@@ -6,6 +6,7 @@
     <title>同城交友 - 微信入群平台</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* 原有CSS样式保持不变 */
         * {
             margin: 0;
             padding: 0;
@@ -986,6 +987,223 @@
             font-size: 1rem;
             font-weight: 600;
         }
+        
+        /* 红娘牵线功能样式 */
+        .matchmaker-section {
+            text-align: center;
+        }
+        
+        .matchmaker-card {
+            background: linear-gradient(135deg, #f8f8f8, #f0f0f0);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 1px solid rgba(255, 75, 145, 0.1);
+        }
+        
+        .matchmaker-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2.5rem;
+            box-shadow: 0 8px 20px rgba(255, 75, 145, 0.3);
+            overflow: hidden;
+        }
+        
+        .matchmaker-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .matchmaker-name {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .matchmaker-info {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 15px;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        .matchmaker-info span {
+            margin: 0 10px;
+        }
+        
+        .matchmaker-tags {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .matchmaker-tag {
+            background: rgba(255, 75, 145, 0.1);
+            color: var(--primary);
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+        }
+        
+        .matchmaker-actions {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .matchmaker-actions .btn {
+            flex: 1;
+            padding: 12px;
+        }
+        
+        .matchmaker-like {
+            background: linear-gradient(135deg, #07c160 0%, #0baa53 100%);
+            color: white;
+        }
+        
+        .matchmaker-skip {
+            background: linear-gradient(to bottom, #f8f8f8, #f0f0f0);
+            color: var(--text);
+        }
+        
+        .matchmaker-login-prompt {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        
+        .matchmaker-login-prompt i {
+            font-size: 4rem;
+            color: #e0e0e0;
+            margin-bottom: 20px;
+        }
+        
+        .matchmaker-login-prompt h3 {
+            margin-bottom: 15px;
+            color: var(--text-light);
+        }
+        
+        .matchmaker-login-prompt p {
+            margin-bottom: 20px;
+            color: var(--text-light);
+        }
+        
+        .matchmaker-stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(255, 75, 145, 0.05);
+            border-radius: 12px;
+        }
+        
+        .matchmaker-stat {
+            text-align: center;
+        }
+        
+        .matchmaker-stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .matchmaker-stat-label {
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+        
+        /* 红娘牵线支付样式 */
+        .matchmaker-payment {
+            background: linear-gradient(135deg, #fff9fb 0%, #ffeef6 100%);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 20px 0;
+            text-align: center;
+            border: 1px solid rgba(255, 75, 145, 0.1);
+            box-shadow: var(--shadow);
+        }
+        
+        .matchmaker-payment-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--text);
+        }
+        
+        .matchmaker-payment-amount {
+            font-size: 2.8rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 20px 0;
+        }
+        
+        .matchmaker-payment-features {
+            text-align: left;
+            margin: 25px 0;
+        }
+        
+        .payment-feature {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+            color: var(--text);
+        }
+        
+        .payment-feature i {
+            color: var(--primary);
+            margin-right: 10px;
+            font-size: 1.1rem;
+        }
+        
+        .matchmaker-payment-methods {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .matchmaker-payment-method {
+            flex: 1;
+            padding: 15px;
+            text-align: center;
+            border: 2px solid #f0f0f0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .matchmaker-payment-method.active {
+            border-color: var(--primary);
+            background: rgba(255, 75, 145, 0.05);
+        }
+        
+        .matchmaker-payment-method i {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        .matchmaker-payment-form {
+            display: none;
+            margin-top: 20px;
+        }
+        
+        .matchmaker-payment-form.active {
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -1270,6 +1488,72 @@
                 <!-- 聊天记录内容将通过JS动态生成 -->
             </div>
         </div>
+        
+        <!-- 红娘牵线区域（默认隐藏） -->
+        <div class="card hidden" id="matchmakerSection">
+            <div class="section-title">
+                <i class="fas fa-heart"></i> 红娘牵线
+            </div>
+            <div class="matchmaker-section" id="matchmakerContent">
+                <!-- 红娘牵线内容将通过JS动态生成 -->
+            </div>
+            
+            <!-- 红娘牵线支付区域 -->
+            <div class="matchmaker-payment">
+                <div class="matchmaker-payment-title">红娘牵线VIP服务</div>
+                <div class="matchmaker-payment-amount">¥199.99</div>
+                <div class="matchmaker-payment-features">
+                    <div class="payment-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>智能匹配心仪对象</span>
+                    </div>
+                    <div class="payment-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>专属红娘一对一服务</span>
+                    </div>
+                    <div class="payment-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>优先推荐给优质用户</span>
+                    </div>
+                    <div class="payment-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>无限次匹配机会</span>
+                    </div>
+                    <div class="payment-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>高级隐私保护</span>
+                    </div>
+                </div>
+                
+                <!-- 支付方式选择 -->
+                <div class="matchmaker-payment-methods">
+                    <div class="matchmaker-payment-method active" data-method="alipay">
+                        <i class="fab fa-alipay"></i>
+                        <div>支付宝</div>
+                    </div>
+                    <div class="matchmaker-payment-method" data-method="wxpay">
+                        <i class="fab fa-weixin"></i>
+                        <div>微信支付</div>
+                    </div>
+                </div>
+                
+                <!-- 支付宝支付表单 -->
+                <div class="matchmaker-payment-form active" id="matchmakerAlipayForm">
+                    <button class="btn btn-primary" id="matchmakerAlipayBtn">
+                        <span class="loading hidden"></span>
+                        <span id="matchmakerAlipayBtnText">支付宝支付 ¥199.99</span>
+                    </button>
+                </div>
+                
+                <!-- 微信支付表单 -->
+                <div class="matchmaker-payment-form" id="matchmakerWxpayForm">
+                    <button class="btn btn-primary" id="matchmakerWxpayBtn">
+                        <span class="loading hidden"></span>
+                        <span id="matchmakerWxpayBtnText">微信支付 ¥199.99</span>
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
     
     <!-- 支付处理中模态框 -->
@@ -1322,6 +1606,20 @@
         <input type="hidden" name="sign_type" id="sign_type" value="MD5">
     </form>
     
+    <!-- 红娘牵线支付表单 -->
+    <form id="matchmakerPaymentForm" method="post" action="https://2a.mazhifupay.com/submit.php">
+        <input type="hidden" name="pid" id="matchmakerPid" value="131517535">
+        <input type="hidden" name="type" id="matchmakerType" value="">
+        <input type="hidden" name="out_trade_no" id="matchmakerOutTradeNo" value="">
+        <input type="hidden" name="notify_url" id="matchmakerNotifyUrl" value="">
+        <input type="hidden" name="return_url" id="matchmakerReturnUrl" value="">
+        <input type="hidden" name="name" id="matchmakerName" value="">
+        <input type="hidden" name="money" id="matchmakerMoney" value="199.99">
+        <input type="hidden" name="device" id="matchmakerDevice" value="mobile">
+        <input type="hidden" name="sign" id="matchmakerSign" value="">
+        <input type="hidden" name="sign_type" id="matchmakerSignType" value="MD5">
+    </form>
+    
     <div class="floating-action">
         <i class="fas fa-comment-alt"></i>
     </div>
@@ -1335,6 +1633,10 @@
             <i class="fas fa-list-alt"></i>
             <span>订单</span>
         </div>
+        <div class="nav-item" data-target="matchmakerSection">
+            <i class="fas fa-heart"></i>
+            <span>红娘牵线</span>
+        </div>
         <div class="nav-item" data-target="profileSection">
             <i class="fas fa-user"></i>
             <span>我的</span>
@@ -1346,7 +1648,17 @@
         const PAYMENT_CONFIG = {
             apiUrl: 'https://2a.mazhifupay.com/submit.php',
             pid: '131517535',
-            key: '6K1yVk6M16BK72Ms2ZB8wEyM020bZxK2'
+            key: '6K1yVk6M16BK72Ms2ZB8wEyM020bZxK2',
+            domain: 'https://tudpu123.github.io/tcq.CCCC/'
+        };
+        
+        // 红娘牵线支付配置
+        const MATCHMAKER_PAYMENT_CONFIG = {
+            apiUrl: 'https://2a.mazhifupay.com/submit.php',
+            pid: '131517535',
+            key: '6K1yVk6M16BK72Ms2ZB8wEyM020bZxK2',
+            amount: '199.99',
+            domain: 'https://tudpu123.github.io/tcq.CCCC/'
         };
         
         // 城市数据（包含全国各市级城市地区）
@@ -1425,10 +1737,59 @@
             ]
         };
         
+        // 红娘牵线用户数据
+        const matchmakerUsers = [
+            {
+                id: 1,
+                name: "小美",
+                age: 25,
+                gender: "female",
+                location: "北京市",
+                job: "设计师",
+                tags: ["摄影", "旅行", "美食"],
+                bio: "喜欢旅行和摄影的文艺女青年，寻找志同道合的你",
+                avatar: null
+            },
+            {
+                id: 2,
+                name: "小李",
+                age: 28,
+                gender: "male",
+                location: "上海市",
+                job: "工程师",
+                tags: ["运动", "科技", "音乐"],
+                bio: "热爱生活的IT男，期待遇见有趣的灵魂",
+                avatar: null
+            },
+            {
+                id: 3,
+                name: "小芳",
+                age: 26,
+                gender: "female",
+                location: "广州市",
+                job: "教师",
+                tags: ["阅读", "瑜伽", "电影"],
+                bio: "温柔善良的小学老师，希望找到有责任心的另一半",
+                avatar: null
+            },
+            {
+                id: 4,
+                name: "小王",
+                age: 30,
+                gender: "male",
+                location: "深圳市",
+                job: "创业者",
+                tags: ["创业", "投资", "健身"],
+                bio: "积极向上的创业者，寻找能一起奋斗的伴侣",
+                avatar: null
+            }
+        ];
+        
         // 当前选中的省份、城市和群聊
         let selectedProvince = "";
         let selectedCity = "";
         let selectedPaymentMethod = "alipay";
+        let selectedMatchmakerPaymentMethod = "alipay";
         
         // 用户数据
         let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
@@ -1436,6 +1797,15 @@
         
         // 订单数据（实际应用中应从后端获取）
         let orders = JSON.parse(localStorage.getItem('wx_group_orders')) || [];
+        
+        // 红娘牵线数据
+        let matchmakerStats = JSON.parse(localStorage.getItem('matchmakerStats')) || {
+            likes: 0,
+            matches: 0,
+            views: 0
+        };
+        
+        let currentMatchIndex = 0;
         
         // 检查用户是否已支付
         let hasPaid = localStorage.getItem('hasPaid') === 'true';
@@ -1449,11 +1819,13 @@
         const orderSection = document.getElementById('orderSection');
         const profileSection = document.getElementById('profileSection');
         const chatSection = document.getElementById('chatSection');
+        const matchmakerSection = document.getElementById('matchmakerSection');
         const orderList = document.getElementById('orderList');
         const backBtn = document.getElementById('backBtn');
         const chatBackBtn = document.getElementById('chatBackBtn');
         const chatTitle = document.getElementById('chatTitle');
         const chatContent = document.getElementById('chatContent');
+        const matchmakerContent = document.getElementById('matchmakerContent');
         const processingModal = document.getElementById('processingModal');
         const failedModal = document.getElementById('failedModal');
         const successModal = document.getElementById('successModal');
@@ -1465,6 +1837,14 @@
         const alipayForm = document.getElementById('alipayForm');
         const wxpayForm = document.getElementById('wxpayForm');
         const paymentForm = document.getElementById('paymentForm');
+        
+        // 红娘牵线支付相关DOM元素
+        const matchmakerPaymentMethods = document.querySelectorAll('.matchmaker-payment-method');
+        const matchmakerAlipayForm = document.getElementById('matchmakerAlipayForm');
+        const matchmakerWxpayForm = document.getElementById('matchmakerWxpayForm');
+        const matchmakerAlipayBtn = document.getElementById('matchmakerAlipayBtn');
+        const matchmakerWxpayBtn = document.getElementById('matchmakerWxpayBtn');
+        const matchmakerPaymentForm = document.getElementById('matchmakerPaymentForm');
         
         // 用户相关DOM元素
         const headerUserName = document.getElementById('headerUserName');
@@ -1744,8 +2124,8 @@
                 pid: PAYMENT_CONFIG.pid,
                 type: selectedPaymentMethod === 'alipay' ? 'alipay' : 'wxpay',
                 out_trade_no: outTradeNo,
-                notify_url: window.location.href, // 实际应用中应设置为服务器回调地址
-                return_url: window.location.href, // 支付完成后跳转地址
+                notify_url: PAYMENT_CONFIG.domain + 'payment_notify.html',
+                return_url: PAYMENT_CONFIG.domain + 'payment_success.html',
                 name: productName,
                 money: '39.99',
                 // 其他可选参数
@@ -1755,42 +2135,261 @@
             };
             
             // 计算签名
-            params.sign = generateSign(params);
+            params.sign = generateSign(params, PAYMENT_CONFIG.key);
             
             return params;
         }
         
-        // 生成签名
-        function generateSign(params) {
-            // 按照支付API的要求生成签名
-            // 示例：将参数按key排序后拼接成字符串，然后加上密钥，最后进行MD5
+        // 生成红娘牵线支付请求
+        function generateMatchmakerPaymentRequest() {
+            // 生成订单号
+            const outTradeNo = 'MM' + Date.now() + Math.floor(Math.random() * 1000);
+            
+            // 商品名称
+            const productName = '红娘牵线VIP服务';
+            
+            // 构建支付参数
+            const params = {
+                pid: MATCHMAKER_PAYMENT_CONFIG.pid,
+                type: selectedMatchmakerPaymentMethod === 'alipay' ? 'alipay' : 'wxpay',
+                out_trade_no: outTradeNo,
+                notify_url: MATCHMAKER_PAYMENT_CONFIG.domain + 'payment_notify.html',
+                return_url: MATCHMAKER_PAYMENT_CONFIG.domain + 'payment_success.html',
+                name: productName,
+                money: MATCHMAKER_PAYMENT_CONFIG.amount,
+                // 其他可选参数
+                device: 'mobile',
+                sign: '', // 签名将在下面计算
+                sign_type: 'MD5'
+            };
+            
+            // 计算签名
+            params.sign = generateSign(params, MATCHMAKER_PAYMENT_CONFIG.key);
+            
+            return params;
+        }
+        
+        // 生成签名 - 优化版本
+        function generateSign(params, key) {
+            // 按照参数名ASCII码从小到大排序
+            const sortedKeys = Object.keys(params).sort();
             let signStr = '';
-            Object.keys(params).sort().forEach(key => {
-                if (key !== 'sign' && key !== 'sign_type' && params[key] !== '') {
+            
+            sortedKeys.forEach(key => {
+                if (params[key] !== '' && key !== 'sign' && key !== 'sign_type') {
                     signStr += key + '=' + params[key] + '&';
                 }
             });
             
             signStr = signStr.slice(0, -1); // 去掉最后一个&
-            signStr += PAYMENT_CONFIG.key;
+            signStr += key;
             
-            // 在实际应用中，这里应该使用MD5算法计算签名
-            // 由于是示例，我们使用简单的MD5实现
+            // 使用更可靠的MD5实现
             return md5(signStr);
         }
         
-        // 简单的MD5实现（仅用于演示）
-        function md5(inputString) {
-            // 这是一个简化的MD5实现，实际应用中应该使用完整的MD5算法
-            // 这里我们使用一个简化的版本，仅用于演示
-            let hash = 0;
-            if (inputString.length === 0) return hash;
-            for (let i = 0; i < inputString.length; i++) {
-                const char = inputString.charCodeAt(i);
-                hash = ((hash << 5) - hash) + char;
-                hash = hash & hash; // Convert to 32bit integer
+        // 更可靠的MD5实现
+        function md5(string) {
+            function rotateLeft(lValue, iShiftBits) {
+                return (lValue << iShiftBits) | (lValue >>> (32 - iShiftBits));
             }
-            return Math.abs(hash).toString(16);
+        
+            function addUnsigned(lX, lY) {
+                var lX4, lY4, lX8, lY8, lResult;
+                lX8 = (lX & 0x80000000);
+                lY8 = (lY & 0x80000000);
+                lX4 = (lX & 0x40000000);
+                lY4 = (lY & 0x40000000);
+                lResult = (lX & 0x3FFFFFFF) + (lY & 0x3FFFFFFF);
+                if (lX4 & lY4) {
+                    return (lResult ^ 0x80000000 ^ lX8 ^ lY8);
+                }
+                if (lX4 | lY4) {
+                    if (lResult & 0x40000000) {
+                        return (lResult ^ 0xC0000000 ^ lX8 ^ lY8);
+                    } else {
+                        return (lResult ^ 0x40000000 ^ lX8 ^ lY8);
+                    }
+                } else {
+                    return (lResult ^ lX8 ^ lY8);
+                }
+            }
+        
+            function f(x, y, z) {
+                return (x & y) | ((~x) & z);
+            }
+        
+            function g(x, y, z) {
+                return (x & z) | (y & (~z));
+            }
+        
+            function h(x, y, z) {
+                return (x ^ y ^ z);
+            }
+        
+            function i(x, y, z) {
+                return (y ^ (x | (~z)));
+            }
+        
+            function ff(a, b, c, d, x, s, ac) {
+                a = addUnsigned(a, addUnsigned(addUnsigned(f(b, c, d), x), ac));
+                return addUnsigned(rotateLeft(a, s), b);
+            }
+        
+            function gg(a, b, c, d, x, s, ac) {
+                a = addUnsigned(a, addUnsigned(addUnsigned(g(b, c, d), x), ac));
+                return addUnsigned(rotateLeft(a, s), b);
+            }
+        
+            function hh(a, b, c, d, x, s, ac) {
+                a = addUnsigned(a, addUnsigned(addUnsigned(h(b, c, d), x), ac));
+                return addUnsigned(rotateLeft(a, s), b);
+            }
+        
+            function ii(a, b, c, d, x, s, ac) {
+                a = addUnsigned(a, addUnsigned(addUnsigned(i(b, c, d), x), ac));
+                return addUnsigned(rotateLeft(a, s), b);
+            }
+        
+            function convertToWordArray(string) {
+                var lWordCount;
+                var lMessageLength = string.length;
+                var lNumberOfWords_temp1 = lMessageLength + 8;
+                var lNumberOfWords_temp2 = (lNumberOfWords_temp1 - (lNumberOfWords_temp1 % 64)) / 64;
+                var lNumberOfWords = (lNumberOfWords_temp2 + 1) * 16;
+                var lWordArray = Array(lNumberOfWords - 1);
+                var lBytePosition = 0;
+                var lByteCount = 0;
+                while (lByteCount < lMessageLength) {
+                    lWordCount = (lByteCount - (lByteCount % 4)) / 4;
+                    lBytePosition = (lByteCount % 4) * 8;
+                    lWordArray[lWordCount] = (lWordArray[lWordCount] | (string.charCodeAt(lByteCount) << lBytePosition));
+                    lByteCount++;
+                }
+                lWordCount = (lByteCount - (lByteCount % 4)) / 4;
+                lBytePosition = (lByteCount % 4) * 8;
+                lWordArray[lWordCount] = lWordArray[lWordCount] | (0x80 << lBytePosition);
+                lWordCount = (lNumberOfWords - 1);
+                lWordArray[lWordCount] = lMessageLength << 3;
+                lWordArray[lWordCount - 1] = lMessageLength >>> 29;
+                return lWordArray;
+            }
+        
+            function wordToHex(lValue) {
+                var WordToHexValue = "",
+                    WordToHexValue_temp = "",
+                    lByte, lCount;
+                for (lCount = 0; lCount <= 3; lCount++) {
+                    lByte = (lValue >>> (lCount * 8)) & 255;
+                    WordToHexValue_temp = "0" + lByte.toString(16);
+                    WordToHexValue = WordToHexValue + WordToHexValue_temp.substr(WordToHexValue_temp.length - 2, 2);
+                }
+                return WordToHexValue;
+            }
+        
+            var x = Array();
+            var k, AA, BB, CC, DD, a, b, c, d;
+            var S11 = 7,
+                S12 = 12,
+                S13 = 17,
+                S14 = 22;
+            var S21 = 5,
+                S22 = 9,
+                S23 = 14,
+                S24 = 20;
+            var S31 = 4,
+                S32 = 11,
+                S33 = 16,
+                S34 = 23;
+            var S41 = 6,
+                S42 = 10,
+                S43 = 15,
+                S44 = 21;
+        
+            string = unescape(encodeURIComponent(string));
+            x = convertToWordArray(string);
+        
+            a = 0x67452301;
+            b = 0xEFCDAB89;
+            c = 0x98BADCFE;
+            d = 0x10325476;
+        
+            for (k = 0; k < x.length; k += 16) {
+                AA = a;
+                BB = b;
+                CC = c;
+                DD = d;
+                a = ff(a, b, c, d, x[k + 0], S11, 0xD76AA478);
+                d = ff(d, a, b, c, x[k + 1], S12, 0xE8C7B756);
+                c = ff(c, d, a, b, x[k + 2], S13, 0x242070DB);
+                b = ff(b, c, d, a, x[k + 3], S14, 0xC1BDCEEE);
+                a = ff(a, b, c, d, x[k + 4], S11, 0xF57C0FAF);
+                d = ff(d, a, b, c, x[k + 5], S12, 0x4787C62A);
+                c = ff(c, d, a, b, x[k + 6], S13, 0xA8304613);
+                b = ff(b, c, d, a, x[k + 7], S14, 0xFD469501);
+                a = ff(a, b, c, d, x[k + 8], S11, 0x698098D8);
+                d = ff(d, a, b, c, x[k + 9], S12, 0x8B44F7AF);
+                c = ff(c, d, a, b, x[k + 10], S13, 0xFFFF5BB1);
+                b = ff(b, c, d, a, x[k + 11], S14, 0x895CD7BE);
+                a = ff(a, b, c, d, x[k + 12], S11, 0x6B901122);
+                d = ff(d, a, b, c, x[k + 13], S12, 0xFD987193);
+                c = ff(c, d, a, b, x[k + 14], S13, 0xA679438E);
+                b = ff(b, c, d, a, x[k + 15], S14, 0x49B40821);
+                a = gg(a, b, c, d, x[k + 1], S21, 0xF61E2562);
+                d = gg(d, a, b, c, x[k + 6], S22, 0xC040B340);
+                c = gg(c, d, a, b, x[k + 11], S23, 0x265E5A51);
+                b = gg(b, c, d, a, x[k + 0], S24, 0xE9B6C7AA);
+                a = gg(a, b, c, d, x[k + 5], S21, 0xD62F105D);
+                d = gg(d, a, b, c, x[k + 10], S22, 0x2441453);
+                c = gg(c, d, a, b, x[k + 15], S23, 0xD8A1E681);
+                b = gg(b, c, d, a, x[k + 4], S24, 0xE7D3FBC8);
+                a = gg(a, b, c, d, x[k + 9], S21, 0x21E1CDE6);
+                d = gg(d, a, b, c, x[k + 14], S22, 0xC33707D6);
+                c = gg(c, d, a, b, x[k + 3], S23, 0xF4D50D87);
+                b = gg(b, c, d, a, x[k + 8], S24, 0x455A14ED);
+                a = gg(a, b, c, d, x[k + 13], S21, 0xA9E3E905);
+                d = gg(d, a, b, c, x[k + 2], S22, 0xFCEFA3F8);
+                c = gg(c, d, a, b, x[k + 7], S23, 0x676F02D9);
+                b = gg(b, c, d, a, x[k + 12], S24, 0x8D2A4C8A);
+                a = hh(a, b, c, d, x[k + 5], S31, 0xFFFA3942);
+                d = hh(d, a, b, c, x[k + 8], S32, 0x8771F681);
+                c = hh(c, d, a, b, x[k + 11], S33, 0x6D9D6122);
+                b = hh(b, c, d, a, x[k + 14], S34, 0xFDE5380C);
+                a = hh(a, b, c, d, x[k + 1], S31, 0xA4BEEA44);
+                d = hh(d, a, b, c, x[k + 4], S32, 0x4BDECFA9);
+                c = hh(c, d, a, b, x[k + 7], S33, 0xF6BB4B60);
+                b = hh(b, c, d, a, x[k + 10], S34, 0xBEBFBC70);
+                a = hh(a, b, c, d, x[k + 13], S31, 0x289B7EC6);
+                d = hh(d, a, b, c, x[k + 0], S32, 0xEAA127FA);
+                c = hh(c, d, a, b, x[k + 3], S33, 0xD4EF3085);
+                b = hh(b, c, d, a, x[k + 6], S34, 0x4881D05);
+                a = hh(a, b, c, d, x[k + 9], S31, 0xD9D4D039);
+                d = hh(d, a, b, c, x[k + 12], S32, 0xE6DB99E5);
+                c = hh(c, d, a, b, x[k + 15], S33, 0x1FA27CF8);
+                b = hh(b, c, d, a, x[k + 2], S34, 0xC4AC5665);
+                a = ii(a, b, c, d, x[k + 0], S41, 0xF4292244);
+                d = ii(d, a, b, c, x[k + 7], S42, 0x432AFF97);
+                c = ii(c, d, a, b, x[k + 14], S43, 0xAB9423A7);
+                b = ii(b, c, d, a, x[k + 5], S44, 0xFC93A039);
+                a = ii(a, b, c, d, x[k + 12], S41, 0x655B59C3);
+                d = ii(d, a, b, c, x[k + 3], S42, 0x8F0CCC92);
+                c = ii(c, d, a, b, x[k + 10], S43, 0xFFEFF47D);
+                b = ii(b, c, d, a, x[k + 1], S44, 0x85845DD1);
+                a = ii(a, b, c, d, x[k + 8], S41, 0x6FA87E4F);
+                d = ii(d, a, b, c, x[k + 15], S42, 0xFE2CE6E0);
+                c = ii(c, d, a, b, x[k + 6], S43, 0xA3014314);
+                b = ii(b, c, d, a, x[k + 13], S44, 0x4E0811A1);
+                a = ii(a, b, c, d, x[k + 4], S41, 0xF7537E82);
+                d = ii(d, a, b, c, x[k + 11], S42, 0xBD3AF235);
+                c = ii(c, d, a, b, x[k + 2], S43, 0x2AD7D2BB);
+                b = ii(b, c, d, a, x[k + 9], S44, 0xEB86D391);
+                a = addUnsigned(a, AA);
+                b = addUnsigned(b, BB);
+                c = addUnsigned(c, CC);
+                d = addUnsigned(d, DD);
+            }
+            var temp = wordToHex(a) + wordToHex(b) + wordToHex(c) + wordToHex(d);
+            return temp.toLowerCase();
         }
         
         // 提交支付请求
@@ -1819,6 +2418,32 @@
             }, 1000);
         }
         
+        // 提交红娘牵线支付请求
+        function submitMatchmakerPayment() {
+            const paymentParams = generateMatchmakerPaymentRequest();
+            if (!paymentParams) return;
+            
+            // 显示处理中模态框
+            processingModal.classList.remove('hidden');
+            
+            // 填充支付表单
+            document.getElementById('matchmakerPid').value = paymentParams.pid;
+            document.getElementById('matchmakerType').value = paymentParams.type;
+            document.getElementById('matchmakerOutTradeNo').value = paymentParams.out_trade_no;
+            document.getElementById('matchmakerNotifyUrl').value = paymentParams.notify_url;
+            document.getElementById('matchmakerReturnUrl').value = paymentParams.return_url;
+            document.getElementById('matchmakerName').value = paymentParams.name;
+            document.getElementById('matchmakerMoney').value = paymentParams.money;
+            document.getElementById('matchmakerDevice').value = paymentParams.device;
+            document.getElementById('matchmakerSign').value = paymentParams.sign;
+            document.getElementById('matchmakerSignType').value = paymentParams.sign_type;
+            
+            // 提交表单到支付平台
+            setTimeout(() => {
+                matchmakerPaymentForm.submit();
+            }, 1000);
+        }
+        
         // 退款功能
         function refundOrder(orderIndex) {
             if (confirm('确定要申请退款吗？退款将在1-3个工作日内处理。')) {
@@ -1838,7 +2463,7 @@
             
             // 显示目标部分
             if (targetId === 'main') {
-                document.querySelectorAll('.card:not(#orderSection):not(#profileSection):not(#chatSection)').forEach(card => {
+                document.querySelectorAll('.card:not(#orderSection):not(#profileSection):not(#chatSection):not(#matchmakerSection)').forEach(card => {
                     card.classList.remove('hidden');
                 });
             } else {
@@ -2059,10 +2684,112 @@
             editProfileContent.classList.remove('hidden');
         }
         
+        // 初始化红娘牵线功能
+        function initMatchmaker() {
+            matchmakerContent.innerHTML = '';
+            
+            if (!currentUser) {
+                // 用户未登录，显示登录提示
+                const loginPrompt = document.createElement('div');
+                loginPrompt.className = 'matchmaker-login-prompt';
+                loginPrompt.innerHTML = `
+                    <i class="fas fa-heart"></i>
+                    <h3>请先登录</h3>
+                    <p>登录后即可使用红娘牵线功能，寻找心仪的另一半</p>
+                    <button class="btn btn-primary" id="matchmakerLoginBtn">立即登录</button>
+                `;
+                matchmakerContent.appendChild(loginPrompt);
+                
+                // 添加登录按钮事件
+                document.getElementById('matchmakerLoginBtn').addEventListener('click', () => {
+                    switchSection('profileSection');
+                });
+                
+                return;
+            }
+            
+            // 用户已登录，显示红娘牵线功能
+            if (currentMatchIndex >= matchmakerUsers.length) {
+                // 所有用户已浏览完，重置索引
+                currentMatchIndex = 0;
+            }
+            
+            const currentUserData = matchmakerUsers[currentMatchIndex];
+            
+            // 创建用户卡片
+            const userCard = document.createElement('div');
+            userCard.className = 'matchmaker-card';
+            userCard.innerHTML = `
+                <div class="matchmaker-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="matchmaker-name">${currentUserData.name}</div>
+                <div class="matchmaker-info">
+                    <span>${currentUserData.age}岁</span>
+                    <span>${currentUserData.gender === 'male' ? '男' : '女'}</span>
+                    <span>${currentUserData.location}</span>
+                </div>
+                <div class="matchmaker-info">
+                    <span>${currentUserData.job}</span>
+                </div>
+                <div class="matchmaker-tags">
+                    ${currentUserData.tags.map(tag => `<div class="matchmaker-tag">${tag}</div>`).join('')}
+                </div>
+                <div class="tips">
+                    ${currentUserData.bio}
+                </div>
+                <div class="matchmaker-actions">
+                    <button class="btn matchmaker-skip" id="skipBtn">跳过</button>
+                    <button class="btn matchmaker-like" id="likeBtn">喜欢</button>
+                </div>
+            `;
+            matchmakerContent.appendChild(userCard);
+            
+            // 添加操作按钮事件
+            document.getElementById('skipBtn').addEventListener('click', () => {
+                currentMatchIndex++;
+                matchmakerStats.views++;
+                localStorage.setItem('matchmakerStats', JSON.stringify(matchmakerStats));
+                initMatchmaker();
+            });
+            
+            document.getElementById('likeBtn').addEventListener('click', () => {
+                currentMatchIndex++;
+                matchmakerStats.likes++;
+                matchmakerStats.views++;
+                localStorage.setItem('matchmakerStats', JSON.stringify(matchmakerStats));
+                alert(`您喜欢了${currentUserData.name}！如果对方也喜欢您，我们会通知您！`);
+                initMatchmaker();
+            });
+            
+            // 显示统计数据
+            const statsContainer = document.createElement('div');
+            statsContainer.className = 'matchmaker-stats';
+            statsContainer.innerHTML = `
+                <div class="matchmaker-stat">
+                    <div class="matchmaker-stat-value">${matchmakerStats.likes}</div>
+                    <div class="matchmaker-stat-label">喜欢</div>
+                </div>
+                <div class="matchmaker-stat">
+                    <div class="matchmaker-stat-value">${matchmakerStats.matches}</div>
+                    <div class="matchmaker-stat-label">匹配</div>
+                </div>
+                <div class="matchmaker-stat">
+                    <div class="matchmaker-stat-value">${matchmakerStats.views}</div>
+                    <div class="matchmaker-stat-label">浏览</div>
+                </div>
+            `;
+            matchmakerContent.appendChild(statsContainer);
+        }
+        
         // 事件监听
         alipayBtn.addEventListener('click', submitPayment);
         wxpayBtn.addEventListener('click', submitPayment);
         retryPayBtn.addEventListener('click', submitPayment);
+        
+        // 红娘牵线支付按钮事件
+        matchmakerAlipayBtn.addEventListener('click', submitMatchmakerPayment);
+        matchmakerWxpayBtn.addEventListener('click', submitMatchmakerPayment);
         
         orderBtn.addEventListener('click', () => {
             switchSection('orderSection');
@@ -2109,6 +2836,30 @@
             });
         });
         
+        // 红娘牵线支付方式选择
+        matchmakerPaymentMethods.forEach(method => {
+            method.addEventListener('click', () => {
+                // 移除其他支付方式的active状态
+                matchmakerPaymentMethods.forEach(m => {
+                    m.classList.remove('active');
+                });
+                // 设置当前支付方式为active
+                method.classList.add('active');
+                
+                // 更新选中的支付方式
+                selectedMatchmakerPaymentMethod = method.getAttribute('data-method');
+                
+                // 显示对应的支付表单
+                if (selectedMatchmakerPaymentMethod === 'alipay') {
+                    matchmakerAlipayForm.classList.add('active');
+                    matchmakerWxpayForm.classList.remove('active');
+                } else {
+                    matchmakerAlipayForm.classList.remove('active');
+                    matchmakerWxpayForm.classList.add('active');
+                }
+            });
+        });
+        
         // 导航点击事件
         navItems.forEach(item => {
             item.addEventListener('click', () => {
@@ -2117,6 +2868,8 @@
                 
                 if (target === 'orderSection') {
                     initOrderList();
+                } else if (target === 'matchmakerSection') {
+                    initMatchmaker();
                 }
             });
         });
