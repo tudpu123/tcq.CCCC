@@ -2739,23 +2739,21 @@
     </div>
 
     <script>
-        // 支付API配置 - 从支付.html复制的正确配置
+        // 支付API配置 - 使用3文件中指定的API对接接口
         const PAYMENT_CONFIG = {
             apiUrl: 'https://2a.mazhifupay.com/submit.php',
             pid: '131517535',
             key: '6K1yVk6M16BK72Ms2ZB8wEyM020bZxK2',
-            notify_url: window.location.origin + '/notify.php',
-            return_url: window.location.origin + '/return.php'
+            domain: window.location.origin + window.location.pathname
         };
         
-        // 红娘牵线支付配置 - 从支付.html复制的正确配置
+        // 红娘牵线支付配置 - 使用3文件中指定的API对接接口
         const MATCHMAKER_PAYMENT_CONFIG = {
             apiUrl: 'https://2a.mazhifupay.com/submit.php',
             pid: '131517535',
             key: '6K1yVk6M16BK72Ms2ZB8wEyM020bZxK2',
             amount: '199.99',
-            notify_url: window.location.origin + '/notify.php',
-            return_url: window.location.origin + '/return.php'
+            domain: window.location.origin + window.location.pathname
         };
         
         // 城市数据（包含全国各市级城市地区）
@@ -3497,21 +3495,23 @@
             // 生成订单号
             const outTradeNo = 'WX' + Date.now() + Math.floor(Math.random() * 1000);
             
-            // 商品名称 - 使用英文数字格式以确保签名验证成功
-            const productName = `city_chat_group_${Date.now()}_${Math.floor(Math.random() * 1000)}`;
+            // 商品名称
+            const productName = `${selectedProvince}${selectedCity}交友群`;
             
-            // 构建支付参数 - 使用正确的notify_url和return_url
+            // 构建支付参数
             const params = {
                 pid: PAYMENT_CONFIG.pid,
                 type: selectedPaymentMethod === 'alipay' ? 'alipay' : 'wxpay',
                 out_trade_no: outTradeNo,
-                notify_url: PAYMENT_CONFIG.notify_url,
-                return_url: PAYMENT_CONFIG.return_url,
+                notify_url: PAYMENT_CONFIG.domain,
+                return_url: PAYMENT_CONFIG.domain,
                 name: productName,
                 money: '39.99',
+                // 其他可选参数
+                device: 'mobile',
                 sign: '', // 签名将在下面计算
                 sign_type: 'MD5'
-            }
+            };
             
             // 计算签名
             params.sign = generateSign(params, PAYMENT_CONFIG.key);
@@ -3533,21 +3533,23 @@
             // 生成订单号
             const outTradeNo = 'MM' + Date.now() + Math.floor(Math.random() * 1000);
             
-            // 商品名称 - 使用英文数字格式以确保签名验证成功
-            const productName = `matchmaker_vip_service_${Date.now()}_${Math.floor(Math.random() * 1000)}`;
+            // 商品名称
+            const productName = '红娘牵线VIP服务';
             
-            // 构建支付参数 - 使用正确的notify_url和return_url
+            // 构建支付参数
             const params = {
                 pid: MATCHMAKER_PAYMENT_CONFIG.pid,
                 type: selectedMatchmakerPaymentMethod === 'alipay' ? 'alipay' : 'wxpay',
                 out_trade_no: outTradeNo,
-                notify_url: MATCHMAKER_PAYMENT_CONFIG.notify_url,
-                return_url: MATCHMAKER_PAYMENT_CONFIG.return_url,
+                notify_url: MATCHMAKER_PAYMENT_CONFIG.domain,
+                return_url: MATCHMAKER_PAYMENT_CONFIG.domain,
                 name: productName,
                 money: MATCHMAKER_PAYMENT_CONFIG.amount,
+                // 其他可选参数
+                device: 'mobile',
                 sign: '', // 签名将在下面计算
                 sign_type: 'MD5'
-            }
+            };
             
             // 计算签名
             params.sign = generateSign(params, MATCHMAKER_PAYMENT_CONFIG.key);
@@ -3564,23 +3566,22 @@
             return url;
         }
         
-        // 生成签名 - 优化版本
-        // 生成签名 - 使用支付.html中的正确签名逻辑
-        function generateSign(params, key) {
-            // 按参数名排序
-            const keys = Object.keys(params).sort();
+        // 生成签名 - 优化版本，修复变量名冲突
+        function generateSign(params, apiKey) {
+            // 按照参数名ASCII码从小到大排序
+            const sortedKeys = Object.keys(params).sort();
             let signStr = '';
             
-            keys.forEach(k => {
-                if (params[k] !== '' && k !== 'sign' && k !== 'sign_type') {
-                    signStr += k + '=' + params[k] + '&';
+            sortedKeys.forEach(paramKey => {
+                if (params[paramKey] !== '' && paramKey !== 'sign' && paramKey !== 'sign_type') {
+                    signStr += paramKey + '=' + params[paramKey] + '&';
                 }
             });
             
-            // 去掉最后一个&，并直接加上密钥（支付.html的签名格式）
-            signStr = signStr.substring(0, signStr.length - 1) + key;
+            signStr = signStr.slice(0, -1); // 去掉最后一个&
+            signStr += apiKey; // 添加支付密钥
             
-            // 计算MD5
+            // 使用更可靠的MD5实现
             return md5(signStr);
         }
         
@@ -3788,22 +3789,76 @@
             return temp.toLowerCase();
         }
         
-        // 提交支付请求
+        // 提交支付请求 - 增强版，添加错误处理和状态反馈
         function submitPayment() {
-            const paymentUrl = generatePaymentRequest();
-            if (!paymentUrl) return;
-            
-            // 直接跳转到支付页面
-            window.location.href = paymentUrl;
+            try {
+                const paymentUrl = generatePaymentRequest();
+                if (!paymentUrl) {
+                    alert('生成支付链接失败，请稍后再试');
+                    return;
+                }
+                
+                console.log('支付链接:', paymentUrl);
+                
+                // 显示加载状态 - 修正ID为processingModal
+                const processingModal = document.getElementById('processingModal');
+                if (processingModal) {
+                    processingModal.classList.remove('hidden');
+                }
+                
+                // 使用新窗口打开支付页面，避免在当前页面跳转失败时影响用户体验
+                window.open(paymentUrl, '_blank');
+                
+                // 3秒后自动隐藏加载状态
+                setTimeout(() => {
+                    if (processingModal) {
+                        processingModal.classList.add('hidden');
+                    }
+                }, 3000);
+            } catch (error) {
+                console.error('支付提交失败:', error);
+                alert('支付提交失败，请稍后再试');
+                const processingModal = document.getElementById('processingModal');
+                if (processingModal) {
+                    processingModal.classList.add('hidden');
+                }
+            }
         }
         
-        // 提交红娘牵线支付请求
+        // 提交红娘牵线支付请求 - 增强版，添加错误处理和状态反馈
         function submitMatchmakerPayment() {
-            const paymentUrl = generateMatchmakerPaymentRequest();
-            if (!paymentUrl) return;
-            
-            // 直接跳转到支付页面
-            window.location.href = paymentUrl;
+            try {
+                const paymentUrl = generateMatchmakerPaymentRequest();
+                if (!paymentUrl) {
+                    alert('生成支付链接失败，请稍后再试');
+                    return;
+                }
+                
+                console.log('红娘牵线支付链接:', paymentUrl);
+                
+                // 显示加载状态 - 修正ID为processingModal
+                const processingModal = document.getElementById('processingModal');
+                if (processingModal) {
+                    processingModal.classList.remove('hidden');
+                }
+                
+                // 使用新窗口打开支付页面，避免在当前页面跳转失败时影响用户体验
+                window.open(paymentUrl, '_blank');
+                
+                // 3秒后自动隐藏加载状态
+                setTimeout(() => {
+                    if (processingModal) {
+                        processingModal.classList.add('hidden');
+                    }
+                }, 3000);
+            } catch (error) {
+                console.error('支付提交失败:', error);
+                alert('支付提交失败，请稍后再试');
+                const processingModal = document.getElementById('processingModal');
+                if (processingModal) {
+                    processingModal.classList.add('hidden');
+                }
+            }
         }
         
         // 退款功能
