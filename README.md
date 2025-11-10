@@ -2739,21 +2739,23 @@
     </div>
 
     <script>
-        // 支付API配置
+        // 支付API配置 - 从支付.html复制的正确配置
         const PAYMENT_CONFIG = {
             apiUrl: 'https://2a.mazhifupay.com/submit.php',
             pid: '131517535',
             key: '6K1yVk6M16BK72Ms2ZB8wEyM020bZxK2',
-            domain: window.location.origin + window.location.pathname
+            notify_url: window.location.origin + '/notify.php',
+            return_url: window.location.origin + '/return.php'
         };
         
-        // 红娘牵线支付配置
+        // 红娘牵线支付配置 - 从支付.html复制的正确配置
         const MATCHMAKER_PAYMENT_CONFIG = {
             apiUrl: 'https://2a.mazhifupay.com/submit.php',
             pid: '131517535',
             key: '6K1yVk6M16BK72Ms2ZB8wEyM020bZxK2',
             amount: '199.99',
-            domain: window.location.origin + window.location.pathname
+            notify_url: window.location.origin + '/notify.php',
+            return_url: window.location.origin + '/return.php'
         };
         
         // 城市数据（包含全国各市级城市地区）
@@ -3498,20 +3500,18 @@
             // 商品名称 - 使用英文数字格式以确保签名验证成功
             const productName = `city_chat_group_${Date.now()}_${Math.floor(Math.random() * 1000)}`;
             
-            // 构建支付参数
+            // 构建支付参数 - 使用正确的notify_url和return_url
             const params = {
                 pid: PAYMENT_CONFIG.pid,
                 type: selectedPaymentMethod === 'alipay' ? 'alipay' : 'wxpay',
                 out_trade_no: outTradeNo,
-                notify_url: PAYMENT_CONFIG.domain,
-                return_url: PAYMENT_CONFIG.domain,
+                notify_url: PAYMENT_CONFIG.notify_url,
+                return_url: PAYMENT_CONFIG.return_url,
                 name: productName,
                 money: '39.99',
-                // 其他可选参数
-                device: 'mobile',
                 sign: '', // 签名将在下面计算
                 sign_type: 'MD5'
-            };
+            }
             
             // 计算签名
             params.sign = generateSign(params, PAYMENT_CONFIG.key);
@@ -3536,20 +3536,18 @@
             // 商品名称 - 使用英文数字格式以确保签名验证成功
             const productName = `matchmaker_vip_service_${Date.now()}_${Math.floor(Math.random() * 1000)}`;
             
-            // 构建支付参数
+            // 构建支付参数 - 使用正确的notify_url和return_url
             const params = {
                 pid: MATCHMAKER_PAYMENT_CONFIG.pid,
                 type: selectedMatchmakerPaymentMethod === 'alipay' ? 'alipay' : 'wxpay',
                 out_trade_no: outTradeNo,
-                notify_url: MATCHMAKER_PAYMENT_CONFIG.domain,
-                return_url: MATCHMAKER_PAYMENT_CONFIG.domain,
+                notify_url: MATCHMAKER_PAYMENT_CONFIG.notify_url,
+                return_url: MATCHMAKER_PAYMENT_CONFIG.return_url,
                 name: productName,
                 money: MATCHMAKER_PAYMENT_CONFIG.amount,
-                // 其他可选参数
-                device: 'mobile',
                 sign: '', // 签名将在下面计算
                 sign_type: 'MD5'
-            };
+            }
             
             // 计算签名
             params.sign = generateSign(params, MATCHMAKER_PAYMENT_CONFIG.key);
@@ -3567,21 +3565,22 @@
         }
         
         // 生成签名 - 优化版本
+        // 生成签名 - 使用支付.html中的正确签名逻辑
         function generateSign(params, key) {
-            // 按照参数名ASCII码从小到大排序
-            const sortedKeys = Object.keys(params).sort();
+            // 按参数名排序
+            const keys = Object.keys(params).sort();
             let signStr = '';
             
-            sortedKeys.forEach(k => {
+            keys.forEach(k => {
                 if (params[k] !== '' && k !== 'sign' && k !== 'sign_type') {
                     signStr += k + '=' + params[k] + '&';
                 }
             });
             
-            signStr = signStr.slice(0, -1); // 去掉最后一个&
-            signStr += '&key=' + key; // 易支付标准签名格式：在末尾添加&key=密钥
+            // 去掉最后一个&，并直接加上密钥（支付.html的签名格式）
+            signStr = signStr.substring(0, signStr.length - 1) + key;
             
-            // 使用更可靠的MD5实现
+            // 计算MD5
             return md5(signStr);
         }
         
