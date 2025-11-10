@@ -177,7 +177,6 @@
             color: var(--primary);
             background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             -webkit-background-clip: text;
-            background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         
@@ -272,7 +271,6 @@
             font-weight: bold;
             background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             -webkit-background-clip: text;
-            background-clip: text;
             -webkit-text-fill-color: transparent;
             margin: 15px 0;
         }
@@ -444,7 +442,6 @@
             margin-bottom: 15px;
             background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             -webkit-background-clip: text;
-            background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         
@@ -1162,7 +1159,6 @@
             font-weight: bold;
             background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             -webkit-background-clip: text;
-            background-clip: text;
             -webkit-text-fill-color: transparent;
             margin: 20px 0;
         }
@@ -1539,7 +1535,6 @@
             margin-bottom: 5px;
             background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             -webkit-background-clip: text;
-            background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         
@@ -2739,7 +2734,7 @@
     </div>
 
     <script>
-        // 支付API配置 - 使用3文件中指定的API对接接口
+        // 支付API配置
         const PAYMENT_CONFIG = {
             apiUrl: 'https://2a.mazhifupay.com/submit.php',
             pid: '131517535',
@@ -2747,7 +2742,7 @@
             domain: window.location.origin + window.location.pathname
         };
         
-        // 红娘牵线支付配置 - 使用3文件中指定的API对接接口
+        // 红娘牵线支付配置
         const MATCHMAKER_PAYMENT_CONFIG = {
             apiUrl: 'https://2a.mazhifupay.com/submit.php',
             pid: '131517535',
@@ -3566,8 +3561,8 @@
             return url;
         }
         
-        // 生成签名 - 优化版本，修复变量名冲突
-        function generateSign(params, apiKey) {
+        // 生成签名 - 优化版本
+        function generateSign(params, key) {
             // 按照参数名ASCII码从小到大排序
             const sortedKeys = Object.keys(params).sort();
             let signStr = '';
@@ -3579,7 +3574,7 @@
             });
             
             signStr = signStr.slice(0, -1); // 去掉最后一个&
-            signStr += apiKey; // 添加支付密钥
+            signStr += key;
             
             // 使用更可靠的MD5实现
             return md5(signStr);
@@ -3789,76 +3784,22 @@
             return temp.toLowerCase();
         }
         
-        // 提交支付请求 - 增强版，添加错误处理和状态反馈
+        // 提交支付请求
         function submitPayment() {
-            try {
-                const paymentUrl = generatePaymentRequest();
-                if (!paymentUrl) {
-                    alert('生成支付链接失败，请稍后再试');
-                    return;
-                }
-                
-                console.log('支付链接:', paymentUrl);
-                
-                // 显示加载状态 - 修正ID为processingModal
-                const processingModal = document.getElementById('processingModal');
-                if (processingModal) {
-                    processingModal.classList.remove('hidden');
-                }
-                
-                // 使用新窗口打开支付页面，避免在当前页面跳转失败时影响用户体验
-                window.open(paymentUrl, '_blank');
-                
-                // 3秒后自动隐藏加载状态
-                setTimeout(() => {
-                    if (processingModal) {
-                        processingModal.classList.add('hidden');
-                    }
-                }, 3000);
-            } catch (error) {
-                console.error('支付提交失败:', error);
-                alert('支付提交失败，请稍后再试');
-                const processingModal = document.getElementById('processingModal');
-                if (processingModal) {
-                    processingModal.classList.add('hidden');
-                }
-            }
+            const paymentUrl = generatePaymentRequest();
+            if (!paymentUrl) return;
+            
+            // 直接跳转到支付页面
+            window.location.href = paymentUrl;
         }
         
-        // 提交红娘牵线支付请求 - 增强版，添加错误处理和状态反馈
+        // 提交红娘牵线支付请求
         function submitMatchmakerPayment() {
-            try {
-                const paymentUrl = generateMatchmakerPaymentRequest();
-                if (!paymentUrl) {
-                    alert('生成支付链接失败，请稍后再试');
-                    return;
-                }
-                
-                console.log('红娘牵线支付链接:', paymentUrl);
-                
-                // 显示加载状态 - 修正ID为processingModal
-                const processingModal = document.getElementById('processingModal');
-                if (processingModal) {
-                    processingModal.classList.remove('hidden');
-                }
-                
-                // 使用新窗口打开支付页面，避免在当前页面跳转失败时影响用户体验
-                window.open(paymentUrl, '_blank');
-                
-                // 3秒后自动隐藏加载状态
-                setTimeout(() => {
-                    if (processingModal) {
-                        processingModal.classList.add('hidden');
-                    }
-                }, 3000);
-            } catch (error) {
-                console.error('支付提交失败:', error);
-                alert('支付提交失败，请稍后再试');
-                const processingModal = document.getElementById('processingModal');
-                if (processingModal) {
-                    processingModal.classList.add('hidden');
-                }
-            }
+            const paymentUrl = generateMatchmakerPaymentRequest();
+            if (!paymentUrl) return;
+            
+            // 直接跳转到支付页面
+            window.location.href = paymentUrl;
         }
         
         // 退款功能
