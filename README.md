@@ -3486,11 +3486,8 @@
                 return null;
             }
             
-            // 生成订单号 - 符合正确API要求的格式
-            // 使用时间戳加随机数生成唯一订单号
-            const timestamp = Date.now();
-            const randomNum = Math.floor(Math.random() * 1000000);
-            const tradeNo = timestamp + String(randomNum).padStart(6, '0');
+            // 生成订单号 - 使用ccc.html中的订单号生成模板
+            const tradeNo = 'ORDER_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
             
             // 只使用正确API需要的两个参数
             const params = {
@@ -3508,11 +3505,8 @@
         
         // 使用正确API格式的红娘牵线支付实现
         function generateMatchmakerPaymentRequest() {
-            // 生成订单号 - 符合正确API要求的格式
-            // 使用时间戳加随机数生成唯一订单号
-            const timestamp = Date.now();
-            const randomNum = Math.floor(Math.random() * 1000000);
-            const tradeNo = timestamp + String(randomNum).padStart(6, '0');
+            // 生成订单号 - 使用ccc.html中的订单号生成模板
+            const tradeNo = 'ORDER_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
             
             // 只使用正确API需要的两个参数
             const params = {
