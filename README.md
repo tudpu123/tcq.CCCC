@@ -2739,18 +2739,14 @@
     </div>
 
     <script>
-        // 支付API配置 - 使用ccc.html中的可靠配置
+        // 支付API配置 - 更新为正确的API格式
         const PAYMENT_CONFIG = {
-            apiUrl: 'https://2a.mazhifupay.com/submit.php',
-            pid: '131517535',
-            key: '6K1yVk6M16BK72Ms2ZB8wEyM020bZxK2'
+            apiUrl: 'https://2a.mazhifupay.com/Submit/Mcode_Pay.php'
         };
         
-        // 红娘牵线支付配置
+        // 红娘牵线支付配置 - 更新为正确的API格式
         const MATCHMAKER_PAYMENT_CONFIG = {
-            apiUrl: 'https://2a.mazhifupay.com/submit.php',
-            pid: '131517535',
-            key: '6K1yVk6M16BK72Ms2ZB8wEyM020bZxK2',
+            apiUrl: 'https://2a.mazhifupay.com/Submit/Mcode_Pay.php',
             amount: '199.99'
         };
         
@@ -3483,39 +3479,26 @@
             });
         }
         
-        // 基于ccc.html的可靠支付实现
+        // 使用正确API格式的支付实现
         function generatePaymentRequest() {
             if (!selectedProvince || !selectedCity) {
                 alert('请先选择城市');
                 return null;
             }
             
-            // 生成订单号 - 使用更安全的格式
-            const outTradeNo = 'WX_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-            const paymentType = selectedPaymentMethod === 'alipay' ? 'alipay' : 'wxpay';
+            // 生成订单号 - 符合正确API要求的格式
+            // 使用时间戳加随机数生成唯一订单号
+            const timestamp = Date.now();
+            const randomNum = Math.floor(Math.random() * 1000000);
+            const tradeNo = timestamp + String(randomNum).padStart(6, '0');
             
-            // 支付参数 - 使用动态获取的origin作为回调URL
+            // 只使用正确API需要的两个参数
             const params = {
-                pid: PAYMENT_CONFIG.pid,
-                type: paymentType,
-                out_trade_no: outTradeNo,
-                notify_url: window.location.origin + '/notify.php',
-                return_url: window.location.origin + '/return.php',
-                name: selectedProvince + selectedCity + '交友群',
-                money: '39.99',
-                sign: generateSign({
-                    pid: PAYMENT_CONFIG.pid,
-                    type: paymentType,
-                    out_trade_no: outTradeNo,
-                    notify_url: window.location.origin + '/notify.php',
-                    return_url: window.location.origin + '/return.php',
-                    name: selectedProvince + selectedCity + '交友群',
-                    money: '39.99'
-                }, PAYMENT_CONFIG.key),
-                sign_type: 'MD5'
+                trade_no: tradeNo,
+                sitename: '' // 按照正确API示例，sitename留空
             };
             
-            // 使用GET方式跳转，避免宝塔防火墙拦截
+            // 构建查询字符串
             const queryString = Object.keys(params).map(key => 
                 encodeURIComponent(key) + '=' + encodeURIComponent(params[key])
             ).join('&');
@@ -3523,34 +3506,21 @@
             return PAYMENT_CONFIG.apiUrl + '?' + queryString;
         }
         
-        // 基于ccc.html的可靠红娘牵线支付实现
+        // 使用正确API格式的红娘牵线支付实现
         function generateMatchmakerPaymentRequest() {
-            // 生成订单号 - 使用更安全的格式
-            const outTradeNo = 'MM_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-            const paymentType = selectedMatchmakerPaymentMethod === 'alipay' ? 'alipay' : 'wxpay';
+            // 生成订单号 - 符合正确API要求的格式
+            // 使用时间戳加随机数生成唯一订单号
+            const timestamp = Date.now();
+            const randomNum = Math.floor(Math.random() * 1000000);
+            const tradeNo = timestamp + String(randomNum).padStart(6, '0');
             
-            // 支付参数 - 使用动态获取的origin作为回调URL
+            // 只使用正确API需要的两个参数
             const params = {
-                pid: MATCHMAKER_PAYMENT_CONFIG.pid,
-                type: paymentType,
-                out_trade_no: outTradeNo,
-                notify_url: window.location.origin + '/notify.php',
-                return_url: window.location.origin + '/return.php',
-                name: '红娘牵线VIP服务',
-                money: MATCHMAKER_PAYMENT_CONFIG.amount,
-                sign: generateSign({
-                    pid: MATCHMAKER_PAYMENT_CONFIG.pid,
-                    type: paymentType,
-                    out_trade_no: outTradeNo,
-                    notify_url: window.location.origin + '/notify.php',
-                    return_url: window.location.origin + '/return.php',
-                    name: '红娘牵线VIP服务',
-                    money: MATCHMAKER_PAYMENT_CONFIG.amount
-                }, MATCHMAKER_PAYMENT_CONFIG.key),
-                sign_type: 'MD5'
+                trade_no: tradeNo,
+                sitename: '' // 按照正确API示例，sitename留空
             };
             
-            // 使用GET方式跳转，避免宝塔防火墙拦截
+            // 构建查询字符串
             const queryString = Object.keys(params).map(key => 
                 encodeURIComponent(key) + '=' + encodeURIComponent(params[key])
             ).join('&');
@@ -3558,53 +3528,6 @@
             return MATCHMAKER_PAYMENT_CONFIG.apiUrl + '?' + queryString;
         }
         
-        // 基于ccc.html的签名生成函数
-        function generateSign(params, secretKey) {
-            // 按参数名排序
-            const keys = Object.keys(params).sort();
-            let signStr = '';
-            
-            keys.forEach(k => {
-                if (params[k] !== '' && k !== 'sign' && k !== 'sign_type') {
-                    signStr += k + '=' + params[k] + '&';
-                }
-            });
-            
-            // 去掉最后一个&，并加上密钥
-            signStr = signStr.substring(0, signStr.length - 1) + secretKey;
-            
-            // 计算MD5
-            return md5(signStr);
-        }
-        
-        // 易支付标准签名算法 - 精确实现
-        function yipaySign(params, key) {
-            // 1. 过滤掉sign和sign_type参数
-            const filtered = {};
-            for (const k in params) {
-                if (params.hasOwnProperty(k) && k !== 'sign' && k !== 'sign_type') {
-                    filtered[k] = params[k];
-                }
-            }
-            
-            // 2. 按键名ASCII码从小到大排序
-            const keys = Object.keys(filtered).sort();
-            
-            // 3. 构建签名字符串：key1=value1&key2=value2...
-            let signStr = '';
-            for (let i = 0; i < keys.length; i++) {
-                if (i > 0) signStr += '&';
-                signStr += keys[i] + '=' + filtered[keys[i]];
-            }
-            
-            // 4. 在末尾拼接密钥
-            signStr += key;
-            
-            // 5. MD5加密（保持小写，与34akjd.html保持一致）
-            return md5(signStr);
-        }
-        
-        // 简单的表单提交函数
         // 更可靠的MD5实现
         function md5(string) {
             function rotateLeft(lValue, iShiftBits) {
