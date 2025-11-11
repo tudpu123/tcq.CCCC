@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>同城交友 - 微信入群平台</title>
+    <title>同城优质交友平台 - 实名认证 · 安全保障</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://js.pusher.com/beams/2.1.0/push-notifications-cdn.js"></script>
     <style>
         /* 保留所有原有CSS样式 */
         * {
@@ -16,24 +17,28 @@
         }
         
         :root {
-            --primary: #ff2d8e;
-            --primary-light: #ff7eb3;
-            --secondary: #ff2d55;
-            --accent: #ff6b9c;
-            --text: #333;
-            --text-light: #666;
-            --bg: #fff5f9;
+            --primary: #8b5cf6;
+            --primary-light: #a78bfa;
+            --secondary: #7c3aed;
+            --accent: #c4b5fd;
+            --text: #333333;
+            --text-light: #666666;
+            --bg: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
             --card-bg: #ffffff;
-            --shadow: 0 4px 20px rgba(255, 45, 142, 0.2);
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
         }
         
         body {
-            background: linear-gradient(135deg, #fff5f9 0%, #ffe6f1 100%);
+            background: var(--bg);
             color: var(--text);
             line-height: 1.6;
             padding: 0;
             margin: 0;
             min-height: 100vh;
+            font-family: "Microsoft YaHei", "PingFang SC", "Helvetica Neue", Arial, sans-serif;
         }
         
         .container {
@@ -45,13 +50,15 @@
         header {
             background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             color: white;
-            padding: 20px 15px;
+            padding: 25px 15px;
             text-align: center;
             border-radius: 0 0 25px 25px;
-            box-shadow: var(--shadow);
-            margin-bottom: 20px;
+            box-shadow: 0 8px 30px rgba(139, 92, 246, 0.3);
+            margin-bottom: 25px;
             position: relative;
             overflow: hidden;
+            border-bottom: 3px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
         }
         
         header::before {
@@ -73,23 +80,25 @@
         }
         
         .user-avatar {
-            width: 50px;
-            height: 50px;
+            width: 55px;
+            height: 55px;
             border-radius: 50%;
             background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 1.5rem;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            font-size: 1.8rem;
+            box-shadow: 0 6px 15px rgba(255, 20, 147, 0.4);
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.3);
         }
         
         .user-avatar:active {
-            transform: scale(0.95);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transform: scale(0.9);
+            box-shadow: 0 3px 8px rgba(255, 20, 147, 0.6);
+            border-color: rgba(255, 255, 255, 0.5);
         }
         
         .user-details {
@@ -130,35 +139,61 @@
         }
         
         .header-content h1 {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             margin-bottom: 8px;
-            text-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-shadow: 0 2px 10px rgba(139, 92, 246, 0.5);
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, #ff6b9d 0%, #c084fc 50%, #8b5cf6 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
         }
         
         .header-content h1:active {
-            transform: scale(0.98);
+            transform: scale(0.95);
         }
         
         .header-content p {
-            font-size: 0.9rem;
+            font-size: 1rem;
             opacity: 0.9;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+            font-weight: 500;
         }
         
         .card {
             background: var(--card-bg);
-            border-radius: 20px;
-            padding: 20px;
+            border-radius: 16px;
+            padding: 24px;
             margin-bottom: 20px;
             box-shadow: var(--shadow);
-            border: 1px solid rgba(255, 45, 142, 0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .card:hover::before {
+            left: 100%;
         }
         
         .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(255, 45, 142, 0.25);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(139, 92, 246, 0.3);
+            border-color: rgba(139, 92, 246, 0.4);
         }
         
         .section-title {
@@ -282,23 +317,202 @@
             width: 100%;
             padding: 18px;
             border: none;
-            border-radius: 15px;
+            border-radius: 12px;
             font-size: 1.1rem;
             font-weight: 600;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            transition: all 0.2s ease;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.15);
+            transition: all 0.3s ease;
         }
         
         .btn:active {
             transform: scale(0.98);
         }
         
-        .btn-primary {
+        .trust-badges {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(37, 99, 235, 0.1);
+        }
+        
+        .trust-badge {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            color: var(--success);
+            font-size: 0.85rem;
+        }
+        
+        .trust-badge i {
+            font-size: 1.2rem;
+            background: linear-gradient(135deg, var(--success) 0%, #34d399 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .user-reviews {
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 1px solid rgba(37, 99, 235, 0.1);
+        }
+        
+        .review-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .review-item {
+            background: rgba(37, 99, 235, 0.05);
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .review-content {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: var(--text);
+            margin-bottom: 8px;
+        }
+        
+        .review-author {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            text-align: right;
+        }
+        
+        .payment-btn {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 18px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .payment-btn i {
+            font-size: 1.4rem;
+        }
+        
+        .payment-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.2);
+        }
+        
+        .payment-btn:active {
+            transform: translateY(0);
+        }
+        
+        .security-info {
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(37, 99, 235, 0.05);
+            border-radius: 10px;
+            border-left: 4px solid var(--success);
+        }
+        
+        .security-badges {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .security-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            color: var(--text);
+        }
+        
+        .security-badge i {
+            color: var(--success);
+            font-size: 1.1rem;
+        }
+        
+        .security-footer {
             background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             color: white;
+            padding: 40px 0;
+            margin-top: 50px;
+        }
+        
+        .security-footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .security-footer h3 {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .security-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .security-feature {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .security-feature i {
+            font-size: 2rem;
+            color: var(--success);
+            flex-shrink: 0;
+        }
+        
+        .security-feature h4 {
+            margin: 0 0 10px 0;
+            font-size: 1.2rem;
+        }
+        
+        .security-feature p {
+            margin: 0;
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+        
+        .legal-info {
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            padding-top: 20px;
+            opacity: 0.8;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #ff6b9d 0%, #c084fc 50%, #8b5cf6 100%);
+            color: white;
+            font-weight: 600;
+            box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4);
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
         
         .btn-primary:active {
@@ -2414,357 +2628,9 @@
         }
         
         /* 客服系统样式 */
-        .customer-service-btn {
-            position: fixed;
-            bottom: 80px;
-            left: 20px;
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, #07c160 0%, #0baa53 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.5rem;
-            box-shadow: 0 4px 20px rgba(7, 193, 96, 0.4);
-            z-index: 99;
-            animation: pulse 2s infinite;
-            transition: all 0.2s ease;
-        }
+
         
-        .customer-service-btn:active {
-            transform: scale(0.95);
-        }
-        
-        .customer-service-chat {
-            position: fixed;
-            bottom: 150px;
-            left: 20px;
-            width: 320px;
-            height: 450px;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            z-index: 100;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            transition: all 0.3s;
-        }
-        
-        .customer-service-chat.hidden {
-            display: none;
-        }
-        
-        .chat-header {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: white;
-            padding: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        
-        .chat-header-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-        }
-        
-        .chat-close-btn {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        
-        .chat-close-btn:active {
-            transform: scale(0.9);
-        }
-        
-        .chat-messages-container {
-            flex: 1;
-            padding: 15px;
-            overflow-y: auto;
-            background: #f8f8f8;
-        }
-        
-        .chat-message {
-            margin-bottom: 15px;
-            display: flex;
-        }
-        
-        .chat-message.customer {
-            justify-content: flex-end;
-        }
-        
-        .message-bubble {
-            max-width: 80%;
-            padding: 10px 15px;
-            border-radius: 18px;
-            font-size: 0.9rem;
-        }
-        
-        .message-bubble.user {
-            background: var(--primary);
-            color: white;
-            border-bottom-right-radius: 5px;
-        }
-        
-        .message-bubble.support {
-            background: white;
-            color: var(--text);
-            border: 1px solid #e0e0e0;
-            border-bottom-left-radius: 5px;
-        }
-        
-        .message-time {
-            font-size: 0.7rem;
-            color: var(--text-light);
-            margin-top: 5px;
-            text-align: right;
-        }
-        
-        .chat-input-container {
-            padding: 15px;
-            border-top: 1px solid #e0e0e0;
-            display: flex;
-            gap: 10px;
-        }
-        
-        .chat-input {
-            flex: 1;
-            padding: 12px 15px;
-            border: 1px solid #e0e0e0;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            outline: none;
-        }
-        
-        .chat-send-btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        
-        .chat-send-btn:active {
-            transform: scale(0.95);
-        }
-        
-        /* 客服后台样式 */
-        .admin-panel {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: white;
-            z-index: 1000;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .admin-header {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: white;
-            padding: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        
-        .admin-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-        }
-        
-        .admin-logout-btn {
-            background: rgba(255,255,255,0.2);
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        
-        .admin-logout-btn:active {
-            transform: scale(0.95);
-        }
-        
-        .admin-content {
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto;
-        }
-        
-        .user-list {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        
-        .user-item {
-            background: #f8f8f8;
-            border-radius: 12px;
-            padding: 15px;
-            cursor: pointer;
-            transition: all 0.3s;
-            transition: all 0.2s ease;
-        }
-        
-        .user-item:active {
-            transform: scale(0.98);
-        }
-        
-        .user-item:hover {
-            background: rgba(255, 45, 142, 0.05);
-        }
-        
-        .user-item.active {
-            background: rgba(255, 45, 142, 0.1);
-            border: 1px solid var(--primary);
-        }
-        
-        .user-name {
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-        
-        .user-last-message {
-            font-size: 0.9rem;
-            color: var(--text-light);
-        }
-        
-        .admin-chat-container {
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-        }
-        
-        .admin-chat-header {
-            padding: 15px;
-            border-bottom: 1px solid #e0e0e0;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        
-        .admin-chat-messages {
-            flex: 1;
-            padding: 15px;
-            overflow-y: auto;
-            background: #f8f8f8;
-        }
-        
-        .admin-chat-input-container {
-            padding: 15px;
-            border-top: 1px solid #e0e0e0;
-            display: flex;
-            gap: 10px;
-        }
-        
-        .admin-back-btn {
-            background: none;
-            border: none;
-            color: var(--primary);
-            font-size: 1.2rem;
-            cursor: pointer;
-            margin-right: 10px;
-            transition: all 0.2s ease;
-        }
-        
-        .admin-back-btn:active {
-            transform: scale(0.9);
-        }
-        
-        .no-user-selected {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            color: var(--text-light);
-            text-align: center;
-        }
-        
-        .no-user-selected i {
-            font-size: 3rem;
-            margin-bottom: 15px;
-            color: #e0e0e0;
-        }
-        
-        /* 新增客服后台统计面板样式 */
-        .admin-stats-panel {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-        
-        .stat-card {
-            background: linear-gradient(135deg, #f8f8f8, #f0f0f0);
-            border-radius: 15px;
-            padding: 20px;
-            text-align: center;
-            border: 1px solid rgba(255, 45, 142, 0.1);
-        }
-        
-        .stat-card .stat-value {
-            font-size: 2rem;
-            font-weight: bold;
-            margin-bottom: 5px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .stat-card .stat-label {
-            font-size: 0.9rem;
-            color: var(--text-light);
-        }
-        
-        .admin-tabs {
-            display: flex;
-            margin-bottom: 20px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .admin-tab {
-            padding: 12px 20px;
-            cursor: pointer;
-            transition: all 0.3s;
-            border-bottom: 3px solid transparent;
-            transition: all 0.2s ease;
-        }
-        
-        .admin-tab:active {
-            transform: scale(0.98);
-        }
-        
-        .admin-tab.active {
-            border-bottom: 3px solid var(--primary);
-            color: var(--primary);
-            font-weight: 600;
-        }
-        
-        .admin-tab-content {
-            display: none;
-        }
-        
-        .admin-tab-content.active {
-            display: block;
-        }
+
         
         /* 群聊选择折叠区域样式 */
         .city-collapse {
@@ -3283,6 +3149,166 @@
             margin-bottom: 15px;
             color: #e0e0e0;
         }
+        
+        /* 客服系统样式 */
+        .customer-service-container {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            z-index: 1000;
+        }
+        
+        .customer-service-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .customer-service-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+        
+        .customer-service-chat {
+            position: absolute;
+            bottom: 60px;
+            right: 0;
+            width: 320px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+        
+        .chat-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .chat-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+        }
+        
+        .chat-close {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            padding: 5px;
+        }
+        
+        .chat-messages {
+            height: 300px;
+            overflow-y: auto;
+            padding: 15px;
+            background: #f8f9fa;
+        }
+        
+        .message {
+            margin-bottom: 15px;
+            display: flex;
+        }
+        
+        .customer-message {
+            justify-content: flex-start;
+        }
+        
+        .user-message {
+            justify-content: flex-end;
+        }
+        
+        .message-content {
+            max-width: 80%;
+            background: white;
+            padding: 10px 15px;
+            border-radius: 18px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .customer-message .message-content {
+            background: #667eea;
+            color: white;
+        }
+        
+        .user-message .message-content {
+            background: #e9ecef;
+            color: #333;
+        }
+        
+        .message-text {
+            margin-bottom: 5px;
+            line-height: 1.4;
+        }
+        
+        .message-time {
+            font-size: 11px;
+            opacity: 0.7;
+        }
+        
+        .chat-input-container {
+            padding: 15px;
+            background: white;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .chat-input-wrapper {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .chat-input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            outline: none;
+            font-size: 14px;
+        }
+        
+        .chat-input:focus {
+            border-color: #667eea;
+        }
+        
+        .chat-send-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease;
+        }
+        
+        .chat-send-btn:hover {
+            background: #5a6fd8;
+        }
+        
+        .chat-send-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
     </style>
 </head>
 <body>
@@ -3300,9 +3326,9 @@
             </div>
         </div>
         <div class="header-content">
-            <h1 id="mainTitle">同城交友微信群</h1>
-            <p>遇见附近有趣的人，拓展你的社交圈</p>
-        </div>
+                <h1 id="mainTitle">深夜密友 · 同城私密交友</h1>
+                <p>寂寞深夜？遇见附近渴望陪伴的TA，开启私密聊天</p>
+            </div>
     </header>
     
     <div class="container">
@@ -3339,12 +3365,28 @@
         <!-- 支付信息区域 -->
         <div class="card">
             <div class="section-title">
-                <i class="fas fa-gem"></i> VIP入群特权
+                <i class="fas fa-gem"></i> 私密交友特权
             </div>
             <div class="payment-info">
-                <p>享受专属交友群组，认识更多优质朋友</p>
+                <p>加入私密交友圈，体验不一样的深夜陪伴</p>
                 <div class="amount">¥39.99</div>
-                <p>支付后即可加入对应城市的优质交友群</p>
+                <p>支付后即可解锁同城私密交友圈，开启深夜陪伴</p>
+                
+                <!-- 信任标识 -->
+                <div class="trust-badges">
+                    <div class="trust-badge">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>私密认证</span>
+                    </div>
+                    <div class="trust-badge">
+                        <i class="fas fa-lock"></i>
+                        <span>匿名保护</span>
+                    </div>
+                    <div class="trust-badge">
+                        <i class="fas fa-check-circle"></i>
+                        <span>深夜陪伴</span>
+                    </div>
+                </div>
             </div>
             
             <!-- 支付方式选择 -->
@@ -3361,21 +3403,62 @@
             
             <!-- 支付宝支付表单 -->
             <div class="payment-form active" id="alipayForm">
-                <button class="btn btn-primary" id="alipayBtn">
+                <button class="btn btn-primary payment-btn" id="alipayBtn">
+                    <i class="fab fa-alipay"></i>
                     <span class="loading hidden"></span>
-                    <span id="alipayBtnText">支付宝支付 ¥39.99</span>
+                    <span id="alipayBtnText">立即解锁私密交友 ¥39.99</span>
                 </button>
             </div>
             
             <!-- 微信支付表单 -->
             <div class="payment-form" id="wxpayForm">
-                <button class="btn btn-primary" id="wxpayBtn">
+                <button class="btn btn-primary payment-btn" id="wxpayBtn">
+                    <i class="fab fa-weixin"></i>
                     <span class="loading hidden"></span>
-                    <span id="wxpayBtnText">微信支付 ¥39.99</span>
+                    <span id="wxpayBtnText">立即解锁私密交友 ¥39.99</span>
                 </button>
             </div>
             
             <button class="btn btn-secondary" id="orderBtn">查看我的订单</button>
+            
+            <!-- 安全保障说明 -->
+            <div class="security-info">
+                <div class="security-badges">
+                    <div class="security-badge">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>私密加密支付</span>
+                    </div>
+                    <div class="security-badge">
+                        <i class="fas fa-lock"></i>
+                        <span>匿名安全保障</span>
+                    </div>
+                    <div class="security-badge">
+                        <i class="fas fa-user-shield"></i>
+                        <span>深夜陪伴承诺</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 用户评价 -->
+            <div class="user-reviews">
+                <div class="section-title">
+                    <i class="fas fa-star"></i> 用户真实反馈
+                </div>
+                <div class="review-list">
+                    <div class="review-item">
+                        <div class="review-content">深夜聊天很刺激，认识了很多有趣的密友！</div>
+                        <div class="review-author">- 张**（北京）</div>
+                    </div>
+                    <div class="review-item">
+                        <div class="review-content">私密聊天体验很棒，推荐给喜欢刺激的朋友</div>
+                        <div class="review-author">- 李**（上海）</div>
+                    </div>
+                    <div class="review-item">
+                        <div class="review-content">深夜陪伴很贴心，聊天氛围很放松</div>
+                        <div class="review-author">- 王**（广州）</div>
+                    </div>
+                </div>
+            </div>
         </div>
         
         <!-- 订单区域（默认隐藏） -->
@@ -3586,7 +3669,6 @@
                 <!-- 登录类型切换 -->
                 <div class="login-type-tabs">
                     <div class="login-type-tab active" data-type="user">用户登录</div>
-                    <div class="login-type-tab" data-type="admin">客服后台登录</div>
                 </div>
                 
                 <!-- 用户登录表单 -->
@@ -3689,28 +3771,6 @@
                     <div class="login-prompt">
                         <p>还没有账号？</p>
                         <button class="btn btn-secondary" id="showRegisterBtn">立即注册</button>
-                    </div>
-                </div>
-                
-                <!-- 客服后台登录表单 -->
-                <div class="login-form hidden" id="adminLoginForm">
-                    <div class="section-title">
-                        <i class="fas fa-lock"></i> 客服后台登录
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="adminUsername">账号</label>
-                        <input type="text" id="adminUsername" placeholder="请输入账号">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="adminPassword">密码</label>
-                        <input type="password" id="adminPassword" placeholder="请输入密码">
-                    </div>
-                    
-                    <div class="form-actions">
-                        <button class="btn btn-primary" id="adminLoginBtn">登录</button>
-                        <button class="btn btn-secondary" id="adminLoginCancelBtn">取消</button>
                     </div>
                 </div>
             </div>
@@ -4015,7 +4075,7 @@
                 <div class="vip-overlay">
                     <i class="fas fa-crown"></i>
                     <h3>开通VIP解锁此功能</h3>
-                    <p>开通红娘牵线VIP服务，即可选择城市区域，精准匹配附近用户</p>
+                    <p>开通VIP会员，享受更多优质功能，精准匹配附近志同道合的朋友</p>
                     <button class="btn btn-primary" id="openVipBtn">立即开通VIP</button>
                 </div>
             </div>
@@ -4171,145 +4231,9 @@
         </div>
     </div>
     
-    <!-- 客服系统 -->
-    <div class="customer-service-btn" id="customerServiceBtn">
-        <i class="fas fa-headset"></i>
-    </div>
+
     
-    <div class="customer-service-chat hidden" id="customerServiceChat">
-        <div class="chat-header">
-            <div class="chat-header-title">客服中心</div>
-            <button class="chat-close-btn" id="closeChatBtn">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        <div class="chat-messages-container" id="customerChatMessages">
-            <div class="chat-message">
-                <div class="message-bubble support">
-                    <div class="message-text">您好！有什么可以帮助您的吗？</div>
-                    <div class="message-time">刚刚</div>
-                </div>
-            </div>
-        </div>
-        <div class="chat-input-container">
-            <input type="text" class="chat-input" id="customerChatInput" placeholder="输入您的问题...">
-            <button class="chat-send-btn" id="customerSendBtn">
-                <i class="fas fa-paper-plane"></i>
-            </button>
-        </div>
-    </div>
-    
-    <!-- 客服后台 -->
-    <div class="admin-panel hidden" id="adminPanel">
-        <div class="admin-header">
-            <div class="admin-title">客服后台管理</div>
-            <button class="admin-logout-btn" id="adminLogoutBtn">退出登录</button>
-        </div>
-        
-        <!-- 客服后台标签页 -->
-        <div class="admin-tabs">
-            <div class="admin-tab active" data-tab="stats">数据统计</div>
-            <div class="admin-tab" data-tab="users">用户管理</div>
-            <div class="admin-tab" data-tab="chat">客服聊天</div>
-        </div>
-        
-        <div class="admin-content">
-            <!-- 数据统计标签页 -->
-            <div class="admin-tab-content active" id="statsTab">
-                <div class="admin-stats-panel">
-                    <div class="stat-card">
-                        <div class="stat-value" id="onlineUsers">0</div>
-                        <div class="stat-label">在线用户</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value" id="totalVisits">0</div>
-                        <div class="stat-label">总访问量</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value" id="successPayments">¥0</div>
-                        <div class="stat-label">支付成功金额</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value" id="failedPayments">0</div>
-                        <div class="stat-label">支付失败次数</div>
-                    </div>
-                </div>
-                
-                <div class="card">
-                    <div class="section-title">
-                        <i class="fas fa-chart-line"></i> 今日数据
-                    </div>
-                    <div class="stats">
-                        <div class="stat-item">
-                            <div class="stat-value" id="todayVisits">0</div>
-                            <div class="stat-label">今日访问</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-value" id="todayRegistrations">0</div>
-                            <div class="stat-label">今日注册</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-value" id="todayPayments">0</div>
-                            <div class="stat-label">今日支付</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="card">
-                    <div class="section-title">
-                        <i class="fas fa-map-marker-alt"></i> 热门城市
-                    </div>
-                    <div id="popularCities">
-                        <!-- 热门城市列表将通过JS动态生成 -->
-                    </div>
-                </div>
-            </div>
-            
-            <!-- 用户管理标签页 -->
-            <div class="admin-tab-content" id="usersTab">
-                <div class="card">
-                    <div class="section-title">
-                        <i class="fas fa-users"></i> 用户列表
-                    </div>
-                    <div class="user-list" id="adminUserList">
-                        <!-- 用户列表将通过JS动态生成 -->
-                    </div>
-                </div>
-            </div>
-            
-            <!-- 客服聊天标签页 -->
-            <div class="admin-tab-content" id="chatTab">
-                <div class="admin-chat-container">
-                    <div class="user-list" id="chatUserList">
-                        <!-- 聊天用户列表将通过JS动态生成 -->
-                    </div>
-                    <div class="no-user-selected" id="noUserSelected">
-                        <div>
-                            <i class="fas fa-comments"></i>
-                            <p>请选择一个用户开始对话</p>
-                        </div>
-                    </div>
-                    <div class="admin-chat-area hidden" id="adminChatArea">
-                        <div class="admin-chat-header">
-                            <button class="admin-back-btn" id="adminBackBtn">
-                                <i class="fas fa-arrow-left"></i>
-                            </button>
-                            <div class="chat-title" id="adminChatUserName">用户对话</div>
-                        </div>
-                        <div class="admin-chat-messages" id="adminChatMessages">
-                            <!-- 客服与用户的聊天记录将通过JS动态生成 -->
-                        </div>
-                        <div class="admin-chat-input-container">
-                            <input type="text" class="chat-input" id="adminChatInput" placeholder="输入回复内容...">
-                            <button class="chat-send-btn" id="adminSendBtn">
-                                <i class="fas fa-paper-plane"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+
     
     <div class="bottom-nav">
         <div class="nav-item active" data-target="main">
@@ -4331,6 +4255,53 @@
         <div class="nav-item" data-target="profileSection">
             <i class="fas fa-user"></i>
             <span>我的</span>
+        </div>
+    </div>
+
+    <!-- 客服系统 -->
+    <div class="customer-service-container">
+        <!-- 客服浮动按钮 -->
+        <div class="customer-service-btn" id="customerServiceBtn">
+            <i class="fas fa-comments"></i>
+            <span>联系客服</span>
+        </div>
+        
+        <!-- 客服聊天窗口 -->
+        <div class="customer-service-chat hidden" id="customerServiceChat">
+            <div class="chat-header">
+                <div class="chat-title">
+                    <i class="fas fa-headset"></i>
+                    <span>在线客服</span>
+                </div>
+                <button class="chat-close" id="closeCustomerService">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="chat-messages" id="customerServiceMessages">
+                <!-- 默认客服消息 -->
+                <div class="message customer-message">
+                    <div class="message-content">
+                        <div class="message-text">您好！我是客服小助手，有什么可以帮助您的吗？</div>
+                        <div class="message-time">刚刚</div>
+                    </div>
+                </div>
+                <div class="message customer-message">
+                    <div class="message-content">
+                        <div class="message-text">如果长时间没有恢复消息请添加客服QQ1158980053</div>
+                        <div class="message-time">刚刚</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chat-input-container">
+                <div class="chat-input-wrapper">
+                    <input type="text" class="chat-input" id="customerServiceInput" placeholder="请输入您的问题..." maxlength="200">
+                    <button class="chat-send-btn" id="sendCustomerMessage">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -4948,7 +4919,7 @@
         
         // 客服系统数据
         let customerServiceMessages = JSON.parse(localStorage.getItem('customerServiceMessages')) || [];
-        let adminLoggedIn = false;
+
         let selectedUserId = null;
         
         // 统计数据
@@ -4963,9 +4934,7 @@
             popularCities: {}
         };
         
-        // 客服后台点击计数器
-        let adminClickCount = 0;
-        let lastAdminClickTime = 0;
+
         
         // DOM元素
         const provinceList = document.getElementById('provinceList');
@@ -5043,28 +5012,14 @@
         const customerChatInput = document.getElementById('customerChatInput');
         const customerSendBtn = document.getElementById('customerSendBtn');
         
-        // 客服后台DOM元素
-        const adminPanel = document.getElementById('adminPanel');
-        const adminUsername = document.getElementById('adminUsername');
-        const adminPassword = document.getElementById('adminPassword');
-        const adminLoginBtn = document.getElementById('adminLoginBtn');
-        const adminLoginCancelBtn = document.getElementById('adminLoginCancelBtn');
-        const adminLogoutBtn = document.getElementById('adminLogoutBtn');
-        const adminUserList = document.getElementById('adminUserList');
-        const noUserSelected = document.getElementById('noUserSelected');
-        const adminChatArea = document.getElementById('adminChatArea');
-        const adminBackBtn = document.getElementById('adminBackBtn');
-        const adminChatUserName = document.getElementById('adminChatUserName');
-        const adminChatMessages = document.getElementById('adminChatMessages');
-        const adminChatInput = document.getElementById('adminChatInput');
-        const adminSendBtn = document.getElementById('adminSendBtn');
+
+
         
         // 新增DOM元素
         const cityCollapseToggle = document.getElementById('cityCollapseToggle');
         const cityCollapseContent = document.getElementById('cityCollapseContent');
         const viewChatBtn = document.getElementById('viewChatBtn');
-        const adminTabs = document.querySelectorAll('.admin-tab');
-        const adminTabContents = document.querySelectorAll('.admin-tab-content');
+
         const onlineUsers = document.getElementById('onlineUsers');
         const totalVisits = document.getElementById('totalVisits');
         const successPayments = document.getElementById('successPayments');
@@ -5082,7 +5037,7 @@
         // 新增登录类型切换元素
         const loginTypeTabs = document.querySelectorAll('.login-type-tab');
         const userLoginForm = document.getElementById('userLoginForm');
-        const adminLoginForm = document.getElementById('adminLoginForm');
+
         
         // 新增订单查询元素
         const orderSearchInput = document.getElementById('orderSearchInput');
@@ -5381,7 +5336,7 @@
                 // 联系用户功能
                 alert(`已向${user.name}发送联系请求，请等待对方回复！`);
                 
-                // 记录联系请求到客服后台
+                // 记录联系请求
                 recordContactRequest(user);
             });
             
@@ -5389,7 +5344,7 @@
             switchSection('userDetailSection');
         }
         
-        // 记录联系请求到客服后台
+        // 记录联系请求
         function recordContactRequest(user) {
             // 创建联系请求记录
             const contactRequest = {
@@ -5407,7 +5362,7 @@
             contactRequests.push(contactRequest);
             localStorage.setItem('contactRequests', JSON.stringify(contactRequests));
             
-            // 这里可以添加发送到客服后台的逻辑
+            // 这里可以添加发送到系统的逻辑
             console.log('联系请求已记录:', contactRequest);
         }
         
@@ -6589,7 +6544,7 @@
                 loginPrompt.innerHTML = `
                     <i class="fas fa-heart"></i>
                     <h3>请先登录</h3>
-                    <p>登录后即可使用红娘牵线功能，寻找心仪的另一半</p>
+                    <p>登录后即可开始寻找志同道合的朋友，拓展您的社交圈</p>
                     <button class="btn btn-primary" id="matchmakerLoginBtn">立即登录</button>
                 `;
                 matchmakerContent.appendChild(loginPrompt);
@@ -6721,397 +6676,11 @@
             });
         }
         
-        // 客服系统功能
-        function initCustomerService() {
-            // 打开客服聊天窗口
-            customerServiceBtn.addEventListener('click', () => {
-                customerServiceChat.classList.remove('hidden');
-            });
-            
-            // 关闭客服聊天窗口
-            closeChatBtn.addEventListener('click', () => {
-                customerServiceChat.classList.add('hidden');
-            });
-            
-            // 发送客服消息
-            customerSendBtn.addEventListener('click', sendCustomerMessage);
-            customerChatInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    sendCustomerMessage();
-                }
-            });
-            
-            // 加载客服聊天记录
-            loadCustomerMessages();
-        }
+
         
-        // 发送客服消息
-        function sendCustomerMessage() {
-            const message = customerChatInput.value.trim();
-            if (!message) return;
-            
-            // 创建消息对象
-            const messageObj = {
-                id: Date.now(),
-                userId: currentUser ? currentUser.id : 'anonymous',
-                userName: currentUser ? currentUser.username : '匿名用户',
-                type: 'user',
-                content: message,
-                time: new Date().toLocaleString()
-            };
-            
-            // 保存消息
-            customerServiceMessages.push(messageObj);
-            localStorage.setItem('customerServiceMessages', JSON.stringify(customerServiceMessages));
-            
-            // 清空输入框
-            customerChatInput.value = '';
-            
-            // 更新聊天界面
-            appendCustomerMessage(messageObj);
-            
-            // 模拟客服回复
-            setTimeout(() => {
-                const replyMessage = {
-                    id: Date.now(),
-                    userId: 'support',
-                    userName: '客服',
-                    type: 'support',
-                    content: '感谢您的留言，我们会尽快回复您的问题。',
-                    time: new Date().toLocaleString()
-                };
-                
-                customerServiceMessages.push(replyMessage);
-                localStorage.setItem('customerServiceMessages', JSON.stringify(customerServiceMessages));
-                
-                appendCustomerMessage(replyMessage);
-            }, 1000);
-        }
+
         
-        // 添加客服消息到界面
-        function appendCustomerMessage(message) {
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `chat-message ${message.type === 'user' ? 'customer' : ''}`;
-            
-            messageDiv.innerHTML = `
-                <div class="message-bubble ${message.type === 'user' ? 'user' : 'support'}">
-                    <div class="message-text">${message.content}</div>
-                    <div class="message-time">${message.time}</div>
-                </div>
-            `;
-            
-            customerChatMessages.appendChild(messageDiv);
-            customerChatMessages.scrollTop = customerChatMessages.scrollHeight;
-        }
-        
-        // 加载客服聊天记录
-        function loadCustomerMessages() {
-            customerChatMessages.innerHTML = '';
-            
-            // 只显示当前用户的聊天记录
-            const userId = currentUser ? currentUser.id : 'anonymous';
-            const userMessages = customerServiceMessages.filter(msg => 
-                msg.userId === userId || msg.type === 'support'
-            );
-            
-            if (userMessages.length === 0) {
-                // 显示欢迎消息
-                const welcomeMessage = {
-                    id: Date.now(),
-                    userId: 'support',
-                    userName: '客服',
-                    type: 'support',
-                    content: '您好！有什么可以帮助您的吗？',
-                    time: '刚刚'
-                };
-                
-                appendCustomerMessage(welcomeMessage);
-            } else {
-                userMessages.forEach(message => {
-                    appendCustomerMessage(message);
-                });
-            }
-        }
-        
-        // 客服后台功能
-        function initAdminPanel() {
-            // 客服后台登录
-            adminLoginBtn.addEventListener('click', () => {
-                const username = adminUsername.value.trim();
-                const password = adminPassword.value.trim();
-                
-                if (username === 'TTT123' && password === 'TTT123') {
-                    adminLoggedIn = true;
-                    adminPanel.classList.remove('hidden');
-                    loadAdminStats();
-                    loadAdminUserList();
-                } else {
-                    alert('账号或密码错误');
-                }
-            });
-            
-            adminLoginCancelBtn.addEventListener('click', () => {
-                // 返回用户登录
-                userLoginForm.classList.remove('hidden');
-                adminLoginForm.classList.add('hidden');
-                
-                // 更新登录类型标签
-                loginTypeTabs.forEach(tab => {
-                    if (tab.getAttribute('data-type') === 'user') {
-                        tab.classList.add('active');
-                    } else {
-                        tab.classList.remove('active');
-                    }
-                });
-            });
-            
-            // 客服后台退出登录
-            adminLogoutBtn.addEventListener('click', () => {
-                adminLoggedIn = false;
-                adminPanel.classList.add('hidden');
-                adminUsername.value = '';
-                adminPassword.value = '';
-            });
-            
-            // 客服后台标签页切换
-            adminTabs.forEach(tab => {
-                tab.addEventListener('click', () => {
-                    const tabId = tab.getAttribute('data-tab');
-                    
-                    // 更新标签页状态
-                    adminTabs.forEach(t => t.classList.remove('active'));
-                    tab.classList.add('active');
-                    
-                    // 更新标签页内容
-                    adminTabContents.forEach(content => {
-                        content.classList.remove('active');
-                        if (content.id === `${tabId}Tab`) {
-                            content.classList.add('active');
-                        }
-                    });
-                });
-            });
-            
-            // 客服后台返回用户列表
-            adminBackBtn.addEventListener('click', () => {
-                adminChatArea.classList.add('hidden');
-                noUserSelected.classList.remove('hidden');
-                selectedUserId = null;
-            });
-            
-            // 客服发送消息
-            adminSendBtn.addEventListener('click', sendAdminMessage);
-            adminChatInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    sendAdminMessage();
-                }
-            });
-            
-            // 主页标题点击事件 - 点击10次打开客服后台
-            mainTitle.addEventListener('click', () => {
-                const currentTime = new Date().getTime();
-                
-                // 如果距离上次点击超过2秒，重置计数器
-                if (currentTime - lastAdminClickTime > 2000) {
-                    adminClickCount = 0;
-                }
-                
-                adminClickCount++;
-                lastAdminClickTime = currentTime;
-                
-                // 显示点击次数（可选）
-                console.log(`点击次数: ${adminClickCount}`);
-                
-                if (adminClickCount >= 10) {
-                    adminClickCount = 0;
-                    if (!adminLoggedIn) {
-                        // 切换到客服后台登录
-                        userLoginForm.classList.add('hidden');
-                        adminLoginForm.classList.remove('hidden');
-                        
-                        // 更新登录类型标签
-                        loginTypeTabs.forEach(tab => {
-                            if (tab.getAttribute('data-type') === 'admin') {
-                                tab.classList.add('active');
-                            } else {
-                                tab.classList.remove('active');
-                            }
-                        });
-                        
-                        // 切换到个人资料页面
-                        switchSection('profileSection');
-                    } else {
-                        adminPanel.classList.remove('hidden');
-                    }
-                }
-            });
-        }
-        
-        // 加载客服后台统计信息
-        function loadAdminStats() {
-            // 更新统计数据
-            onlineUsers.textContent = websiteStats.onlineUsers;
-            totalVisits.textContent = websiteStats.totalVisits;
-            successPayments.textContent = `¥${websiteStats.successPayments}`;
-            failedPayments.textContent = websiteStats.failedPayments;
-            todayVisits.textContent = websiteStats.todayVisits;
-            todayRegistrations.textContent = websiteStats.todayRegistrations;
-            todayPayments.textContent = websiteStats.todayPayments;
-            
-            // 加载热门城市
-            loadPopularCities();
-        }
-        
-        // 加载热门城市
-        function loadPopularCities() {
-            popularCities.innerHTML = '';
-            
-            // 获取热门城市数据
-            const cities = Object.entries(websiteStats.popularCities)
-                .sort((a, b) => b[1] - a[1])
-                .slice(0, 5);
-            
-            if (cities.length === 0) {
-                popularCities.innerHTML = '<p style="text-align: center; padding: 20px; color: #999;">暂无数据</p>';
-                return;
-            }
-            
-            cities.forEach(([city, count]) => {
-                const cityItem = document.createElement('div');
-                cityItem.className = 'user-item';
-                cityItem.innerHTML = `
-                    <div class="user-name">${city}</div>
-                    <div class="user-last-message">访问次数: ${count}</div>
-                `;
-                popularCities.appendChild(cityItem);
-            });
-        }
-        
-        // 加载客服后台用户列表
-        function loadAdminUserList() {
-            adminUserList.innerHTML = '';
-            chatUserList.innerHTML = '';
-            
-            // 获取所有有聊天记录的用户
-            const userIds = [...new Set(customerServiceMessages.map(msg => msg.userId))];
-            
-            if (userIds.length === 0) {
-                adminUserList.innerHTML = '<p style="text-align: center; padding: 20px; color: #999;">暂无用户消息</p>';
-                chatUserList.innerHTML = '<p style="text-align: center; padding: 20px; color: #999;">暂无用户消息</p>';
-                return;
-            }
-            
-            userIds.forEach(userId => {
-                // 获取用户最后一条消息
-                const userMessages = customerServiceMessages.filter(msg => msg.userId === userId);
-                const lastMessage = userMessages[userMessages.length - 1];
-                
-                // 获取用户名
-                const userName = lastMessage.userName || '匿名用户';
-                
-                // 用户管理列表项
-                const userItem = document.createElement('div');
-                userItem.className = 'user-item';
-                userItem.innerHTML = `
-                    <div class="user-name">${userName}</div>
-                    <div class="user-last-message">${lastMessage.content}</div>
-                `;
-                
-                adminUserList.appendChild(userItem);
-                
-                // 客服聊天列表项
-                const chatUserItem = document.createElement('div');
-                chatUserItem.className = 'user-item';
-                chatUserItem.innerHTML = `
-                    <div class="user-name">${userName}</div>
-                    <div class="user-last-message">${lastMessage.content}</div>
-                `;
-                
-                chatUserItem.addEventListener('click', () => {
-                    // 设置当前选中的用户
-                    selectedUserId = userId;
-                    
-                    // 更新用户列表选中状态
-                    document.querySelectorAll('#chatUserList .user-item').forEach(item => {
-                        item.classList.remove('active');
-                    });
-                    chatUserItem.classList.add('active');
-                    
-                    // 显示聊天区域
-                    noUserSelected.classList.add('hidden');
-                    adminChatArea.classList.remove('hidden');
-                    
-                    // 加载用户聊天记录
-                    loadAdminChatMessages(userId, userName);
-                });
-                
-                chatUserList.appendChild(chatUserItem);
-            });
-        }
-        
-        // 加载客服后台用户聊天记录
-        function loadAdminChatMessages(userId, userName) {
-            adminChatMessages.innerHTML = '';
-            adminChatUserName.textContent = userName;
-            
-            // 获取用户的所有消息
-            const userMessages = customerServiceMessages.filter(msg => 
-                msg.userId === userId || (msg.type === 'support' && msg.userId === 'support')
-            );
-            
-            userMessages.forEach(message => {
-                const messageDiv = document.createElement('div');
-                messageDiv.className = `chat-message ${message.type === 'user' ? 'customer' : ''}`;
-                
-                messageDiv.innerHTML = `
-                    <div class="message-bubble ${message.type === 'user' ? 'user' : 'support'}">
-                        <div class="message-text">${message.content}</div>
-                        <div class="message-time">${message.time}</div>
-                    </div>
-                `;
-                
-                adminChatMessages.appendChild(messageDiv);
-            });
-            
-            adminChatMessages.scrollTop = adminChatMessages.scrollHeight;
-        }
-        
-        // 客服发送消息
-        function sendAdminMessage() {
-            const message = adminChatInput.value.trim();
-            if (!message || !selectedUserId) return;
-            
-            // 创建消息对象
-            const messageObj = {
-                id: Date.now(),
-                userId: 'support',
-                userName: '客服',
-                type: 'support',
-                content: message,
-                time: new Date().toLocaleString()
-            };
-            
-            // 保存消息
-            customerServiceMessages.push(messageObj);
-            localStorage.setItem('customerServiceMessages', JSON.stringify(customerServiceMessages));
-            
-            // 清空输入框
-            adminChatInput.value = '';
-            
-            // 更新聊天界面
-            const messageDiv = document.createElement('div');
-            messageDiv.className = 'chat-message';
-            
-            messageDiv.innerHTML = `
-                <div class="message-bubble support">
-                    <div class="message-text">${message}</div>
-                    <div class="message-time">${messageObj.time}</div>
-                </div>
-            `;
-            
-            adminChatMessages.appendChild(messageDiv);
-            adminChatMessages.scrollTop = adminChatMessages.scrollHeight;
-        }
+
         
         // 初始化城市折叠功能
         function initCityCollapse() {
@@ -7176,10 +6745,6 @@
                     // 更新登录表单显示
                     if (loginType === 'user') {
                         userLoginForm.classList.remove('hidden');
-                        adminLoginForm.classList.add('hidden');
-                    } else {
-                        userLoginForm.classList.add('hidden');
-                        adminLoginForm.classList.remove('hidden');
                     }
                 });
             });
@@ -8715,6 +8280,97 @@
             }
         }
         
+        // 客服系统功能
+        function initCustomerService() {
+            const customerServiceBtn = document.getElementById('customerServiceBtn');
+            const customerServiceChat = document.getElementById('customerServiceChat');
+            const closeCustomerService = document.getElementById('closeCustomerService');
+            const customerServiceInput = document.getElementById('customerServiceInput');
+            const sendCustomerMessage = document.getElementById('sendCustomerMessage');
+            const customerServiceMessages = document.getElementById('customerServiceMessages');
+            
+            if (!customerServiceBtn || !customerServiceChat) return;
+            
+            // 打开客服聊天窗口
+            customerServiceBtn.addEventListener('click', () => {
+                customerServiceChat.classList.remove('hidden');
+                customerServiceInput.focus();
+            });
+            
+            // 关闭客服聊天窗口
+            closeCustomerService.addEventListener('click', () => {
+                customerServiceChat.classList.add('hidden');
+            });
+            
+            // 发送消息
+            sendCustomerMessage.addEventListener('click', sendMessage);
+            customerServiceInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+            
+            function sendMessage() {
+                const message = customerServiceInput.value.trim();
+                if (!message) return;
+                
+                // 添加用户消息
+                addMessage(message, 'user');
+                customerServiceInput.value = '';
+                
+                // 模拟客服回复（延迟1-3秒）
+                setTimeout(() => {
+                    const responses = [
+                        '您好，很高兴为您服务！',
+                        '我理解您的问题，让我为您解答。',
+                        '感谢您的咨询，我们会尽快处理。',
+                        '这个问题需要进一步了解，请稍等。',
+                        '我们已经收到您的反馈，会尽快回复。',
+                        '建议您查看常见问题解答，可能对您有帮助。',
+                        '感谢您的耐心等待，正在为您查询。',
+                        '这个问题比较常见，让我为您详细说明。'
+                    ];
+                    
+                    const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+                    addMessage(randomResponse, 'customer');
+                    
+                    // 偶尔添加QQ提示
+                    if (Math.random() < 0.3) {
+                        setTimeout(() => {
+                            addMessage('如果长时间没有恢复消息请添加客服QQ1158980053', 'customer');
+                        }, 1000);
+                    }
+                }, 1000 + Math.random() * 2000);
+            }
+            
+            function addMessage(text, sender) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${sender}-message`;
+                
+                const now = new Date();
+                const timeString = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+                
+                messageDiv.innerHTML = `
+                    <div class="message-content">
+                        <div class="message-text">${text}</div>
+                        <div class="message-time">${timeString}</div>
+                    </div>
+                `;
+                
+                customerServiceMessages.appendChild(messageDiv);
+                customerServiceMessages.scrollTop = customerServiceMessages.scrollHeight;
+            }
+            
+            // 点击外部关闭聊天窗口
+            document.addEventListener('click', (e) => {
+                if (!customerServiceChat.contains(e.target) && 
+                    !customerServiceBtn.contains(e.target) && 
+                    !customerServiceChat.classList.contains('hidden')) {
+                    customerServiceChat.classList.add('hidden');
+                }
+            });
+        }
+        
         // 初始化
         document.addEventListener('DOMContentLoaded', () => {
             initProvinceList();
@@ -8722,8 +8378,8 @@
             initUI();
             checkPaymentResult();
             checkMatchmakerPaymentResult();
-            initCustomerService();
-            initAdminPanel();
+
+
             initCityCollapse();
             initWebsiteStats();
             initUserAvatarClick();
@@ -8736,7 +8392,60 @@
             initMatchmakerFeedbackPage();
             initGroupFeedbackPage();
             initAgreementDoubleClick();
+            initCustomerService();
         });
     </script>
+    
+    <!-- Pusher推送通知SDK初始化 -->
+    <script>
+      const beamsClient = new PusherPushNotifications.Client({
+        instanceId: '6d04a26e-c9db-4744-b21c-f636a3ec2535',
+      });
+
+      beamsClient.start()
+        .then(() => beamsClient.addDeviceInterest('hello'))
+        .then(() => console.log('Successfully registered and subscribed!'))
+        .catch(console.error);
+    </script>
+    
+    <!-- 私密交友安全保障说明 -->
+    <div class="security-footer">
+        <div class="security-footer-content">
+            <h3><i class="fas fa-shield-alt"></i> 私密交友安全保障</h3>
+            <div class="security-features">
+                <div class="security-feature">
+                    <i class="fas fa-lock"></i>
+                    <div>
+                        <h4>私密加密保护</h4>
+                        <p>所有聊天内容均采用加密传输，确保私密信息安全</p>
+                    </div>
+                </div>
+                <div class="security-feature">
+                    <i class="fas fa-user-shield"></i>
+                    <div>
+                        <h4>匿名保护承诺</h4>
+                        <p>严格保护用户匿名性，确保深夜交友私密安全</p>
+                    </div>
+                </div>
+                <div class="security-feature">
+                    <i class="fas fa-money-bill-wave"></i>
+                    <div>
+                        <h4>资金安全保障</h4>
+                        <p>与知名支付机构合作，确保资金交易安全可靠</p>
+                    </div>
+                </div>
+                <div class="security-feature">
+                    <i class="fas fa-check-circle"></i>
+                    <div>
+                        <h4>深夜陪伴体系</h4>
+                        <p>专业深夜陪伴服务，确保交友体验真实可靠</p>
+                    </div>
+                </div>
+            </div>
+            <div class="legal-info">
+                <p>© 2024 深夜密友私密交友平台 | 严格遵守《网络安全法》、《个人信息保护法》等相关法律法规</p>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
