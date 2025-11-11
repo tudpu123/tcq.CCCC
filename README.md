@@ -657,6 +657,250 @@
             display: block;
         }
         
+        /* 反馈中心样式 */
+        .login-prompt {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-light);
+        }
+        
+        .login-prompt-content i {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .login-prompt-content h3 {
+            margin: 15px 0 10px;
+            font-size: 1.3rem;
+        }
+        
+        .feedback-content {
+            padding: 20px;
+        }
+        
+        .feedback-mode-selector {
+            display: flex;
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 5px;
+            margin-bottom: 20px;
+        }
+        
+        .feedback-mode-tab {
+            flex: 1;
+            text-align: center;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: var(--text-light);
+        }
+        
+        .feedback-mode-tab.active {
+            background: white;
+            color: var(--primary);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .feedback-mode-tab i {
+            display: block;
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+        
+        .feedback-mode-content {
+            display: none;
+        }
+        
+        .feedback-mode-content.active {
+            display: block;
+        }
+        
+        .feedback-info {
+            background: rgba(255, 45, 142, 0.05);
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .feedback-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .feedback-tip {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+        }
+        
+        .feedback-tip i {
+            margin-right: 8px;
+            color: var(--primary);
+        }
+        
+        .feedback-list {
+            margin-bottom: 20px;
+        }
+        
+        .feedback-item {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .feedback-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .feedback-item-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .feedback-item-date {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        .feedback-item-content {
+            color: var(--text);
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+        
+        .feedback-item-photos {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .feedback-photo {
+            width: 100%;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        
+        .vip-restricted {
+            position: relative;
+        }
+        
+        .vip-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255,255,255,0.95);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+            border-radius: 12px;
+        }
+        
+        .vip-overlay i {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .vip-overlay h3 {
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .feedback-upload {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        .feedback-upload-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .feedback-upload-title i {
+            margin-right: 10px;
+            color: var(--primary);
+        }
+        
+        .photo-upload-area {
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .photo-upload-area:hover {
+            border-color: var(--primary);
+        }
+        
+        .photo-upload-preview {
+            color: var(--text-light);
+        }
+        
+        .photo-upload-preview i {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        .photo-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .photo-item {
+            position: relative;
+        }
+        
+        .photo-item img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        
+        .photo-remove {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+        
         .form-group {
             margin-bottom: 15px;
         }
@@ -2438,6 +2682,143 @@
             </div>
         </div>
         
+        <!-- 反馈中心区域（默认隐藏） -->
+        <div class="card hidden" id="feedbackSection">
+            <div class="section-title">
+                <i class="fas fa-comments"></i> 反馈中心
+            </div>
+            
+            <!-- 登录提示 -->
+            <div class="login-prompt" id="feedbackLoginPrompt">
+                <div class="login-prompt-content">
+                    <i class="fas fa-lock"></i>
+                    <h3>请先登录</h3>
+                    <p>反馈中心功能需要登录后才能使用</p>
+                    <button class="btn btn-primary" id="feedbackLoginBtn">立即登录</button>
+                </div>
+            </div>
+            
+            <!-- 反馈中心内容（登录后显示） -->
+            <div class="feedback-content hidden" id="feedbackContent">
+                <!-- 反馈模式选择 -->
+                <div class="feedback-mode-selector">
+                    <div class="feedback-mode-tab active" data-mode="group">
+                        <i class="fas fa-users"></i>
+                        <span>微信群聊用户反馈</span>
+                    </div>
+                    <div class="feedback-mode-tab" data-mode="matchmaker">
+                        <i class="fas fa-heart"></i>
+                        <span>红娘牵线服务反馈</span>
+                    </div>
+                </div>
+                
+                <!-- 微信群聊用户反馈 -->
+                <div class="feedback-mode-content active" id="groupFeedbackContent">
+                    <div class="feedback-info">
+                        <div class="feedback-stats">
+                            <span>免费观看：<span id="freeGroupViews">8</span>/8</span>
+                            <span>剩余VIP观看：<span id="vipGroupViews">0</span></span>
+                        </div>
+                        <div class="feedback-tip">
+                            <i class="fas fa-info-circle"></i>
+                            <span>免费观看8条反馈，后续需要开通VIP群聊服务</span>
+                        </div>
+                    </div>
+                    
+                    <!-- 反馈列表 -->
+                    <div class="feedback-list" id="groupFeedbackList">
+                        <!-- 反馈内容将通过JS动态生成 -->
+                    </div>
+                    
+                    <!-- VIP限制提示 -->
+                    <div class="vip-restricted hidden" id="groupVipRestricted">
+                        <div class="vip-overlay">
+                            <i class="fas fa-crown"></i>
+                            <h3>开通VIP继续观看</h3>
+                            <p>您已用完免费观看次数，开通VIP群聊服务可继续观看更多反馈</p>
+                            <button class="btn btn-primary" id="openGroupVipBtn">开通VIP</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 红娘牵线服务反馈 -->
+                <div class="feedback-mode-content" id="matchmakerFeedbackContent">
+                    <div class="feedback-info">
+                        <div class="feedback-stats">
+                            <span>试看次数：<span id="trialMatchmakerViews">5</span>/5</span>
+                            <span>VIP观看：<span id="vipMatchmakerViews">0</span></span>
+                        </div>
+                        <div class="feedback-tip">
+                            <i class="fas fa-info-circle"></i>
+                            <span>可试看5条反馈，开通红娘牵线VIP服务可观看全部</span>
+                        </div>
+                    </div>
+                    
+                    <!-- 反馈列表 -->
+                    <div class="feedback-list" id="matchmakerFeedbackList">
+                        <!-- 反馈内容将通过JS动态生成 -->
+                    </div>
+                    
+                    <!-- VIP限制提示 -->
+                    <div class="vip-restricted hidden" id="matchmakerVipRestricted">
+                        <div class="vip-overlay">
+                            <i class="fas fa-crown"></i>
+                            <h3>开通VIP解锁全部反馈</h3>
+                            <p>您已用完试看次数，开通红娘牵线VIP服务可观看全部反馈内容</p>
+                            <button class="btn btn-primary" id="openMatchmakerVipBtn">开通VIP</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 上传反馈区域 -->
+                <div class="feedback-upload">
+                    <div class="feedback-upload-title">
+                        <i class="fas fa-plus-circle"></i>
+                        <span>上传反馈</span>
+                    </div>
+                    
+                    <div class="feedback-upload-form">
+                        <div class="form-group">
+                            <label for="feedbackTitle">反馈标题</label>
+                            <input type="text" id="feedbackTitle" placeholder="请输入反馈标题">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="feedbackContent">反馈内容</label>
+                            <textarea id="feedbackContent" placeholder="请输入反馈内容..." rows="4"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>上传照片</label>
+                            <div class="photo-upload-area" id="photoUploadArea">
+                                <div class="photo-upload-preview" id="photoPreview">
+                                    <i class="fas fa-camera"></i>
+                                    <span>点击上传照片</span>
+                                </div>
+                                <input type="file" id="photoInput" accept="image/*" multiple style="display: none;">
+                            </div>
+                            <div class="photo-list" id="photoList">
+                                <!-- 已上传照片列表 -->
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="feedbackMode">反馈类型</label>
+                            <select id="feedbackMode">
+                                <option value="group">微信群聊用户反馈</option>
+                                <option value="matchmaker">红娘牵线服务反馈</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button class="btn btn-primary" id="submitFeedbackBtn">提交反馈</button>
+                            <button class="btn btn-secondary" id="cancelFeedbackBtn">取消</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
         <!-- 红娘牵线区域（默认隐藏） -->
         <div class="card hidden" id="matchmakerSection">
             <div class="section-title">
@@ -2726,6 +3107,10 @@
             <i class="fas fa-list-alt"></i>
             <span>订单</span>
         </div>
+        <div class="nav-item" data-target="feedbackSection">
+            <i class="fas fa-comments"></i>
+            <span>反馈中心</span>
+        </div>
         <div class="nav-item" data-target="matchmakerSection">
             <i class="fas fa-heart"></i>
             <span>红娘牵线</span>
@@ -2781,8 +3166,15 @@
 
             // 发起支付（页面跳转）
             submitPayment(paymentUrl) {
-                // 直接跳转到支付页面
-                window.location.href = paymentUrl;
+                // 创建隐藏的form表单进行支付跳转，确保支付平台正确识别支付方式
+                const form = document.createElement('form');
+                form.method = 'GET';
+                form.action = paymentUrl;
+                form.style.display = 'none';
+                
+                // 将表单添加到页面并自动提交
+                document.body.appendChild(form);
+                form.submit();
             }
 
             // 异步回调验证
@@ -3108,7 +3500,9 @@
             apiUrl: 'https://2a.mazhifupay.com/',
             pid: '131517535',
             key: '6K1yVk6M16BK72Ms2ZB8wEyM020bZxK2',
-            domain: window.location.origin + window.location.pathname
+            domain: window.location.origin + window.location.pathname,
+            return_url: window.location.origin + window.location.pathname,
+            notify_url: window.location.origin + window.location.pathname
         };
         
         // 红娘牵线支付配置
@@ -3117,7 +3511,9 @@
             pid: '131517535',
             key: '6K1yVk6M16BK72Ms2ZB8wEyM020bZxK2',
             amount: '199.99',
-            domain: window.location.origin + window.location.pathname
+            domain: window.location.origin + window.location.pathname,
+            return_url: window.location.origin + window.location.pathname,
+            notify_url: window.location.origin + window.location.pathname
         };
         
         // 城市数据（包含全国各市级城市地区）
@@ -3871,8 +4267,8 @@
                 pid: PAYMENT_CONFIG.pid,
                 type: selectedPaymentMethod === 'alipay' ? 'alipay' : 'wxpay',
                 out_trade_no: outTradeNo,
-                notify_url: PAYMENT_CONFIG.domain,
-                return_url: PAYMENT_CONFIG.domain,
+                notify_url: PAYMENT_CONFIG.notify_url,
+                return_url: PAYMENT_CONFIG.return_url,
                 name: productName,
                 money: '39.99',
                 device: 'mobile'
@@ -3904,8 +4300,8 @@
                 pid: MATCHMAKER_PAYMENT_CONFIG.pid,
                 type: selectedMatchmakerPaymentMethod === 'alipay' ? 'alipay' : 'wxpay',
                 out_trade_no: outTradeNo,
-                notify_url: MATCHMAKER_PAYMENT_CONFIG.domain,
-                return_url: MATCHMAKER_PAYMENT_CONFIG.domain,
+                notify_url: MATCHMAKER_PAYMENT_CONFIG.notify_url,
+                return_url: MATCHMAKER_PAYMENT_CONFIG.return_url,
                 name: productName,
                 money: MATCHMAKER_PAYMENT_CONFIG.amount,
                 device: 'mobile'
@@ -4184,30 +4580,10 @@
         
         // 提交红娘牵线支付请求（使用彩虹易支付SDK）
         function submitMatchmakerPayment() {
-            // 检查是否已选择城市（红娘牵线也需要城市信息）
-            if (!selectedMatchmakerCity) {
-                // 显示更友好的提示，并自动滚动到城市选择区域
-                alert('请先选择您所在的城市，然后才能开通红娘牵线VIP服务');
-                
-                // 自动滚动到红娘牵线城市选择区域
-                const matchmakerCitySection = document.querySelector('.matchmaker-city-section');
-                if (matchmakerCitySection) {
-                    matchmakerCitySection.scrollIntoView({ behavior: 'smooth' });
-                }
-                
-                // 高亮显示城市选择区域
-                const matchmakerCityGrid = document.getElementById('matchmakerCityGrid');
-                if (matchmakerCityGrid) {
-                    matchmakerCityGrid.style.border = '2px solid #ff6b6b';
-                    matchmakerCityGrid.style.boxShadow = '0 0 10px rgba(255, 107, 107, 0.5)';
-                    
-                    // 3秒后移除高亮效果
-                    setTimeout(() => {
-                        matchmakerCityGrid.style.border = '';
-                        matchmakerCityGrid.style.boxShadow = '';
-                    }, 3000);
-                }
-                
+            // 检查用户是否已登录
+            if (!currentUser) {
+                alert('请先登录才能开通红娘牵线VIP服务');
+                switchSection('profileSection');
                 return;
             }
             
@@ -4260,6 +4636,11 @@
             const status = urlParams.get('status');
             const tradeNo = urlParams.get('out_trade_no');
             
+            // 只有在有支付参数时才处理支付结果
+            if (!status && !tradeNo) {
+                return;
+            }
+            
             // 使用SDK验证支付结果签名
             const params = Object.fromEntries(urlParams.entries());
             const isValid = epayCore.verifyReturn(params);
@@ -4300,12 +4681,202 @@
             }
         }
         
+        // 初始化反馈中心
+        function initFeedbackCenter() {
+            // 检查用户登录状态
+            if (!currentUser) {
+                document.getElementById('feedbackLoginPrompt').classList.remove('hidden');
+                document.getElementById('feedbackContent').classList.add('hidden');
+            } else {
+                document.getElementById('feedbackLoginPrompt').classList.add('hidden');
+                document.getElementById('feedbackContent').classList.remove('hidden');
+                loadFeedbackData();
+            }
+        }
+        
+        // 加载反馈数据
+        function loadFeedbackData() {
+            // 从localStorage加载反馈数据
+            const feedbackData = JSON.parse(localStorage.getItem('feedbackData') || '[]');
+            
+            // 分离微信群聊和红娘牵线反馈
+            const groupFeedback = feedbackData.filter(fb => fb.mode === 'group');
+            const matchmakerFeedback = feedbackData.filter(fb => fb.mode === 'matchmaker');
+            
+            // 更新免费观看次数
+            updateViewCounts(groupFeedback, matchmakerFeedback);
+            
+            // 渲染反馈列表
+            renderFeedbackList('group', groupFeedback);
+            renderFeedbackList('matchmaker', matchmakerFeedback);
+        }
+        
+        // 更新观看次数
+        function updateViewCounts(groupFeedback, matchmakerFeedback) {
+            // 微信群聊反馈观看次数
+            const freeGroupViews = Math.max(0, 8 - groupFeedback.length);
+            const vipGroupViews = currentUser.vip ? groupFeedback.length : 0;
+            
+            document.getElementById('freeGroupViews').textContent = freeGroupViews;
+            document.getElementById('vipGroupViews').textContent = vipGroupViews;
+            
+            // 红娘牵线反馈观看次数
+            const trialMatchmakerViews = Math.max(0, 5 - matchmakerFeedback.length);
+            const vipMatchmakerViews = currentUser.matchmakerVip ? matchmakerFeedback.length : 0;
+            
+            document.getElementById('trialMatchmakerViews').textContent = trialMatchmakerViews;
+            document.getElementById('vipMatchmakerViews').textContent = vipMatchmakerViews;
+            
+            // 显示/隐藏VIP限制
+            document.getElementById('groupVipRestricted').classList.toggle('hidden', freeGroupViews > 0 || currentUser.vip);
+            document.getElementById('matchmakerVipRestricted').classList.toggle('hidden', trialMatchmakerViews > 0 || currentUser.matchmakerVip);
+        }
+        
+        // 渲染反馈列表
+        function renderFeedbackList(mode, feedbackList) {
+            const container = document.getElementById(mode + 'FeedbackList');
+            container.innerHTML = '';
+            
+            feedbackList.forEach((feedback, index) => {
+                const feedbackItem = document.createElement('div');
+                feedbackItem.className = 'feedback-item';
+                
+                feedbackItem.innerHTML = `
+                    <div class="feedback-item-header">
+                        <div class="feedback-item-title">${feedback.title}</div>
+                        <div class="feedback-item-date">${feedback.date}</div>
+                    </div>
+                    <div class="feedback-item-content">${feedback.content}</div>
+                    ${feedback.photos && feedback.photos.length > 0 ? `
+                        <div class="feedback-item-photos">
+                            ${feedback.photos.map(photo => `<img src="${photo}" class="feedback-photo" alt="反馈照片">`).join('')}
+                        </div>
+                    ` : ''}
+                `;
+                
+                container.appendChild(feedbackItem);
+            });
+        }
+        
+        // 提交反馈
+        function submitFeedback() {
+            if (!currentUser) {
+                alert('请先登录');
+                return;
+            }
+            
+            const title = document.getElementById('feedbackTitle').value;
+            const content = document.getElementById('feedbackContent').value;
+            const mode = document.getElementById('feedbackMode').value;
+            
+            if (!title || !content) {
+                alert('请填写反馈标题和内容');
+                return;
+            }
+            
+            // 创建反馈对象
+            const newFeedback = {
+                id: Date.now(),
+                title,
+                content,
+                mode,
+                photos: uploadedPhotos,
+                date: new Date().toLocaleString(),
+                userId: currentUser.id
+            };
+            
+            // 保存到localStorage
+            const feedbackData = JSON.parse(localStorage.getItem('feedbackData') || '[]');
+            feedbackData.push(newFeedback);
+            localStorage.setItem('feedbackData', JSON.stringify(feedbackData));
+            
+            // 清空表单
+            document.getElementById('feedbackTitle').value = '';
+            document.getElementById('feedbackContent').value = '';
+            uploadedPhotos = [];
+            updatePhotoPreview();
+            
+            // 重新加载反馈数据
+            loadFeedbackData();
+            
+            alert('反馈提交成功！');
+        }
+        
+        // 照片上传相关变量
+        let uploadedPhotos = [];
+        
+        // 更新照片预览
+        function updatePhotoPreview() {
+            const photoList = document.getElementById('photoList');
+            photoList.innerHTML = '';
+            
+            uploadedPhotos.forEach((photo, index) => {
+                const photoItem = document.createElement('div');
+                photoItem.className = 'photo-item';
+                photoItem.innerHTML = `
+                    <img src="${photo}" alt="上传的照片">
+                    <div class="photo-remove" onclick="removePhoto(${index})">×</div>
+                `;
+                photoList.appendChild(photoItem);
+            });
+        }
+        
+        // 移除照片
+        function removePhoto(index) {
+            uploadedPhotos.splice(index, 1);
+            updatePhotoPreview();
+        }
+        
+        // 处理照片上传
+        function handlePhotoUpload(event) {
+            const files = event.target.files;
+            if (files.length === 0) return;
+            
+            Array.from(files).forEach(file => {
+                if (!file.type.startsWith('image/')) {
+                    alert('请上传图片文件');
+                    return;
+                }
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    uploadedPhotos.push(e.target.result);
+                    updatePhotoPreview();
+                };
+                reader.readAsDataURL(file);
+            });
+            
+            // 清空文件输入
+            event.target.value = '';
+        }
+        
+        // 切换反馈模式
+        function switchFeedbackMode(mode) {
+            // 更新模式选择器
+            document.querySelectorAll('.feedback-mode-option').forEach(option => {
+                option.classList.remove('active');
+            });
+            document.getElementById(mode + 'Mode').classList.add('active');
+            
+            // 更新表单模式
+            document.getElementById('feedbackMode').value = mode;
+            
+            // 显示/隐藏相应的反馈列表
+            document.getElementById('groupFeedbackSection').classList.toggle('hidden', mode !== 'group');
+            document.getElementById('matchmakerFeedbackSection').classList.toggle('hidden', mode !== 'matchmaker');
+        }
+        
         // 检查红娘牵线支付结果（使用彩虹易支付SDK验证）
         function checkMatchmakerPaymentResult() {
             const urlParams = new URLSearchParams(window.location.search);
             const status = urlParams.get('status');
             const tradeNo = urlParams.get('out_trade_no');
             const product = urlParams.get('name');
+            
+            // 只有在有支付参数时才处理支付结果
+            if (!status && !tradeNo) {
+                return;
+            }
             
             // 使用SDK验证支付结果签名
             const params = Object.fromEntries(urlParams.entries());
@@ -5270,6 +5841,14 @@
         navItems.forEach(item => {
             item.addEventListener('click', () => {
                 const target = item.getAttribute('data-target');
+                
+                // 牵线服务需要登录检查
+                if (target === 'matchmakerSection' && !currentUser) {
+                    alert('请先登录后再使用红娘牵线功能');
+                    switchSection('profileSection');
+                    return;
+                }
+                
                 switchSection(target);
                 
                 if (target === 'orderSection') {
@@ -5277,6 +5856,8 @@
                 } else if (target === 'matchmakerSection') {
                     initMatchmaker();
                     initMatchmakerCitySelector();
+                } else if (target === 'feedbackSection') {
+                    initFeedbackCenter();
                 }
             });
         });
@@ -5365,6 +5946,31 @@
             }
         });
         
+        // 反馈中心相关事件监听
+        // 照片上传
+        const photoUploadInput = document.getElementById('photoUpload');
+        if (photoUploadInput) {
+            photoUploadInput.addEventListener('change', handlePhotoUpload);
+        }
+        
+        // 提交反馈按钮
+        const submitFeedbackBtn = document.getElementById('submitFeedbackBtn');
+        if (submitFeedbackBtn) {
+            submitFeedbackBtn.addEventListener('click', submitFeedback);
+        }
+        
+        // 反馈模式切换
+        const groupModeBtn = document.getElementById('groupMode');
+        const matchmakerModeBtn = document.getElementById('matchmakerMode');
+        
+        if (groupModeBtn) {
+            groupModeBtn.addEventListener('click', () => switchFeedbackMode('group'));
+        }
+        
+        if (matchmakerModeBtn) {
+            matchmakerModeBtn.addEventListener('click', () => switchFeedbackMode('matchmaker'));
+        }
+        
         // 初始化
         document.addEventListener('DOMContentLoaded', () => {
             initProvinceList();
@@ -5378,6 +5984,7 @@
             initWebsiteStats();
             initUserAvatarClick();
             initMatchmakerCitySelector();
+            initFeedbackCenter();
             initLoginTypeTabs();
             initOrderSearch();
         });
