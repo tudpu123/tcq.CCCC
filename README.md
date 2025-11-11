@@ -3289,17 +3289,33 @@
             // 发起支付（获取链接）
             getPayLink(param) {
                 const params = this.buildRequestParam(param);
-                const url = this.submitUrl + '?' + new URLSearchParams(params).toString();
+                // 使用传统的URL参数构建方式，与PHP后端保持一致
+                const queryString = Object.keys(params)
+                    .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(params[key]))
+                    .join('&');
+                const url = this.submitUrl + '?' + queryString;
                 return url;
             }
 
             // 发起支付（页面跳转）
-            submitPayment(paymentUrl) {
+            submitPayment(param) {
                 // 创建隐藏的form表单进行支付跳转，确保支付平台正确识别支付方式
+                const params = this.buildRequestParam(param);
                 const form = document.createElement('form');
-                form.method = 'GET';
-                form.action = paymentUrl;
+                form.method = 'POST';
+                form.action = this.submitUrl;
                 form.style.display = 'none';
+                
+                // 添加所有参数到表单
+                for (const key in params) {
+                    if (params.hasOwnProperty(key)) {
+                        const input = document.createElement('input');
+                        input.type = 'hidden';
+                        input.name = key;
+                        input.value = params[key];
+                        form.appendChild(input);
+                    }
+                }
                 
                 // 将表单添加到页面并自动提交
                 document.body.appendChild(form);
@@ -3345,6 +3361,10 @@
 
             // 私有方法
             buildRequestParam(param) {
+                // 确保pid参数被添加到支付请求中
+                if (!param.pid) {
+                    param.pid = this.pid;
+                }
                 const mysign = this.getSign(param);
                 param.sign = mysign;
                 param.sign_type = this.signType;
@@ -3626,24 +3646,18 @@
 
         // 支付API配置（使用第三方易支付平台）
         const PAYMENT_CONFIG = {
-            apiUrl: 'https://2a.mazhifupay.com/submit.php',
+            apiUrl: 'https://2a.mazhifupay.com/',
             pid: '131517535',
             key: '6K1yVk6M16BK72Ms2ZB8wEyM020bZxK2',
-            domain: window.location.origin + window.location.pathname,
-            return_url: window.location.origin + window.location.pathname + '?status=success',
-            notify_url: window.location.origin + window.location.pathname + '?status=notify',
             amount: '39.99'
         };
         
         // 红娘牵线支付配置
         const MATCHMAKER_PAYMENT_CONFIG = {
-            apiUrl: 'https://2a.mazhifupay.com/submit.php',
+            apiUrl: 'https://2a.mazhifupay.com/',
             pid: '131517535',
             key: '6K1yVk6M16BK72Ms2ZB8wEyM020bZxK2',
-            amount: '199.99',
-            domain: window.location.origin + window.location.pathname,
-            return_url: window.location.origin + window.location.pathname + '?status=success',
-            notify_url: window.location.origin + window.location.pathname + '?status=notify'
+            amount: '199.99'
         };
         
         // 城市数据（包含全国各市级城市地区）
@@ -4694,27 +4708,24 @@
             }
             
             console.log('开始生成支付请求...');
-            const paymentUrl = generatePaymentRequest();
             
-            if (!paymentUrl) {
-                console.log('支付请求生成失败');
-                return;
-            }
+            // 构建支付参数
+            const paymentParams = {
+                type: 'alipay', // 默认使用支付宝
+                notify_url: window.location.origin + '/notify_url.php',
+                return_url: window.location.origin + '/return_url.php',
+                out_trade_no: 'WXGROUP' + Date.now(),
+                name: '微信群聊VIP服务',
+                money: '39.99'
+            };
             
-            console.log('支付URL生成成功:', paymentUrl);
+            console.log('支付参数生成成功:', paymentParams);
             
             // 使用SDK的支付跳转方法 - 直接跳转到第三方支付平台
             console.log('开始跳转到支付页面...');
             
-            // 创建隐藏的form表单进行支付跳转，确保支付平台正确识别支付方式
-            const form = document.createElement('form');
-            form.method = 'GET';
-            form.action = paymentUrl;
-            form.style.display = 'none';
-            
-            // 将表单添加到页面并自动提交
-            document.body.appendChild(form);
-            form.submit();
+            // 使用SDK的submitPayment方法进行POST跳转
+            epayCore.submitPayment(paymentParams);
         }
         
         // 提交红娘牵线支付请求（使用彩虹易支付SDK）
@@ -4726,21 +4737,23 @@
                 return;
             }
             
-            const paymentUrl = generateMatchmakerPaymentRequest();
-            if (!paymentUrl) return;
+            // 构建红娘牵线支付参数
+            const paymentParams = {
+                type: 'alipay', // 默认使用支付宝
+                notify_url: window.location.origin + '/notify_url.php',
+                return_url: window.location.origin + '/return_url.php',
+                out_trade_no: 'MATCHMAKER' + Date.now(),
+                name: '红娘牵线VIP服务',
+                money: '99.99'
+            };
+            
+            console.log('红娘牵线支付参数生成成功:', paymentParams);
             
             // 使用SDK的支付跳转方法 - 直接跳转到第三方支付平台
-            console.log('红娘牵线支付URL生成成功:', paymentUrl);
+            console.log('开始跳转到红娘牵线支付页面...');
             
-            // 创建隐藏的form表单进行支付跳转，确保支付平台正确识别支付方式
-            const form = document.createElement('form');
-            form.method = 'GET';
-            form.action = paymentUrl;
-            form.style.display = 'none';
-            
-            // 将表单添加到页面并自动提交
-            document.body.appendChild(form);
-            form.submit();
+            // 使用SDK的submitPayment方法进行POST跳转
+            epayCore.submitPayment(paymentParams);
         }
         
         // 退款功能
