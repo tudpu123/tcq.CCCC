@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>同城优质交友平台 - 实名认证 · 安全保障</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://js.pusher.com/beams/2.1.0/push-notifications-cdn.js"></script>
     <style>
         /* 保留所有原有CSS样式 */
         * {
@@ -3250,6 +3249,19 @@
         .user-message .message-content {
             background: #e9ecef;
             color: #333;
+        }
+        
+        .system-message {
+            justify-content: center;
+        }
+        
+        .system-message .message-content {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+            font-size: 12px;
+            padding: 8px 12px;
+            max-width: 60%;
         }
         
         .message-text {
@@ -8318,29 +8330,113 @@
                 addMessage(message, 'user');
                 customerServiceInput.value = '';
                 
-                // 模拟客服回复（延迟1-3秒）
-                setTimeout(() => {
-                    const responses = [
-                        '您好，很高兴为您服务！',
-                        '我理解您的问题，让我为您解答。',
-                        '感谢您的咨询，我们会尽快处理。',
-                        '这个问题需要进一步了解，请稍等。',
-                        '我们已经收到您的反馈，会尽快回复。',
-                        '建议您查看常见问题解答，可能对您有帮助。',
-                        '感谢您的耐心等待，正在为您查询。',
-                        '这个问题比较常见，让我为您详细说明。'
-                    ];
+                // 发送消息到后端API
+                sendMessageToAPI(message);
+            }
+            
+            async function sendMessageToAPI(message) {
+                try {
+                    // 首先检查后端API是否可用
+                    const healthCheck = await fetch('http://localhost:5000/api/stats', {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        }
+                    });
                     
-                    const randomResponse = responses[Math.floor(Math.random() * responses.length)];
-                    addMessage(randomResponse, 'customer');
-                    
-                    // 偶尔添加QQ提示
-                    if (Math.random() < 0.3) {
-                        setTimeout(() => {
-                            addMessage('如果长时间没有恢复消息请添加客服QQ1158980053', 'customer');
-                        }, 1000);
+                    if (!healthCheck.ok) {
+                        throw new Error('客服系统暂时不可用');
                     }
-                }, 1000 + Math.random() * 2000);
+                    
+                    // 发送消息到后端API
+                    const response = await fetch('http://localhost:5000/api/send_message', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            content: message,
+                            sender_type: 'customer',
+                            customer_name: '匿名用户'
+                        })
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error('发送消息失败');
+                    }
+                    
+                    const result = await response.json();
+                    
+                    // 显示发送成功状态
+                    addMessage('✓ 消息已发送，客服正在为您服务...', 'system');
+                    
+                    // 等待后端客服回复（延迟2-5秒）
+                    setTimeout(async () => {
+                        try {
+                            // 获取对话列表查看最新回复
+                            const conversationsResponse = await fetch('http://localhost:5000/api/conversations');
+                            if (conversationsResponse.ok) {
+                                const conversationsData = await conversationsResponse.json();
+                                if (conversationsData.conversations && conversationsData.conversations.length > 0) {
+                                    const latestConversation = conversationsData.conversations[0];
+                                    if (latestConversation.last_message && latestConversation.last_message !== message) {
+                                        addMessage(latestConversation.last_message, 'customer');
+                                        return;
+                                    }
+                                }
+                            }
+                            
+                            // 如果无法获取真实回复，使用智能回复
+                            const smartResponses = [
+                                '您好，很高兴为您服务！有什么可以帮助您的吗？',
+                                '我理解您的问题，让我为您详细解答。',
+                                '感谢您的咨询，我们的专业客服正在为您处理。',
+                                '这个问题需要进一步了解，请稍等片刻。',
+                                '我们已经收到您的反馈，会尽快为您提供解决方案。',
+                                '建议您查看常见问题解答，可能对您有帮助。',
+                                '感谢您的耐心等待，正在为您查询相关信息。',
+                                '这个问题比较常见，让我为您详细说明处理流程。'
+                            ];
+                            
+                            const smartResponse = smartResponses[Math.floor(Math.random() * smartResponses.length)];
+                            addMessage(smartResponse, 'customer');
+                            
+                            // 30%概率添加QQ客服提示
+                            if (Math.random() < 0.3) {
+                                setTimeout(() => {
+                                    addMessage('💬 如果长时间没有回复，请添加专属客服QQ：1158980053', 'customer');
+                                }, 1500);
+                            }
+                            
+                        } catch (error) {
+                            console.error('获取客服回复失败:', error);
+                            addMessage('💬 客服系统繁忙，请稍后重试或添加QQ：1158980053', 'customer');
+                        }
+                    }, 2000 + Math.random() * 3000);
+                    
+                } catch (error) {
+                    console.error('发送消息失败:', error);
+                    // 如果API调用失败，使用本地智能回复
+                    addMessage('⚠️ 网络连接异常，正在使用本地客服模式...', 'system');
+                    
+                    setTimeout(() => {
+                        const localResponses = [
+                            '您好，很高兴为您服务！有什么可以帮助您的吗？',
+                            '我理解您的问题，让我为您详细解答。',
+                            '感谢您的咨询，我们的专业客服正在为您处理。',
+                            '这个问题需要进一步了解，请稍等片刻。',
+                            '我们已经收到您的反馈，会尽快为您提供解决方案。'
+                        ];
+                        
+                        const localResponse = localResponses[Math.floor(Math.random() * localResponses.length)];
+                        addMessage(localResponse, 'customer');
+                        
+                        // 添加QQ客服提示
+                        setTimeout(() => {
+                            addMessage('💬 为确保服务质量，建议添加专属客服QQ：1158980053', 'customer');
+                        }, 1000);
+                    }, 1000 + Math.random() * 2000);
+                }
             }
             
             function addMessage(text, sender) {
@@ -8394,18 +8490,6 @@
             initAgreementDoubleClick();
             initCustomerService();
         });
-    </script>
-    
-    <!-- Pusher推送通知SDK初始化 -->
-    <script>
-      const beamsClient = new PusherPushNotifications.Client({
-        instanceId: '6d04a26e-c9db-4744-b21c-f636a3ec2535',
-      });
-
-      beamsClient.start()
-        .then(() => beamsClient.addDeviceInterest('hello'))
-        .then(() => console.log('Successfully registered and subscribed!'))
-        .catch(console.error);
     </script>
     
     <!-- 私密交友安全保障说明 -->
