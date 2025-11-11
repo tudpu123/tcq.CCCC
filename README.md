@@ -394,48 +394,109 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0,0,0,0.7);
+            background: rgba(0,0,0,0.8);
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 1000;
             padding: 20px;
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(10px);
+            animation: modalFadeIn 0.3s ease-out;
+        }
+        
+        @keyframes modalFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
         
         .modal-content {
-            background: white;
-            border-radius: 25px;
-            padding: 25px;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            border-radius: 20px;
+            padding: 30px;
             width: 100%;
-            max-width: 400px;
+            max-width: 420px;
             text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            animation: modalAppear 0.3s ease-out;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.2);
+            animation: modalSlideIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
         }
         
-        @keyframes modalAppear {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+        .modal-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+        }
+        
+        @keyframes modalSlideIn {
+            from { 
+                opacity: 0; 
+                transform: translateY(-50px) scale(0.9); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0) scale(1); 
+            }
         }
         
         .modal h2 {
             margin-bottom: 15px;
             color: var(--text);
+            font-size: 1.4rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, var(--text) 0%, var(--text-light) 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         
         .modal p {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             color: var(--text-light);
+            font-size: 1rem;
+            line-height: 1.5;
         }
         
         .modal-buttons {
             display: flex;
-            gap: 12px;
+            gap: 15px;
+            margin-top: 10px;
         }
         
         .modal-buttons .btn {
             flex: 1;
+            border-radius: 12px;
+            font-weight: 600;
+            padding: 12px 20px;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 0.95rem;
+        }
+        
+        .modal-buttons .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            box-shadow: 0 4px 15px rgba(255, 45, 142, 0.3);
+        }
+        
+        .modal-buttons .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 45, 142, 0.4);
+        }
+        
+        .modal-buttons .btn-secondary {
+            background: rgba(108, 117, 125, 0.1);
+            color: var(--text-light);
+            border: 1px solid rgba(108, 117, 125, 0.2);
+        }
+        
+        .modal-buttons .btn-secondary:hover {
+            background: rgba(108, 117, 125, 0.2);
+            transform: translateY(-1px);
         }
         
         .success-icon {
@@ -569,6 +630,31 @@
             padding: 12px 0;
             box-shadow: 0 -2px 20px rgba(0,0,0,0.1);
             z-index: 100;
+            /* 防止被手机键盘遮挡 */
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
+            /* 确保在输入时保持可见 */
+            will-change: transform;
+        }
+        
+        /* 移动设备输入时的特殊处理 */
+        @media (max-height: 600px) {
+            .bottom-nav {
+                padding: 8px 0;
+            }
+            
+            .nav-item {
+                font-size: 0.7rem;
+            }
+            
+            .nav-item i {
+                font-size: 1.2rem;
+            }
+        }
+        
+        /* 确保内容区域有足够的底部间距 */
+        .main-content {
+            padding-bottom: 70px !important;
         }
         
         .nav-item {
@@ -759,6 +845,384 @@
             color: var(--text-light);
         }
         
+        /* 反馈中心增强样式 */
+        .feedback-page-navigation {
+            display: flex;
+            background: #f8f8f8;
+            border-radius: 12px;
+            padding: 5px;
+            margin-bottom: 20px;
+        }
+        
+        .feedback-page-tab {
+            flex: 1;
+            text-align: center;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .feedback-page-tab.active {
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            color: var(--primary);
+        }
+        
+        .feedback-page-tab i {
+            font-size: 1.2rem;
+        }
+        
+        .feedback-mode-content {
+            display: none;
+        }
+        
+        .feedback-mode-content.active {
+            display: block;
+        }
+        
+        .feedback-info {
+            background: rgba(255, 45, 142, 0.05);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .feedback-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+        
+        .feedback-tip {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+        
+        .feedback-tip i {
+            color: var(--primary);
+        }
+        
+        .feedback-list {
+            display: grid;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .feedback-item {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            border: 1px solid rgba(255, 45, 142, 0.1);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .feedback-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 45, 142, 0.1);
+        }
+        
+        .feedback-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .feedback-title {
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--text);
+        }
+        
+        .feedback-date {
+            font-size: 0.8rem;
+            color: var(--text-light);
+        }
+        
+        .feedback-preview {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+        }
+        
+        .feedback-text {
+            flex: 1;
+            font-size: 0.9rem;
+            color: var(--text-light);
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .feedback-image {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            object-fit: cover;
+            background: #f0f0f0;
+        }
+        
+        .vip-restricted {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .vip-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            z-index: 10;
+        }
+        
+        .vip-overlay i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: #ffd700;
+        }
+        
+        .vip-overlay h3 {
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .vip-overlay p {
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .feedback-upload {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            border: 2px dashed rgba(255, 45, 142, 0.3);
+            margin-top: 20px;
+        }
+        
+        .feedback-upload-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .feedback-upload-title i {
+            font-size: 1.3rem;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text);
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(255, 45, 142, 0.1);
+        }
+        
+        /* 手机号验证状态样式 */
+        .form-group input.valid {
+            border-color: #28a745;
+            box-shadow: 0 0 0 2px rgba(40, 167, 69, 0.1);
+        }
+        
+        .form-group input.invalid {
+            border-color: #dc3545;
+            box-shadow: 0 0 0 2px rgba(220, 53, 69, 0.1);
+        }
+        
+        .form-group input.valid:focus {
+            border-color: #28a745;
+            box-shadow: 0 0 0 2px rgba(40, 167, 69, 0.2);
+        }
+        
+        .form-group input.invalid:focus {
+            border-color: #dc3545;
+            box-shadow: 0 0 0 2px rgba(220, 53, 69, 0.2);
+        }
+        
+        .photo-upload-area {
+            border: 2px dashed #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .photo-upload-area:hover {
+            border-color: var(--primary);
+        }
+        
+        .photo-upload-preview {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-light);
+        }
+        
+        .photo-upload-preview i {
+            font-size: 2rem;
+            color: var(--primary);
+        }
+        
+        .photo-list {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .photo-item {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .photo-remove {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+        
+        .form-actions {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .form-actions .btn {
+            flex: 1;
+        }
+        
+        /* 反馈详情页面样式 */
+        .feedback-detail {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .feedback-detail-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 45, 142, 0.1);
+        }
+        
+        .feedback-detail-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+        
+        .feedback-detail-meta {
+            display: flex;
+            gap: 15px;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+        
+        .feedback-detail-content {
+            margin-bottom: 20px;
+            line-height: 1.6;
+            color: var(--text);
+        }
+        
+        .feedback-detail-images {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .feedback-detail-image {
+            width: 100%;
+            height: 150px;
+            border-radius: 8px;
+            object-fit: cover;
+            background: #f0f0f0;
+        }
+        
+        .feedback-detail-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+        
+        .feedback-detail-back {
+            background: #f8f8f8;
+            color: var(--text);
+        }
+        
         .login-prompt-content i {
             font-size: 3rem;
             color: var(--primary);
@@ -774,7 +1238,7 @@
             padding: 20px;
         }
         
-        .feedback-mode-selector {
+        .feedback-page-navigation {
             display: flex;
             background: #f8f9fa;
             border-radius: 12px;
@@ -782,7 +1246,7 @@
             margin-bottom: 20px;
         }
         
-        .feedback-mode-tab {
+        .feedback-page-tab {
             flex: 1;
             text-align: center;
             padding: 12px;
@@ -792,13 +1256,13 @@
             color: var(--text-light);
         }
         
-        .feedback-mode-tab.active {
+        .feedback-page-tab.active {
             background: white;
             color: var(--primary);
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
         
-        .feedback-mode-tab i {
+        .feedback-page-tab i {
             display: block;
             font-size: 1.2rem;
             margin-bottom: 5px;
@@ -917,6 +1381,322 @@
         .vip-overlay h3 {
             margin-bottom: 10px;
             font-size: 1.2rem;
+        }
+        
+        /* 牵线服务反馈页面样式 */
+        #matchmakerFeedbackPage {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .matchmaker-feedback-content {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .matchmaker-feedback-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .matchmaker-feedback-header h2 {
+            margin: 0 0 10px 0;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        
+        .matchmaker-feedback-header p {
+            margin: 0;
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+        
+        .matchmaker-feedback-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 30px;
+            background: #f8f9fa;
+        }
+        
+        .stat-item {
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        .matchmaker-feedback-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 30px;
+            border-bottom: 1px solid #eee;
+            background: white;
+        }
+        
+        .feedback-filters {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .feedback-filters select {
+            padding: 8px 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            background: white;
+        }
+        
+        .matchmaker-feedback-list {
+            padding: 30px;
+            min-height: 400px;
+        }
+        
+        .matchmaker-feedback-item {
+            background: white;
+            border: 1px solid #eee;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 0.3s;
+        }
+        
+        .matchmaker-feedback-item:hover {
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+        
+        .feedback-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .feedback-user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .feedback-user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+        
+        .feedback-user-name {
+            font-weight: 600;
+            color: var(--text);
+        }
+        
+        .feedback-date {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        .feedback-content {
+            color: var(--text);
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .feedback-rating {
+            color: #ffc107;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .feedback-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        
+        .feedback-tag {
+            background: var(--primary-light);
+            color: var(--primary);
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        /* 群聊服务反馈页面样式 */
+        #groupFeedbackPage {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .group-feedback-content {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .group-feedback-header {
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .group-feedback-header h2 {
+            margin: 0 0 10px 0;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        
+        .group-feedback-header p {
+            margin: 0;
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+        
+        .group-feedback-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 30px;
+            background: #f8f9fa;
+        }
+        
+        .group-feedback-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 30px;
+            border-bottom: 1px solid #eee;
+            background: white;
+        }
+        
+        .group-feedback-list {
+            padding: 30px;
+            min-height: 400px;
+        }
+        
+        .group-feedback-item {
+            background: white;
+            border: 1px solid #eee;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 0.3s;
+        }
+        
+        .group-feedback-item:hover {
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+        
+        .group-feedback-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .group-feedback-user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .group-feedback-user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+        
+        .group-feedback-user-name {
+            font-weight: 600;
+            color: var(--text);
+        }
+        
+        .group-feedback-date {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        .group-feedback-content-text {
+            color: var(--text);
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .group-feedback-rating {
+            color: #ffc107;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .group-feedback-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        
+        .group-feedback-tag {
+            background: #e8f5e8;
+            color: #4CAF50;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .vip-status-info {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 30px;
+            text-align: center;
+        }
+        
+        .vip-status-info h4 {
+            margin: 0 0 10px 0;
+            color: #856404;
+        }
+        
+        .vip-status-info p {
+            margin: 0 0 15px 0;
+            color: #856404;
         }
         
         .feedback-upload {
@@ -1109,6 +1889,73 @@
         
         .form-actions .btn {
             flex: 1;
+        }
+        
+        /* 声明和免责声明样式 */
+        .agreement-section {
+            margin: 15px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .agreement-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #495057;
+            font-size: 1rem;
+        }
+        
+        .agreement-content {
+            max-height: 120px;
+            overflow-y: auto;
+            font-size: 0.85rem;
+            line-height: 1.4;
+            color: #6c757d;
+            padding: 10px;
+            background: white;
+            border-radius: 4px;
+            border: 1px solid #dee2e6;
+        }
+        
+        .agreement-checkbox {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 4px;
+            border: 1px solid #dee2e6;
+        }
+        
+        .agreement-checkbox input[type="checkbox"] {
+            margin-right: 8px;
+            width: 16px;
+            height: 16px;
+        }
+        
+        .agreement-checkbox label {
+            font-size: 0.85rem;
+            color: #007bff;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        
+        .agreement-checkbox label:hover {
+            color: #0056b3;
+        }
+        
+        .agreement-checkbox.required label::after {
+            content: " *";
+            color: #dc3545;
+        }
+        
+        .agreement-error {
+            color: #dc3545;
+            font-size: 0.8rem;
+            margin-top: 5px;
+            display: none;
         }
         
         .login-prompt {
@@ -2647,6 +3494,82 @@
                     <textarea id="registerBio" placeholder="介绍一下你自己..." rows="3"></textarea>
                 </div>
                 
+                <!-- 声明和免责声明 -->
+                <div class="agreement-section">
+                    <div class="agreement-title">
+                        <i class="fas fa-exclamation-circle"></i> 法律声明与免责声明
+                    </div>
+                    
+                    <div class="agreement-content hidden" id="registerAgreementContent">
+                        <div class="agreement-summary">
+                            <p><strong>重要提示：</strong>在使用本平台服务前，请仔细阅读以下声明内容。双击"我已阅读同意上述法律声明和免责声明"复选框即可查看完整内容。</p>
+                            <p class="agreement-preview">本平台严格遵守国家法律法规，提供婚恋交友信息服务。用户需对自身行为承担法律责任，平台仅提供信息交流服务...</p>
+                        </div>
+                        
+                        <div class="agreement-details">
+                            <p><strong>法律声明：</strong></p>
+                            <ul>
+                                <li>本平台严格遵守《中华人民共和国网络安全法》、《个人信息保护法》、《民法典》等相关法律法规</li>
+                                <li>用户需保证所提供信息的真实性和合法性，不得冒用他人身份或提供虚假信息</li>
+                                <li>禁止发布涉及色情、暴力、赌博、诈骗、传销等违法信息及不当言论</li>
+                                <li>用户需对自身行为承担全部法律责任，包括但不限于民事、行政、刑事责任</li>
+                                <li>平台有权对违规内容进行删除，对违规用户进行警告、限制功能或封禁处理</li>
+                                <li>用户应妥善保管账号信息，不得转让、出租或出借账号给他人使用</li>
+                                <li>禁止利用平台进行商业推广、广告宣传等未经授权的商业活动</li>
+                                <li>用户应遵守平台社区规范，维护良好的交流环境</li>
+                            </ul>
+                            
+                            <p><strong>免责声明：</strong></p>
+                            <ul>
+                                <li>本平台仅提供信息交流服务，不承担用户间纠纷责任，用户应自行协商解决</li>
+                                <li>用户需自行判断信息真实性，平台不保证用户发布信息的准确性、完整性和时效性</li>
+                                <li>因用户行为造成的任何损失，包括但不限于财产损失、人身伤害等，平台概不负责</li>
+                                <li>平台有权根据法律法规变化或业务需要调整服务内容，恕不另行通知</li>
+                                <li>因不可抗力、网络故障、黑客攻击等导致的服务中断，平台不承担责任</li>
+                                <li>用户应遵守社会公德，文明交流，不得进行骚扰、诽谤等不当行为</li>
+                                <li>平台不保证服务的连续性、及时性、安全性，用户需自行承担使用风险</li>
+                                <li>用户应自行备份重要信息，平台不承担数据丢失责任</li>
+                            </ul>
+                            
+                            <p><strong>隐私保护：</strong></p>
+                            <ul>
+                                <li>平台将依法保护用户个人信息，未经用户同意不得向第三方泄露</li>
+                                <li>用户应保护个人隐私，不要轻易透露身份证号、银行卡号等敏感信息</li>
+                                <li>平台有权依法向司法机关提供用户信息以配合调查</li>
+                                <li>用户有权查询、更正、删除个人信息的权利</li>
+                                <li>平台将采取合理措施保护用户信息安全，但无法保证绝对安全</li>
+                            </ul>
+                            
+                            <p><strong>安全提示：</strong></p>
+                            <ul>
+                                <li>建议用户在线下见面时选择公共场所，注意人身和财产安全</li>
+                                <li>如遇不当内容或行为，请及时通过举报功能反馈，平台将及时处理</li>
+                                <li>如发现违法犯罪行为，请立即向公安机关举报</li>
+                                <li>用户应理性对待情感关系，谨慎处理个人隐私</li>
+                                <li>禁止进行金钱交易，谨防网络诈骗</li>
+                            </ul>
+                            
+                            <p><strong>服务条款：</strong></p>
+                            <ul>
+                                <li>用户注册即表示同意本平台的服务条款和隐私政策</li>
+                                <li>平台有权收集和使用用户信息以提供更好的服务，具体详见隐私政策</li>
+                                <li>VIP服务购买后不支持退款，请谨慎选择</li>
+                                <li>平台保留最终解释权和修改权</li>
+                                <li>用户应遵守平台使用规则，不得恶意攻击系统或干扰正常运营</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="agreement-checkbox required">
+                        <input type="checkbox" id="registerAgreementCheckbox">
+                        <label for="registerAgreementCheckbox">我已阅读同意上述法律声明和免责声明</label>
+                    </div>
+                    
+                    <div class="agreement-error" id="registerAgreementError">
+                        <i class="fas fa-exclamation-triangle"></i> 请先阅读并同意法律声明和免责声明
+                    </div>
+                </div>
+                
                 <div class="form-actions">
                     <button class="btn btn-primary" id="registerSubmitBtn">注册</button>
                     <button class="btn btn-secondary" id="registerCancelBtn">取消</button>
@@ -2680,6 +3603,82 @@
                     <div class="form-group">
                         <label for="loginPassword">密码</label>
                         <input type="password" id="loginPassword" placeholder="请输入密码">
+                    </div>
+                    
+                    <!-- 声明和免责声明 -->
+                    <div class="agreement-section">
+                        <div class="agreement-title">
+                            <i class="fas fa-exclamation-circle"></i> 法律声明与免责声明
+                        </div>
+                        
+                        <div class="agreement-content hidden" id="loginAgreementContent">
+                            <div class="agreement-summary">
+                                <p><strong>重要提示：</strong>在使用本平台服务前，请仔细阅读以下声明内容。双击"我已阅读同意上述法律声明和免责声明"复选框即可查看完整内容。</p>
+                                <p class="agreement-preview">本平台严格遵守国家法律法规，提供婚恋交友信息服务。用户需对自身行为承担法律责任，平台仅提供信息交流服务...</p>
+                            </div>
+                            
+                            <div class="agreement-details">
+                                <p><strong>法律声明：</strong></p>
+                                <ul>
+                                    <li>本平台严格遵守《中华人民共和国网络安全法》、《个人信息保护法》、《民法典》等相关法律法规</li>
+                                    <li>用户需保证所提供信息的真实性和合法性，不得冒用他人身份或提供虚假信息</li>
+                                    <li>禁止发布涉及色情、暴力、赌博、诈骗、传销等违法信息及不当言论</li>
+                                    <li>用户需对自身行为承担全部法律责任，包括但不限于民事、行政、刑事责任</li>
+                                    <li>平台有权对违规内容进行删除，对违规用户进行警告、限制功能或封禁处理</li>
+                                    <li>用户应妥善保管账号信息，不得转让、出租或出借账号给他人使用</li>
+                                    <li>禁止利用平台进行商业推广、广告宣传等未经授权的商业活动</li>
+                                    <li>用户应遵守平台社区规范，维护良好的交流环境</li>
+                                </ul>
+                                
+                                <p><strong>免责声明：</strong></p>
+                                <ul>
+                                    <li>本平台仅提供信息交流服务，不承担用户间纠纷责任，用户应自行协商解决</li>
+                                    <li>用户需自行判断信息真实性，平台不保证用户发布信息的准确性、完整性和时效性</li>
+                                    <li>因用户行为造成的任何损失，包括但不限于财产损失、人身伤害等，平台概不负责</li>
+                                    <li>平台有权根据法律法规变化或业务需要调整服务内容，恕不另行通知</li>
+                                    <li>因不可抗力、网络故障、黑客攻击等导致的服务中断，平台不承担责任</li>
+                                    <li>用户应遵守社会公德，文明交流，不得进行骚扰、诽谤等不当行为</li>
+                                    <li>平台不保证服务的连续性、及时性、安全性，用户需自行承担使用风险</li>
+                                    <li>用户应自行备份重要信息，平台不承担数据丢失责任</li>
+                                </ul>
+                                
+                                <p><strong>隐私保护：</strong></p>
+                                <ul>
+                                    <li>平台将依法保护用户个人信息，未经用户同意不得向第三方泄露</li>
+                                    <li>用户应保护个人隐私，不要轻易透露身份证号、银行卡号等敏感信息</li>
+                                    <li>平台有权依法向司法机关提供用户信息以配合调查</li>
+                                    <li>用户有权查询、更正、删除个人信息的权利</li>
+                                    <li>平台将采取合理措施保护用户信息安全，但无法保证绝对安全</li>
+                                </ul>
+                                
+                                <p><strong>安全提示：</strong></p>
+                                <ul>
+                                    <li>建议用户在线下见面时选择公共场所，注意人身和财产安全</li>
+                                    <li>如遇不当内容或行为，请及时通过举报功能反馈，平台将及时处理</li>
+                                    <li>如发现违法犯罪行为，请立即向公安机关举报</li>
+                                    <li>用户应理性对待情感关系，谨慎处理个人隐私</li>
+                                    <li>禁止进行金钱交易，谨防网络诈骗</li>
+                                </ul>
+                                
+                                <p><strong>服务条款：</strong></p>
+                                <ul>
+                                    <li>用户注册即表示同意本平台的服务条款和隐私政策</li>
+                                    <li>平台有权收集和使用用户信息以提供更好的服务，具体详见隐私政策</li>
+                                    <li>VIP服务购买后不支持退款，请谨慎选择</li>
+                                    <li>平台保留最终解释权和修改权</li>
+                                    <li>用户应遵守平台使用规则，不得恶意攻击系统或干扰正常运营</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="agreement-checkbox required">
+                            <input type="checkbox" id="loginAgreementCheckbox">
+                            <label for="loginAgreementCheckbox">我已阅读同意上述法律声明和免责声明</label>
+                        </div>
+                        
+                        <div class="agreement-error" id="loginAgreementError">
+                            <i class="fas fa-exclamation-triangle"></i> 请先阅读并同意法律声明和免责声明
+                        </div>
                     </div>
                     
                     <div class="form-actions">
@@ -2785,40 +3784,26 @@
                 <i class="fas fa-comments"></i> 反馈中心
             </div>
             
-            <!-- 登录提示 -->
-            <div class="login-prompt" id="feedbackLoginPrompt">
-                <div class="login-prompt-content">
-                    <i class="fas fa-lock"></i>
-                    <h3>请先登录</h3>
-                    <p>反馈中心功能需要登录后才能使用</p>
-                    <button class="btn btn-primary" id="feedbackLoginBtn">立即登录</button>
-                </div>
-            </div>
-            
-            <!-- 反馈中心内容（登录后显示） -->
-            <div class="feedback-content hidden" id="feedbackContent">
-                <!-- 反馈模式选择 -->
-                <div class="feedback-mode-selector">
-                    <div class="feedback-mode-tab active" data-mode="group">
+            <!-- 反馈中心内容（未登录用户也可查看） -->
+            <div class="feedback-content" id="feedbackContent">
+                <!-- 反馈页面导航 -->
+                <div class="feedback-page-navigation">
+                    <div class="feedback-page-tab active" data-page="groupFeedbackPage">
                         <i class="fas fa-users"></i>
-                        <span>微信群聊用户反馈</span>
+                        <span>群聊用户反馈</span>
                     </div>
-                    <div class="feedback-mode-tab" data-mode="matchmaker">
+                    <div class="feedback-page-tab" data-page="matchmakerFeedbackPage">
                         <i class="fas fa-heart"></i>
-                        <span>红娘牵线服务反馈</span>
+                        <span>牵线用户反馈</span>
                     </div>
                 </div>
                 
                 <!-- 微信群聊用户反馈 -->
                 <div class="feedback-mode-content active" id="groupFeedbackContent">
                     <div class="feedback-info">
-                        <div class="feedback-stats">
-                            <span>免费观看：<span id="freeGroupViews">8</span>/8</span>
-                            <span>剩余VIP观看：<span id="vipGroupViews">0</span></span>
-                        </div>
                         <div class="feedback-tip">
                             <i class="fas fa-info-circle"></i>
-                            <span>免费观看8条反馈，后续需要开通VIP群聊服务</span>
+                            <span>查看群聊用户反馈，提交反馈需要开通VIP入群特权</span>
                         </div>
                     </div>
                     
@@ -2826,44 +3811,20 @@
                     <div class="feedback-list" id="groupFeedbackList">
                         <!-- 反馈内容将通过JS动态生成 -->
                     </div>
-                    
-                    <!-- VIP限制提示 -->
-                    <div class="vip-restricted hidden" id="groupVipRestricted">
-                        <div class="vip-overlay">
-                            <i class="fas fa-crown"></i>
-                            <h3>开通VIP继续观看</h3>
-                            <p>您已用完免费观看次数，开通VIP群聊服务可继续观看更多反馈</p>
-                            <button class="btn btn-primary" id="openGroupVipBtn">开通VIP</button>
-                        </div>
-                    </div>
                 </div>
                 
                 <!-- 红娘牵线服务反馈 -->
                 <div class="feedback-mode-content" id="matchmakerFeedbackContent">
                     <div class="feedback-info">
-                        <div class="feedback-stats">
-                            <span>试看次数：<span id="trialMatchmakerViews">5</span>/5</span>
-                            <span>VIP观看：<span id="vipMatchmakerViews">0</span></span>
-                        </div>
                         <div class="feedback-tip">
                             <i class="fas fa-info-circle"></i>
-                            <span>可试看5条反馈，开通红娘牵线VIP服务可观看全部</span>
+                            <span>查看牵线服务反馈，提交反馈需要开通红娘牵线VIP服务</span>
                         </div>
                     </div>
                     
                     <!-- 反馈列表 -->
                     <div class="feedback-list" id="matchmakerFeedbackList">
                         <!-- 反馈内容将通过JS动态生成 -->
-                    </div>
-                    
-                    <!-- VIP限制提示 -->
-                    <div class="vip-restricted hidden" id="matchmakerVipRestricted">
-                        <div class="vip-overlay">
-                            <i class="fas fa-crown"></i>
-                            <h3>开通VIP解锁全部反馈</h3>
-                            <p>您已用完试看次数，开通红娘牵线VIP服务可观看全部反馈内容</p>
-                            <button class="btn btn-primary" id="openMatchmakerVipBtn">开通VIP</button>
-                        </div>
                     </div>
                 </div>
                 
@@ -2899,13 +3860,7 @@
                             </div>
                         </div>
                         
-                        <div class="form-group">
-                            <label for="feedbackMode">反馈类型</label>
-                            <select id="feedbackMode">
-                                <option value="group">微信群聊用户反馈</option>
-                                <option value="matchmaker">红娘牵线服务反馈</option>
-                            </select>
-                        </div>
+
                         
                         <div class="form-actions">
                             <button class="btn btn-primary" id="submitFeedbackBtn">提交反馈</button>
@@ -2916,6 +3871,135 @@
             </div>
         </div>
         
+        <!-- 牵线服务反馈页面（默认隐藏） -->
+        <div class="card hidden" id="matchmakerFeedbackPage">
+            <div class="section-title">
+                <i class="fas fa-heart"></i> 牵线服务反馈
+                <button class="btn btn-secondary btn-sm" id="backToFeedbackCenter">
+                    <i class="fas fa-arrow-left"></i> 返回反馈中心
+                </button>
+            </div>
+            
+            <!-- 牵线服务反馈内容（未登录用户也可查看） -->
+            <div class="matchmaker-feedback-content" id="matchmakerFeedbackPageContent">
+                
+                <!-- 反馈统计 -->
+                <div class="matchmaker-feedback-stats">
+                    <div class="stat-item">
+                        <span class="stat-number" id="totalMatchmakerFeedback">0</span>
+                        <span class="stat-label">总反馈数</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="todayMatchmakerFeedback">0</span>
+                        <span class="stat-label">今日新增</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="matchmakerSuccessRate">0%</span>
+                        <span class="stat-label">成功率</span>
+                    </div>
+                </div>
+                
+                <!-- 反馈筛选 -->
+                <div class="matchmaker-feedback-filter">
+                    <div class="filter-group">
+                        <label>筛选条件：</label>
+                        <select id="matchmakerFeedbackFilter">
+                            <option value="all">全部反馈</option>
+                            <option value="success">成功案例</option>
+                            <option value="pending">进行中</option>
+                            <option value="new">最新反馈</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>排序方式：</label>
+                        <select id="matchmakerFeedbackSort">
+                            <option value="newest">最新优先</option>
+                            <option value="oldest">最旧优先</option>
+                            <option value="rating">评分最高</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- 反馈列表 -->
+                <div class="matchmaker-feedback-list" id="matchmakerFeedbackPageList">
+                    <!-- 反馈内容将通过JS动态生成 -->
+                </div>
+                
+                <!-- 加载更多 -->
+                <div class="matchmaker-feedback-load-more" id="matchmakerFeedbackLoadMore">
+                    <button class="btn btn-outline" id="loadMoreMatchmakerFeedback">
+                        <i class="fas fa-plus"></i> 加载更多反馈
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 群聊服务反馈页面 -->
+        <div class="card hidden" id="groupFeedbackPage">
+            <div class="matchmaker-feedback-content">
+                <!-- 页面头部 -->
+                <div class="matchmaker-feedback-header">
+                    <button id="backToFeedbackCenterFromGroup" class="btn-back">
+                        <i class="fas fa-arrow-left"></i> 返回反馈中心
+                    </button>
+                    <h2>群聊服务反馈中心</h2>
+                    <p>查看其他用户的群聊体验和反馈</p>
+                </div>
+                
+                <!-- 页面内容（未登录用户也可查看） -->
+                <div id="groupFeedbackPageContent">
+                    
+                    <!-- 统计信息 -->
+                    <div class="matchmaker-feedback-stats">
+                        <div class="stat-item">
+                            <div class="stat-value" id="totalGroupFeedback">0</div>
+                            <div class="stat-label">总反馈数</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="todayGroupFeedback">0</div>
+                            <div class="stat-label">今日新增</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value" id="groupSuccessRate">0%</div>
+                            <div class="stat-label">成功匹配率</div>
+                        </div>
+                    </div>
+                    
+                    <!-- 控制栏 -->
+                    <div class="matchmaker-feedback-controls">
+                        <div class="feedback-filters">
+                            <select id="groupFeedbackFilter">
+                                <option value="all">全部反馈</option>
+                                <option value="success">成功案例</option>
+                                <option value="pending">进行中</option>
+                                <option value="new">最近7天</option>
+                            </select>
+                            <select id="groupFeedbackSort">
+                                <option value="newest">最新优先</option>
+                                <option value="oldest">最早优先</option>
+                                <option value="rating">评分最高</option>
+                            </select>
+                        </div>
+                        <div class="feedback-actions">
+                            <button id="refreshGroupFeedback" class="btn-secondary">
+                                <i class="fas fa-sync-alt"></i> 刷新
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- 反馈列表 -->
+                    <div class="matchmaker-feedback-list">
+                        <div id="groupFeedbackPageList"></div>
+                        
+                        <!-- 加载更多 -->
+                        <div class="load-more-container">
+                            <button id="loadMoreGroupFeedback" class="btn-secondary">加载更多</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- 红娘牵线区域（默认隐藏） -->
         <div class="card hidden" id="matchmakerSection">
             <div class="section-title">
@@ -4134,12 +5218,7 @@
                 cityItem.className = 'matchmaker-city-item';
                 cityItem.textContent = city;
                 cityItem.addEventListener('click', () => {
-                    if (!hasMatchmakerVip) {
-                        // 未开通VIP，显示VIP限制提示
-                        vipRestrictedModal.classList.remove('hidden');
-                        return;
-                    }
-                    
+                    // 移除VIP限制，允许所有用户选择城市
                     // 移除其他城市的active状态
                     document.querySelectorAll('.matchmaker-city-item').forEach(item => {
                         item.classList.remove('active');
@@ -4299,12 +5378,6 @@
             });
             
             document.getElementById('contactUserBtn').addEventListener('click', () => {
-                if (!hasMatchmakerVip) {
-                    // 未开通VIP，显示VIP限制提示
-                    vipRestrictedModal.classList.remove('hidden');
-                    return;
-                }
-                
                 // 联系用户功能
                 alert(`已向${user.name}发送联系请求，请等待对方回复！`);
                 
@@ -4709,9 +5782,9 @@
             
             console.log('开始生成支付请求...');
             
-            // 构建支付参数
+            // 构建支付参数 - 根据用户选择的支付方式
             const paymentParams = {
-                type: 'alipay', // 默认使用支付宝
+                type: selectedPaymentMethod === 'alipay' ? 'alipay' : 'wxpay', // 根据选择切换支付方式
                 notify_url: window.location.origin + '/notify_url.php',
                 return_url: window.location.origin + '/return_url.php',
                 out_trade_no: 'WXGROUP' + Date.now(),
@@ -4720,6 +5793,7 @@
             };
             
             console.log('支付参数生成成功:', paymentParams);
+            console.log('选择的支付方式:', selectedPaymentMethod);
             
             // 使用SDK的支付跳转方法 - 直接跳转到第三方支付平台
             console.log('开始跳转到支付页面...');
@@ -4737,9 +5811,9 @@
                 return;
             }
             
-            // 构建红娘牵线支付参数
+            // 构建红娘牵线支付参数 - 根据用户选择的支付方式
             const paymentParams = {
-                type: 'alipay', // 默认使用支付宝
+                type: selectedMatchmakerPaymentMethod === 'alipay' ? 'alipay' : 'wxpay', // 根据选择切换支付方式
                 notify_url: window.location.origin + '/notify_url.php',
                 return_url: window.location.origin + '/return_url.php',
                 out_trade_no: 'MATCHMAKER' + Date.now(),
@@ -4748,6 +5822,7 @@
             };
             
             console.log('红娘牵线支付参数生成成功:', paymentParams);
+            console.log('选择的支付方式:', selectedMatchmakerPaymentMethod);
             
             // 使用SDK的支付跳转方法 - 直接跳转到第三方支付平台
             console.log('开始跳转到红娘牵线支付页面...');
@@ -4919,12 +5994,23 @@
         // 初始化反馈中心
         function initFeedbackCenter() {
             // 检查用户登录状态
-            if (!currentUser) {
-                document.getElementById('feedbackLoginPrompt').classList.remove('hidden');
-                document.getElementById('feedbackContent').classList.add('hidden');
-            } else {
-                document.getElementById('feedbackLoginPrompt').classList.add('hidden');
-                document.getElementById('feedbackContent').classList.remove('hidden');
+            updateFeedbackCenterUI();
+            
+            // 监听用户登录状态变化
+            window.addEventListener('userLogin', updateFeedbackCenterUI);
+            window.addEventListener('userLogout', updateFeedbackCenterUI);
+        }
+        
+        // 更新反馈中心UI显示
+        function updateFeedbackCenterUI() {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
+            
+            // 删除登录限制，未登录用户也可以查看反馈中心
+            document.getElementById('feedbackLoginPrompt').classList.add('hidden');
+            document.getElementById('feedbackContent').classList.remove('hidden');
+            
+            // 如果已登录，加载反馈数据
+            if (currentUser) {
                 loadFeedbackData();
             }
         }
@@ -4948,23 +6034,16 @@
         
         // 更新观看次数
         function updateViewCounts(groupFeedback, matchmakerFeedback) {
-            // 微信群聊反馈观看次数
-            const freeGroupViews = Math.max(0, 8 - groupFeedback.length);
-            const vipGroupViews = currentUser.vip ? groupFeedback.length : 0;
+            // 移除VIP观看次数限制，所有用户都可以查看所有反馈
+            // 不再显示观看次数统计，直接显示所有反馈内容
             
-            document.getElementById('freeGroupViews').textContent = freeGroupViews;
-            document.getElementById('vipGroupViews').textContent = vipGroupViews;
+            // 显示所有反馈内容，不限制观看
+            document.getElementById('groupFeedbackList').innerHTML = '';
+            document.getElementById('matchmakerFeedbackList').innerHTML = '';
             
-            // 红娘牵线反馈观看次数
-            const trialMatchmakerViews = Math.max(0, 5 - matchmakerFeedback.length);
-            const vipMatchmakerViews = currentUser.matchmakerVip ? matchmakerFeedback.length : 0;
-            
-            document.getElementById('trialMatchmakerViews').textContent = trialMatchmakerViews;
-            document.getElementById('vipMatchmakerViews').textContent = vipMatchmakerViews;
-            
-            // 显示/隐藏VIP限制
-            document.getElementById('groupVipRestricted').classList.toggle('hidden', freeGroupViews > 0 || currentUser.vip);
-            document.getElementById('matchmakerVipRestricted').classList.toggle('hidden', trialMatchmakerViews > 0 || currentUser.matchmakerVip);
+            // 渲染所有反馈内容
+            renderFeedbackList('group', groupFeedback);
+            renderFeedbackList('matchmaker', matchmakerFeedback);
         }
         
         // 渲染反馈列表
@@ -5007,6 +6086,29 @@
             if (!title || !content) {
                 alert('请填写反馈标题和内容');
                 return;
+            }
+            
+            // 检查VIP状态 - 保留群聊和牵线服务的VIP提交检查
+            if (mode === 'group') {
+                // 群聊用户反馈提交需要开通VIP入群特权
+                if (!currentUser.vip) {
+                    if (confirm('提交群聊用户反馈需要开通VIP入群特权。是否立即开通？')) {
+                        // 跳转到VIP开通页面
+                        switchSection('groupSection');
+                        return;
+                    }
+                    return;
+                }
+            } else if (mode === 'matchmaker') {
+                // 牵线服务用户提交反馈需要开通红娘牵线VIP服务
+                if (!currentUser.matchmakerVip) {
+                    if (confirm('提交牵线服务反馈需要开通红娘牵线VIP服务。是否立即开通？')) {
+                        // 跳转到VIP开通页面
+                        switchSection('matchmakerSection');
+                        return;
+                    }
+                    return;
+                }
             }
             
             // 创建反馈对象
@@ -5085,6 +6187,22 @@
             event.target.value = '';
         }
         
+        // 切换反馈页面
+        function switchFeedbackPage(pageId) {
+            // 更新页面导航状态
+            document.querySelectorAll('.feedback-page-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelector(`.feedback-page-tab[data-page="${pageId}"]`).classList.add('active');
+            
+            // 隐藏所有反馈页面
+            document.getElementById('groupFeedbackPage').classList.add('hidden');
+            document.getElementById('matchmakerFeedbackPage').classList.add('hidden');
+            
+            // 显示目标反馈页面
+            document.getElementById(pageId).classList.remove('hidden');
+        }
+        
         // 切换反馈模式
         function switchFeedbackMode(mode) {
             // 更新模式选择器
@@ -5149,6 +6267,8 @@
             const age = document.getElementById('registerAge').value;
             const location = document.getElementById('registerLocation').value;
             const bio = document.getElementById('registerBio').value;
+            const agreementCheckbox = document.getElementById('registerAgreementCheckbox');
+            const agreementError = document.getElementById('registerAgreementError');
             
             // 获取选中的性别
             let gender = '';
@@ -5167,6 +6287,90 @@
             if (password !== confirmPassword) {
                 alert('两次输入的密码不一致');
                 return;
+            }
+            
+            // 密码验证 - 必须满足6位数
+            if (password.length !== 6) {
+                alert('密码必须为6位数');
+                document.getElementById('registerPassword').focus();
+                return;
+            }
+            
+            // 手机号验证 - 必须输入手机号才能注册（放在其他验证之后，允许用户先填写其他字段）
+            if (!phone) {
+                alert('必须输入手机号才能注册');
+                document.getElementById('registerPhone').focus();
+                return;
+            }
+            
+            // 手机号-密码关联验证：检查密码是否与手机号相关
+            const phoneRegex = /^1[3-9]\d{9}$/;
+            
+            // 只有当手机号输入完整时才进行格式验证
+            if (phone.length === 11) {
+                if (phoneRegex.test(phone)) {
+                    // 检查密码是否与手机号相关
+                    const lastSixDigits = phone.slice(-6);
+                    const firstSixDigits = phone.slice(0, 6);
+                    
+                    // 密码不能是手机号的前6位或后6位
+                    if (password === lastSixDigits || password === firstSixDigits) {
+                        alert('密码不能与手机号的前6位或后6位相同');
+                        document.getElementById('registerPassword').focus();
+                        return;
+                    }
+                    
+                    // 密码不能是连续的6个相同数字
+                    if (/^(\d)\1{5}$/.test(password)) {
+                        alert('密码不能是连续的6个相同数字');
+                        document.getElementById('registerPassword').focus();
+                        return;
+                    }
+                    
+                    // 密码不能是简单的递增或递减序列
+                    const isSequential = (str) => {
+                        const digits = str.split('').map(Number);
+                        const diff = digits[1] - digits[0];
+                        for (let i = 1; i < digits.length - 1; i++) {
+                            if (digits[i + 1] - digits[i] !== diff) {
+                                return false;
+                            }
+                        }
+                        return Math.abs(diff) === 1;
+                    };
+                    
+                    if (isSequential(password)) {
+                        alert('密码不能是简单的递增或递减序列');
+                        document.getElementById('registerPassword').focus();
+                        return;
+                    }
+                } else {
+                    // 手机号格式不正确
+                    alert('请输入有效的中国大陆手机号码（11位数字，以1开头）');
+                    document.getElementById('registerPhone').focus();
+                    return;
+                }
+            } else {
+                // 手机号长度不足11位
+                alert('手机号必须为11位数字');
+                document.getElementById('registerPhone').focus();
+                return;
+            }
+            
+            // 检查手机号是否已被注册
+            if (users.find(user => user.phone === phone)) {
+                alert('该手机号已被注册');
+                document.getElementById('registerPhone').focus();
+                return;
+            }
+            
+            // 检查声明勾选框 - 需要点击勾选后才能注册
+            if (!agreementCheckbox.checked) {
+                agreementError.style.display = 'block';
+                agreementCheckbox.focus();
+                return;
+            } else {
+                agreementError.style.display = 'none';
             }
             
             // 检查用户名是否已存在
@@ -5201,6 +6405,10 @@
             // 更新UI
             updateUserUI();
             
+            // 触发登录事件
+            const loginEvent = new CustomEvent('userLogin');
+            window.dispatchEvent(loginEvent);
+            
             alert('注册成功！');
         }
         
@@ -5208,10 +6416,68 @@
         function loginUser() {
             const username = document.getElementById('loginUsername').value;
             const password = document.getElementById('loginPassword').value;
+            const agreementCheckbox = document.getElementById('loginAgreementCheckbox');
+            const agreementError = document.getElementById('loginAgreementError');
             
             if (!username || !password) {
                 alert('请填写用户名和密码');
                 return;
+            }
+            
+            // 密码长度验证：必须为6位数
+            if (password.length !== 6) {
+                alert('密码必须为6位数');
+                document.getElementById('loginPassword').focus();
+                return;
+            }
+            
+            // 手机号-密码关联验证：检查密码是否与手机号相关
+            const phoneRegex = /^1[3-9]\d{9}$/;
+            if (phoneRegex.test(username)) {
+                // 如果是手机号格式，检查密码是否与手机号相关
+                const lastSixDigits = username.slice(-6);
+                const firstSixDigits = username.slice(0, 6);
+                
+                // 密码不能是手机号的前6位或后6位
+                if (password === lastSixDigits || password === firstSixDigits) {
+                    alert('密码不能与手机号的前6位或后6位相同');
+                    document.getElementById('loginPassword').focus();
+                    return;
+                }
+                
+                // 密码不能是连续的6个相同数字
+                if (/^(\d)\1{5}$/.test(password)) {
+                    alert('密码不能是连续的6个相同数字');
+                    document.getElementById('loginPassword').focus();
+                    return;
+                }
+                
+                // 密码不能是简单的递增或递减序列
+                const isSequential = (str) => {
+                    const digits = str.split('').map(Number);
+                    const diff = digits[1] - digits[0];
+                    for (let i = 1; i < digits.length - 1; i++) {
+                        if (digits[i + 1] - digits[i] !== diff) {
+                            return false;
+                        }
+                    }
+                    return Math.abs(diff) === 1;
+                };
+                
+                if (isSequential(password)) {
+                    alert('密码不能是简单的递增或递减序列');
+                    document.getElementById('loginPassword').focus();
+                    return;
+                }
+            }
+            
+            // 检查声明勾选框
+            if (!agreementCheckbox.checked) {
+                agreementError.style.display = 'block';
+                agreementCheckbox.focus();
+                return;
+            } else {
+                agreementError.style.display = 'none';
             }
             
             // 查找用户
@@ -5221,6 +6487,11 @@
                 currentUser = user;
                 localStorage.setItem('currentUser', JSON.stringify(currentUser));
                 updateUserUI();
+                
+                // 触发登录事件
+                const loginEvent = new CustomEvent('userLogin');
+                window.dispatchEvent(loginEvent);
+                
                 alert('登录成功！');
             } else {
                 alert('用户名或密码错误');
@@ -5232,6 +6503,11 @@
             currentUser = null;
             localStorage.removeItem('currentUser');
             updateUserUI();
+            
+            // 触发退出登录事件
+            const logoutEvent = new CustomEvent('userLogout');
+            window.dispatchEvent(logoutEvent);
+            
             alert('已退出登录');
         }
         
@@ -6235,6 +7511,15 @@
             submitFeedbackBtn.addEventListener('click', submitFeedback);
         }
         
+        // 反馈页面导航切换
+        const feedbackPageTabs = document.querySelectorAll('.feedback-page-tab');
+        feedbackPageTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const pageId = tab.getAttribute('data-page');
+                switchFeedbackPage(pageId);
+            });
+        });
+        
         // 反馈模式切换
         const groupModeBtn = document.getElementById('groupMode');
         const matchmakerModeBtn = document.getElementById('matchmakerMode');
@@ -6306,6 +7591,1130 @@
             });
         }
         
+        // 反馈中心功能类
+        class FeedbackCenter {
+            constructor() {
+                this.currentMode = 'group'; // 默认群聊模式
+                this.feedbackList = [];
+                this.init();
+            }
+            
+            init() {
+                this.loadFeedbackData();
+                this.bindEvents();
+                this.updateFeedbackDisplay();
+            }
+            
+            // 加载反馈数据
+            loadFeedbackData() {
+                const savedData = localStorage.getItem('feedbackData');
+                if (savedData) {
+                    this.feedbackList = JSON.parse(savedData);
+                } else {
+                    // 初始化示例数据
+                    this.feedbackList = [
+                        {
+                            id: 1,
+                            type: 'group',
+                            title: '第一次参加群聊活动',
+                            content: '活动氛围很好，认识了很多新朋友',
+                            image: '',
+                            timestamp: new Date().toLocaleString(),
+                            user: '匿名用户'
+                        },
+                        {
+                            id: 2,
+                            type: 'matchmaker',
+                            title: '牵线服务体验',
+                            content: '红娘很专业，匹配很精准',
+                            image: '',
+                            timestamp: new Date().toLocaleString(),
+                            user: '匿名用户'
+                        }
+                    ];
+                    this.saveFeedbackData();
+                }
+            }
+            
+            // 保存反馈数据
+            saveFeedbackData() {
+                localStorage.setItem('feedbackData', JSON.stringify(this.feedbackList));
+            }
+            
+            // 绑定事件
+            bindEvents() {
+                // 反馈模式切换
+                const groupModeBtn = document.getElementById('groupMode');
+                const matchmakerModeBtn = document.getElementById('matchmakerMode');
+                
+                if (groupModeBtn) {
+                    groupModeBtn.addEventListener('click', () => this.switchMode('group'));
+                }
+                
+                if (matchmakerModeBtn) {
+                    matchmakerModeBtn.addEventListener('click', () => this.switchMode('matchmaker'));
+                }
+                
+                // 照片上传
+                const photoUploadInput = document.getElementById('photoUpload');
+                if (photoUploadInput) {
+                    photoUploadInput.addEventListener('change', (e) => this.handlePhotoUpload(e));
+                }
+                
+                // 提交反馈
+                const submitFeedbackBtn = document.getElementById('submitFeedbackBtn');
+                if (submitFeedbackBtn) {
+                    submitFeedbackBtn.addEventListener('click', () => this.submitFeedback());
+                }
+                
+                // 查看反馈详情
+                this.bindFeedbackDetailEvents();
+            }
+            
+            // 切换反馈模式
+            switchMode(mode) {
+                this.currentMode = mode;
+                
+                // 更新按钮状态
+                const groupModeBtn = document.getElementById('groupMode');
+                const matchmakerModeBtn = document.getElementById('matchmakerMode');
+                
+                if (groupModeBtn && matchmakerModeBtn) {
+                    if (mode === 'group') {
+                        groupModeBtn.classList.add('active');
+                        matchmakerModeBtn.classList.remove('active');
+                    } else {
+                        groupModeBtn.classList.remove('active');
+                        matchmakerModeBtn.classList.add('active');
+                    }
+                }
+                
+                this.updateFeedbackDisplay();
+            }
+            
+            // 更新反馈显示
+            updateFeedbackDisplay() {
+                // 显示对应模式的反馈
+                const groupFeedbackSection = document.getElementById('groupFeedbackSection');
+                const matchmakerFeedbackSection = document.getElementById('matchmakerFeedbackSection');
+                
+                if (groupFeedbackSection && matchmakerFeedbackSection) {
+                    if (this.currentMode === 'group') {
+                        groupFeedbackSection.style.display = 'block';
+                        matchmakerFeedbackSection.style.display = 'none';
+                    } else {
+                        groupFeedbackSection.style.display = 'none';
+                        matchmakerFeedbackSection.style.display = 'block';
+                    }
+                }
+                
+                // 更新反馈列表
+                this.updateFeedbackList();
+            }
+            
+            // 更新反馈列表
+            updateFeedbackList() {
+                const feedbackListElement = document.getElementById('feedbackList');
+                if (!feedbackListElement) return;
+                
+                // 过滤当前模式的反馈
+                const currentModeFeedback = this.feedbackList.filter(feedback => 
+                    feedback.type === this.currentMode
+                );
+                
+                // 只显示前5条
+                const displayFeedback = currentModeFeedback.slice(0, 5);
+                
+                feedbackListElement.innerHTML = '';
+                
+                displayFeedback.forEach(feedback => {
+                    const feedbackItem = document.createElement('div');
+                    feedbackItem.className = 'feedback-item';
+                    feedbackItem.setAttribute('data-id', feedback.id);
+                    
+                    feedbackItem.innerHTML = `
+                        <div class="feedback-header">
+                            <div class="feedback-title">${feedback.title}</div>
+                            <div class="feedback-time">${feedback.timestamp}</div>
+                        </div>
+                        <div class="feedback-content">${feedback.content}</div>
+                        ${feedback.image ? `<div class="feedback-image"><img src="${feedback.image}" alt="反馈图片"></div>` : ''}
+                        <div class="feedback-user">发布者: ${feedback.user}</div>
+                    `;
+                    
+                    feedbackListElement.appendChild(feedbackItem);
+                });
+                
+                // 显示VIP限制提示
+                this.showVipRestriction(currentModeFeedback.length > 5);
+                
+                // 重新绑定详情查看事件
+                this.bindFeedbackDetailEvents();
+            }
+            
+            // 显示VIP限制提示
+            showVipRestriction(hasMore) {
+                const vipRestriction = document.getElementById('vipRestriction');
+                if (!vipRestriction) return;
+                
+                if (hasMore) {
+                    vipRestriction.style.display = 'block';
+                    vipRestriction.innerHTML = `
+                        <div class="vip-restriction-content">
+                            <i class="fas fa-crown"></i>
+                            <p>查看更多反馈需要开通VIP服务</p>
+                            <button id="openGroupVipBtn" class="vip-button">开通VIP</button>
+                        </div>
+                    `;
+                    
+                    // 重新绑定VIP开通按钮事件
+                    const openVipBtn = document.getElementById('openGroupVipBtn');
+                    if (openVipBtn) {
+                        openVipBtn.addEventListener('click', () => {
+                            if (!currentUser) {
+                                alert('请先登录后再开通VIP服务');
+                                switchSection('profileSection');
+                                return;
+                            }
+                            // 跳转到VIP支付页面
+                            switchSection('matchmakerSection');
+                        });
+                    }
+                } else {
+                    vipRestriction.style.display = 'none';
+                }
+            }
+            
+            // 绑定反馈详情查看事件
+            bindFeedbackDetailEvents() {
+                const feedbackItems = document.querySelectorAll('.feedback-item');
+                feedbackItems.forEach(item => {
+                    item.addEventListener('click', () => {
+                        const feedbackId = parseInt(item.getAttribute('data-id'));
+                        this.showFeedbackDetail(feedbackId);
+                    });
+                });
+            }
+            
+            // 显示反馈详情
+            showFeedbackDetail(feedbackId) {
+                const feedback = this.feedbackList.find(f => f.id === feedbackId);
+                if (!feedback) return;
+                
+                // 创建详情模态框
+                const detailModal = document.createElement('div');
+                detailModal.className = 'feedback-detail-modal';
+                detailModal.innerHTML = `
+                    <div class="feedback-detail-content">
+                        <div class="feedback-detail-header">
+                            <h3>${feedback.title}</h3>
+                            <button class="close-detail-btn">&times;</button>
+                        </div>
+                        <div class="feedback-detail-body">
+                            <div class="feedback-detail-info">
+                                <div class="feedback-detail-user">发布者: ${feedback.user}</div>
+                                <div class="feedback-detail-time">时间: ${feedback.timestamp}</div>
+                            </div>
+                            <div class="feedback-detail-content-text">${feedback.content}</div>
+                            ${feedback.image ? `<div class="feedback-detail-image"><img src="${feedback.image}" alt="反馈图片"></div>` : ''}
+                        </div>
+                    </div>
+                `;
+                
+                document.body.appendChild(detailModal);
+                
+                // 绑定关闭事件
+                const closeBtn = detailModal.querySelector('.close-detail-btn');
+                closeBtn.addEventListener('click', () => {
+                    document.body.removeChild(detailModal);
+                });
+                
+                // 点击模态框外部关闭
+                detailModal.addEventListener('click', (e) => {
+                    if (e.target === detailModal) {
+                        document.body.removeChild(detailModal);
+                    }
+                });
+            }
+            
+            // 处理照片上传
+            handlePhotoUpload(event) {
+                const file = event.target.files[0];
+                if (!file) return;
+                
+                // 检查文件类型
+                if (!file.type.startsWith('image/')) {
+                    alert('请上传图片文件');
+                    return;
+                }
+                
+                // 检查文件大小（限制5MB）
+                if (file.size > 5 * 1024 * 1024) {
+                    alert('图片大小不能超过5MB');
+                    return;
+                }
+                
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    // 显示预览
+                    const photoPreview = document.getElementById('photoPreview');
+                    if (photoPreview) {
+                        photoPreview.innerHTML = `<img src="${e.target.result}" alt="预览图片">`;
+                        photoPreview.style.display = 'block';
+                    }
+                };
+                reader.readAsDataURL(file);
+            }
+            
+            // 提交反馈
+            submitFeedback() {
+                // 检查登录状态
+                if (!currentUser) {
+                    alert('请先登录后再提交反馈');
+                    switchSection('profileSection');
+                    return;
+                }
+                
+                // 检查VIP状态
+                if (!this.checkVipStatus()) {
+                    const vipTypeName = this.currentMode === 'group' ? '群聊VIP服务' : '红娘牵线VIP服务';
+                    const confirmMsg = `提交反馈需要开通${vipTypeName}。是否立即开通？`;
+                    
+                    if (confirm(confirmMsg)) {
+                        // 跳转到对应的VIP开通页面
+                        if (this.currentMode === 'group') {
+                            this.openGroupVipPage();
+                        } else {
+                            this.openMatchmakerVipPage();
+                        }
+                    }
+                    return;
+                }
+                
+                const titleInput = document.getElementById('feedbackTitle');
+                const contentInput = document.getElementById('feedbackContent');
+                const photoPreview = document.getElementById('photoPreview');
+                
+                const title = titleInput ? titleInput.value.trim() : '';
+                const content = contentInput ? contentInput.value.trim() : '';
+                
+                // 验证输入
+                if (!title) {
+                    alert('请输入反馈标题');
+                    return;
+                }
+                
+                if (!content) {
+                    alert('请输入反馈内容');
+                    return;
+                }
+                
+                // 获取图片数据
+                let imageData = '';
+                if (photoPreview && photoPreview.style.display !== 'none') {
+                    const img = photoPreview.querySelector('img');
+                    if (img) {
+                        imageData = img.src;
+                    }
+                }
+                
+                // 创建反馈对象
+                const newFeedback = {
+                    id: Date.now(),
+                    type: this.currentMode,
+                    title: title,
+                    content: content,
+                    image: imageData,
+                    timestamp: new Date().toLocaleString(),
+                    user: currentUser.username || '匿名用户'
+                };
+                
+                // 添加到列表
+                this.feedbackList.unshift(newFeedback);
+                this.saveFeedbackData();
+                
+                // 清空表单
+                if (titleInput) titleInput.value = '';
+                if (contentInput) contentInput.value = '';
+                if (photoPreview) {
+                    photoPreview.innerHTML = '';
+                    photoPreview.style.display = 'none';
+                }
+                
+                // 重置文件输入
+                const photoUploadInput = document.getElementById('photoUpload');
+                if (photoUploadInput) {
+                    photoUploadInput.value = '';
+                }
+                
+                // 更新显示
+                this.updateFeedbackList();
+                
+                alert('反馈提交成功！');
+            }
+            
+            // 检查VIP状态
+            checkVipStatus() {
+                if (!currentUser) return false;
+                
+                // 使用VIP服务管理器检查VIP状态
+                if (this.currentMode === 'group') {
+                    return vipServiceManager.checkUserVipStatus(currentUser, 'group');
+                } else {
+                    return vipServiceManager.checkUserVipStatus(currentUser, 'matchmaker');
+                }
+            }
+            
+            // 打开群聊VIP页面
+            openGroupVipPage() {
+                // 切换到群聊VIP开通页面
+                switchSection('groupSection');
+                
+                // 显示VIP开通提示
+                setTimeout(() => {
+                    alert('请开通群聊VIP服务以提交反馈');
+                }, 500);
+            }
+            
+            // 打开红娘牵线VIP页面
+            openMatchmakerVipPage() {
+                // 切换到红娘牵线VIP开通页面
+                switchSection('matchmakerSection');
+                
+                // 显示VIP开通提示
+                setTimeout(() => {
+                    alert('请开通红娘牵线VIP服务以提交反馈');
+                }, 500);
+            }
+        }
+        
+        // 初始化反馈中心
+        function initFeedbackCenter() {
+            if (typeof feedbackCenter === 'undefined') {
+                window.feedbackCenter = new FeedbackCenter();
+            }
+        }
+        
+
+        
+        // 初始化手机号验证功能
+        function initPhoneValidation() {
+            const registerPhoneInput = document.getElementById('registerPhone');
+            
+            if (registerPhoneInput) {
+                // 实时验证手机号格式 - 优化：允许用户随时切换输入
+                registerPhoneInput.addEventListener('input', function() {
+                    const phone = this.value.trim();
+                    const phoneRegex = /^1[3-9]\d{9}$/;
+                    
+                    // 移除之前的验证样式
+                    this.classList.remove('valid', 'invalid');
+                    
+                    if (phone === '') {
+                        // 空值时不显示验证状态，允许用户切换其他输入
+                        return;
+                    }
+                    
+                    // 只有当输入完整11位手机号时才验证格式
+                    if (phone.length === 11) {
+                        if (phoneRegex.test(phone)) {
+                            this.classList.add('valid');
+                        } else {
+                            this.classList.add('invalid');
+                        }
+                    }
+                    // 输入少于11位时不显示验证状态，允许用户继续输入或切换
+                });
+                
+                // 失去焦点时显示详细提示 - 优化：只在输入完整手机号时验证
+                registerPhoneInput.addEventListener('blur', function() {
+                    const phone = this.value.trim();
+                    const phoneRegex = /^1[3-9]\d{9}$/;
+                    
+                    // 只有当输入完整11位手机号时才验证格式
+                    if (phone.length === 11 && !phoneRegex.test(phone)) {
+                        // 显示错误提示
+                        this.setCustomValidity('请输入有效的中国大陆手机号码（11位数字，以1开头）');
+                        this.reportValidity();
+                    } else {
+                        this.setCustomValidity('');
+                    }
+                });
+                
+                // 获得焦点时清除提示
+                registerPhoneInput.addEventListener('focus', function() {
+                    this.setCustomValidity('');
+                });
+            }
+        }
+        
+        // VIP服务管理模块
+        class VipServiceManager {
+            constructor() {
+                this.vipTypes = {
+                    group: {
+                        name: '微信群聊VIP服务',
+                        price: 39.99,
+                        features: [
+                            '无限查看群聊反馈',
+                            '参与群聊讨论',
+                            '优先匹配群聊成员',
+                            '专属群聊活动'
+                        ]
+                    },
+                    matchmaker: {
+                        name: '红娘牵线VIP服务',
+                        price: 99.00,
+                        features: [
+                            '无限查看牵线反馈',
+                            '精准城市匹配',
+                            '一对一红娘服务',
+                            '优先推荐优质用户'
+                        ]
+                    }
+                };
+            }
+            
+            // 检查用户VIP状态
+            checkUserVipStatus(user, vipType) {
+                if (!user || !user.vip) return false;
+                
+                if (vipType === 'group') {
+                    return user.vip.group === true;
+                } else if (vipType === 'matchmaker') {
+                    return user.vip.matchmaker === true;
+                }
+                
+                return false;
+            }
+            
+            // 开通VIP服务
+            activateVipService(user, vipType) {
+                if (!user) return false;
+                
+                // 确保vip对象存在
+                if (!user.vip) {
+                    user.vip = {};
+                }
+                
+                if (vipType === 'group') {
+                    user.vip.group = true;
+                } else if (vipType === 'matchmaker') {
+                    user.vip.matchmaker = true;
+                }
+                
+                // 更新用户数据
+                this.updateUserData(user);
+                
+                return true;
+            }
+            
+            // 更新用户数据
+            updateUserData(user) {
+                const users = JSON.parse(localStorage.getItem('users') || '[]');
+                const userIndex = users.findIndex(u => u.username === user.username);
+                
+                if (userIndex !== -1) {
+                    users[userIndex] = user;
+                    localStorage.setItem('users', JSON.stringify(users));
+                }
+                
+                // 更新当前用户
+                if (currentUser && currentUser.username === user.username) {
+                    currentUser = user;
+                    localStorage.setItem('currentUser', JSON.stringify(user));
+                }
+            }
+            
+            // 获取VIP服务信息
+            getVipServiceInfo(vipType) {
+                return this.vipTypes[vipType] || null;
+            }
+            
+            // 显示VIP开通提示
+            showVipPrompt(vipType) {
+                const serviceInfo = this.getVipServiceInfo(vipType);
+                if (!serviceInfo) return false;
+                
+                const confirmMessage = `开通${serviceInfo.name}（¥${serviceInfo.price}）\n\n服务包含：\n${serviceInfo.features.join('\n')}\n\n是否确认开通？`;
+                
+                return confirm(confirmMessage);
+            }
+            
+            // 验证VIP访问权限
+            validateVipAccess(user, vipType, featureName) {
+                if (!this.checkUserVipStatus(user, vipType)) {
+                    const serviceInfo = this.getVipServiceInfo(vipType);
+                    alert(`使用${featureName}功能需要开通${serviceInfo.name}`);
+                    return false;
+                }
+                
+                return true;
+            }
+        }
+        
+        // 初始化VIP服务管理器
+        function initVipServiceManager() {
+            if (typeof vipServiceManager === 'undefined') {
+                window.vipServiceManager = new VipServiceManager();
+            }
+        }
+        
+        // 初始化牵线服务反馈页面
+        function initMatchmakerFeedbackPage() {
+            // 绑定返回按钮事件
+            const backToFeedbackCenterBtn = document.getElementById('backToFeedbackCenter');
+            if (backToFeedbackCenterBtn) {
+                backToFeedbackCenterBtn.addEventListener('click', function() {
+                    // 隐藏牵线服务反馈页面，显示反馈中心，并重置导航状态
+                    document.getElementById('matchmakerFeedbackPage').classList.add('hidden');
+                    document.getElementById('feedbackSection').classList.remove('hidden');
+                    
+                    // 重置页面导航状态
+                    document.querySelectorAll('.feedback-page-tab').forEach(tab => {
+                        tab.classList.remove('active');
+                    });
+                    document.querySelector('.feedback-page-tab[data-page="groupFeedbackPage"]').classList.add('active');
+                });
+            }
+            
+            // 绑定登录按钮事件
+            const matchmakerFeedbackLoginBtn = document.getElementById('matchmakerFeedbackLoginBtn');
+            if (matchmakerFeedbackLoginBtn) {
+                matchmakerFeedbackLoginBtn.addEventListener('click', function() {
+                    switchSection('profileSection');
+                });
+            }
+            
+            // 绑定VIP开通按钮事件
+            const openMatchmakerVipPageBtn = document.getElementById('openMatchmakerVipPageBtn');
+            const openMatchmakerVipFromPageBtn = document.getElementById('openMatchmakerVipFromPageBtn');
+            
+            if (openMatchmakerVipPageBtn) {
+                openMatchmakerVipPageBtn.addEventListener('click', function() {
+                    // 切换到VIP开通页面
+                    switchSection('matchmakerSection');
+                });
+            }
+            
+            if (openMatchmakerVipFromPageBtn) {
+                openMatchmakerVipFromPageBtn.addEventListener('click', function() {
+                    // 切换到VIP开通页面
+                    switchSection('matchmakerSection');
+                });
+            }
+            
+            // 绑定筛选和排序事件
+            const filterSelect = document.getElementById('matchmakerFeedbackFilter');
+            const sortSelect = document.getElementById('matchmakerFeedbackSort');
+            
+            if (filterSelect) {
+                filterSelect.addEventListener('change', updateMatchmakerFeedbackList);
+            }
+            
+            if (sortSelect) {
+                sortSelect.addEventListener('change', updateMatchmakerFeedbackList);
+            }
+            
+            // 绑定加载更多按钮事件
+            const loadMoreBtn = document.getElementById('loadMoreMatchmakerFeedback');
+            if (loadMoreBtn) {
+                loadMoreBtn.addEventListener('click', loadMoreMatchmakerFeedback);
+            }
+            
+            // 初始化页面显示
+            updateMatchmakerFeedbackPage();
+        }
+        
+        // 更新牵线服务反馈页面显示
+        function updateMatchmakerFeedbackPage() {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
+            
+            // 始终显示反馈内容区域（未登录用户也可查看）
+            document.getElementById('matchmakerFeedbackPageContent').classList.remove('hidden');
+            
+            // 如果用户已登录，更新VIP状态和反馈列表
+            if (currentUser) {
+                updateMatchmakerVipStatus();
+                updateMatchmakerFeedbackList();
+            }
+        }
+        
+        // 更新VIP状态显示
+        function updateMatchmakerVipStatus() {
+            if (!currentUser || !vipServiceManager) return;
+            
+            const vipStatus = vipServiceManager.checkUserVipStatus(currentUser, 'matchmaker');
+            const vipStatusElement = document.getElementById('matchmakerVipStatus');
+            const vipRestrictedElement = document.getElementById('matchmakerPageVipRestricted');
+            
+            if (vipStatus) {
+                // VIP用户
+                if (vipStatusElement) vipStatusElement.style.display = 'none';
+                if (vipRestrictedElement) vipRestrictedElement.classList.add('hidden');
+            } else {
+                // 非VIP用户
+                if (vipStatusElement) vipStatusElement.style.display = 'flex';
+                if (vipRestrictedElement) vipRestrictedElement.classList.remove('hidden');
+            }
+        }
+        
+        // 更新牵线服务反馈列表
+        function updateMatchmakerFeedbackList() {
+            if (!feedbackCenter || !feedbackCenter.feedbackList) return;
+            
+            const feedbackList = feedbackCenter.feedbackList.filter(feedback => 
+                feedback.type === 'matchmaker'
+            );
+            
+            // 获取筛选和排序条件
+            const filterValue = document.getElementById('matchmakerFeedbackFilter')?.value || 'all';
+            const sortValue = document.getElementById('matchmakerFeedbackSort')?.value || 'newest';
+            
+            // 筛选反馈
+            let filteredFeedback = feedbackList;
+            if (filterValue === 'success') {
+                filteredFeedback = feedbackList.filter(feedback => 
+                    feedback.tags && feedback.tags.includes('success')
+                );
+            } else if (filterValue === 'pending') {
+                filteredFeedback = feedbackList.filter(feedback => 
+                    feedback.tags && feedback.tags.includes('pending')
+                );
+            } else if (filterValue === 'new') {
+                // 最近7天的反馈
+                const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+                filteredFeedback = feedbackList.filter(feedback => 
+                    new Date(feedback.timestamp) > sevenDaysAgo
+                );
+            }
+            
+            // 排序反馈
+            filteredFeedback.sort((a, b) => {
+                if (sortValue === 'newest') {
+                    return new Date(b.timestamp) - new Date(a.timestamp);
+                } else if (sortValue === 'oldest') {
+                    return new Date(a.timestamp) - new Date(b.timestamp);
+                } else if (sortValue === 'rating') {
+                    return (b.rating || 0) - (a.rating || 0);
+                }
+                return 0;
+            });
+            
+            // 更新统计信息
+            updateMatchmakerFeedbackStats(filteredFeedback);
+            
+            // 显示反馈列表
+            displayMatchmakerFeedbackList(filteredFeedback);
+        }
+        
+        // 更新统计信息
+        function updateMatchmakerFeedbackStats(feedbackList) {
+            const totalElement = document.getElementById('totalMatchmakerFeedback');
+            const todayElement = document.getElementById('todayMatchmakerFeedback');
+            const successRateElement = document.getElementById('matchmakerSuccessRate');
+            
+            if (totalElement) {
+                totalElement.textContent = feedbackList.length;
+            }
+            
+            if (todayElement) {
+                const today = new Date().toDateString();
+                const todayFeedback = feedbackList.filter(feedback => 
+                    new Date(feedback.timestamp).toDateString() === today
+                );
+                todayElement.textContent = todayFeedback.length;
+            }
+            
+            if (successRateElement) {
+                const successFeedback = feedbackList.filter(feedback => 
+                    feedback.tags && feedback.tags.includes('success')
+                );
+                const successRate = feedbackList.length > 0 ? 
+                    Math.round((successFeedback.length / feedbackList.length) * 100) : 0;
+                successRateElement.textContent = successRate + '%';
+            }
+        }
+        
+        // 显示牵线服务反馈列表
+        function displayMatchmakerFeedbackList(feedbackList) {
+            const feedbackListElement = document.getElementById('matchmakerFeedbackPageList');
+            if (!feedbackListElement) return;
+            
+            // 清空现有内容
+            feedbackListElement.innerHTML = '';
+            
+            // 显示反馈项
+            feedbackList.forEach(feedback => {
+                const feedbackItem = createMatchmakerFeedbackItem(feedback);
+                feedbackListElement.appendChild(feedbackItem);
+            });
+            
+            // 更新加载更多按钮显示
+            updateLoadMoreButton(feedbackList.length);
+        }
+        
+        // 创建牵线服务反馈项
+        function createMatchmakerFeedbackItem(feedback) {
+            const item = document.createElement('div');
+            item.className = 'matchmaker-feedback-item';
+            
+            // 生成用户头像（使用用户名首字母）
+            const userInitial = feedback.user ? feedback.user.charAt(0).toUpperCase() : '匿';
+            
+            // 生成标签HTML
+            const tagsHtml = feedback.tags ? feedback.tags.map(tag => 
+                `<span class="feedback-tag">${tag}</span>`
+            ).join('') : '';
+            
+            // 生成评分HTML
+            const ratingHtml = feedback.rating ? 
+                `<div class="feedback-rating">${'★'.repeat(feedback.rating)}${'☆'.repeat(5 - feedback.rating)}</div>` : '';
+            
+            item.innerHTML = `
+                <div class="feedback-item-header">
+                    <div class="feedback-user-info">
+                        <div class="feedback-user-avatar">${userInitial}</div>
+                        <div class="feedback-user-name">${feedback.user || '匿名用户'}</div>
+                    </div>
+                    <div class="feedback-date">${feedback.timestamp}</div>
+                </div>
+                <div class="feedback-content">${feedback.content}</div>
+                ${ratingHtml}
+                <div class="feedback-tags">${tagsHtml}</div>
+            `;
+            
+            return item;
+        }
+        
+        // 更新加载更多按钮显示
+        function updateLoadMoreButton(currentCount) {
+            const loadMoreElement = document.getElementById('matchmakerFeedbackLoadMore');
+            if (!loadMoreElement) return;
+            
+            // 这里可以添加逻辑来控制是否显示加载更多按钮
+            // 目前暂时显示所有内容，不实现分页
+            loadMoreElement.style.display = 'none';
+        }
+        
+        // 加载更多牵线服务反馈
+        function loadMoreMatchmakerFeedback() {
+            // 这里可以实现分页加载逻辑
+            // 目前暂时不实现分页
+        }
+        
+        // 初始化群聊服务反馈页面
+        function initGroupFeedbackPage() {
+            // 绑定返回按钮事件
+            const backToFeedbackCenterBtn = document.getElementById('backToFeedbackCenterFromGroup');
+            if (backToFeedbackCenterBtn) {
+                backToFeedbackCenterBtn.addEventListener('click', function() {
+                    // 隐藏群聊服务反馈页面，显示反馈中心，并重置导航状态
+                    document.getElementById('groupFeedbackPage').classList.add('hidden');
+                    document.getElementById('feedbackSection').classList.remove('hidden');
+                    
+                    // 重置页面导航状态
+                    document.querySelectorAll('.feedback-page-tab').forEach(tab => {
+                        tab.classList.remove('active');
+                    });
+                    document.querySelector('.feedback-page-tab[data-page="groupFeedbackPage"]').classList.add('active');
+                });
+            }
+            
+            // 绑定登录按钮事件
+            const groupFeedbackLoginBtn = document.getElementById('groupFeedbackLoginBtn');
+            if (groupFeedbackLoginBtn) {
+                groupFeedbackLoginBtn.addEventListener('click', function() {
+                    switchSection('profileSection');
+                });
+            }
+            
+            // 绑定VIP开通按钮事件
+            const openGroupVipPageBtn = document.getElementById('openGroupVipPageBtn');
+            const openGroupVipFromPageBtn = document.getElementById('openGroupVipFromPageBtn');
+            
+            if (openGroupVipPageBtn) {
+                openGroupVipPageBtn.addEventListener('click', function() {
+                    // 切换到VIP开通页面
+                    switchSection('matchmakerSection');
+                });
+            }
+            
+            if (openGroupVipFromPageBtn) {
+                openGroupVipFromPageBtn.addEventListener('click', function() {
+                    // 切换到VIP开通页面
+                    switchSection('matchmakerSection');
+                });
+            }
+            
+            // 绑定筛选和排序事件
+            const filterSelect = document.getElementById('groupFeedbackFilter');
+            const sortSelect = document.getElementById('groupFeedbackSort');
+            
+            if (filterSelect) {
+                filterSelect.addEventListener('change', updateGroupFeedbackList);
+            }
+            
+            if (sortSelect) {
+                sortSelect.addEventListener('change', updateGroupFeedbackList);
+            }
+            
+            // 绑定加载更多按钮事件
+            const loadMoreBtn = document.getElementById('loadMoreGroupFeedback');
+            if (loadMoreBtn) {
+                loadMoreBtn.addEventListener('click', loadMoreGroupFeedback);
+            }
+            
+            // 初始化页面显示
+            updateGroupFeedbackPage();
+        }
+        
+        // 更新群聊服务反馈页面显示
+        function updateGroupFeedbackPage() {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
+            
+            // 始终显示反馈内容区域（未登录用户也可查看）
+            document.getElementById('groupFeedbackPageContent').classList.remove('hidden');
+            
+            // 如果用户已登录，更新VIP状态和反馈列表
+            if (currentUser) {
+                updateGroupVipStatus();
+                updateGroupFeedbackList();
+            }
+        }
+        
+        // 更新VIP状态显示
+        function updateGroupVipStatus() {
+            if (!currentUser || !vipServiceManager) return;
+            
+            const vipStatus = vipServiceManager.checkUserVipStatus(currentUser, 'group');
+            const vipStatusElement = document.getElementById('groupVipStatus');
+            const vipRestrictedElement = document.getElementById('groupPageVipRestricted');
+            
+            if (vipStatus) {
+                // VIP用户
+                if (vipStatusElement) vipStatusElement.style.display = 'none';
+                if (vipRestrictedElement) vipRestrictedElement.classList.add('hidden');
+            } else {
+                // 非VIP用户
+                if (vipStatusElement) vipStatusElement.style.display = 'flex';
+                if (vipRestrictedElement) vipRestrictedElement.classList.remove('hidden');
+            }
+        }
+        
+        // 更新群聊服务反馈列表
+        function updateGroupFeedbackList() {
+            if (!feedbackCenter || !feedbackCenter.feedbackList) return;
+            
+            const feedbackList = feedbackCenter.feedbackList.filter(feedback => 
+                feedback.type === 'group'
+            );
+            
+            // 获取筛选和排序条件
+            const filterValue = document.getElementById('groupFeedbackFilter')?.value || 'all';
+            const sortValue = document.getElementById('groupFeedbackSort')?.value || 'newest';
+            
+            // 筛选反馈
+            let filteredFeedback = feedbackList;
+            if (filterValue === 'success') {
+                filteredFeedback = feedbackList.filter(feedback => 
+                    feedback.tags && feedback.tags.includes('success')
+                );
+            } else if (filterValue === 'pending') {
+                filteredFeedback = feedbackList.filter(feedback => 
+                    feedback.tags && feedback.tags.includes('pending')
+                );
+            } else if (filterValue === 'new') {
+                // 最近7天的反馈
+                const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+                filteredFeedback = feedbackList.filter(feedback => 
+                    new Date(feedback.timestamp) > sevenDaysAgo
+                );
+            }
+            
+            // 排序反馈
+            filteredFeedback.sort((a, b) => {
+                if (sortValue === 'newest') {
+                    return new Date(b.timestamp) - new Date(a.timestamp);
+                } else if (sortValue === 'oldest') {
+                    return new Date(a.timestamp) - new Date(b.timestamp);
+                } else if (sortValue === 'rating') {
+                    return (b.rating || 0) - (a.rating || 0);
+                }
+                return 0;
+            });
+            
+            // 更新统计信息
+            updateGroupFeedbackStats(filteredFeedback);
+            
+            // 显示反馈列表
+            displayGroupFeedbackList(filteredFeedback);
+        }
+        
+        // 更新统计信息
+        function updateGroupFeedbackStats(feedbackList) {
+            const totalElement = document.getElementById('totalGroupFeedback');
+            const todayElement = document.getElementById('todayGroupFeedback');
+            const successRateElement = document.getElementById('groupSuccessRate');
+            
+            if (totalElement) {
+                totalElement.textContent = feedbackList.length;
+            }
+            
+            if (todayElement) {
+                const today = new Date().toDateString();
+                const todayFeedback = feedbackList.filter(feedback => 
+                    new Date(feedback.timestamp).toDateString() === today
+                );
+                todayElement.textContent = todayFeedback.length;
+            }
+            
+            if (successRateElement) {
+                const successFeedback = feedbackList.filter(feedback => 
+                    feedback.tags && feedback.tags.includes('success')
+                );
+                const successRate = feedbackList.length > 0 ? 
+                    Math.round((successFeedback.length / feedbackList.length) * 100) : 0;
+                successRateElement.textContent = successRate + '%';
+            }
+        }
+        
+        // 显示群聊服务反馈列表
+        function displayGroupFeedbackList(feedbackList) {
+            const feedbackListElement = document.getElementById('groupFeedbackPageList');
+            if (!feedbackListElement) return;
+            
+            // 清空现有内容
+            feedbackListElement.innerHTML = '';
+            
+            // 显示反馈项
+            feedbackList.forEach(feedback => {
+                const feedbackItem = createGroupFeedbackItem(feedback);
+                feedbackListElement.appendChild(feedbackItem);
+            });
+            
+            // 更新加载更多按钮显示
+            updateGroupLoadMoreButton(feedbackList.length);
+        }
+        
+        // 创建群聊服务反馈项
+        function createGroupFeedbackItem(feedback) {
+            const item = document.createElement('div');
+            item.className = 'matchmaker-feedback-item';
+            
+            // 生成用户头像（使用用户名首字母）
+            const userInitial = feedback.user ? feedback.user.charAt(0).toUpperCase() : '匿';
+            
+            // 生成标签HTML
+            const tagsHtml = feedback.tags ? feedback.tags.map(tag => 
+                `<span class="feedback-tag">${tag}</span>`
+            ).join('') : '';
+            
+            // 生成评分HTML
+            const ratingHtml = feedback.rating ? 
+                `<div class="feedback-rating">${'★'.repeat(feedback.rating)}${'☆'.repeat(5 - feedback.rating)}</div>` : '';
+            
+            item.innerHTML = `
+                <div class="feedback-item-header">
+                    <div class="feedback-user-info">
+                        <div class="feedback-user-avatar">${userInitial}</div>
+                        <div class="feedback-user-name">${feedback.user || '匿名用户'}</div>
+                    </div>
+                    <div class="feedback-date">${feedback.timestamp}</div>
+                </div>
+                <div class="feedback-content">${feedback.content}</div>
+                ${ratingHtml}
+                <div class="feedback-tags">${tagsHtml}</div>
+            `;
+            
+            return item;
+        }
+        
+        // 更新加载更多按钮显示
+        function updateGroupLoadMoreButton(currentCount) {
+            const loadMoreElement = document.getElementById('loadMoreGroupFeedback');
+            if (!loadMoreElement) return;
+            
+            // 这里可以添加逻辑来控制是否显示加载更多按钮
+            // 目前暂时显示所有内容，不实现分页
+            loadMoreElement.style.display = 'none';
+        }
+        
+        // 加载更多群聊服务反馈
+        function loadMoreGroupFeedback() {
+            // 这里可以实现分页加载逻辑
+            // 目前暂时不实现分页
+        }
+        
+        // 初始化声明双击事件
+        function initAgreementDoubleClick() {
+            // 注册页面声明双击事件
+            const registerAgreementCheckbox = document.getElementById('registerAgreementCheckbox');
+            const registerAgreementContent = document.getElementById('registerAgreementContent');
+            
+            if (registerAgreementCheckbox && registerAgreementContent) {
+                let clickCount = 0;
+                let clickTimer = null;
+                
+                registerAgreementCheckbox.addEventListener('click', function(e) {
+                    // 允许正常的复选框点击行为，不阻止默认行为
+                    
+                    clickCount++;
+                    
+                    if (clickCount === 1) {
+                        // 第一次点击，设置定时器
+                        clickTimer = setTimeout(() => {
+                            clickCount = 0; // 重置计数
+                        }, 300); // 300毫秒内没有第二次点击则重置
+                    } else if (clickCount === 2) {
+                        // 第二次点击，清除定时器
+                        clearTimeout(clickTimer);
+                        clickCount = 0;
+                        
+                        // 切换声明内容的显示/隐藏
+                        if (registerAgreementContent.classList.contains('hidden')) {
+                            registerAgreementContent.classList.remove('hidden');
+                        } else {
+                            registerAgreementContent.classList.add('hidden');
+                        }
+                    }
+                });
+            }
+            
+            // 登录页面声明双击事件
+            const loginAgreementCheckbox = document.getElementById('loginAgreementCheckbox');
+            const loginAgreementContent = document.getElementById('loginAgreementContent');
+            
+            if (loginAgreementCheckbox && loginAgreementContent) {
+                let clickCount = 0;
+                let clickTimer = null;
+                
+                loginAgreementCheckbox.addEventListener('click', function(e) {
+                    // 允许正常的复选框点击行为，不阻止默认行为
+                    
+                    clickCount++;
+                    
+                    if (clickCount === 1) {
+                        // 第一次点击，设置定时器
+                        clickTimer = setTimeout(() => {
+                            clickCount = 0; // 重置计数
+                        }, 300); // 300毫秒内没有第二次点击则重置
+                    } else if (clickCount === 2) {
+                        // 第二次点击，清除定时器
+                        clearTimeout(clickTimer);
+                        clickCount = 0;
+                        
+                        // 切换声明内容的显示/隐藏
+                        if (loginAgreementContent.classList.contains('hidden')) {
+                            loginAgreementContent.classList.remove('hidden');
+                        } else {
+                            loginAgreementContent.classList.add('hidden');
+                        }
+                    }
+                });
+            }
+        }
+        
         // 初始化
         document.addEventListener('DOMContentLoaded', () => {
             initProvinceList();
@@ -6322,6 +8731,11 @@
             initFeedbackCenter();
             initLoginTypeTabs();
             initOrderSearch();
+            initPhoneValidation();
+            initVipServiceManager();
+            initMatchmakerFeedbackPage();
+            initGroupFeedbackPage();
+            initAgreementDoubleClick();
         });
     </script>
 </body>
