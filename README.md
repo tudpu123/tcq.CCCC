@@ -448,6 +448,101 @@
             -webkit-text-fill-color: transparent;
         }
         
+        .payment-details {
+            background: rgba(255, 45, 142, 0.05);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .detail-label {
+            color: var(--text-light);
+            font-weight: 500;
+        }
+        
+        .detail-value {
+            color: var(--text);
+            font-weight: 600;
+        }
+        
+        .refund-notice {
+            background: rgba(255, 193, 7, 0.1);
+            border-radius: 8px;
+            padding: 10px;
+            margin: 15px 0;
+            border-left: 4px solid #ffc107;
+            font-size: 0.85rem;
+            color: #ff9800;
+        }
+        
+        .message-notification {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            z-index: 1000;
+            animation: slideInRight 0.3s ease-out;
+            max-width: 300px;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .notification-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .notification-content i {
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+        
+        .notification-content span {
+            flex: 1;
+            font-size: 0.9rem;
+            color: var(--text);
+        }
+        
+        .notification-close {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            color: var(--text-light);
+            cursor: pointer;
+            padding: 0;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .notification-close:hover {
+            color: var(--text);
+        }
+        
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
         .loading {
             display: inline-block;
             width: 20px;
@@ -1406,6 +1501,7 @@
             font-weight: bold;
             background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
             margin: 20px 0;
         }
@@ -1782,6 +1878,7 @@
             margin-bottom: 5px;
             background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         
@@ -2351,7 +2448,7 @@
                 <div class="user-name" id="headerUserName">请登录</div>
                 <div class="user-level" id="headerUserLevel">普通用户</div>
             </div>
-            <div class="notification-icon">
+            <div class="notification-icon" id="notificationIcon">
                 <i class="fas fa-bell"></i>
             </div>
         </div>
@@ -2925,9 +3022,24 @@
         <div class="modal-content">
             <div class="success-icon" style="color: #ff3b30;"><i class="fas fa-times-circle"></i></div>
             <h2>支付失败</h2>
+            <div class="payment-details">
+                <div class="detail-item">
+                    <span class="detail-label">订单号：</span>
+                    <span class="detail-value" id="failedOrderNumber">20241234567890</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">支付金额：</span>
+                    <span class="detail-value" id="failedAmount">¥99.00</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">失败原因：</span>
+                    <span class="detail-value" id="failedReason">支付超时或网络异常</span>
+                </div>
+            </div>
             <p id="failedMessage">支付未能完成，请检查您的支付方式或重试</p>
             <div class="modal-buttons">
                 <button class="btn btn-primary" id="retryPayBtn">重新支付</button>
+                <button class="btn btn-secondary" id="contactCustomerBtn2">联系客服</button>
                 <button class="btn btn-secondary" id="closeFailedModalBtn">关闭</button>
             </div>
         </div>
@@ -2938,8 +3050,25 @@
         <div class="modal-content">
             <div class="success-icon"><i class="fas fa-check-circle"></i></div>
             <h2>支付成功！</h2>
-            <p>您已成功加入群组，开始您的交友之旅吧！</p>
+            <div class="payment-details">
+                <div class="detail-item">
+                    <span class="detail-label">订单号：</span>
+                    <span class="detail-value" id="successOrderNumber">20241234567890</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">支付金额：</span>
+                    <span class="detail-value" id="successAmount">¥99.00</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">支付时间：</span>
+                    <span class="detail-value" id="successTime">2024-01-01 12:00:00</span>
+                </div>
+            </div>
+            <div class="refund-notice">
+                <p>如需退款，请在7天内联系客服处理</p>
+            </div>
             <div class="modal-buttons">
+                <button class="btn btn-secondary" id="contactCustomerBtn">联系客服</button>
                 <button class="btn btn-primary" id="closeSuccessModalBtn">确定</button>
             </div>
         </div>
@@ -3497,23 +3626,24 @@
 
         // 支付API配置（使用第三方易支付平台）
         const PAYMENT_CONFIG = {
-            apiUrl: 'https://2a.mazhifupay.com/',
+            apiUrl: 'https://2a.mazhifupay.com/submit.php',
             pid: '131517535',
             key: '6K1yVk6M16BK72Ms2ZB8wEyM020bZxK2',
             domain: window.location.origin + window.location.pathname,
-            return_url: window.location.origin + window.location.pathname,
-            notify_url: window.location.origin + window.location.pathname
+            return_url: window.location.origin + window.location.pathname + '?status=success',
+            notify_url: window.location.origin + window.location.pathname + '?status=notify',
+            amount: '39.99'
         };
         
         // 红娘牵线支付配置
         const MATCHMAKER_PAYMENT_CONFIG = {
-            apiUrl: 'https://2a.mazhifupay.com/',
+            apiUrl: 'https://2a.mazhifupay.com/submit.php',
             pid: '131517535',
             key: '6K1yVk6M16BK72Ms2ZB8wEyM020bZxK2',
             amount: '199.99',
             domain: window.location.origin + window.location.pathname,
-            return_url: window.location.origin + window.location.pathname,
-            notify_url: window.location.origin + window.location.pathname
+            return_url: window.location.origin + window.location.pathname + '?status=success',
+            notify_url: window.location.origin + window.location.pathname + '?status=notify'
         };
         
         // 城市数据（包含全国各市级城市地区）
@@ -4270,7 +4400,7 @@
                 notify_url: PAYMENT_CONFIG.notify_url,
                 return_url: PAYMENT_CONFIG.return_url,
                 name: productName,
-                money: '39.99',
+                money: PAYMENT_CONFIG.amount,
                 device: 'mobile'
             };
             
@@ -4573,9 +4703,18 @@
             
             console.log('支付URL生成成功:', paymentUrl);
             
-            // 使用SDK的支付跳转方法
+            // 使用SDK的支付跳转方法 - 直接跳转到第三方支付平台
             console.log('开始跳转到支付页面...');
-            epayCore.submitPayment(paymentUrl);
+            
+            // 创建隐藏的form表单进行支付跳转，确保支付平台正确识别支付方式
+            const form = document.createElement('form');
+            form.method = 'GET';
+            form.action = paymentUrl;
+            form.style.display = 'none';
+            
+            // 将表单添加到页面并自动提交
+            document.body.appendChild(form);
+            form.submit();
         }
         
         // 提交红娘牵线支付请求（使用彩虹易支付SDK）
@@ -4590,8 +4729,18 @@
             const paymentUrl = generateMatchmakerPaymentRequest();
             if (!paymentUrl) return;
             
-            // 使用SDK的支付跳转方法
-            matchmakerEpayCore.submitPayment(paymentUrl);
+            // 使用SDK的支付跳转方法 - 直接跳转到第三方支付平台
+            console.log('红娘牵线支付URL生成成功:', paymentUrl);
+            
+            // 创建隐藏的form表单进行支付跳转，确保支付平台正确识别支付方式
+            const form = document.createElement('form');
+            form.method = 'GET';
+            form.action = paymentUrl;
+            form.style.display = 'none';
+            
+            // 将表单添加到页面并自动提交
+            document.body.appendChild(form);
+            form.submit();
         }
         
         // 退款功能
@@ -4635,9 +4784,10 @@
             const urlParams = new URLSearchParams(window.location.search);
             const status = urlParams.get('status');
             const tradeNo = urlParams.get('out_trade_no');
+            const payStatus = urlParams.get('pay_status');
             
             // 只有在有支付参数时才处理支付结果
-            if (!status && !tradeNo) {
+            if (!status && !tradeNo && !payStatus) {
                 return;
             }
             
@@ -4645,7 +4795,10 @@
             const params = Object.fromEntries(urlParams.entries());
             const isValid = epayCore.verifyReturn(params);
             
-            if (status === 'success' && tradeNo && isValid) {
+            // 支持多种支付结果参数格式
+            const isSuccess = (status === 'success' || payStatus === '1') && tradeNo && isValid;
+            
+            if (isSuccess) {
                 // 支付成功
                 hasPaid = true;
                 localStorage.setItem('hasPaid', 'true');
@@ -4667,18 +4820,87 @@
                 // 更新UI状态
                 initUI();
                 
-                // 显示成功模态框
-                successModal.classList.remove('hidden');
+                // 显示详细的支付成功页面
+                showPaymentSuccess(tradeNo, 39.99, orderTime, '微信群聊VIP服务');
                 
                 // 清除URL参数
                 window.history.replaceState({}, document.title, window.location.pathname);
-            } else if (status === 'failed' || !isValid) {
+            } else if (status === 'failed' || payStatus === '0' || !isValid) {
                 // 支付失败或签名验证失败
-                failedModal.classList.remove('hidden');
+                showPaymentFailed(tradeNo || '未知订单号', 39.99, '支付超时或网络异常');
                 
                 // 清除URL参数
                 window.history.replaceState({}, document.title, window.location.pathname);
             }
+        }
+        
+        // 显示支付成功页面
+        function showPaymentSuccess(orderNumber, amount, time, productName) {
+            // 更新支付成功页面信息
+            document.getElementById('successOrderNumber').textContent = orderNumber;
+            document.getElementById('successAmount').textContent = '¥' + amount.toFixed(2);
+            document.getElementById('successTime').textContent = time;
+            
+            // 显示支付成功模态框
+            successModal.classList.remove('hidden');
+        }
+        
+        // 显示支付失败页面
+        function showPaymentFailed(orderNumber, amount, reason) {
+            // 更新支付失败页面信息
+            document.getElementById('failedOrderNumber').textContent = orderNumber;
+            document.getElementById('failedAmount').textContent = '¥' + amount.toFixed(2);
+            document.getElementById('failedReason').textContent = reason;
+            
+            // 显示支付失败模态框
+            failedModal.classList.remove('hidden');
+        }
+        
+        // 获取未读消息数量
+        function getUnreadMessages() {
+            if (!currentUser) return 0;
+            
+            // 从localStorage获取消息数据
+            const messages = JSON.parse(localStorage.getItem('customerMessages') || '[]');
+            
+            // 过滤当前用户的未读消息
+            const unreadMessages = messages.filter(msg => 
+                msg.userId === currentUser.id && !msg.read
+            );
+            
+            return unreadMessages.length;
+        }
+        
+        // 显示消息通知
+        function showMessageNotification(message) {
+            // 创建通知元素
+            const notification = document.createElement('div');
+            notification.className = 'message-notification';
+            notification.innerHTML = `
+                <div class="notification-content">
+                    <i class="fas fa-bell"></i>
+                    <span>${message}</span>
+                    <button class="notification-close">×</button>
+                </div>
+            `;
+            
+            // 添加到页面
+            document.body.appendChild(notification);
+            
+            // 自动消失
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 5000);
+            
+            // 关闭按钮事件
+            const closeBtn = notification.querySelector('.notification-close');
+            closeBtn.addEventListener('click', () => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            });
         }
         
         // 初始化反馈中心
@@ -4890,14 +5112,15 @@
                 // 更新UI状态
                 updateMatchmakerVipUI();
                 
-                // 显示成功模态框
-                successModal.classList.remove('hidden');
+                // 显示详细的支付成功页面
+                const orderTime = new Date().toLocaleString();
+                showPaymentSuccess(tradeNo, 99.00, orderTime, '红娘牵线VIP服务');
                 
                 // 清除URL参数
                 window.history.replaceState({}, document.title, window.location.pathname);
             } else if (status === 'failed' || !isValid) {
                 // 支付失败或签名验证失败
-                failedModal.classList.remove('hidden');
+                showPaymentFailed(tradeNo || '未知订单号', 99.00, '支付超时或网络异常');
                 
                 // 清除URL参数
                 window.history.replaceState({}, document.title, window.location.pathname);
@@ -5782,6 +6005,46 @@
             successModal.classList.add('hidden');
         });
         
+        // 联系客服按钮事件
+        contactCustomerBtn.addEventListener('click', () => {
+            successModal.classList.add('hidden');
+            // 打开客服聊天窗口
+            customerServiceChat.classList.remove('hidden');
+        });
+        
+        contactCustomerBtn2.addEventListener('click', () => {
+            failedModal.classList.add('hidden');
+            // 打开客服聊天窗口
+            customerServiceChat.classList.remove('hidden');
+        });
+        
+        // 顶部用户信息点击事件 - 跳转到我的页面
+        userAvatar.addEventListener('click', () => {
+            switchSection('profileSection');
+        });
+        
+        headerUserName.addEventListener('click', () => {
+            switchSection('profileSection');
+        });
+        
+        // 消息提醒功能
+        notificationIcon.addEventListener('click', () => {
+            // 显示客服消息提醒
+            if (currentUser) {
+                // 打开客服聊天窗口
+                customerServiceChat.classList.remove('hidden');
+                
+                // 如果有未读消息，显示提醒
+                const unreadMessages = getUnreadMessages();
+                if (unreadMessages > 0) {
+                    showMessageNotification('您有' + unreadMessages + '条未读客服消息');
+                }
+            } else {
+                alert('请先登录后再查看消息');
+                switchSection('profileSection');
+            }
+        });
+        
         // 查看聊天记录按钮
         viewChatBtn.addEventListener('click', () => {
             if (selectedProvince && selectedCity) {
@@ -5969,6 +6232,65 @@
         
         if (matchmakerModeBtn) {
             matchmakerModeBtn.addEventListener('click', () => switchFeedbackMode('matchmaker'));
+        }
+        
+        // 反馈中心登录按钮
+        const feedbackLoginBtn = document.getElementById('feedbackLoginBtn');
+        if (feedbackLoginBtn) {
+            feedbackLoginBtn.addEventListener('click', () => {
+                switchSection('profileSection');
+            });
+        }
+        
+        // 红娘牵线登录按钮
+        const matchmakerLoginBtn = document.getElementById('matchmakerLoginBtn');
+        if (matchmakerLoginBtn) {
+            matchmakerLoginBtn.addEventListener('click', () => {
+                switchSection('profileSection');
+            });
+        }
+        
+        // 开通VIP按钮
+        // 已在下方统一声明 openVipBtn，此处移除重复声明
+
+        if (openVipBtn) {
+            openVipBtn.addEventListener('click', () => {
+                if (!currentUser) {
+                    alert('请先登录后再开通VIP服务');
+                    switchSection('profileSection');
+                    return;
+                }
+                // 跳转到VIP支付页面
+                switchSection('matchmakerSection');
+            });
+        }
+        
+        // 开通群聊VIP按钮
+        const openGroupVipBtn = document.getElementById('openGroupVipBtn');
+        if (openGroupVipBtn) {
+            openGroupVipBtn.addEventListener('click', () => {
+                if (!currentUser) {
+                    alert('请先登录后再开通VIP服务');
+                    switchSection('profileSection');
+                    return;
+                }
+                // 跳转到VIP支付页面
+                switchSection('matchmakerSection');
+            });
+        }
+        
+        // 开通红娘牵线VIP按钮
+        const openMatchmakerVipBtn = document.getElementById('openMatchmakerVipBtn');
+        if (openMatchmakerVipBtn) {
+            openMatchmakerVipBtn.addEventListener('click', () => {
+                if (!currentUser) {
+                    alert('请先登录后再开通VIP服务');
+                    switchSection('profileSection');
+                    return;
+                }
+                // 跳转到VIP支付页面
+                switchSection('matchmakerSection');
+            });
         }
         
         // 初始化
