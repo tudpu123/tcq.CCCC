@@ -176,6 +176,7 @@
             margin-right: 10px;
             color: var(--primary);
             background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -270,6 +271,7 @@
             font-size: 2.5rem;
             font-weight: bold;
             background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin: 15px 0;
@@ -441,6 +443,7 @@
             color: var(--primary);
             margin-bottom: 15px;
             background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -2734,9 +2737,375 @@
     </div>
 
     <script>
-        // 支付API配置
+        // 彩虹易支付SDK类
+        class EpayCore {
+            constructor(config) {
+                this.pid = config.pid;
+                this.key = config.key;
+                this.submitUrl = config.apiUrl + 'submit.php';
+                this.mapiUrl = config.apiUrl + 'mapi.php';
+                this.apiUrl = config.apiUrl + 'api.php';
+                this.signType = 'MD5';
+                
+                // 调试信息
+                console.log('EpayCore配置:', {
+                    pid: this.pid,
+                    key: this.key,
+                    submitUrl: this.submitUrl,
+                    mapiUrl: this.mapiUrl,
+                    apiUrl: this.apiUrl
+                });
+            }
+
+            // 发起支付（页面跳转）
+            pagePay(param, button = '正在跳转') {
+                const params = this.buildRequestParam(param);
+                
+                let html = '<form id="dopay" action="' + this.submitUrl + '" method="post">';
+                for (const key in params) {
+                    if (params.hasOwnProperty(key)) {
+                        html += '<input type="hidden" name="' + key + '" value="' + params[key] + '"/>';
+                    }
+                }
+                html += '<input type="submit" value="' + button + '"><\/form><script>document.getElementById("dopay").submit();<\/script>';
+                
+                return html;
+            }
+
+            // 发起支付（获取链接）
+            getPayLink(param) {
+                const params = this.buildRequestParam(param);
+                const url = this.submitUrl + '?' + new URLSearchParams(params).toString();
+                return url;
+            }
+
+            // 发起支付（页面跳转）
+            submitPayment(paymentUrl) {
+                // 直接跳转到支付页面
+                window.location.href = paymentUrl;
+            }
+
+            // 异步回调验证
+            verifyNotify(getParams) {
+                if (!getParams || Object.keys(getParams).length === 0) return false;
+                
+                const sign = this.getSign(getParams);
+                return sign === getParams.sign;
+            }
+
+            // 同步回调验证
+            verifyReturn(getParams) {
+                if (!getParams || Object.keys(getParams).length === 0) return false;
+                
+                const sign = this.getSign(getParams);
+                return sign === getParams.sign;
+            }
+
+            // 查询订单支付状态
+            async orderStatus(tradeNo) {
+                const result = await this.queryOrder(tradeNo);
+                return result.status === 1;
+            }
+
+            // 查询订单
+            async queryOrder(tradeNo) {
+                const url = this.apiUrl + '?act=order&pid=' + this.pid + '&key=' + this.key + '&trade_no=' + tradeNo;
+                const response = await this.getHttpResponse(url);
+                return JSON.parse(response);
+            }
+
+            // 订单退款
+            async refund(tradeNo, money) {
+                const url = this.apiUrl + '?act=refund';
+                const postData = 'pid=' + this.pid + '&key=' + this.key + '&trade_no=' + tradeNo + '&money=' + money;
+                const response = await this.getHttpResponse(url, postData);
+                return JSON.parse(response);
+            }
+
+            // 私有方法
+            buildRequestParam(param) {
+                const mysign = this.getSign(param);
+                param.sign = mysign;
+                param.sign_type = this.signType;
+                return param;
+            }
+
+            // 计算签名
+            getSign(param) {
+                const sortedParams = Object.keys(param)
+                    .sort()
+                    .reduce((result, key) => {
+                        if (key !== "sign" && key !== "sign_type" && param[key] !== '') {
+                            result[key] = param[key];
+                        }
+                        return result;
+                    }, {});
+                
+                let signStr = '';
+                for (const key in sortedParams) {
+                    signStr += key + '=' + sortedParams[key] + '&';
+                }
+                signStr = signStr.slice(0, -1); // 去掉最后一个&
+                signStr += this.key;
+                
+                return this.md5(signStr);
+            }
+
+            // MD5加密函数
+            md5(string) {
+                function rotateLeft(lValue, iShiftBits) {
+                    return (lValue << iShiftBits) | (lValue >>> (32 - iShiftBits));
+                }
+
+                function addUnsigned(lX, lY) {
+                    let lX4, lY4, lX8, lY8, lResult;
+                    lX8 = (lX & 0x80000000);
+                    lY8 = (lY & 0x80000000);
+                    lX4 = (lX & 0x40000000);
+                    lY4 = (lY & 0x40000000);
+                    lResult = (lX & 0x3FFFFFFF) + (lY & 0x3FFFFFFF);
+                    if (lX4 & lY4) {
+                        return (lResult ^ 0x80000000 ^ lX8 ^ lY8);
+                    }
+                    if (lX4 | lY4) {
+                        if (lResult & 0x40000000) {
+                            return (lResult ^ 0xC0000000 ^ lX8 ^ lY8);
+                        } else {
+                            return (lResult ^ 0x40000000 ^ lX8 ^ lY8);
+                        }
+                    } else {
+                        return (lResult ^ lX8 ^ lY8);
+                    }
+                }
+
+                function F(x, y, z) { return (x & y) | ((~x) & z); }
+                function G(x, y, z) { return (x & z) | (y & (~z)); }
+                function H(x, y, z) { return (x ^ y ^ z); }
+                function I(x, y, z) { return (y ^ (x | (~z))); }
+
+                function FF(a, b, c, d, x, s, ac) {
+                    a = addUnsigned(a, addUnsigned(addUnsigned(F(b, c, d), x), ac));
+                    return addUnsigned(rotateLeft(a, s), b);
+                }
+
+                function GG(a, b, c, d, x, s, ac) {
+                    a = addUnsigned(a, addUnsigned(addUnsigned(G(b, c, d), x), ac));
+                    return addUnsigned(rotateLeft(a, s), b);
+                }
+
+                function HH(a, b, c, d, x, s, ac) {
+                    a = addUnsigned(a, addUnsigned(addUnsigned(H(b, c, d), x), ac));
+                    return addUnsigned(rotateLeft(a, s), b);
+                }
+
+                function II(a, b, c, d, x, s, ac) {
+                    a = addUnsigned(a, addUnsigned(addUnsigned(I(b, c, d), x), ac));
+                    return addUnsigned(rotateLeft(a, s), b);
+                }
+
+                function convertToWordArray(string) {
+                    let lWordCount;
+                    const lMessageLength = string.length;
+                    const lNumberOfWordsTemp1 = lMessageLength + 8;
+                    const lNumberOfWordsTemp2 = (lNumberOfWordsTemp1 - (lNumberOfWordsTemp1 % 64)) / 64;
+                    const lNumberOfWords = (lNumberOfWordsTemp2 + 1) * 16;
+                    const lWordArray = Array(lNumberOfWords - 1);
+                    let lBytePosition = 0;
+                    let lByteCount = 0;
+                    while (lByteCount < lMessageLength) {
+                        lWordCount = (lByteCount - (lByteCount % 4)) / 4;
+                        lBytePosition = (lByteCount % 4) * 8;
+                        lWordArray[lWordCount] = (lWordArray[lWordCount] | (string.charCodeAt(lByteCount) << lBytePosition));
+                        lByteCount++;
+                    }
+                    lWordCount = (lByteCount - (lByteCount % 4)) / 4;
+                    lBytePosition = (lByteCount % 4) * 8;
+                    lWordArray[lWordCount] = lWordArray[lWordCount] | (0x80 << lBytePosition);
+                    lWordArray[lNumberOfWords - 2] = lMessageLength << 3;
+                    lWordArray[lNumberOfWords - 1] = lMessageLength >>> 29;
+                    return lWordArray;
+                }
+
+                function wordToHex(lValue) {
+                    let WordToHexValue = "", WordToHexValueTemp = "", lByte, lCount;
+                    for (lCount = 0; lCount <= 3; lCount++) {
+                        lByte = (lValue >>> (lCount * 8)) & 255;
+                        WordToHexValueTemp = "0" + lByte.toString(16);
+                        WordToHexValue = WordToHexValue + WordToHexValueTemp.substr(WordToHexValueTemp.length - 2, 2);
+                    }
+                    return WordToHexValue;
+                }
+
+                let x = [];
+                let k, AA, BB, CC, DD, a, b, c, d;
+                const S11 = 7, S12 = 12, S13 = 17, S14 = 22;
+                const S21 = 5, S22 = 9, S23 = 14, S24 = 20;
+                const S31 = 4, S32 = 11, S33 = 16, S34 = 23;
+                const S41 = 6, S42 = 10, S43 = 15, S44 = 21;
+
+                // UTF-8编码函数
+                function Utf8Encode(string) {
+                    string = string.replace(/\r\n/g, "\n");
+                    let utftext = "";
+                    
+                    for (let n = 0; n < string.length; n++) {
+                        const c = string.charCodeAt(n);
+                        
+                        if (c < 128) {
+                            utftext += String.fromCharCode(c);
+                        } else if ((c > 127) && (c < 2048)) {
+                            utftext += String.fromCharCode((c >> 6) | 192);
+                            utftext += String.fromCharCode((c & 63) | 128);
+                        } else {
+                            utftext += String.fromCharCode((c >> 12) | 224);
+                            utftext += String.fromCharCode(((c >> 6) & 63) | 128);
+                            utftext += String.fromCharCode((c & 63) | 128);
+                        }
+                    }
+                    
+                    return utftext;
+                }
+                
+                string = Utf8Encode(string);
+
+                x = convertToWordArray(string);
+
+                a = 0x67452301; b = 0xEFCDAB89; c = 0x98BADCFE; d = 0x10325476;
+
+                for (k = 0; k < x.length; k += 16) {
+                    AA = a; BB = b; CC = c; DD = d;
+                    a = FF(a, b, c, d, x[k + 0], S11, 0xD76AA478);
+                    d = FF(d, a, b, c, x[k + 1], S12, 0xE8C7B756);
+                    c = FF(c, d, a, b, x[k + 2], S13, 0x242070DB);
+                    b = FF(b, c, d, a, x[k + 3], S14, 0xC1BDCEEE);
+                    a = FF(a, b, c, d, x[k + 4], S11, 0xF57C0FAF);
+                    d = FF(d, a, b, c, x[k + 5], S12, 0x4787C62A);
+                    c = FF(c, d, a, b, x[k + 6], S13, 0xA8304613);
+                    b = FF(b, c, d, a, x[k + 7], S14, 0xFD469501);
+                    a = FF(a, b, c, d, x[k + 8], S11, 0x698098D8);
+                    d = FF(d, a, b, c, x[k + 9], S12, 0x8B44F7AF);
+                    c = FF(c, d, a, b, x[k + 10], S13, 0xFFFF5BB1);
+                    b = FF(b, c, d, a, x[k + 11], S14, 0x895CD7BE);
+                    a = FF(a, b, c, d, x[k + 12], S11, 0x6B901122);
+                    d = FF(d, a, b, c, x[k + 13], S12, 0xFD987193);
+                    c = FF(c, d, a, b, x[k + 14], S13, 0xA679438E);
+                    b = FF(b, c, d, a, x[k + 15], S14, 0x49B40821);
+                    a = GG(a, b, c, d, x[k + 1], S21, 0xF61E2562);
+                    d = GG(d, a, b, c, x[k + 6], S22, 0xC040B340);
+                    c = GG(c, d, a, b, x[k + 11], S23, 0x265E5A51);
+                    b = GG(b, c, d, a, x[k + 0], S24, 0xE9B6C7AA);
+                    a = GG(a, b, c, d, x[k + 5], S21, 0xD62F105D);
+                    d = GG(d, a, b, c, x[k + 10], S22, 0x2441453);
+                    c = GG(c, d, a, b, x[k + 15], S23, 0xD8A1E681);
+                    b = GG(b, c, d, a, x[k + 4], S24, 0xE7D3FBC8);
+                    a = GG(a, b, c, d, x[k + 9], S21, 0x21E1CDE6);
+                    d = GG(d, a, b, c, x[k + 14], S22, 0xC33707D6);
+                    c = GG(c, d, a, b, x[k + 3], S23, 0xF4D50D87);
+                    b = GG(b, c, d, a, x[k + 8], S24, 0x455A14ED);
+                    a = GG(a, b, c, d, x[k + 13], S21, 0xA9E3E905);
+                    d = GG(d, a, b, c, x[k + 2], S22, 0xFCEFA3F8);
+                    c = GG(c, d, a, b, x[k + 7], S23, 0x676F02D9);
+                    b = GG(b, c, d, a, x[k + 12], S24, 0x8D2A4C8A);
+                    a = HH(a, b, c, d, x[k + 5], S31, 0xFFFA3942);
+                    d = HH(d, a, b, c, x[k + 8], S32, 0x8771F681);
+                    c = HH(c, d, a, b, x[k + 11], S33, 0x6D9D6122);
+                    b = HH(b, c, d, a, x[k + 14], S34, 0xFDE5380C);
+                    a = HH(a, b, c, d, x[k + 1], S31, 0xA4BEEA44);
+                    d = HH(d, a, b, c, x[k + 4], S32, 0x4BDECFA9);
+                    c = HH(c, d, a, b, x[k + 7], S33, 0xF6BB4B60);
+                    b = HH(b, c, d, a, x[k + 10], S34, 0xBEBFBC70);
+                    a = HH(a, b, c, d, x[k + 13], S31, 0x289B7EC6);
+                    d = HH(d, a, b, c, x[k + 0], S32, 0xEAA127FA);
+                    c = HH(c, d, a, b, x[k + 3], S33, 0xD4EF3085);
+                    b = HH(b, c, d, a, x[k + 6], S34, 0x4881D05);
+                    a = HH(a, b, c, d, x[k + 9], S31, 0xD9D4D039);
+                    d = HH(d, a, b, c, x[k + 12], S32, 0xE6DB99E5);
+                    c = HH(c, d, a, b, x[k + 15], S33, 0x1FA27CF8);
+                    b = HH(b, c, d, a, x[k + 2], S34, 0xC4AC5665);
+                    a = II(a, b, c, d, x[k + 0], S41, 0xF4292244);
+                    d = II(d, a, b, c, x[k + 7], S42, 0x432AFF97);
+                    c = II(c, d, a, b, x[k + 14], S43, 0xAB9423A7);
+                    b = II(b, c, d, a, x[k + 5], S44, 0xFC93A039);
+                    a = II(a, b, c, d, x[k + 12], S41, 0x655B59C3);
+                    d = II(d, a, b, c, x[k + 3], S42, 0x8F0CCC92);
+                    c = II(c, d, a, b, x[k + 10], S43, 0xFFEFF47D);
+                    b = II(b, c, d, a, x[k + 1], S44, 0x85845DD1);
+                    a = II(a, b, c, d, x[k + 8], S41, 0x6FA87E4F);
+                    d = II(d, a, b, c, x[k + 15], S42, 0xFE2CE6E0);
+                    c = II(c, d, a, b, x[k + 6], S43, 0xA3014314);
+                    b = II(b, c, d, a, x[k + 13], S44, 0x4E0811A1);
+                    a = II(a, b, c, d, x[k + 4], S41, 0xF7537E82);
+                    d = II(d, a, b, c, x[k + 11], S42, 0xBD3AF235);
+                    c = II(c, d, a, b, x[k + 2], S43, 0x2AD7D2BB);
+                    b = II(b, c, d, a, x[k + 9], S44, 0xEB86D391);
+                    a = addUnsigned(a, AA);
+                    b = addUnsigned(b, BB);
+                    c = addUnsigned(c, CC);
+                    d = addUnsigned(d, DD);
+                }
+                const temp = wordToHex(a) + wordToHex(b) + wordToHex(c) + wordToHex(d);
+                return temp.toLowerCase();
+            }
+
+            // UTF-8编码
+            Utf8Encode(string) {
+                string = string.replace(/\r\n/g, "\n");
+                let utftext = "";
+                for (let n = 0; n < string.length; n++) {
+                    const c = string.charCodeAt(n);
+                    if (c < 128) {
+                        utftext += String.fromCharCode(c);
+                    } else if ((c > 127) && (c < 2048)) {
+                        utftext += String.fromCharCode((c >> 6) | 192);
+                        utftext += String.fromCharCode((c & 63) | 128);
+                    } else {
+                        utftext += String.fromCharCode((c >> 12) | 224);
+                        utftext += String.fromCharCode(((c >> 6) & 63) | 128);
+                        utftext += String.fromCharCode((c & 63) | 128);
+                    }
+                }
+                return utftext;
+            }
+
+            // HTTP请求
+            async getHttpResponse(url, postData = false, timeout = 10000) {
+                try {
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), timeout);
+                    
+                    const options = {
+                        method: postData ? 'POST' : 'GET',
+                        headers: {
+                            'Accept': '*/*',
+                            'Accept-Language': 'zh-CN,zh;q=0.8',
+                            'Connection': 'close'
+                        },
+                        signal: controller.signal
+                    };
+                    
+                    if (postData) {
+                        options.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+                        options.body = postData;
+                    }
+                    
+                    const response = await fetch(url, options);
+                    clearTimeout(timeoutId);
+                    
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    
+                    return await response.text();
+                } catch (error) {
+                    console.error('HTTP请求失败:', error);
+                    throw error;
+                }
+            }
+        }
+
+        // 支付API配置（使用第三方易支付平台）
         const PAYMENT_CONFIG = {
-            apiUrl: 'https://2a.mazhifupay.com/submit.php',
+            apiUrl: 'https://2a.mazhifupay.com/',
             pid: '131517535',
             key: '6K1yVk6M16BK72Ms2ZB8wEyM020bZxK2',
             domain: window.location.origin + window.location.pathname
@@ -2744,7 +3113,7 @@
         
         // 红娘牵线支付配置
         const MATCHMAKER_PAYMENT_CONFIG = {
-            apiUrl: 'https://2a.mazhifupay.com/submit.php',
+            apiUrl: 'https://2a.mazhifupay.com/',
             pid: '131517535',
             key: '6K1yVk6M16BK72Ms2ZB8wEyM020bZxK2',
             amount: '199.99',
@@ -3480,7 +3849,11 @@
             });
         }
         
-        // 生成支付请求URL
+        // 初始化彩虹易支付SDK
+        const epayCore = new EpayCore(PAYMENT_CONFIG);
+        const matchmakerEpayCore = new EpayCore(MATCHMAKER_PAYMENT_CONFIG);
+        
+        // 生成支付请求URL（使用彩虹易支付SDK）
         function generatePaymentRequest() {
             if (!selectedProvince || !selectedCity) {
                 alert('请先选择城市');
@@ -3502,28 +3875,23 @@
                 return_url: PAYMENT_CONFIG.domain,
                 name: productName,
                 money: '39.99',
-                // 其他可选参数
-                device: 'mobile',
-                sign: '', // 签名将在下面计算
-                sign_type: 'MD5'
+                device: 'mobile'
             };
             
-            // 计算签名
-            params.sign = generateSign(params, PAYMENT_CONFIG.key);
+            // 调试信息
+            console.log('支付参数:', params);
+            console.log('支付配置:', PAYMENT_CONFIG);
             
-            // 构建GET请求URL
-            let url = PAYMENT_CONFIG.apiUrl + '?';
-            for (const key in params) {
-                if (params.hasOwnProperty(key)) {
-                    url += `${key}=${encodeURIComponent(params[key])}&`;
-                }
-            }
-            url = url.slice(0, -1); // 去掉最后一个&
+            // 使用彩虹易支付SDK生成支付链接
+            const paymentUrl = epayCore.getPayLink(params);
             
-            return url;
+            // 调试信息
+            console.log('生成的支付链接:', paymentUrl);
+            
+            return paymentUrl;
         }
         
-        // 生成红娘牵线支付请求URL
+        // 生成红娘牵线支付请求URL（使用彩虹易支付SDK）
         function generateMatchmakerPaymentRequest() {
             // 生成订单号
             const outTradeNo = 'MM' + Date.now() + Math.floor(Math.random() * 1000);
@@ -3540,25 +3908,11 @@
                 return_url: MATCHMAKER_PAYMENT_CONFIG.domain,
                 name: productName,
                 money: MATCHMAKER_PAYMENT_CONFIG.amount,
-                // 其他可选参数
-                device: 'mobile',
-                sign: '', // 签名将在下面计算
-                sign_type: 'MD5'
+                device: 'mobile'
             };
             
-            // 计算签名
-            params.sign = generateSign(params, MATCHMAKER_PAYMENT_CONFIG.key);
-            
-            // 构建GET请求URL
-            let url = MATCHMAKER_PAYMENT_CONFIG.apiUrl + '?';
-            for (const key in params) {
-                if (params.hasOwnProperty(key)) {
-                    url += `${key}=${encodeURIComponent(params[key])}&`;
-                }
-            }
-            url = url.slice(0, -1); // 去掉最后一个&
-            
-            return url;
+            // 使用彩虹易支付SDK生成支付链接
+            return matchmakerEpayCore.getPayLink(params);
         }
         
         // 生成签名 - 优化版本
@@ -3567,9 +3921,9 @@
             const sortedKeys = Object.keys(params).sort();
             let signStr = '';
             
-            sortedKeys.forEach(paramKey => {
-                if (params[paramKey] !== '' && paramKey !== 'sign' && paramKey !== 'sign_type') {
-                    signStr += paramKey + '=' + params[paramKey] + '&';
+            sortedKeys.forEach(key => {
+                if (params[key] !== '' && key !== 'sign' && key !== 'sign_type') {
+                    signStr += key + '=' + params[key] + '&';
                 }
             });
             
@@ -3784,22 +4138,84 @@
             return temp.toLowerCase();
         }
         
-        // 提交支付请求
+        // 提交支付请求（使用彩虹易支付SDK）
         function submitPayment() {
-            const paymentUrl = generatePaymentRequest();
-            if (!paymentUrl) return;
+            // 检查是否已选择城市
+            if (!selectedProvince || !selectedCity) {
+                // 显示更友好的提示，并自动滚动到城市选择区域
+                alert('请先选择您所在的城市，然后才能进行支付');
+                
+                // 自动滚动到城市选择区域
+                const citySection = document.querySelector('.city-section');
+                if (citySection) {
+                    citySection.scrollIntoView({ behavior: 'smooth' });
+                }
+                
+                // 高亮显示城市选择区域
+                const provinceList = document.getElementById('provinceList');
+                if (provinceList) {
+                    provinceList.style.border = '2px solid #ff6b6b';
+                    provinceList.style.boxShadow = '0 0 10px rgba(255, 107, 107, 0.5)';
+                    
+                    // 3秒后移除高亮效果
+                    setTimeout(() => {
+                        provinceList.style.border = '';
+                        provinceList.style.boxShadow = '';
+                    }, 3000);
+                }
+                
+                return;
+            }
             
-            // 直接跳转到支付页面
-            window.location.href = paymentUrl;
+            console.log('开始生成支付请求...');
+            const paymentUrl = generatePaymentRequest();
+            
+            if (!paymentUrl) {
+                console.log('支付请求生成失败');
+                return;
+            }
+            
+            console.log('支付URL生成成功:', paymentUrl);
+            
+            // 使用SDK的支付跳转方法
+            console.log('开始跳转到支付页面...');
+            epayCore.submitPayment(paymentUrl);
         }
         
-        // 提交红娘牵线支付请求
+        // 提交红娘牵线支付请求（使用彩虹易支付SDK）
         function submitMatchmakerPayment() {
+            // 检查是否已选择城市（红娘牵线也需要城市信息）
+            if (!selectedMatchmakerCity) {
+                // 显示更友好的提示，并自动滚动到城市选择区域
+                alert('请先选择您所在的城市，然后才能开通红娘牵线VIP服务');
+                
+                // 自动滚动到红娘牵线城市选择区域
+                const matchmakerCitySection = document.querySelector('.matchmaker-city-section');
+                if (matchmakerCitySection) {
+                    matchmakerCitySection.scrollIntoView({ behavior: 'smooth' });
+                }
+                
+                // 高亮显示城市选择区域
+                const matchmakerCityGrid = document.getElementById('matchmakerCityGrid');
+                if (matchmakerCityGrid) {
+                    matchmakerCityGrid.style.border = '2px solid #ff6b6b';
+                    matchmakerCityGrid.style.boxShadow = '0 0 10px rgba(255, 107, 107, 0.5)';
+                    
+                    // 3秒后移除高亮效果
+                    setTimeout(() => {
+                        matchmakerCityGrid.style.border = '';
+                        matchmakerCityGrid.style.boxShadow = '';
+                    }, 3000);
+                }
+                
+                return;
+            }
+            
             const paymentUrl = generateMatchmakerPaymentRequest();
             if (!paymentUrl) return;
             
-            // 直接跳转到支付页面
-            window.location.href = paymentUrl;
+            // 使用SDK的支付跳转方法
+            matchmakerEpayCore.submitPayment(paymentUrl);
         }
         
         // 退款功能
@@ -3838,13 +4254,17 @@
             });
         }
         
-        // 检查URL参数，处理支付结果
+        // 检查URL参数，处理支付结果（使用彩虹易支付SDK验证）
         function checkPaymentResult() {
             const urlParams = new URLSearchParams(window.location.search);
             const status = urlParams.get('status');
             const tradeNo = urlParams.get('out_trade_no');
             
-            if (status === 'success' && tradeNo) {
+            // 使用SDK验证支付结果签名
+            const params = Object.fromEntries(urlParams.entries());
+            const isValid = epayCore.verifyReturn(params);
+            
+            if (status === 'success' && tradeNo && isValid) {
                 // 支付成功
                 hasPaid = true;
                 localStorage.setItem('hasPaid', 'true');
@@ -3871,8 +4291,8 @@
                 
                 // 清除URL参数
                 window.history.replaceState({}, document.title, window.location.pathname);
-            } else if (status === 'failed') {
-                // 支付失败
+            } else if (status === 'failed' || !isValid) {
+                // 支付失败或签名验证失败
                 failedModal.classList.remove('hidden');
                 
                 // 清除URL参数
@@ -3880,14 +4300,18 @@
             }
         }
         
-        // 检查红娘牵线支付结果
+        // 检查红娘牵线支付结果（使用彩虹易支付SDK验证）
         function checkMatchmakerPaymentResult() {
             const urlParams = new URLSearchParams(window.location.search);
             const status = urlParams.get('status');
             const tradeNo = urlParams.get('out_trade_no');
             const product = urlParams.get('name');
             
-            if (status === 'success' && tradeNo && product === '红娘牵线VIP服务') {
+            // 使用SDK验证支付结果签名
+            const params = Object.fromEntries(urlParams.entries());
+            const isValid = matchmakerEpayCore.verifyReturn(params);
+            
+            if (status === 'success' && tradeNo && product === '红娘牵线VIP服务' && isValid) {
                 // 红娘牵线VIP支付成功
                 hasMatchmakerVip = true;
                 localStorage.setItem('hasMatchmakerVip', 'true');
@@ -3897,6 +4321,12 @@
                 
                 // 显示成功模态框
                 successModal.classList.remove('hidden');
+                
+                // 清除URL参数
+                window.history.replaceState({}, document.title, window.location.pathname);
+            } else if (status === 'failed' || !isValid) {
+                // 支付失败或签名验证失败
+                failedModal.classList.remove('hidden');
                 
                 // 清除URL参数
                 window.history.replaceState({}, document.title, window.location.pathname);
