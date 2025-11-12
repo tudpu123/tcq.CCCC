@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>同城优质交友平台 - 实名认证 · 安全保障</title>
+    <title>微信同城群聊 - 同城交友平台</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* 保留所有原有CSS样式 */
@@ -16,28 +16,34 @@
         }
         
         :root {
-            --primary: #8b5cf6;
-            --primary-light: #a78bfa;
-            --secondary: #7c3aed;
-            --accent: #c4b5fd;
-            --text: #333333;
-            --text-light: #666666;
-            --bg: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            --card-bg: #ffffff;
-            --shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            --success: #10b981;
-            --warning: #f59e0b;
-            --danger: #ef4444;
+            --primary: #818cf8; /* 调淡的蓝紫色 */
+            --primary-light: #a5b4fc;
+            --secondary: #a78bfa;
+            --accent: #60a5fa;
+            --text: #374151; /* 调淡的文本色 */
+            --text-light: #9ca3af;
+            --text-softer: #d1d5db;
+            --text-accent: #6366f1;
+            --bg: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%); /* 保持原背景色 */
+            --card-bg: rgba(255, 255, 255, 0.98);
+            --shadow: 0 8px 30px rgba(129, 140, 248, 0.12); /* 调淡的阴影 */
+            --success: #34d399;
+            --warning: #fbbf24;
+            --danger: #f87171;
         }
         
         body {
             background: var(--bg);
             color: var(--text);
-            line-height: 1.6;
+            line-height: 1.7;
             padding: 0;
             margin: 0;
             min-height: 100vh;
-            font-family: "Microsoft YaHei", "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+            font-family: "PingFang SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+            font-smooth: always;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            letter-spacing: 0.01em; /* 增加一点字间距，提高可读性 */
         }
         
         .container {
@@ -47,16 +53,16 @@
         }
         
         header {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            background: linear-gradient(135deg, #ff6b9d 0%, #c026d3 100%);
             color: white;
             padding: 25px 15px;
             text-align: center;
-            border-radius: 0 0 25px 25px;
-            box-shadow: 0 8px 30px rgba(139, 92, 246, 0.3);
+            border-radius: 0 0 30px 30px;
+            box-shadow: 0 10px 40px rgba(255, 107, 157, 0.4);
             margin-bottom: 25px;
             position: relative;
             overflow: hidden;
-            border-bottom: 3px solid rgba(255, 255, 255, 0.2);
+            border-bottom: 3px solid rgba(255, 255, 255, 0.3);
             backdrop-filter: blur(10px);
         }
         
@@ -67,8 +73,18 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 70%);
             transform: rotate(30deg);
+        }
+        
+        header::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
         }
         
         .user-info {
@@ -138,16 +154,17 @@
         }
         
         .header-content h1 {
-            font-size: 1.6rem;
+            font-size: 1.8rem;
             margin-bottom: 8px;
-            text-shadow: 0 2px 10px rgba(139, 92, 246, 0.5);
+            text-shadow: 0 3px 15px rgba(255, 107, 157, 0.7);
             cursor: pointer;
             transition: all 0.3s ease;
-            background: linear-gradient(135deg, #ff6b9d 0%, #c084fc 50%, #8b5cf6 100%);
+            background: linear-gradient(135deg, #ff87b2 0%, #ff6b9d 50%, #e879f9 100%);
             background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            font-weight: 700;
+            font-weight: 800;
+            letter-spacing: 1px;
         }
         
         .header-content h1:active {
@@ -155,19 +172,21 @@
         }
         
         .header-content p {
-            font-size: 1rem;
-            opacity: 0.9;
-            text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+            font-size: 1.1rem;
+            opacity: 0.95;
+            text-shadow: 0 1px 5px rgba(0,0,0,0.4);
             font-weight: 500;
+            color: #fff;
+            letter-spacing: 0.5px;
         }
         
         .card {
             background: var(--card-bg);
-            border-radius: 16px;
+            border-radius: 20px;
             padding: 24px;
             margin-bottom: 20px;
             box-shadow: var(--shadow);
-            border: 1px solid rgba(139, 92, 246, 0.2);
+            border: 1px solid rgba(255, 107, 157, 0.2);
             transition: all 0.3s ease;
             backdrop-filter: blur(10px);
             position: relative;
@@ -181,29 +200,46 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.1), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 107, 157, 0.15), transparent);
             transition: left 0.5s ease;
+        }
+        
+        .card::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #ff6b9d, #c026d3);
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
         
         .card:hover::before {
             left: 100%;
         }
         
+        .card:hover::after {
+            opacity: 1;
+        }
+        
         .card:hover {
             transform: translateY(-3px);
-            box-shadow: 0 12px 35px rgba(139, 92, 246, 0.3);
-            border-color: rgba(139, 92, 246, 0.4);
+            box-shadow: 0 15px 40px rgba(255, 107, 157, 0.35);
+            border-color: rgba(255, 107, 157, 0.5);
         }
         
         .section-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 20px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 22px;
             color: var(--text);
             display: flex;
             align-items: center;
-            padding-bottom: 10px;
+            padding-bottom: 12px;
             border-bottom: 1px solid rgba(255, 45, 142, 0.1);
+            letter-spacing: -0.5px;
         }
         
         .section-title i {
@@ -213,10 +249,93 @@
             background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            font-size: 1.4rem;
         }
         
         .city-selector {
             position: relative;
+        }
+        
+        /* 城市搜索样式 */
+        .city-search {
+            margin: 15px 0;
+            position: relative;
+        }
+        
+        .search-input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            background-color: #f5f5f5;
+            border-radius: 20px;
+            padding: 0 15px;
+        }
+        
+        .search-input-wrapper i {
+            color: #999;
+            margin-right: 10px;
+        }
+        
+        #citySearchInput {
+            flex: 1;
+            border: none;
+            background: transparent;
+            padding: 10px 0;
+            outline: none;
+            font-size: 14px;
+        }
+        
+        .search-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            max-height: 250px;
+            overflow-y: auto;
+            margin-top: 5px;
+        }
+        
+        .search-result-item {
+            padding: 12px 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #f0f0f0;
+            transition: background-color 0.2s;
+        }
+        
+        .search-result-item:last-child {
+            border-bottom: none;
+        }
+        
+        .search-result-item:hover {
+            background-color: #f8f8f8;
+        }
+        
+        .result-type {
+            background-color: #e0f7fa;
+            color: #006064;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-right: 10px;
+        }
+        
+        .result-name {
+            flex: 1;
+            font-size: 14px;
+        }
+        
+        .result-parent {
+            color: #999;
+            font-size: 12px;
+            background-color: #f5f5f5;
+            padding: 2px 8px;
+            border-radius: 4px;
         }
         
         .province-list {
@@ -439,6 +558,42 @@
         .security-badge i {
             color: var(--success);
             font-size: 1.1rem;
+        }
+        
+        /* 退款保障 */
+        .refund-guarantees {
+            margin: 20px 0;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .guarantee-items {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+        
+        .guarantee-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            margin: 10px;
+        }
+        
+        .guarantee-item i {
+            font-size: 20px;
+            margin-right: 15px;
+            color: var(--primary-color);
+        }
+        
+        .guarantee-item span {
+            color: var(--text-color);
+            font-size: 14px;
         }
         
         .security-footer {
@@ -870,6 +1025,150 @@
             padding-bottom: 70px !important;
         }
         
+        /* 确保导航栏始终在最上层 */
+        #bottomNav {
+            z-index: 1000;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: var(--card-bg);
+            border-top: 1px solid rgba(255, 107, 157, 0.2);
+            box-shadow: 0 -2px 15px rgba(255, 107, 157, 0.15);
+        }
+        
+        /* 文字美化 - 添加渐变文字效果 */
+        .gradient-text {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 600;
+        }
+        
+        /* 文字美化 - 添加发光效果 */
+        .glow-text {
+            text-shadow: 0 0 10px rgba(255, 107, 157, 0.3), 0 0 20px rgba(255, 107, 157, 0.2);
+        }
+        
+        /* 文字美化 - 标题样式增强 */
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 700;
+            margin-bottom: 15px;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, var(--text) 0%, var(--primary) 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        h1 {
+            font-size: 2rem;
+            line-height: 1.2;
+        }
+        
+        h2 {
+            font-size: 1.6rem;
+            line-height: 1.3;
+        }
+        
+        h3 {
+            font-size: 1.4rem;
+            line-height: 1.4;
+        }
+        
+        /* 文字美化 - 正文样式增强 */
+        p {
+            margin-bottom: 15px;
+            color: var(--text);
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+        
+        /* 文字美化 - 链接样式增强 */
+        a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            position: relative;
+        }
+        
+        a:hover {
+            color: var(--secondary);
+            text-shadow: 0 0 5px rgba(255, 107, 157, 0.3);
+        }
+        
+        a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: width 0.3s ease;
+        }
+        
+        a:hover::after {
+            width: 100%;
+        }
+        
+        /* 文字美化 - 按钮文字样式增强 */
+        .btn {
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+        
+        /* 文字美化 - 卡片内文字样式 */
+        .card p {
+            color: var(--text-light);
+        }
+        
+        /* 文字美化 - 添加动画效果 */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animated-text {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+        
+        /* 文字美化 - 强调文字 */
+        .highlight {
+            background: linear-gradient(120deg, #ff9a9e 0%, #fad0c4 100%);
+            background-repeat: no-repeat;
+            background-size: 100% 30%;
+            background-position: 0 90%;
+            padding: 0 4px;
+            border-radius: 4px;
+        }
+        
+        /* 文字美化 - 标签文字 */
+        .tag {
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        
+        /* 文字美化 - 状态文字 */
+        .status-text {
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
         .nav-item {
             display: flex;
             flex-direction: column;
@@ -995,6 +1294,492 @@
             text-align: center;
             padding: 20px;
         }
+
+        /* 牵线服务通知样式 - 全新现代设计 */
+        .modal-content.premium-style {
+            background: transparent;
+            border: none;
+            box-shadow: none;
+        }
+        
+        .matchmaker-notification.modern-notification {
+            background: linear-gradient(135deg, #ffffff, #fff5f5);
+            border-radius: 25px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(255, 102, 130, 0.2);
+            max-width: 550px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid rgba(255, 102, 130, 0.2);
+        }
+        
+        /* 装饰性心形元素 */
+        .notification-decoration {
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            left: -20px;
+            height: 80px;
+            overflow: hidden;
+            z-index: 0;
+        }
+        
+        .heart-decoration {
+            position: absolute;
+            background: rgba(255, 102, 130, 0.08);
+            transform: rotate(45deg);
+            animation: floatUpDown 6s ease-in-out infinite;
+        }
+        
+        .heart-decoration::before,
+        .heart-decoration::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: inherit;
+            border-radius: 50%;
+        }
+        
+        .heart-decoration::before {
+            top: -50%;
+            left: 0;
+        }
+        
+        .heart-decoration::after {
+            top: 0;
+            left: -50%;
+        }
+        
+        .heart-1 {
+            width: 40px;
+            height: 40px;
+            top: 20px;
+            left: 20%;
+            animation-delay: 0s;
+        }
+        
+        .heart-2 {
+            width: 30px;
+            height: 30px;
+            top: 30px;
+            left: 50%;
+            animation-delay: 2s;
+        }
+        
+        .heart-3 {
+            width: 25px;
+            height: 25px;
+            top: 25px;
+            left: 80%;
+            animation-delay: 4s;
+        }
+        
+        /* 标题区域 */
+        .notification-header.modern-header {
+            text-align: center;
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .notification-header.modern-header h2 {
+            font-size: 28px;
+            color: #333;
+            margin: 0 0 10px 0;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        
+        .header-subtitle {
+            font-size: 16px;
+            color: #888;
+            margin: 0;
+            font-weight: 400;
+        }
+        
+        .gold-icon {
+            color: #ffd700;
+            margin-right: 8px;
+            font-size: 24px;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, #ff6b6b, #ff9966);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+        }
+        
+        /* 主要内容区域 */
+        .notification-content.modern-content {
+            position: relative;
+            padding: 20px 0;
+            z-index: 1;
+        }
+        
+        /* 视觉元素 */
+        .notification-visual {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 25px;
+            height: 120px;
+            position: relative;
+        }
+        
+        .visual-container {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .red-heart, .pink-heart, .blue-heart {
+            position: absolute;
+            font-size: 50px;
+        }
+        
+        .red-heart {
+            color: #ff3860;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        .pink-heart {
+            color: #ff7eb3;
+            animation: pulse 2s ease-in-out infinite 0.5s;
+        }
+        
+        .blue-heart {
+            color: #3273dc;
+            animation: pulse 2s ease-in-out infinite 1s;
+        }
+        
+        /* 文字内容 */
+        .notification-message {
+            text-align: center;
+        }
+        
+        .message-text {
+            font-size: 17px;
+            line-height: 1.7;
+            margin: 20px 0;
+        }
+        
+        .romantic-text {
+            color: #444;
+            font-weight: 500;
+        }
+        
+        .greeting {
+            color: #ff6b6b;
+            font-weight: 600;
+        }
+        
+        .highlight {
+            background: linear-gradient(120deg, #ffb347, #ffcc33);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: bold;
+        }
+        
+        /* 服务亮点 */
+        .service-highlights {
+            display: flex;
+            justify-content: space-around;
+            margin: 30px 0;
+            padding: 0 10px;
+        }
+        
+        .highlight-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            width: 30%;
+        }
+        
+        .highlight-item i {
+            font-size: 24px;
+            color: #ff6b6b;
+            margin-bottom: 10px;
+            background: rgba(255, 107, 107, 0.1);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .highlight-item span {
+            font-size: 14px;
+            color: #555;
+            line-height: 1.4;
+        }
+        
+        /* 特别提示文字 */
+        .italic-text {
+            font-style: italic;
+            background: linear-gradient(135deg, #fff5f5, #fff0f0);
+            padding: 15px;
+            border-radius: 15px;
+            margin: 25px auto;
+            max-width: 90%;
+            box-shadow: 0 2px 10px rgba(255, 107, 107, 0.1);
+        }
+        
+        .seductive-text {
+            color: #ff6b6b;
+            position: relative;
+        }
+        
+        .flame-icon {
+            color: #ff6b6b;
+            margin-right: 8px;
+            font-size: 18px;
+        }
+        
+        .love-icon {
+            color: #ff6b6b;
+            margin-left: 8px;
+            font-size: 18px;
+        }
+        
+        .special-text {
+            color: #e84393;
+            font-weight: 600;
+        }
+        
+        .underline {
+            text-decoration: underline;
+            text-decoration-style: wavy;
+            text-decoration-color: #ff6b6b;
+            text-underline-offset: 4px;
+        }
+        
+        /* 免责声明 */
+        .notification-disclaimer {
+            margin-top: 25px;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.03);
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .notification-disclaimer small {
+            color: #999;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+        
+        /* 按钮区域 */
+        .notification-actions.modern-actions {
+            text-align: center;
+            margin-top: 30px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .premium-button {
+            background: linear-gradient(135deg, #ff6b6b, #ff8e53);
+            border: none;
+            color: white;
+            padding: 14px 40px;
+            border-radius: 30px;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+            position: relative;
+            overflow: hidden;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .premium-button:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .premium-button:hover:before {
+            left: 100%;
+        }
+        
+        .premium-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.5);
+        }
+        
+        /* 动画效果 */
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 0.8;
+            }
+        }
+        
+        @keyframes floatUpDown {
+            0%, 100% {
+                transform: translateY(0) rotate(45deg);
+            }
+            50% {
+                transform: translateY(-10px) rotate(45deg);
+            }
+        }
+        
+        .seductive-button {
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(255, 62, 108, 0.4);
+            position: relative;
+        }
+        
+        /* 动画效果定义 */
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            14% { transform: scale(1.3); }
+            28% { transform: scale(1); }
+            42% { transform: scale(1.3); }
+            70% { transform: scale(1); }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        /* 动画类 */
+        .heartbeat {
+            animation: heartbeat 1.2s ease-in-out infinite;
+        }
+        
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+        
+        .seductive-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: all 0.5s ease;
+        }
+        
+        .seductive-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 62, 108, 0.5);
+            background: linear-gradient(45deg, #ff6b81, #ff3e6c);
+        }
+        
+        .seductive-button:hover::before {
+            left: 100%;
+        }
+        
+        .seductive-button:active {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(255, 62, 108, 0.4);
+        }
+
+        .notification-actions .btn-primary:hover {
+            background: linear-gradient(45deg, #ff2a5c, #ff5a71);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 62, 108, 0.4);
+        }
+
+        .notification-actions .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        /* 心跳动画 */
+        @keyframes heartbeat {
+            0% {
+                transform: scale(1);
+            }
+            14% {
+                transform: scale(1.1);
+            }
+            28% {
+                transform: scale(1);
+            }
+            42% {
+                transform: scale(1.1);
+            }
+            70% {
+                transform: scale(1);
+            }
+        }
+        
+        /* 支付过渡页面样式 */
+        .payment-redirect {
+            text-align: center;
+        }
+        
+        .payment-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .countdown-area {
+            margin: 30px 0;
+        }
+        
+        .countdown-area p {
+            font-size: 1.1rem;
+            color: var(--text);
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+        
+        .countdown-area #redirectCountdown {
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 1.3rem;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 5px;
+            transition: width 1s linear;
+            width: 100%;
+        }
         
         .payment-status {
             font-size: 1.1rem;
@@ -1096,6 +1881,55 @@
         
         .feedback-mode-content.active {
             display: block;
+        }
+
+        /* 反馈促销区域样式 */
+        .feedback-promo {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7));
+            border: 2px solid rgba(255, 45, 142, 0.2);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(255, 45, 142, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .feedback-promo:hover {
+            box-shadow: 0 8px 25px rgba(255, 45, 142, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .promo-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            color: white;
+            font-weight: bold;
+            font-size: 12px;
+            margin-bottom: 10px;
+            animation: pulse 2s infinite;
+        }
+
+        .promo-text {
+            font-size: 16px;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .feedback-promo .btn {
+            padding: 10px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .feedback-promo .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(255, 45, 142, 0.4);
         }
         
         .feedback-info {
@@ -2409,13 +3243,19 @@
         }
         
         .matchmaker-card {
-            background: linear-gradient(135deg, #f8f8f8, #f0f0f0);
+            background: #fefefe;
             border-radius: 20px;
-            padding: 20px;
+            padding: 24px;
             margin-bottom: 20px;
             text-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            border: 1px solid rgba(255, 45, 142, 0.1);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .matchmaker-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
         }
         
         .matchmaker-avatar {
@@ -2429,8 +3269,9 @@
             justify-content: center;
             color: white;
             font-size: 2.5rem;
-            box-shadow: 0 8px 20px rgba(255, 45, 142, 0.3);
+            box-shadow: 0 8px 20px rgba(79, 70, 229, 0.3);
             overflow: hidden;
+            border: 4px solid white;
         }
         
         .matchmaker-avatar img {
@@ -2440,9 +3281,10 @@
         }
         
         .matchmaker-name {
-            font-size: 1.4rem;
-            font-weight: 600;
-            margin-bottom: 5px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text);
         }
         
         .matchmaker-info {
@@ -2455,6 +3297,436 @@
         
         .matchmaker-info span {
             margin: 0 10px;
+        }
+        
+        /* VIP开通提示样式 */
+        .matchmaker-vip-prompt {
+            background: linear-gradient(135deg, #fff5f8, #fff0f5);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 1px solid rgba(255, 45, 142, 0.1);
+        }
+        
+        /* 信任徽章样式 */
+        .trust-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+            justify-content: center;
+        }
+        
+        .trust-badges .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 5px 12px;
+            background-color: rgba(255, 45, 142, 0.1);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: var(--primary);
+            transition: all 0.3s ease;
+        }
+        
+        .trust-badges .badge:hover {
+            background-color: rgba(255, 45, 142, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .trust-badges .badge i {
+            margin-right: 5px;
+        }
+        
+        /* 限时优惠样式 */
+        .limited-time-offer {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            color: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(255, 154, 158, 0.3);
+        }
+        
+        .limited-time-offer i {
+            color: #fff0f3;
+            font-size: 1.2rem;
+            margin-right: 8px;
+        }
+        
+        .countdown-timer {
+            margin-top: 8px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            color: #fff0f3;
+        }
+        
+        /* 价格样式 */
+        .matchmaker-payment-amount {
+            position: relative;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        
+        .current-price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .original-price {
+            font-size: 1.2rem;
+            color: #999;
+            text-decoration: line-through;
+            margin-left: 10px;
+        }
+        
+        .discount-tag {
+            background-color: #ff4560;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            margin-left: 10px;
+        }
+        
+        /* 特权特性样式增强 */
+        .payment-feature {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            padding: 8px 15px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .payment-feature:hover {
+            background-color: rgba(255, 45, 142, 0.05);
+            transform: translateX(5px);
+        }
+        
+        .highlight-feature {
+            background: linear-gradient(135deg, rgba(255, 45, 142, 0.1), rgba(255, 45, 142, 0.05));
+            border-left: 3px solid var(--primary);
+        }
+        
+        .payment-feature i {
+            font-size: 1.2rem;
+            margin-right: 12px;
+            width: 24px;
+            text-align: center;
+        }
+        
+        /* 成功案例样式 */
+        .success-stories {
+            margin: 30px 0;
+            padding: 20px;
+            background-color: #fff5f8;
+            border-radius: 12px;
+        }
+        
+        .success-stories h4 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            text-align: center;
+        }
+        
+        .stories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        
+        .story-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+        
+        .story-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .story-text {
+            color: #333;
+            font-style: italic;
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+        
+        .story-author {
+            color: #666;
+            font-size: 0.9rem;
+            text-align: right;
+        }
+        
+        /* 用户评价样式 */
+        .user-reviews {
+            margin: 25px 0;
+            text-align: center;
+        }
+        
+        .review-stats {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .rating {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+        }
+        
+        .stars {
+            color: #ffb400;
+            font-size: 1.8rem;
+            letter-spacing: 3px;
+        }
+        
+        .rating-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .review-count {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .vip-promo-header h3 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+        
+        .vip-promo-header p {
+            color: var(--text-light);
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+        
+        .vip-benefits {
+            margin: 20px 0;
+        }
+        
+        .benefits-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .benefits-list li {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+        }
+        
+        .benefits-list li i {
+            color: var(--primary);
+            margin-right: 10px;
+            margin-top: 2px;
+        }
+        
+        .vip-price {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 25px;
+        }
+        
+        .price-amount {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .price-period {
+            margin-left: 5px;
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+        
+        /* 资料上传表单样式 */
+        .matchmaker-profile-form {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 1px solid rgba(255, 45, 142, 0.1);
+        }
+        
+        .form-header h3 {
+            color: var(--primary);
+            margin-bottom: 8px;
+            font-size: 1.3rem;
+        }
+        
+        .form-header p {
+            color: var(--text-light);
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+        
+        .form-content {
+            text-align: left;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+        
+        .form-group input[type="text"],
+        .form-group input[type="number"],
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            background: white;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        .form-group input[type="file"] {
+            border: none;
+            padding: 5px 0;
+        }
+        
+        .preferences-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .preference-item label {
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+        
+        /* 资料摘要样式 */
+        .matchmaker-profile-summary {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 1px solid rgba(255, 45, 142, 0.1);
+        }
+        
+        .summary-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .summary-header h4 {
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin: 0;
+        }
+        
+        .profile-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+        
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+        }
+        
+        .info-label {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-bottom: 5px;
+        }
+        
+        .info-value {
+            font-weight: 500;
+            color: var(--text-primary);
+            font-size: 1rem;
+        }
+        
+        /* 匹配结果样式 */
+        .matchmaker-match-result {
+            background: linear-gradient(135deg, #f0f9ff, #f0f5ff);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 1px solid rgba(59, 130, 246, 0.1);
+        }
+        
+        .result-header h4 {
+            color: #3b82f6;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+        
+        .match-status {
+            margin: 20px 0;
+        }
+        
+        .status-message {
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+        }
+        
+        .status-tip {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+        
+        /* VIP限制样式 */
+        .vip-restricted {
+            opacity: 0.6;
+            pointer-events: none;
+            position: relative;
+        }
+        
+        .vip-restricted::after {
+            content: 'VIP专享';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--primary);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            font-weight: 500;
         }
         
         .matchmaker-tags {
@@ -2540,13 +3812,13 @@
         
         /* 红娘牵线支付样式 */
         .matchmaker-payment {
-            background: linear-gradient(135deg, #fff5f9 0%, #ffe6f1 100%);
+            background: linear-gradient(135deg, #fefefe 0%, #f9fafb 100%);
             border-radius: 20px;
             padding: 25px;
             margin: 20px 0;
             text-align: center;
-            border: 1px solid rgba(255, 45, 142, 0.1);
-            box-shadow: var(--shadow);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
         }
         
         .matchmaker-payment-title {
@@ -2607,8 +3879,8 @@
         }
         
         .matchmaker-payment-method.active {
-            border-color: var(--primary);
-            background: rgba(255, 45, 142, 0.05);
+            border-color: rgba(79, 70, 229, 0.6);
+            background: rgba(79, 70, 229, 0.03);
         }
         
         .matchmaker-payment-method i {
@@ -2706,13 +3978,13 @@
         
         /* 红娘牵线用户卡片样式优化 */
         .matchmaker-user-card {
-            background: linear-gradient(135deg, #f8f8f8, #f0f0f0);
+            background: linear-gradient(135deg, #fcfcfc, #f8f9fa);
             border-radius: 20px;
             padding: 20px;
             margin-bottom: 20px;
             text-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            border: 1px solid rgba(255, 45, 142, 0.1);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+            border: 1px solid rgba(0, 0, 0, 0.06);
             position: relative;
             cursor: pointer;
             transition: all 0.2s ease;
@@ -2720,6 +3992,48 @@
         
         .matchmaker-user-card:active {
             transform: scale(0.98);
+        }
+
+        /* 男女用户卡片样式区分 */
+        .user-card-male {
+            border: 2px solid rgba(74, 144, 226, 0.6) !important;
+            box-shadow: 0 4px 15px rgba(74, 144, 226, 0.2) !important;
+        }
+
+        .user-card-female {
+            border: 2px solid #e91e63 !important;
+            box-shadow: 0 4px 15px rgba(233, 30, 99, 0.3) !important;
+        }
+
+        /* 性别徽章样式 */
+        .gender-badge {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            padding: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        /* 性别图标样式 */
+        .gender-icon {
+            font-size: 16px;
+        }
+
+        .male-icon {
+            color: #4a90e2;
+        }
+
+        .female-icon {
+            color: #e91e63;
+        }
+
+        /* 性别文字样式 */
+        .gender-text {
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
         
         .matchmaker-user-avatar {
@@ -2814,12 +4128,12 @@
         }
         
         .matchmaker-user-list-item {
-            background: linear-gradient(135deg, #f8f8f8, #f0f0f0);
+            background: var(--card-bg);
             border-radius: 20px;
             padding: 20px;
             text-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            border: 1px solid rgba(255, 45, 142, 0.1);
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(79, 70, 229, 0.1);
             transition: all 0.3s;
             cursor: pointer;
             transition: all 0.2s ease;
@@ -2831,7 +4145,7 @@
         
         .matchmaker-user-list-item:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(255, 45, 142, 0.2);
+            box-shadow: 0 12px 40px rgba(79, 70, 229, 0.2);
         }
         
         .matchmaker-user-list-avatar {
@@ -2840,7 +4154,8 @@
             border-radius: 50%;
             margin: 0 auto 10px;
             overflow: hidden;
-            border: 2px solid var(--primary);
+            border: 3px solid var(--primary);
+            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
         }
         
         .matchmaker-user-list-avatar img {
@@ -2850,9 +4165,10 @@
         }
         
         .matchmaker-user-list-name {
-            font-size: 1.2rem;
-            font-weight: 600;
+            font-size: 1.3rem;
+            font-weight: 700;
             margin-bottom: 5px;
+            color: var(--text);
         }
         
         .matchmaker-user-list-info {
@@ -2959,45 +4275,153 @@
         /* 新增：城市选择区域样式 */
         .matchmaker-city-selector {
             margin: 20px 0;
-            padding: 15px;
-            background: rgba(255, 45, 142, 0.05);
-            border-radius: 15px;
-            border: 1px solid rgba(255, 45, 142, 0.1);
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 245, 250, 0.95));
+            border-radius: 20px;
+            border: 1px solid rgba(255, 105, 180, 0.2);
+            box-shadow: 0 4px 15px rgba(255, 105, 180, 0.1);
+            backdrop-filter: blur(10px);
         }
         
         .matchmaker-city-selector-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 15px;
-            color: var(--primary);
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #333;
             text-align: center;
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            letter-spacing: 0.5px;
         }
         
         .matchmaker-city-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 12px;
         }
         
         .matchmaker-city-item {
-            padding: 10px 5px;
+            padding: 12px 8px;
             text-align: center;
             background: white;
-            border-radius: 10px;
-            font-size: 0.85rem;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: 500;
             cursor: pointer;
-            transition: all 0.3s;
-            border: 1px solid rgba(255, 45, 142, 0.1);
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            color: #555;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .matchmaker-city-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 105, 180, 0.2);
+            border-color: rgba(255, 105, 180, 0.3);
         }
         
         .matchmaker-city-item:active {
-            transform: scale(0.98);
+            transform: scale(0.97);
         }
         
         .matchmaker-city-item.active {
-            background: var(--primary);
+            background: linear-gradient(135deg, #ff69b4, #ff1493);
             color: white;
+            border-color: #ff69b4;
+            box-shadow: 0 6px 20px rgba(255, 105, 180, 0.4);
+        }
+
+        /* 性别筛选区域样式 */
+        .matchmaker-gender-filter {
+            margin: 20px 0;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(245, 245, 255, 0.95));
+            border-radius: 20px;
+            border: 1px solid rgba(100, 149, 237, 0.2);
+            box-shadow: 0 4px 15px rgba(100, 149, 237, 0.1);
+        }
+
+        .matchmaker-gender-filter-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #333;
+            text-align: center;
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            letter-spacing: 0.5px;
+        }
+
+        .matchmaker-gender-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .gender-btn {
+            flex: 1;
+            max-width: 150px;
+            padding: 15px 20px;
+            border: 2px solid transparent;
+            border-radius: 15px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: white;
+            color: #555;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .gender-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .gender-btn.active {
+            color: white;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .gender-btn.gender-all.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-color: #667eea;
+        }
+
+        .gender-btn.gender-male {
+            color: #4a90e2;
+        }
+
+        .gender-btn.gender-male:hover {
+            border-color: rgba(74, 144, 226, 0.3);
+            box-shadow: 0 4px 15px rgba(74, 144, 226, 0.2);
+        }
+
+        .gender-btn.gender-male.active {
+            background: linear-gradient(135deg, #4a90e2, #357abd);
+            border-color: #4a90e2;
+            color: white;
+        }
+
+        .gender-btn.gender-female {
+            color: #e91e63;
+        }
+
+        .gender-btn.gender-female:hover {
+            border-color: rgba(233, 30, 99, 0.3);
+            box-shadow: 0 4px 15px rgba(233, 30, 99, 0.2);
+        }
+
+        .gender-btn.gender-female.active {
+            background: linear-gradient(135deg, #e91e63, #c2185b);
+            border-color: #e91e63;
+            color: white;
+        }
+
+        .gender-btn i {
+            font-size: 1.2rem;
         }
         
         /* 新增：VIP限制提示样式 */
@@ -3338,65 +4762,130 @@
             </div>
         </div>
         <div class="header-content">
-                <h1 id="mainTitle">深夜密友 · 同城私密交友</h1>
-                <p>寂寞深夜？遇见附近渴望陪伴的TA，开启私密聊天</p>
+                <h1 id="mainTitle" class="gradient-text glow-text animated-text">微信同城群聊 · 同城交友</h1>
+                <p class="animated-text" style="animation-delay: 0.2s;"><span class="highlight">想认识同城好友？</span>加入附近<span class="gradient-text">微信同城群聊</span>，开启<span class="highlight">同城交友</span></p>
             </div>
     </header>
     
     <div class="container">
-        <!-- 城市选择区域 -->
-        <div class="card">
-            <div class="section-title">
-                <i class="fas fa-map-marker-alt"></i> 选择你所在的城市
+        <!-- 城市选择区域 - 现代化优化版 -->
+        <div class="card city-selector-card modern-card">
+            <div class="section-title modern-title">
+                <i class="fas fa-map-marker-alt location-icon"></i> 
+                <span class="title-text gradient-text">微信同城群聊</span>
+                <div class="location-badge">
+                    <i class="fas fa-users"></i>
+                    <span id="onlineCount" class="online-count">417</span>
+                </div>
             </div>
-            <div class="city-selector">
-                <div class="province-list" id="provinceList">
-                    <!-- 省份列表将通过JS动态生成 -->
+            
+            <div class="city-selector city-selector-modern">
+                <!-- 当前选择显示 - 更美观的卡片样式 -->
+                <div class="current-selection modern-selection" id="currentSelection">
+                    <div class="selection-header">
+                        <i class="fas fa-map-pin selection-icon gradient-text"></i>
+                        <span class="selection-label gradient-text">同城位置</span>
+                    </div>
+                    <div class="selection-value-container">
+                        <span class="selection-value modern-value gradient-text" id="selectionValue">未选择城市</span>
+                        <div class="location-indicator">
+                            <i class="fas fa-caret-right indicator-icon gradient-text"></i>
+                        </div>
+                    </div>
                 </div>
                 
-                <!-- 城市折叠区域 -->
-                <div class="city-collapse">
-                    <div class="collapse-toggle" id="cityCollapseToggle">
-                        <span>选择城市</span>
-                        <i class="fas fa-chevron-down"></i>
+                <!-- 省份列表 - 现代化横向滚动 -->
+                <div class="province-list-wrapper">
+                    <div class="scroll-hint">
+                        <span>滑动选择省份</span>
+                        <i class="fas fa-hand-pointer"></i>
                     </div>
-                    <div class="collapse-content" id="cityCollapseContent">
-                        <div class="city-grid" id="cityGrid">
+                    <div class="province-list-scrollable modern-scrollable">
+                        <div class="province-list modern-province-list" id="provinceList">
+                            <!-- 省份列表将通过JS动态生成 -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 城市搜索区域 - 优化搜索体验 -->
+                <div class="city-search city-search-modern">
+                    <div class="search-input-wrapper modern-search">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" id="citySearchInput" placeholder="🔍 搜索城市名称或拼音..." class="modern-search-input" style="font-weight: 500;">
+                    </div>
+                    <div class="search-results" id="searchResultsContainer">
+                        <!-- 搜索结果将动态生成 -->
+                    </div>
+                </div>
+                
+                <!-- 城市折叠区域 - 更优雅的交互设计 -->
+                <div class="city-collapse panel-collapse modern-collapse">
+                    <div class="collapse-toggle panel-header modern-toggle" id="cityCollapseToggle">
+                        <div class="toggle-left">
+                            <i class="fas fa-building city-icon"></i>
+                            <span>选择城市</span>
+                            <span class="city-count">(<span id="cityCountDisplay">0</span>个)</span>
+                        </div>
+                        <div class="toggle-right">
+                            <span class="toggle-text">展开</span>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                    </div>
+                    <div class="collapse-content panel-content modern-content" id="cityCollapseContent">
+                        <!-- 热门城市快速选择 - 更美观的设计 -->
+                        <div class="hot-cities-section modern-hot-cities">
+                            <div class="hot-cities-header">
+                                <i class="fas fa-fire hot-icon"></i>
+                                <div class="hot-cities-label">热门城市</div>
+                            </div>
+                            <div class="hot-cities modern-hot-list" id="hotCitiesList">
+                                <!-- 热门城市将动态生成 -->
+                            </div>
+                        </div>
+                        
+                        <!-- 城市列表 - 网格优化 -->
+                        <div class="city-grid modern-city-grid" id="cityGrid">
                             <!-- 城市列表将通过JS动态生成 -->
                         </div>
                     </div>
                 </div>
                 
-                <!-- 查看聊天记录按钮 -->
-                <button class="view-chat-btn" id="viewChatBtn" disabled>
-                    <i class="fas fa-comments"></i> 查看群聊记录
+                <!-- 微信同城群聊按钮 - 更吸引人的设计 -->
+                <button class="view-chat-btn modern-chat-btn" id="viewChatBtn" disabled>
+                    <div class="btn-icon">
+                        <i class="fab fa-weixin btn-inner-icon"></i>
+                    </div>
+                    <span class="btn-text gradient-text">加入微信同城群聊</span>
+                    <div class="btn-indicator">
+                        <i class="fas fa-arrow-right btn-arrow"></i>
+                    </div>
                 </button>
             </div>
         </div>
         
         <!-- 支付信息区域 -->
         <div class="card">
-            <div class="section-title">
-                <i class="fas fa-gem"></i> 私密交友特权
+            <div class="section-title gradient-text">
+                <i class="fas fa-gem"></i> 微信同城群聊特权
             </div>
             <div class="payment-info">
-                <p>加入私密交友圈，体验不一样的深夜陪伴</p>
-                <div class="amount">¥39.99</div>
-                <p>支付后即可解锁同城私密交友圈，开启深夜陪伴</p>
+                <p class="enhanced-paragraph"><span class="highlight">加入微信同城群聊</span>，认识更多同城好友</p>
+                <div class="amount gradient-text">¥39.99</div>
+                <p class="enhanced-paragraph">支付后即可<span class="highlight">解锁微信同城群聊</span>，开启同城交友之旅</p>
                 
                 <!-- 信任标识 -->
                 <div class="trust-badges">
-                    <div class="trust-badge">
+                    <div class="trust-badge gradient-bg">
                         <i class="fas fa-shield-alt"></i>
-                        <span>私密认证</span>
+                        <span class="badge-text">安全认证</span>
                     </div>
-                    <div class="trust-badge">
+                    <div class="trust-badge gradient-bg">
                         <i class="fas fa-lock"></i>
-                        <span>匿名保护</span>
+                        <span class="badge-text">隐私保护</span>
                     </div>
-                    <div class="trust-badge">
+                    <div class="trust-badge gradient-bg">
                         <i class="fas fa-check-circle"></i>
-                        <span>深夜陪伴</span>
+                        <span class="badge-text">同城真实</span>
                     </div>
                 </div>
             </div>
@@ -3418,7 +4907,7 @@
                 <button class="btn btn-primary payment-btn" id="alipayBtn">
                     <i class="fab fa-alipay"></i>
                     <span class="loading hidden"></span>
-                    <span id="alipayBtnText">立即解锁私密交友 ¥39.99</span>
+                    <span id="alipayBtnText">立即加入微信同城群聊 ¥39.99</span>
                 </button>
             </div>
             
@@ -3427,7 +4916,7 @@
                 <button class="btn btn-primary payment-btn" id="wxpayBtn">
                     <i class="fab fa-weixin"></i>
                     <span class="loading hidden"></span>
-                    <span id="wxpayBtnText">立即解锁私密交友 ¥39.99</span>
+                    <span id="wxpayBtnText">立即加入微信同城群聊 ¥39.99</span>
                 </button>
             </div>
             
@@ -3442,11 +4931,32 @@
                     </div>
                     <div class="security-badge">
                         <i class="fas fa-lock"></i>
-                        <span>匿名安全保障</span>
+                        <span>隐私保护</span>
                     </div>
                     <div class="security-badge">
                         <i class="fas fa-user-shield"></i>
-                        <span>深夜陪伴承诺</span>
+                        <span>同城真实</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 退款保障 -->
+            <div class="refund-guarantees">
+                <div class="section-title gradient-text">
+                    <i class="fas fa-shield-alt"></i> 服务保障
+                </div>
+                <div class="guarantee-items">
+                    <div class="guarantee-item">
+                        <i class="fas fa-undo-alt"></i>
+                        <span>24小时不满意随时退款</span>
+                    </div>
+                    <div class="guarantee-item">
+                        <i class="fas fa-database"></i>
+                        <span>资源齐全</span>
+                    </div>
+                    <div class="guarantee-item">
+                        <i class="fas fa-robot"></i>
+                        <span>自动退款系统</span>
                     </div>
                 </div>
             </div>
@@ -3457,17 +4967,17 @@
                     <i class="fas fa-star"></i> 用户真实反馈
                 </div>
                 <div class="review-list">
-                    <div class="review-item">
-                        <div class="review-content">深夜聊天很刺激，认识了很多有趣的密友！</div>
-                        <div class="review-author">- 张**（北京）</div>
+                    <div class="review-item animated-text" style="animation-delay: 0.1s;">
+                        <div class="review-content enhanced-paragraph">深夜聊天很刺激，认识了很多<span class="gradient-text">有趣的密友</span>！</div>
+                        <div class="review-author gradient-text">- 张**（北京）</div>
                     </div>
-                    <div class="review-item">
-                        <div class="review-content">私密聊天体验很棒，推荐给喜欢刺激的朋友</div>
-                        <div class="review-author">- 李**（上海）</div>
+                    <div class="review-item animated-text" style="animation-delay: 0.2s;">
+                        <div class="review-content enhanced-paragraph">私密聊天体验很棒，推荐给<span class="highlight">喜欢刺激</span>的朋友</div>
+                        <div class="review-author gradient-text">- 李**（上海）</div>
                     </div>
-                    <div class="review-item">
-                        <div class="review-content">深夜陪伴很贴心，聊天氛围很放松</div>
-                        <div class="review-author">- 王**（广州）</div>
+                    <div class="review-item animated-text" style="animation-delay: 0.3s;">
+                        <div class="review-content enhanced-paragraph">深夜陪伴很贴心，聊天氛围<span class="gradient-text">很放松</span></div>
+                        <div class="review-author gradient-text">- 王**（广州）</div>
                     </div>
                 </div>
             </div>
@@ -3852,30 +5362,34 @@
         
         <!-- 反馈中心区域（默认隐藏） -->
         <div class="card hidden" id="feedbackSection">
-            <div class="section-title">
-                <i class="fas fa-comments"></i> 反馈中心
+            <div class="section-title gradient-text">
+                <i class="fas fa-comments"></i> 用户真实体验反馈
             </div>
             
-            <!-- 反馈中心内容（未登录用户也可查看） -->
+            <!-- 反馈中心内容（基本框架） -->
             <div class="feedback-content" id="feedbackContent">
-                <!-- 反馈页面导航 -->
-                <div class="feedback-page-navigation">
-                    <div class="feedback-page-tab active" data-page="groupFeedbackPage">
-                        <i class="fas fa-users"></i>
-                        <span>群聊用户反馈</span>
-                    </div>
-                    <div class="feedback-page-tab" data-page="matchmakerFeedbackPage">
-                        <i class="fas fa-heart"></i>
-                        <span>牵线用户反馈</span>
+                <div class="feedback-info">
+                    <div class="feedback-tip">
+                        <i class="fas fa-info-circle"></i>
+                        <span>反馈功能正在优化中，敬请期待</span>
                     </div>
                 </div>
                 
                 <!-- 微信群聊用户反馈 -->
                 <div class="feedback-mode-content active" id="groupFeedbackContent">
                     <div class="feedback-info">
-                        <div class="feedback-tip">
-                            <i class="fas fa-info-circle"></i>
-                            <span>查看群聊用户反馈，提交反馈需要开通VIP入群特权</span>
+                        <div class="feedback-tip enhanced-paragraph">
+                            <i class="fas fa-star gradient-text"></i>
+                            <span>已有<span class="highlight">10,000+</span>用户加入我们的同城群聊，开启了他们的社交之旅！</span>
+                        </div>
+                        <div class="feedback-promo">
+                            <div class="promo-badge gradient-bg">限时优惠</div>
+                            <div class="promo-text">
+                                <span class="gradient-text">开通VIP</span> 即可无限制参与所有同城群聊，遇见志同道合的朋友！
+                            </div>
+                            <button class="btn btn-primary gradient-bg" onclick="openPaymentModal('group')">
+                                <i class="fas fa-rocket"></i> 立即开通VIP
+                            </button>
                         </div>
                     </div>
                     
@@ -3943,183 +5457,99 @@
             </div>
         </div>
         
-        <!-- 牵线服务反馈页面（默认隐藏） -->
-        <div class="card hidden" id="matchmakerFeedbackPage">
-            <div class="section-title">
-                <i class="fas fa-heart"></i> 牵线服务反馈
-                <button class="btn btn-secondary btn-sm" id="backToFeedbackCenter">
-                    <i class="fas fa-arrow-left"></i> 返回反馈中心
-                </button>
-            </div>
-            
-            <!-- 牵线服务反馈内容（未登录用户也可查看） -->
-            <div class="matchmaker-feedback-content" id="matchmakerFeedbackPageContent">
-                
-                <!-- 反馈统计 -->
-                <div class="matchmaker-feedback-stats">
-                    <div class="stat-item">
-                        <span class="stat-number" id="totalMatchmakerFeedback">0</span>
-                        <span class="stat-label">总反馈数</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number" id="todayMatchmakerFeedback">0</span>
-                        <span class="stat-label">今日新增</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number" id="matchmakerSuccessRate">0%</span>
-                        <span class="stat-label">成功率</span>
-                    </div>
-                </div>
-                
-                <!-- 反馈筛选 -->
-                <div class="matchmaker-feedback-filter">
-                    <div class="filter-group">
-                        <label>筛选条件：</label>
-                        <select id="matchmakerFeedbackFilter">
-                            <option value="all">全部反馈</option>
-                            <option value="success">成功案例</option>
-                            <option value="pending">进行中</option>
-                            <option value="new">最新反馈</option>
-                        </select>
-                    </div>
-                    <div class="filter-group">
-                        <label>排序方式：</label>
-                        <select id="matchmakerFeedbackSort">
-                            <option value="newest">最新优先</option>
-                            <option value="oldest">最旧优先</option>
-                            <option value="rating">评分最高</option>
-                        </select>
-                    </div>
-                </div>
-                
-                <!-- 反馈列表 -->
-                <div class="matchmaker-feedback-list" id="matchmakerFeedbackPageList">
-                    <!-- 反馈内容将通过JS动态生成 -->
-                </div>
-                
-                <!-- 加载更多 -->
-                <div class="matchmaker-feedback-load-more" id="matchmakerFeedbackLoadMore">
-                    <button class="btn btn-outline" id="loadMoreMatchmakerFeedback">
-                        <i class="fas fa-plus"></i> 加载更多反馈
-                    </button>
-                </div>
-            </div>
-        </div>
-        
-        <!-- 群聊服务反馈页面 -->
-        <div class="card hidden" id="groupFeedbackPage">
-            <div class="matchmaker-feedback-content">
-                <!-- 页面头部 -->
-                <div class="matchmaker-feedback-header">
-                    <button id="backToFeedbackCenterFromGroup" class="btn-back">
-                        <i class="fas fa-arrow-left"></i> 返回反馈中心
-                    </button>
-                    <h2>群聊服务反馈中心</h2>
-                    <p>查看其他用户的群聊体验和反馈</p>
-                </div>
-                
-                <!-- 页面内容（未登录用户也可查看） -->
-                <div id="groupFeedbackPageContent">
-                    
-                    <!-- 统计信息 -->
-                    <div class="matchmaker-feedback-stats">
-                        <div class="stat-item">
-                            <div class="stat-value" id="totalGroupFeedback">0</div>
-                            <div class="stat-label">总反馈数</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-value" id="todayGroupFeedback">0</div>
-                            <div class="stat-label">今日新增</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-value" id="groupSuccessRate">0%</div>
-                            <div class="stat-label">成功匹配率</div>
-                        </div>
-                    </div>
-                    
-                    <!-- 控制栏 -->
-                    <div class="matchmaker-feedback-controls">
-                        <div class="feedback-filters">
-                            <select id="groupFeedbackFilter">
-                                <option value="all">全部反馈</option>
-                                <option value="success">成功案例</option>
-                                <option value="pending">进行中</option>
-                                <option value="new">最近7天</option>
-                            </select>
-                            <select id="groupFeedbackSort">
-                                <option value="newest">最新优先</option>
-                                <option value="oldest">最早优先</option>
-                                <option value="rating">评分最高</option>
-                            </select>
-                        </div>
-                        <div class="feedback-actions">
-                            <button id="refreshGroupFeedback" class="btn-secondary">
-                                <i class="fas fa-sync-alt"></i> 刷新
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <!-- 反馈列表 -->
-                    <div class="matchmaker-feedback-list">
-                        <div id="groupFeedbackPageList"></div>
-                        
-                        <!-- 加载更多 -->
-                        <div class="load-more-container">
-                            <button id="loadMoreGroupFeedback" class="btn-secondary">加载更多</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <!-- 红娘牵线区域（默认隐藏） -->
+        
+
+
+
+        <!-- 一对一情侣牵线区域（默认隐藏） -->
         <div class="card hidden" id="matchmakerSection">
-            <div class="section-title">
-                <i class="fas fa-heart"></i> 红娘牵线
+            <div class="section-title gradient-text">
+                <i class="fas fa-heart"></i> 一对一情侣牵线
             </div>
             
-            <!-- 城市选择区域（VIP限制） -->
-            <div class="matchmaker-city-selector vip-restricted" id="matchmakerCitySelector">
-                <div class="matchmaker-city-selector-title">选择你所在的城市区域</div>
-                <div class="matchmaker-city-grid" id="matchmakerCityGrid">
-                    <!-- 城市区域将通过JS动态生成 -->
-                </div>
-                <div class="vip-overlay">
-                    <i class="fas fa-crown"></i>
-                    <h3>开通VIP解锁此功能</h3>
-                    <p>开通VIP会员，享受更多优质功能，精准匹配附近志同道合的朋友</p>
-                    <button class="btn btn-primary" id="openVipBtn">立即开通VIP</button>
-                </div>
-            </div>
-            
-            <div class="matchmaker-section" id="matchmakerContent">
-                <!-- 红娘牵线内容将通过JS动态生成 -->
-            </div>
-            
-            <!-- 红娘牵线支付区域 -->
+            <!-- 红娘牵线支付区域（已移至顶部） -->
             <div class="matchmaker-payment">
-                <div class="matchmaker-payment-title">红娘牵线VIP服务</div>
-                <div class="matchmaker-payment-amount">¥199.99</div>
+                <!-- 信任徽章区域 -->
+                <div class="trust-badges">
+                    <span class="badge"><i class="fas fa-shield-alt"></i> 实名认证</span>
+                    <span class="badge"><i class="fas fa-user-check"></i> 人工审核</span>
+                    <span class="badge"><i class="fas fa-thumbs-up"></i> 98.5%好评</span>
+                    <span class="badge"><i class="fas fa-lock"></i> 安全支付</span>
+                </div>
+                
+                <!-- 限时优惠提示 -->
+                <div class="limited-time-offer">
+                    <i class="fas fa-bolt"></i> 
+                    <span>限时优惠：原价¥499.99，限时特惠¥299.99</span>
+                    <div class="countdown-timer">剩余时间: <span id="countdown">23:59:59</span></div>
+                </div>
+                
+                <div class="matchmaker-payment-title gradient-text">一对一情侣VIP服务</div>
+                <div class="matchmaker-payment-amount">
+                    <span class="current-price">¥299.99</span>
+                    <span class="original-price">¥499.99</span>
+                    <span class="discount-tag">5.8折</span>
+                </div>
+                
                 <div class="matchmaker-payment-features">
-                    <div class="payment-feature">
-                        <i class="fas fa-check-circle"></i>
-                        <span>智能匹配心仪对象</span>
+                    <div class="payment-feature highlight-feature">
+                        <i class="fas fa-heart"></i>
+                        <span>专属一对一情侣匹配</span>
                     </div>
                     <div class="payment-feature">
-                        <i class="fas fa-check-circle"></i>
-                        <span>专属红娘一对一服务</span>
+                        <i class="fas fa-user-friends"></i>
+                        <span>同城异性精准匹配</span>
                     </div>
                     <div class="payment-feature">
-                        <i class="fas fa-check-circle"></i>
-                        <span>优先推荐给优质用户</span>
+                        <i class="fas fa-phone"></i>
+                        <span>解锁完整联系方式</span>
                     </div>
                     <div class="payment-feature">
-                        <i class="fas fa-check-circle"></i>
-                        <span>无限次匹配机会</span>
+                        <i class="fas fa-comments"></i>
+                        <span>无限次私密聊天</span>
                     </div>
                     <div class="payment-feature">
-                        <i class="fas fa-check-circle"></i>
-                        <span>高级隐私保护</span>
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>同城线下约会安排</span>
+                    </div>
+                    <div class="payment-feature">
+                        <i class="fas fa-lock"></i>
+                        <span>全程隐私安全保护</span>
+                    </div>
+                    <div class="payment-feature">
+                        <i class="fas fa-redo"></i>
+                        <span>不满意免费重新匹配</span>
+                    </div>
+                </div>
+                
+                <!-- 成功案例展示 -->
+                <div class="success-stories">
+                    <h4 class="gradient-text">✓ 情侣成功案例</h4>
+                    <div class="stories-grid">
+                        <div class="story-item animated-text">
+                            <div class="story-content">
+                                <p class="story-text enhanced-paragraph">"通过一对一牵线，我找到了完美的伴侣！现在我们每周都会约会，关系越来越甜蜜。"</p>
+                                <div class="story-author gradient-text">— 张先生，上海</div>
+                            </div>
+                        </div>
+                        <div class="story-item animated-text" style="animation-delay: 0.2s;">
+                            <div class="story-content">
+                                <p class="story-text enhanced-paragraph">"匹配精准，他正是我想要的类型！现在我们已经在一起三个月了，感谢这个平台！"</p>
+                                <div class="story-author gradient-text">— 李女士，北京</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 用户评价 -->
+                <div class="user-reviews">
+                    <div class="review-stats">
+                        <div class="rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="rating-number">4.9/5</span>
+                        </div>
+                        <div class="review-count">基于1200+真实用户评价</div>
                     </div>
                 </div>
                 
@@ -4139,7 +5569,7 @@
                 <div class="matchmaker-payment-form active" id="matchmakerAlipayForm">
                     <button class="btn btn-primary" id="matchmakerAlipayBtn">
                         <span class="loading hidden"></span>
-                        <span id="matchmakerAlipayBtnText">支付宝支付 ¥199.99</span>
+                        <span id="matchmakerAlipayBtnText">支付宝支付 ¥299.99</span>
                     </button>
                 </div>
                 
@@ -4147,9 +5577,28 @@
                 <div class="matchmaker-payment-form" id="matchmakerWxpayForm">
                     <button class="btn btn-primary" id="matchmakerWxpayBtn">
                         <span class="loading hidden"></span>
-                        <span id="matchmakerWxpayBtnText">微信支付 ¥199.99</span>
+                        <span id="matchmakerWxpayBtnText">微信支付 ¥299.99</span>
                     </button>
                 </div>
+            </div>
+            
+            <!-- 城市选择区域 - 优化折叠面板 -->
+            <div class="matchmaker-city-selector panel-collapse" id="matchmakerCitySelector">
+                <div class="matchmaker-city-selector-title panel-header">
+                    <span>选择你所在的城市区域</span>
+                    <div class="panel-toggle">
+                        <i class="fas fa-chevron-down toggle-icon"></i>
+                    </div>
+                </div>
+                <div class="matchmaker-city-grid panel-content" id="matchmakerCityGrid">
+                    <!-- 城市区域将通过JS动态生成 -->
+                </div>
+            </div>
+
+
+            
+            <div class="matchmaker-section" id="matchmakerContent">
+                <!-- 红娘牵线内容将通过JS动态生成 -->
             </div>
         </div>
         
@@ -4162,6 +5611,107 @@
         </div>
     </div>
     
+    <!-- 支付过渡页面 -->
+    <div class="modal hidden" id="paymentRedirectModal">
+        <div class="modal-content">
+            <div class="payment-redirect">
+                <div class="payment-icon"><i class="fas fa-credit-card"></i></div>
+                <h2>正在处理支付请求</h2>
+                <div class="payment-details">
+                    <div class="detail-item">
+                        <span class="detail-label">订单号：</span>
+                        <span class="detail-value" id="redirectOrderNumber">WXGROUP20241234567890</span>
+                    </div>
+                </div>
+                <div class="countdown-area">
+                    <p>正在跳转支付，请耐心等待 <span id="redirectCountdown">3</span> 秒</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="redirectProgress"></div>
+                    </div>
+                </div>
+                <div class="modal-buttons">
+                    <button class="btn btn-primary" id="continuePaymentBtn">继续支付</button>
+                    <button class="btn btn-secondary" id="cancelPaymentBtn">返回</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 牵线服务通知模态框 -->
+    <div class="modal hidden" id="matchmakerNotificationModal">
+        <div class="modal-content premium-style">
+            <div class="matchmaker-notification modern-notification">
+                <!-- 顶部装饰元素 -->
+                <div class="notification-decoration">
+                    <div class="heart-decoration heart-1"></div>
+                    <div class="heart-decoration heart-2"></div>
+                    <div class="heart-decoration heart-3"></div>
+                </div>
+                
+                <!-- 标题区域 -->
+                <div class="notification-header modern-header">
+                    <h2><i class="fas fa-crown gold-icon"></i> <span class="seductive-text gradient-text">专属</span> 一对一体验</h2>
+                    <p class="header-subtitle">为您精心打造的私密约会服务</p>
+                </div>
+                
+                <!-- 主要内容区域 -->
+                <div class="notification-content modern-content">
+                    <!-- 视觉元素 -->
+                    <div class="notification-visual">
+                        <div class="visual-container">
+                            <i class="fas fa-heart red-heart pulse-animation"></i>
+                            <i class="fas fa-heart pink-heart pulse-animation-delay"></i>
+                            <i class="fas fa-heart blue-heart pulse-animation-delay-2"></i>
+                        </div>
+                    </div>
+                    
+                    <!-- 文字内容 -->
+                    <div class="notification-message">
+                        <p class="message-text romantic-text">
+                            <span class="greeting">亲爱的用户，</span>
+                            <br>
+                            欢迎体验我们<span class="highlight">高端定制</span>的牵线服务
+                        </p>
+                        
+                        <div class="service-highlights">
+                            <div class="highlight-item">
+                                <i class="fas fa-user-check"></i>
+                                <span>精准匹配理想伴侣</span>
+                            </div>
+                            <div class="highlight-item">
+                                <i class="fas fa-calendar-day"></i>
+                                <span>一日情侣专属体验</span>
+                            </div>
+                            <div class="highlight-item">
+                                <i class="fas fa-lock"></i>
+                                <span>私密空间完全保障</span>
+                            </div>
+                        </div>
+                        
+                        <p class="message-text seductive-text italic-text">
+                            <i class="fas fa-fire flame-icon"></i>
+                            <span class="special-text">在双方<span class="underline">自愿同意</span>的前提下，您可以尽情享受与匹配对象的浪漫时光...</span>
+                            <i class="fas fa-kiss-wink-heart love-icon"></i>
+                        </p>
+                        
+                        <p class="notification-disclaimer">
+                            <small><strong>重要提示：本服务仅面向18岁以上成年用户提供，未满18岁用户禁止使用本服务。</strong></small><br>
+                            <small>所有互动均建立在双方自愿和尊重的基础上，平台建议用户注意个人安全与隐私保护。</small>
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- 底部按钮区域 -->
+                <div class="notification-actions modern-actions">
+                    <button class="btn premium-button" id="confirmNotificationBtn">
+                        <span>开启浪漫之旅</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- 支付处理中模态框 -->
     <div class="modal hidden" id="processingModal">
         <div class="modal-content">
@@ -4230,15 +5780,14 @@
         </div>
     </div>
     
-    <!-- VIP限制提示模态框 -->
-    <div class="modal hidden" id="vipRestrictedModal">
+    <!-- 功能提示模态框 -->
+    <div class="modal hidden" id="featureInfoModal">
         <div class="modal-content">
-            <div class="success-icon"><i class="fas fa-crown"></i></div>
-            <h2>VIP功能</h2>
-            <p>此功能需要开通红娘牵线VIP服务才能使用</p>
+            <div class="success-icon"><i class="fas fa-info-circle"></i></div>
+            <h2>功能提示</h2>
+            <p>请先完善您的个人资料以使用此功能</p>
             <div class="modal-buttons">
-                <button class="btn btn-primary" id="openVipFromModalBtn">立即开通VIP</button>
-                <button class="btn btn-secondary" id="closeVipModalBtn">稍后再说</button>
+                <button class="btn btn-primary" id="closeFeatureInfoModalBtn">我知道了</button>
             </div>
         </div>
     </div>
@@ -4716,7 +6265,9 @@
             apiUrl: 'https://2a.mazhifupay.com/',
             pid: '131517535',
             key: '6K1yVk6M16BK72Ms2ZB8wEyM020bZxK2',
-            amount: '39.99'
+            amount: '39.99',
+            notify_url: '/api/notify',
+            return_url: '/api/return'
         };
         
         // 红娘牵线支付配置
@@ -4724,7 +6275,9 @@
             apiUrl: 'https://2a.mazhifupay.com/',
             pid: '131517535',
             key: '6K1yVk6M16BK72Ms2ZB8wEyM020bZxK2',
-            amount: '199.99'
+            amount: '299.99',
+            notify_url: '/api/notify',
+            return_url: '/api/return'
         };
         
         // 城市数据（包含全国各市级城市地区）
@@ -4905,7 +6458,9 @@
         let selectedCity = "";
         let selectedPaymentMethod = "alipay";
         let selectedMatchmakerPaymentMethod = "alipay";
-        let selectedMatchmakerCity = "";
+        // 从localStorage恢复城市选择状态
+let selectedMatchmakerCity = localStorage.getItem('selectedMatchmakerCity') || "";
+let selectedMatchmakerGender = localStorage.getItem('selectedMatchmakerGender') || "all";
         
         // 用户数据
         let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
@@ -4914,14 +6469,7 @@
         // 订单数据（实际应用中应从后端获取）
         let orders = JSON.parse(localStorage.getItem('wx_group_orders')) || [];
         
-        // 红娘牵线数据
-        let matchmakerStats = JSON.parse(localStorage.getItem('matchmakerStats')) || {
-            likes: 0,
-            matches: 0,
-            views: 0
-        };
-        
-        let currentMatchIndex = 0;
+        // 已删除喜欢匹配相关变量
         
         // 检查用户是否已支付
         let hasPaid = localStorage.getItem('hasPaid') === 'true';
@@ -4970,13 +6518,14 @@
         const processingModal = document.getElementById('processingModal');
         const failedModal = document.getElementById('failedModal');
         const successModal = document.getElementById('successModal');
-        const vipRestrictedModal = document.getElementById('vipRestrictedModal');
+        const featureInfoModal = document.getElementById('featureInfoModal');
+        const matchmakerNotificationModal = document.getElementById('matchmakerNotificationModal');
+        const confirmNotificationBtn = document.getElementById('confirmNotificationBtn');
         const closeFailedModalBtn = document.getElementById('closeFailedModalBtn');
         const closeSuccessModalBtn = document.getElementById('closeSuccessModalBtn');
         const retryPayBtn = document.getElementById('retryPayBtn');
         const openVipBtn = document.getElementById('openVipBtn');
-        const openVipFromModalBtn = document.getElementById('openVipFromModalBtn');
-        const closeVipModalBtn = document.getElementById('closeVipModalBtn');
+        const closeFeatureInfoModalBtn = document.getElementById('closeFeatureInfoModalBtn');
         const navItems = document.querySelectorAll('.nav-item');
         const paymentMethods = document.querySelectorAll('.payment-method');
         const alipayForm = document.getElementById('alipayForm');
@@ -5031,6 +6580,51 @@
         const cityCollapseToggle = document.getElementById('cityCollapseToggle');
         const cityCollapseContent = document.getElementById('cityCollapseContent');
         const viewChatBtn = document.getElementById('viewChatBtn');
+        const citySearchInput = document.getElementById('citySearchInput');
+        const searchResultsContainer = document.createElement('div');
+        searchResultsContainer.className = 'search-results';
+        searchResultsContainer.style.display = 'none';
+        document.querySelector('.city-search').appendChild(searchResultsContainer);
+        
+        // 城市代码映射（用于搜索）
+        const cityCodeMap = {
+            '100010': '北京市',
+            '100020': '上海市',
+            '100030': '广州市',
+            '100040': '深圳市',
+            '100050': '杭州市',
+            '100060': '成都市',
+            '100070': '重庆市',
+            '100080': '武汉市',
+            '100090': '西安市',
+            '100100': '南京市',
+            '100110': '天津市',
+            '100120': '苏州市',
+            '100130': '重庆市',
+            '100140': '郑州市',
+            '100150': '长沙市',
+            '100160': '青岛市',
+            '100170': '宁波市',
+            '100180': '东莞市',
+            '100190': '福州市',
+            '100200': '厦门市',
+            '100210': '无锡市',
+            '100220': '济南市',
+            '100230': '合肥市',
+            '100240': '昆明市',
+            '100250': '哈尔滨市',
+            '100260': '石家庄市',
+            '100270': '南宁市',
+            '100280': '贵阳市',
+            '100290': '南昌市',
+            '100300': '太原市',
+            '100310': '乌鲁木齐市',
+            '100320': '兰州市',
+            '100330': '西宁市',
+            '100340': '银川市',
+            '100350': '呼和浩特市',
+            '100360': '拉萨市'
+        };
 
         const onlineUsers = document.getElementById('onlineUsers');
         const totalVisits = document.getElementById('totalVisits');
@@ -5102,25 +6696,57 @@
         
         // 更新红娘牵线VIP界面状态
         function updateMatchmakerVipUI() {
-            if (hasMatchmakerVip) {
-                // 用户已开通VIP，移除VIP限制覆盖层
-                const vipOverlay = matchmakerCitySelector.querySelector('.vip-overlay');
-                if (vipOverlay) {
-                    vipOverlay.style.display = 'none';
-                }
-                
-                // 启用城市选择功能
-                const cityItems = matchmakerCityGrid.querySelectorAll('.matchmaker-city-item');
-                cityItems.forEach(item => {
-                    item.style.pointerEvents = 'auto';
-                    item.style.opacity = '1';
-                });
+            // 确保无论是否为VIP用户，城市选择功能都能正常使用
+            // 移除可能存在的VIP限制覆盖层
+            const vipOverlay = matchmakerCitySelector.querySelector('.vip-overlay');
+            if (vipOverlay) {
+                vipOverlay.style.display = 'none';
             }
+            
+            // 启用城市选择功能
+            const cityItems = matchmakerCityGrid.querySelectorAll('.matchmaker-city-item');
+            cityItems.forEach(item => {
+                item.style.pointerEvents = 'auto';
+                item.style.opacity = '1';
+            });
+            
+            // 移除可能存在的vip-restricted类
+            matchmakerCitySelector.classList.remove('vip-restricted');
+            matchmakerCityGrid.classList.remove('vip-restricted');
         }
         
         // 初始化省份列表
         function initProvinceList() {
+            const cityCollapseToggle = document.getElementById('cityCollapseToggle');
+            const cityCollapseContent = document.getElementById('cityCollapseContent');
+            const selectionValue = document.getElementById('selectionValue');
+            
             provinceList.innerHTML = '';
+            
+            // 创建全部省份选项
+            const allProvinceItem = document.createElement('div');
+            allProvinceItem.className = 'province-item active';
+            allProvinceItem.textContent = '全部';
+            allProvinceItem.addEventListener('click', () => {
+                // 移除其他省份的active状态
+                document.querySelectorAll('.province-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                // 设置当前省份为active
+                allProvinceItem.classList.add('active');
+                // 更新选中的省份
+                selectedProvince = '全部';
+                // 更新城市列表
+                updateCityGrid('全部');
+                // 更新当前选择显示
+                selectionValue.textContent = '全部 - 未选择城市';
+                // 自动展开城市列表
+                cityCollapseContent.style.display = 'block';
+                cityCollapseToggle.querySelector('.toggle-icon').classList.add('rotate');
+            });
+            provinceList.appendChild(allProvinceItem);
+            
+            // 遍历省份数据
             Object.keys(citiesData).forEach(province => {
                 const provinceItem = document.createElement('div');
                 provinceItem.className = 'province-item';
@@ -5135,89 +6761,1060 @@
                     // 更新城市列表
                     selectedProvince = province;
                     updateCityGrid(province);
+                    // 更新当前选择显示
+                    selectionValue.textContent = `${province} - 未选择城市`;
+                    // 自动展开城市列表
+                    cityCollapseContent.style.display = 'block';
+                    cityCollapseToggle.querySelector('.toggle-icon').classList.add('rotate');
                 });
                 provinceList.appendChild(provinceItem);
             });
             
-            // 默认选择第一个省份
-            if (Object.keys(citiesData).length > 0) {
-                document.querySelector('.province-item').click();
-            }
+            // 初始化热门城市
+            initHotCities();
+            
+            // 默认选择全部
+            allProvinceItem.click();
+            
+            // 初始化折叠面板交互
+            cityCollapseToggle.addEventListener('click', function() {
+                const icon = this.querySelector('.toggle-icon');
+                if (cityCollapseContent.style.display === 'block') {
+                    cityCollapseContent.style.display = 'none';
+                    icon.classList.remove('rotate');
+                } else {
+                    cityCollapseContent.style.display = 'block';
+                    icon.classList.add('rotate');
+                }
+            });
+            
+            // 默认展开城市列表
+            cityCollapseContent.style.display = 'block';
+            cityCollapseToggle.querySelector('.toggle-icon').classList.add('rotate');
+            
+            // 初始化搜索功能
+            citySearchInput.addEventListener('input', function() {
+                const searchTerm = this.value.trim().toLowerCase();
+                searchCities(searchTerm);
+            });
+            
+            // 点击页面其他地方关闭搜索结果
+            document.addEventListener('click', function(event) {
+                if (!citySearchInput.contains(event.target) && 
+                    !searchResultsContainer.contains(event.target)) {
+                    searchResultsContainer.style.display = 'none';
+                }
+            });
         }
         
-        // 更新城市网格
-        function updateCityGrid(province) {
-            cityGrid.innerHTML = '';
-            citiesData[province].forEach(city => {
-                const cityCard = document.createElement('div');
-                cityCard.className = 'city-card';
-                cityCard.innerHTML = `
-                    <div class="city-icon">
-                        <i class="fas fa-city"></i>
-                    </div>
-                    <div class="city-name">${city}</div>
-                `;
-                cityCard.addEventListener('click', () => {
-                    // 移除其他城市的active状态
-                    document.querySelectorAll('.city-card').forEach(item => {
-                        item.classList.remove('active');
-                    });
-                    // 设置当前城市为active
-                    cityCard.classList.add('active');
+        // 初始化热门城市
+        function initHotCities() {
+            const hotCitiesList = document.getElementById('hotCitiesList');
+            const hotCities = ['北京', '上海', '广州', '深圳', '杭州', '成都', '重庆', '武汉', '西安', '南京'];
+            const selectionValue = document.getElementById('selectionValue');
+            
+            hotCitiesList.innerHTML = '';
+            
+            hotCities.forEach(city => {
+                const cityItem = document.createElement('div');
+                cityItem.className = 'hot-city-item';
+                cityItem.textContent = city;
+                
+                cityItem.addEventListener('click', function() {
+                    // 设置选中的城市
                     selectedCity = city;
+                    // 查找对应的省份
+                    for (const province in citiesData) {
+                        if (citiesData[province].includes(city)) {
+                            selectedProvince = province;
+                            // 更新省份选中状态
+                            document.querySelectorAll('.province-item').forEach(item => {
+                                item.classList.remove('active');
+                                if (item.textContent === province) {
+                                    item.classList.add('active');
+                                }
+                            });
+                            break;
+                        }
+                    }
+                    
+                    // 更新当前选择显示
+                    selectionValue.textContent = `${selectedProvince} - ${selectedCity}`;
+                    
+                    // 更新城市网格
+                    updateCityGrid(selectedProvince);
                     
                     // 启用查看聊天记录按钮
                     viewChatBtn.disabled = false;
                 });
-                cityGrid.appendChild(cityCard);
+                
+                hotCitiesList.appendChild(cityItem);
+            });
+        }
+        
+        // 更新城市网格
+        function updateCityGrid(province) {
+            const cityCountDisplay = document.getElementById('cityCountDisplay');
+            const selectionValue = document.getElementById('selectionValue');
+            let cityCount = 0;
+            
+            cityGrid.innerHTML = '';
+            
+            // 根据选中的省份生成城市列表
+            if (province === '全部') {
+                // 如果选择全部，则显示所有城市
+                for (const p in citiesData) {
+                    const cities = citiesData[p];
+                    cities.forEach(city => {
+                        const cityCard = createCityCard(city, p);
+                        cityGrid.appendChild(cityCard);
+                        cityCount++;
+                    });
+                }
+            } else if (citiesData[province]) {
+                // 否则只显示选中省份的城市
+                const cities = citiesData[province];
+                cities.forEach(city => {
+                    const cityCard = createCityCard(city, province);
+                    cityGrid.appendChild(cityCard);
+                    cityCount++;
+                });
+            }
+            
+            // 更新城市数量显示
+            cityCountDisplay.textContent = cityCount;
+        }
+        
+        // 创建城市卡片
+        function createCityCard(city, province) {
+            const cityCard = document.createElement('div');
+            cityCard.className = 'city-card';
+            
+            // 如果是当前选中的城市，添加active状态
+            if (city === selectedCity && province === selectedProvince) {
+                cityCard.classList.add('active');
+            }
+            
+            cityCard.innerHTML = `
+                <div class="city-icon">
+                    <i class="fas fa-city"></i>
+                </div>
+                <div class="city-name">${city}</div>
+            `;
+            
+            cityCard.addEventListener('click', () => {
+                // 移除其他城市的active状态
+                document.querySelectorAll('.city-card').forEach(item => {
+                    item.classList.remove('active');
+                });
+                // 设置当前城市为active
+                cityCard.classList.add('active');
+                selectedCity = city;
+                selectedProvince = province;
+                
+                // 更新当前选择显示
+                document.getElementById('selectionValue').textContent = `${province} - ${city}`;
+                
+                // 启用查看聊天记录按钮
+                viewChatBtn.disabled = false;
+            });
+            
+            return cityCard;
+        }
+        
+        // 搜索城市函数
+        function searchCities(keyword) {
+            const results = [];
+            const selectionValue = document.getElementById('selectionValue');
+            
+            // 如果搜索框为空，清空结果并隐藏
+            if (!keyword.trim()) {
+                searchResultsContainer.innerHTML = '';
+                searchResultsContainer.style.display = 'none';
+                return;
+            }
+            
+            // 先检查是否是城市代码
+            if (cityCodeMap && cityCodeMap[keyword]) {
+                const city = cityCodeMap[keyword];
+                // 查找该城市所在的省份
+                for (const [province, cities] of Object.entries(citiesData)) {
+                    if (province === city || cities.includes(city)) {
+                        results.push({ type: province === city ? 'province' : 'city', name: city, parent: province });
+                        break;
+                    }
+                }
+            } else {
+                // 搜索城市名称
+                for (const [province, cities] of Object.entries(citiesData)) {
+                    // 检查省份名称
+                    if (province.toLowerCase().includes(keyword)) {
+                        results.push({ type: 'province', name: province, parent: province });
+                    }
+                    // 检查城市名称
+                    cities.forEach(city => {
+                        if (city.toLowerCase().includes(keyword)) {
+                            results.push({ type: 'city', name: city, parent: province });
+                        }
+                    });
+                }
+            }
+            
+            // 清空并填充搜索结果
+            searchResultsContainer.innerHTML = '';
+            
+            if (results.length > 0) {
+                results.forEach(result => {
+                    const resultItem = document.createElement('div');
+                    resultItem.className = 'search-result-item';
+                    resultItem.innerHTML = `<span class="province-name">${result.parent}</span><span class="city-name">${result.name}</span>`;
+                    
+                    resultItem.addEventListener('click', function() {
+                        if (result.type === 'province') {
+                            // 选择省份
+                            selectedProvince = result.name;
+                            selectedCity = null;
+                            
+                            // 更新省份选中状态
+                            document.querySelectorAll('.province-item').forEach(item => {
+                                item.classList.remove('active');
+                                if (item.textContent === result.name) {
+                                    item.classList.add('active');
+                                }
+                            });
+                            
+                            // 更新当前选择显示
+                            selectionValue.textContent = `${result.name} - 未选择城市`;
+                        } else {
+                            // 选择城市
+                            selectedProvince = result.parent;
+                            selectedCity = result.name;
+                            
+                            // 更新省份选中状态
+                            document.querySelectorAll('.province-item').forEach(item => {
+                                item.classList.remove('active');
+                                if (item.textContent === result.parent) {
+                                    item.classList.add('active');
+                                }
+                            });
+                            
+                            // 更新当前选择显示
+                            selectionValue.textContent = `${result.parent} - ${result.name}`;
+                            
+                            // 启用查看聊天记录按钮
+                            viewChatBtn.disabled = false;
+                        }
+                        
+                        // 更新城市网格
+                        updateCityGrid(selectedProvince);
+                        
+                        // 隐藏搜索结果
+                        searchResultsContainer.style.display = 'none';
+                        
+                        // 清空搜索框
+                        citySearchInput.value = '';
+                    });
+                    
+                    searchResultsContainer.appendChild(resultItem);
+                });
+                
+                searchResultsContainer.style.display = 'block';
+            } else {
+                const noResult = document.createElement('div');
+                noResult.className = 'no-result';
+                noResult.textContent = '未找到匹配的城市';
+                searchResultsContainer.appendChild(noResult);
+                searchResultsContainer.style.display = 'block';
+            }
+            
+            // 搜索省份和城市名称
+            keyword = keyword.toLowerCase();
+            for (const [province, cities] of Object.entries(citiesData)) {
+                // 搜索省份
+                if (province.toLowerCase().includes(keyword)) {
+                    results.push({ type: 'province', name: province, parent: null });
+                }
+                
+                // 搜索城市
+                cities.forEach(city => {
+                    if (city.toLowerCase().includes(keyword)) {
+                        results.push({ type: 'city', name: city, parent: province });
+                    }
+                });
+            }
+            
+            // 显示搜索结果
+            displaySearchResults(results);
+        }
+        
+        // 显示搜索结果
+        function displaySearchResults(results) {
+            searchResultsContainer.innerHTML = '';
+            
+            if (results.length === 0) {
+                const noResult = document.createElement('div');
+                noResult.className = 'search-result-item';
+                noResult.textContent = '没有找到匹配的城市';
+                noResult.style.color = '#999';
+                searchResultsContainer.appendChild(noResult);
+            } else {
+                results.forEach(result => {
+                    const resultItem = document.createElement('div');
+                    resultItem.className = 'search-result-item';
+                    resultItem.innerHTML = `
+                        <span class="result-type">${result.type === 'province' ? '省份' : '城市'}</span>
+                        <span class="result-name">${result.name}</span>
+                        ${result.parent && result.type === 'city' ? `<span class="result-parent">${result.parent}</span>` : ''}
+                    `;
+                    
+                    // 添加点击事件
+                    resultItem.addEventListener('click', () => {
+                        if (result.type === 'province') {
+                            // 点击省份，更新城市网格
+                            selectedProvince = result.name;
+                            updateCityGrid(result.name);
+                            
+                            // 找到并点击对应的省份项
+                            document.querySelectorAll('.province-item').forEach(item => {
+                                if (item.textContent === result.name) {
+                                    item.click();
+                                }
+                            });
+                        } else if (result.type === 'city') {
+                            // 点击城市，选中该城市
+                            selectedProvince = result.parent;
+                            selectedCity = result.name;
+                            
+                            // 先更新城市网格
+                            updateCityGrid(result.parent);
+                            
+                            // 找到并点击对应的城市卡片
+                            setTimeout(() => {
+                                document.querySelectorAll('.city-card').forEach(card => {
+                                    if (card.querySelector('.city-name').textContent === result.name) {
+                                        card.click();
+                                    }
+                                });
+                            }, 100);
+                        }
+                        
+                        // 清空搜索框并隐藏结果
+                        citySearchInput.value = '';
+                        searchResultsContainer.style.display = 'none';
+                    });
+                    
+                    searchResultsContainer.appendChild(resultItem);
+                });
+            }
+            
+            searchResultsContainer.style.display = 'block';
+        }
+        
+        // 添加搜索框事件监听
+        citySearchInput.addEventListener('input', () => {
+            searchCities(citySearchInput.value);
+        });
+        
+        // 点击页面其他地方隐藏搜索结果
+        document.addEventListener('click', (e) => {
+            if (!document.querySelector('.city-search').contains(e.target)) {
+                searchResultsContainer.style.display = 'none';
+            }
+        });
+        
+        // 添加折叠面板的CSS样式
+        const addPanelStyles = () => {
+            const style = document.createElement('style');
+            style.textContent = `
+                /* 折叠面板样式 */
+                .panel-collapse {
+                    border-radius: 8px;
+                    border: 1px solid #e0e0e0;
+                    overflow: hidden;
+                    margin-bottom: 16px;
+                }
+                
+                .panel-header {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 12px 16px;
+                    background-color: #f8f9fa;
+                    cursor: pointer;
+                    user-select: none;
+                    transition: background-color 0.3s;
+                }
+                
+                .panel-header:hover {
+                    background-color: #e9ecef;
+                }
+                
+                .panel-toggle {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 32px;
+                    height: 32px;
+                }
+                
+                .toggle-icon {
+                    transition: transform 0.3s ease;
+                }
+                
+                .panel-content {
+                    max-height: 300px;
+                    overflow-y: auto;
+                    padding: 12px;
+                    transition: max-height 0.3s ease, padding 0.3s ease;
+                }
+                
+                .panel-content.collapsed {
+                    max-height: 0;
+                    padding: 0 12px;
+                    overflow: hidden;
+                }
+                
+                .panel-collapse.active .toggle-icon {
+                    transform: rotate(180deg);
+                }
+                
+                        /* 城市选择器增强样式 */
+                .city-selector-enhanced .current-selection {
+                    display: flex;
+                    align-items: center;
+                    padding: 12px;
+                    background: linear-gradient(135deg, #f0f4ff, #e8f0ff);
+                    border-radius: 8px;
+                    margin-bottom: 15px;
+                    border-left: 4px solid var(--primary);
+                }
+                
+                .city-selector-enhanced .selection-label {
+                    font-weight: 600;
+                    color: #333;
+                    margin-right: 10px;
+                }
+                
+                .city-selector-enhanced .selection-value {
+                    color: var(--primary);
+                    font-weight: 600;
+                }
+                
+                /* 横向滚动省份列表 */
+                .province-list-scrollable {
+                    overflow-x: auto;
+                    overflow-y: hidden;
+                    margin-bottom: 15px;
+                    -webkit-overflow-scrolling: touch;
+                    scrollbar-width: thin;
+                    scrollbar-color: #ccc transparent;
+                }
+                
+                .province-list-scrollable::-webkit-scrollbar {
+                    height: 4px;
+                }
+                
+                .province-list-scrollable::-webkit-scrollbar-track {
+                    background: transparent;
+                }
+                
+                .province-list-scrollable::-webkit-scrollbar-thumb {
+                    background-color: #ccc;
+                    border-radius: 2px;
+                }
+                
+                .province-list-scrollable .province-list {
+                    display: flex;
+                    gap: 10px;
+                    padding: 5px 0;
+                    width: fit-content;
+                    min-width: 100%;
+                }
+                
+                .province-list-scrollable .province-item {
+                    white-space: nowrap;
+                    flex-shrink: 0;
+                    width: 100px;
+                }
+                
+                /* 增强搜索区域 */
+                .city-search-enhanced {
+                    margin-bottom: 15px;
+                    position: relative;
+                }
+                
+                /* 热门城市样式 */
+                .hot-cities-section {
+                    margin-bottom: 15px;
+                }
+                
+                .hot-cities-label {
+                    font-weight: 600;
+                    color: #666;
+                    margin-bottom: 8px;
+                    font-size: 14px;
+                }
+                
+                .hot-cities {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 8px;
+                }
+                
+                .hot-city-item {
+                    background: linear-gradient(135deg, #fff0f5, #ffe4e1);
+                    border: 1px solid #ffb6c1;
+                    border-radius: 16px;
+                    padding: 6px 12px;
+                    font-size: 14px;
+                    cursor: pointer;
+                    transition: all 0.2s ease;
+                }
+                
+                .hot-city-item:hover {
+                    background: linear-gradient(135deg, #ffb6c1, #ff69b4);
+                    color: white;
+                    transform: translateY(-2px);
+                }
+                
+                .hot-city-item.active {
+                    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+                    color: white;
+                    border-color: var(--primary);
+                }
+                
+                /* 折叠面板优化 */
+                .city-collapse .panel-header {
+                    font-weight: 600;
+                    color: #333;
+                }
+                
+                .city-collapse .city-count {
+                    color: var(--primary);
+                    font-weight: 600;
+                }
+                
+                /* 优化城市选择器样式 */
+                .matchmaker-city-grid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+                    gap: 8px;
+                }
+                
+                .matchmaker-city-item {
+                    padding: 8px 12px;
+                    text-align: center;
+                    border: 1px solid #dee2e6;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    transition: all 0.2s;
+                    font-size: 14px;
+                }
+                
+                .matchmaker-city-item:hover {
+                    background-color: #f8f9fa;
+                    border-color: #007bff;
+                }
+                
+                .matchmaker-city-item.active {
+                    background-color: #007bff;
+                    color: white;
+                    border-color: #007bff;
+                }
+                
+                /* 城市选择器标题样式 */
+                .matchmaker-city-selector-title {
+                    font-weight: 600;
+                    color: #5a6069;
+                    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+                    font-size: 16px;
+                    letter-spacing: 0.3px;
+                }
+            `;
+            document.head.appendChild(style);
+        };
+        
+        // 初始化折叠面板功能
+        function initPanelCollapse() {
+            const panel = document.getElementById('matchmakerCitySelector');
+            const header = panel.querySelector('.panel-header');
+            const content = panel.querySelector('.panel-content');
+            
+            // 从localStorage恢复展开/折叠状态
+            const isExpanded = localStorage.getItem('matchmakerCityPanelExpanded') !== 'false';
+            
+            if (!isExpanded) {
+                content.classList.add('collapsed');
+            } else {
+                panel.classList.add('active');
+            }
+            
+            // 添加点击事件
+            header.addEventListener('click', () => {
+                panel.classList.toggle('active');
+                content.classList.toggle('collapsed');
+                
+                // 保存状态到localStorage
+                localStorage.setItem('matchmakerCityPanelExpanded', !content.classList.contains('collapsed'));
             });
         }
         
         // 初始化红娘牵线城市选择
         function initMatchmakerCitySelector() {
+            // 添加CSS样式
+            addPanelStyles();
+            
+            // 初始化折叠面板
+            initPanelCollapse();
+            
             matchmakerCityGrid.innerHTML = '';
             
-            // 使用热门城市作为选项
-            const popularCities = ["北京市", "上海市", "广州市", "深圳市", "杭州市", "成都市", "重庆市", "武汉市", "西安市", "南京市"];
+            // 添加城市搜索功能（移动端优先设计）
+            const searchContainer = document.createElement('div');
+            searchContainer.className = 'matchmaker-city-search';
+            searchContainer.innerHTML = `
+                <input type="text" class="matchmaker-city-search-input" placeholder="搜索城市...">
+                <i class="fas fa-search matchmaker-search-icon"></i>
+            `;
+            matchmakerCityGrid.appendChild(searchContainer);
             
-            popularCities.forEach(city => {
-                const cityItem = document.createElement('div');
-                cityItem.className = 'matchmaker-city-item';
-                cityItem.textContent = city;
-                cityItem.addEventListener('click', () => {
-                    // 移除VIP限制，允许所有用户选择城市
-                    // 移除其他城市的active状态
-                    document.querySelectorAll('.matchmaker-city-item').forEach(item => {
-                        item.classList.remove('active');
+            // 添加搜索功能逻辑
+            const searchInput = searchContainer.querySelector('.matchmaker-city-search-input');
+            searchInput.addEventListener('input', (e) => {
+                const searchTerm = e.target.value.toLowerCase().trim();
+                const allCityItems = document.querySelectorAll('.matchmaker-city-item');
+                const allRegionHeaders = document.querySelectorAll('.matchmaker-region-header');
+                const allRegionCities = document.querySelectorAll('.matchmaker-region-cities');
+                
+                if (searchTerm === '') {
+                    // 清空搜索时显示所有地区和城市
+                    allRegionHeaders.forEach(header => header.style.display = 'block');
+                    allRegionCities.forEach(cities => cities.style.display = 'grid');
+                    allCityItems.forEach(item => {
+                        if (item.classList.contains('matchmaker-nationwide')) {
+                            item.style.display = 'block';
+                        } else {
+                            item.style.display = 'block';
+                        }
                     });
-                    // 设置当前城市为active
-                    cityItem.classList.add('active');
-                    selectedMatchmakerCity = city;
+                    return;
+                }
+                
+                // 搜索时的逻辑
+                allRegionHeaders.forEach((header, index) => {
+                    const regionName = header.querySelector('.region-name').textContent;
+                    const regionCitiesContainer = allRegionCities[index];
+                    const cityItemsInRegion = regionCitiesContainer.querySelectorAll('.matchmaker-city-item');
+                    let hasMatchingCity = false;
                     
-                    // 根据选择的城市过滤用户
-                    filterMatchmakerUsersByCity(city);
+                    // 检查当前地区是否有匹配的城市
+                    cityItemsInRegion.forEach(item => {
+                        const cityName = item.textContent;
+                        if (cityName.toLowerCase().includes(searchTerm)) {
+                            item.style.display = 'block';
+                            hasMatchingCity = true;
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                    
+                    // 如果地区名称匹配或有匹配的城市，则显示该地区
+                    if (regionName.toLowerCase().includes(searchTerm) || hasMatchingCity) {
+                        header.style.display = 'block';
+                        regionCitiesContainer.style.display = 'grid';
+                        // 展开该地区
+                        regionCitiesContainer.classList.remove('collapsed');
+                        const toggleIcon = header.querySelector('.region-toggle');
+                        toggleIcon.classList.add('rotated');
+                    } else {
+                        header.style.display = 'none';
+                        regionCitiesContainer.style.display = 'none';
+                    }
                 });
-                matchmakerCityGrid.appendChild(cityItem);
+                
+                // 检查全国选项是否匹配
+                const nationwideItem = document.querySelector('.matchmaker-city-item.matchmaker-nationwide');
+                if (nationwideItem.textContent.toLowerCase().includes(searchTerm)) {
+                    nationwideItem.style.display = 'block';
+                } else {
+                    nationwideItem.style.display = 'block'; // 始终显示全国选项
+                }
             });
+            
+            // 添加全国选项（移动端优化）
+            const nationalItem = document.createElement('div');
+            nationalItem.className = 'matchmaker-city-item matchmaker-nationwide';
+            nationalItem.innerHTML = `
+                <i class="fas fa-globe-asia"></i>
+                <span>全国</span>
+            `;
+            
+            // 如果没有选择特定城市（即全国），设置为active
+            if (!selectedMatchmakerCity || selectedMatchmakerCity === '全国') {
+                nationalItem.classList.add('active');
+            }
+            
+            nationalItem.addEventListener('click', () => {
+                // 移除所有城市的active状态
+                document.querySelectorAll('.matchmaker-city-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                // 设置全国选项为active
+                nationalItem.classList.add('active');
+                selectedMatchmakerCity = '全国';
+                
+                // 保存到localStorage
+                localStorage.setItem('selectedMatchmakerCity', '全国');
+                
+                // 显示所有用户
+                filterMatchmakerUsersByCity('');
+            });
+            matchmakerCityGrid.appendChild(nationalItem);
+            
+            // 按地区组织城市数据（与用户生成函数保持一致的城市名称格式）
+            const regionCities = {
+                "华北地区": ["北京", "天津", "石家庄", "太原", "呼和浩特", "唐山", "秦皇岛", "邯郸", "邢台", "保定", "张家口", "承德", "沧州", "廊坊", "衡水", "大同", "阳泉", "长治", "晋城", "朔州", "晋中", "运城", "忻州", "临汾", "吕梁", "包头", "乌海", "赤峰", "通辽", "鄂尔多斯", "呼伦贝尔", "巴彦淖尔", "乌兰察布"],
+                "东北地区": ["沈阳", "大连", "长春", "哈尔滨", "鞍山", "抚顺", "本溪", "丹东", "锦州", "营口", "阜新", "辽阳", "盘锦", "铁岭", "朝阳", "葫芦岛", "吉林", "四平", "辽源", "通化", "白山", "松原", "白城", "延边", "齐齐哈尔", "鸡西", "鹤岗", "双鸭山", "大庆", "伊春", "佳木斯", "七台河", "牡丹江", "黑河", "绥化", "大兴安岭"],
+                "华东地区": ["上海", "南京", "杭州", "宁波", "温州", "苏州", "无锡", "徐州", "常州", "南通", "连云港", "淮安", "盐城", "扬州", "镇江", "泰州", "宿迁", "湖州", "嘉兴", "绍兴", "金华", "衢州", "舟山", "台州", "丽水", "合肥", "芜湖", "蚌埠", "淮南", "马鞍山", "淮北", "铜陵", "安庆", "黄山", "滁州", "阜阳", "宿州", "六安", "亳州", "池州", "宣城", "福州", "厦门", "莆田", "三明", "泉州", "漳州", "南平", "龙岩", "宁德", "南昌", "景德镇", "萍乡", "九江", "新余", "鹰潭", "赣州", "吉安", "宜春", "抚州", "上饶", "济南", "青岛", "淄博", "枣庄", "东营", "烟台", "潍坊", "济宁", "泰安", "威海", "日照", "临沂", "德州", "聊城", "滨州", "菏泽"],
+                "中南地区": ["广州", "深圳", "武汉", "郑州", "长沙", "韶关", "珠海", "汕头", "佛山", "江门", "湛江", "茂名", "肇庆", "惠州", "梅州", "汕尾", "河源", "阳江", "清远", "东莞", "中山", "潮州", "揭阳", "云浮", "株洲", "湘潭", "衡阳", "邵阳", "岳阳", "常德", "张家界", "益阳", "郴州", "永州", "怀化", "娄底", "湘西", "洛阳", "开封", "平顶山", "安阳", "鹤壁", "新乡", "焦作", "濮阳", "许昌", "漯河", "三门峡", "南阳", "商丘", "信阳", "周口", "驻马店", "济源", "南宁", "柳州", "桂林", "梧州", "北海", "防城港", "钦州", "贵港", "玉林", "百色", "贺州", "河池", "来宾", "崇左", "海口", "三亚", "三沙", "儋州"],
+                "西南地区": ["重庆", "成都", "昆明", "贵阳", "拉萨", "自贡", "攀枝花", "泸州", "德阳", "绵阳", "广元", "遂宁", "内江", "乐山", "南充", "眉山", "宜宾", "广安", "达州", "雅安", "巴中", "资阳", "阿坝", "甘孜", "凉山", "六盘水", "遵义", "安顺", "毕节", "铜仁", "黔西南", "黔东南", "黔南", "曲靖", "玉溪", "保山", "昭通", "丽江", "普洱", "临沧", "楚雄", "红河", "文山", "西双版纳", "大理", "德宏", "怒江", "迪庆", "山南", "日喀则", "那曲", "阿里", "林芝"],
+                "西北地区": ["西安", "兰州", "银川", "西宁", "乌鲁木齐", "铜川", "宝鸡", "咸阳", "渭南", "延安", "汉中", "榆林", "安康", "商洛", "嘉峪关", "金昌", "白银", "天水", "武威", "张掖", "平凉", "酒泉", "庆阳", "定西", "陇南", "临夏", "甘南", "石嘴山", "吴忠", "固原", "中卫", "海东", "海北", "黄南", "海南", "果洛", "玉树", "海西", "克拉玛依", "吐鲁番", "哈密", "昌吉", "博尔塔拉", "巴音郭楞", "阿克苏", "克孜勒苏", "喀什", "和田", "伊犁", "塔城", "阿勒泰"]
+            };
+            
+            // 为每个地区创建城市组（移动端点击式设计）
+            Object.entries(regionCities).forEach(([region, cities]) => {
+                // 创建地区标题（增大点击区域，适合移动端触摸）
+                const regionHeader = document.createElement('div');
+                regionHeader.className = 'matchmaker-region-header';
+                regionHeader.innerHTML = `
+                    <span class="region-name">${region}</span>
+                    <i class="fas fa-chevron-down region-toggle"></i>
+                `;
+                matchmakerCityGrid.appendChild(regionHeader);
+                
+                // 创建城市容器（移动端网格布局）
+                const regionCitiesContainer = document.createElement('div');
+                regionCitiesContainer.className = 'matchmaker-region-cities collapsed'; // 默认折叠
+                
+                // 添加该地区的所有城市（增大点击区域，优化触摸体验）
+                cities.forEach(city => {
+                    const cityItem = document.createElement('div');
+                    cityItem.className = 'matchmaker-city-item';
+                    cityItem.textContent = city;
+                    
+                    // 如果是已选中的城市，设置为active
+                    if (city === selectedMatchmakerCity) {
+                        cityItem.classList.add('active');
+                    }
+                    
+                    cityItem.addEventListener('click', () => {
+                        // 移除其他城市的active状态
+                        document.querySelectorAll('.matchmaker-city-item').forEach(item => {
+                            item.classList.remove('active');
+                        });
+                        // 设置当前城市为active
+                        cityItem.classList.add('active');
+                        selectedMatchmakerCity = city;
+                        
+                        // 保存到localStorage
+                        localStorage.setItem('selectedMatchmakerCity', city);
+                        
+                        // 根据选择的城市过滤用户
+                        filterMatchmakerUsersByCity(city);
+                    });
+                    regionCitiesContainer.appendChild(cityItem);
+                });
+                
+                matchmakerCityGrid.appendChild(regionCitiesContainer);
+                
+                // 添加地区折叠/展开功能（优化移动端触摸交互）
+                regionHeader.addEventListener('click', () => {
+                    regionCitiesContainer.classList.toggle('collapsed');
+                    const toggleIcon = regionHeader.querySelector('.region-toggle');
+                    toggleIcon.classList.toggle('rotated');
+                });
+            });
+            
+            // 添加城市选择样式（移动端优先设计 - 优化版）
+            const cityStyles = document.createElement('style');
+            cityStyles.textContent = `
+                /* 移动端优先的城市选择样式 */
+                .matchmaker-city-grid {
+                    padding: 12px;
+                    background: #fefefe;
+                    border-radius: 16px;
+                    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+                    width: 100%;
+                    box-sizing: border-box;
+                    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+                }
+                
+                /* 全国选项样式 */
+                .matchmaker-nationwide {
+                    background: linear-gradient(135deg, #748ffc 0%, #9775fa 100%);
+                    color: white;
+                    border: none;
+                    font-weight: 600;
+                    margin-bottom: 18px;
+                    padding: 18px 24px;
+                    border-radius: 14px;
+                    transition: all 0.3s ease;
+                    font-size: 17px;
+                    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    cursor: pointer;
+                    -webkit-tap-highlight-color: transparent;
+                    letter-spacing: 0.5px;
+                }
+                
+                .matchmaker-nationwide:hover,
+                .matchmaker-nationwide:active {
+                    transform: translateY(-2px);
+                    box-shadow: 0 6px 20px rgba(116, 143, 252, 0.4);
+                }
+                
+                /* 地区标题样式 */
+                .matchmaker-region-header {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 16px 20px;
+                    background: #f7f8fa;
+                    border-radius: 12px;
+                    cursor: pointer;
+                    margin-bottom: 10px;
+                    transition: all 0.3s ease;
+                    font-size: 16px;
+                    font-weight: 600;
+                    color: #5a6069;
+                    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+                    -webkit-tap-highlight-color: transparent;
+                    letter-spacing: 0.3px;
+                }
+                
+                .matchmaker-region-header:hover,
+                .matchmaker-region-header:active {
+                    background: #f0f2f5;
+                    transform: translateY(-1px);
+                }
+                
+                .region-name {
+                    font-weight: 600;
+                }
+                
+                .region-toggle {
+                    transition: transform 0.3s ease;
+                    color: #868e96;
+                    font-size: 15px;
+                }
+                
+                .region-toggle.rotated {
+                    transform: rotate(180deg);
+                }
+                
+                /* 城市容器样式 */
+                .matchmaker-region-cities {
+                    padding: 14px;
+                    background: white;
+                    border-radius: 12px;
+                    display: grid;
+                    grid-template-columns: repeat(3, 1fr);
+                    gap: 12px;
+                    transition: all 0.3s ease;
+                    margin-bottom: 14px;
+                    max-height: 400px;
+                    overflow-y: auto;
+                }
+                
+                /* 城市项样式（优化触摸体验） */
+                .matchmaker-city-item {
+                    padding: 16px 14px;
+                    background: #f9fafb;
+                    border: 1px solid #f0f2f5;
+                    border-radius: 12px;
+                    cursor: pointer;
+                    text-align: center;
+                    font-size: 15px;
+                    transition: all 0.25s ease;
+                    color: #5a6069;
+                    font-weight: 500;
+                    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+                    -webkit-tap-highlight-color: transparent;
+                    min-height: 54px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    word-wrap: break-word;
+                    letter-spacing: 0.2px;
+                    line-height: 1.4;
+                }
+                
+                .matchmaker-city-item:hover,
+                .matchmaker-city-item:active {
+                    background: #e7f5ff;
+                    border-color: #90caf9;
+                    color: #1976d2;
+                    transform: translateY(-2px);
+                    box-shadow: 0 5px 16px rgba(144, 202, 249, 0.3);
+                }
+                
+                /* 城市项选中状态 */
+                .matchmaker-city-item.active {
+                    background: #bbdefb;
+                    border-color: #64b5f6;
+                    color: #1565c0;
+                    font-weight: 600;
+                }
+                
+                /* 优化滚动条样式 */
+                .matchmaker-region-cities::-webkit-scrollbar {
+                    width: 6px;
+                }
+                
+                .matchmaker-region-cities::-webkit-scrollbar-track {
+                    background: #f1f3f4;
+                    border-radius: 3px;
+                }
+                
+                .matchmaker-region-cities::-webkit-scrollbar-thumb {
+                    background: #c1c8cd;
+                    border-radius: 3px;
+                }
+                
+                .matchmaker-region-cities::-webkit-scrollbar-thumb:hover {
+                    background: #a8b2b9;
+                }
+                
+                .matchmaker-city-item.active {
+                    background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+                    color: white;
+                    border-color: #4CAF50;
+                    font-weight: 600;
+                    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4);
+                }
+                
+                /* 搜索功能样式 */
+                .matchmaker-city-search {
+                    position: relative;
+                    margin-bottom: 20px;
+                }
+                
+                .matchmaker-city-search-input {
+                    width: 100%;
+                    padding: 16px 20px 16px 50px;
+                    border: 2px solid #e9ecef;
+                    border-radius: 28px;
+                    font-size: 15px;
+                    transition: all 0.3s ease;
+                    box-sizing: border-box;
+                    background: #f8f9fa;
+                    -webkit-appearance: none;
+                }
+                
+                .matchmaker-city-search-input:focus {
+                    outline: none;
+                    border-color: #667eea;
+                    background: white;
+                    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+                }
+                
+                .matchmaker-search-icon {
+                    position: absolute;
+                    left: 18px;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    color: #6c757d;
+                    font-size: 18px;
+                }
+                
+                /* 移动端优化 */
+                @media (max-width: 768px) {
+                    .matchmaker-city-grid {
+                        padding: 12px;
+                        margin: 0 -15px;
+                        border-radius: 0;
+                    }
+                    
+                    .matchmaker-region-cities {
+                        grid-template-columns: repeat(3, 1fr);
+                        gap: 10px;
+                        padding: 16px;
+                    }
+                    
+                    .matchmaker-region-cities.collapsed {
+                        display: none;
+                    }
+                    
+                    .matchmaker-city-item {
+                        padding: 16px 12px;
+                        font-size: 14px;
+                        min-height: 55px;
+                    }
+                    
+                    .matchmaker-city-search-input {
+                        padding: 16px 20px 16px 50px;
+                        font-size: 15px;
+                    }
+                    
+                    .matchmaker-region-header {
+                        padding: 16px 20px;
+                        font-size: 15px;
+                    }
+                }
+                
+                /* 超小屏幕优化 */
+                @media (max-width: 480px) {
+                    .matchmaker-region-cities {
+                        grid-template-columns: repeat(2, 1fr);
+                        gap: 10px;
+                    }
+                    
+                    .matchmaker-city-item {
+                        padding: 14px 8px;
+                        font-size: 13px;
+                    }
+                }
+                
+                /* 全国选项的图标样式 */
+                .matchmaker-nationwide i {
+                    margin-right: 10px;
+                    font-size: 18px;
+                }
+                
+                .matchmaker-nationwide span {
+                    vertical-align: middle;
+                }
+                    cursor: pointer;
+                    transition: all 0.2s ease;
+                }
+                
+                .matchmaker-city-item:hover {
+                    background-color: #f0f0f0;
+                    border-color: #999;
+                }
+                
+                .matchmaker-city-item.active {
+                    background-color: #2196F3;
+                    color: white;
+                    border-color: #2196F3;
+                }
+            `;
+            document.head.appendChild(cityStyles);
         }
         
         // 根据城市过滤红娘牵线用户
         function filterMatchmakerUsersByCity(city) {
-            const filteredUsers = matchmakerUsers.filter(user => user.location === city);
+            // 设置选中的城市
+            selectedMatchmakerCity = city;
+            // 保存到localStorage
+            localStorage.setItem('selectedMatchmakerCity', city);
+            // 调用displayMatchmakerUserList显示筛选后的用户信息
+            displayMatchmakerUserList();
             
-            // 更新红娘牵线内容
-            if (filteredUsers.length > 0) {
-                currentMatchIndex = 0;
-                initMatchmaker();
-            } else {
-                matchmakerContent.innerHTML = `
-                    <div class="no-chat-data">
-                        <i class="fas fa-users"></i>
-                        <p>当前城市暂无用户</p>
-                        <p style="font-size: 0.9rem; margin-top: 10px;">请尝试选择其他城市</p>
-                    </div>
-                `;
-            }
+            // 更新用户界面，显示已选择的城市
+            console.log(`已选择城市: ${city || '全国'}，正在显示该区域的所有用户`);
         }
         
         // 显示聊天记录
@@ -5306,55 +7903,7 @@
             switchSection('chatSection');
         }
         
-        // 显示用户详情
-        function showUserDetail(user) {
-            userDetailContent.innerHTML = '';
-            
-            const userDetail = document.createElement('div');
-            userDetail.className = 'user-detail-section';
-            userDetail.innerHTML = `
-                <div class="user-detail-avatar">
-                    <img src="${user.avatar}" alt="${user.name}">
-                </div>
-                <div class="user-detail-name">${user.name}</div>
-                <div class="user-detail-info">
-                    <span>${user.age}岁</span>
-                    <span>${user.gender === 'male' ? '男' : '女'}</span>
-                    <span>${user.location}</span>
-                </div>
-                <div class="user-detail-info">
-                    <span>${user.job}</span>
-                </div>
-                <div class="user-detail-tags">
-                    ${user.tags.map(tag => `<div class="user-detail-tag">${tag}</div>`).join('')}
-                </div>
-                <div class="user-detail-bio">
-                    ${user.bio}
-                </div>
-                <div class="user-detail-actions">
-                    <button class="btn matchmaker-user-skip" id="backFromDetailBtn">返回</button>
-                    <button class="btn matchmaker-user-like" id="contactUserBtn">联系TA</button>
-                </div>
-            `;
-            
-            userDetailContent.appendChild(userDetail);
-            
-            // 添加事件监听
-            document.getElementById('backFromDetailBtn').addEventListener('click', () => {
-                switchSection('matchmakerSection');
-            });
-            
-            document.getElementById('contactUserBtn').addEventListener('click', () => {
-                // 联系用户功能
-                alert(`已向${user.name}发送联系请求，请等待对方回复！`);
-                
-                // 记录联系请求
-                recordContactRequest(user);
-            });
-            
-            // 显示用户详情区域
-            switchSection('userDetailSection');
-        }
+        // 已删除用户详情预览功能
         
         // 记录联系请求
         function recordContactRequest(user) {
@@ -5718,6 +8267,97 @@
             return temp.toLowerCase();
         }
         
+        // 支付过渡页面相关变量
+        let redirectTimer = null;
+        let redirectPaymentParams = null;
+        
+        // 显示支付过渡页面
+        function showPaymentRedirect(orderNo, paymentParams) {
+            // 保存支付参数以便稍后使用
+            redirectPaymentParams = paymentParams;
+            
+            // 更新订单号
+            document.getElementById('redirectOrderNumber').textContent = orderNo;
+            
+            // 重置倒计时
+            const countdownEl = document.getElementById('redirectCountdown');
+            const progressEl = document.getElementById('redirectProgress');
+            let seconds = 3;
+            countdownEl.textContent = seconds;
+            progressEl.style.width = '100%';
+            
+            // 显示过渡页面
+            document.getElementById('paymentRedirectModal').classList.remove('hidden');
+            
+            // 清除之前的定时器
+            if (redirectTimer) {
+                clearInterval(redirectTimer);
+            }
+            
+            // 开始倒计时
+            redirectTimer = setInterval(() => {
+                seconds--;
+                countdownEl.textContent = seconds;
+                
+                // 更新进度条
+                const progressPercentage = (seconds / 3) * 100;
+                progressEl.style.width = progressPercentage + '%';
+                
+                // 倒计时结束，自动跳转到支付
+                if (seconds <= 0) {
+                    clearInterval(redirectTimer);
+                    redirectToPayment();
+                }
+            }, 1000);
+        }
+        
+        // 跳转到支付页面
+        function redirectToPayment() {
+            if (redirectPaymentParams) {
+                // 隐藏过渡页面
+                document.getElementById('paymentRedirectModal').classList.add('hidden');
+                
+                // 使用SDK的支付跳转方法
+                console.log('自动跳转到支付页面...');
+                epayCore.submitPayment(redirectPaymentParams);
+                
+                // 清除支付参数
+                redirectPaymentParams = null;
+            }
+        }
+        
+        // 取消支付
+        function cancelPayment() {
+            // 清除定时器
+            if (redirectTimer) {
+                clearInterval(redirectTimer);
+                redirectTimer = null;
+            }
+            
+            // 隐藏过渡页面
+            document.getElementById('paymentRedirectModal').classList.add('hidden');
+            
+            // 提示支付失败并建议重新支付
+            alert('支付失败，请重新支付');
+            
+            // 清除支付参数
+            redirectPaymentParams = null;
+        }
+        
+        // 绑定支付过渡页面按钮事件
+        document.addEventListener('DOMContentLoaded', function() {
+            // 继续支付按钮
+            document.getElementById('continuePaymentBtn').addEventListener('click', function() {
+                if (redirectTimer) {
+                    clearInterval(redirectTimer);
+                }
+                redirectToPayment();
+            });
+            
+            // 返回按钮
+            document.getElementById('cancelPaymentBtn').addEventListener('click', cancelPayment);
+        });
+        
         // 提交支付请求（使用彩虹易支付SDK）
         function submitPayment() {
             // 检查是否已选择城市
@@ -5752,8 +8392,8 @@
             // 构建支付参数 - 根据用户选择的支付方式
             const paymentParams = {
                 type: selectedPaymentMethod === 'alipay' ? 'alipay' : 'wxpay', // 根据选择切换支付方式
-                notify_url: window.location.origin + '/notify_url.php',
-                return_url: window.location.origin + '/return_url.php',
+                notify_url: '/api/notify',
+                return_url: '/api/return',
                 out_trade_no: 'WXGROUP' + Date.now(),
                 name: '微信群聊VIP服务',
                 money: '39.99'
@@ -5762,11 +8402,9 @@
             console.log('支付参数生成成功:', paymentParams);
             console.log('选择的支付方式:', selectedPaymentMethod);
             
-            // 使用SDK的支付跳转方法 - 直接跳转到第三方支付平台
-            console.log('开始跳转到支付页面...');
-            
-            // 使用SDK的submitPayment方法进行POST跳转
-            epayCore.submitPayment(paymentParams);
+            // 显示支付过渡页面，而不是直接跳转
+            console.log('显示支付过渡页面...');
+            showPaymentRedirect(paymentParams.out_trade_no, paymentParams);
         }
         
         // 提交红娘牵线支付请求（使用彩虹易支付SDK）
@@ -5778,24 +8416,22 @@
                 return;
             }
             
-            // 构建红娘牵线支付参数 - 根据用户选择的支付方式
+            // 构建红娘牵线支付参数 - 使用MATCHMAKER_PAYMENT_CONFIG中的配置
             const paymentParams = {
                 type: selectedMatchmakerPaymentMethod === 'alipay' ? 'alipay' : 'wxpay', // 根据选择切换支付方式
-                notify_url: window.location.origin + '/notify_url.php',
-                return_url: window.location.origin + '/return_url.php',
+                notify_url: MATCHMAKER_PAYMENT_CONFIG.notify_url,
+                return_url: MATCHMAKER_PAYMENT_CONFIG.return_url,
                 out_trade_no: 'MATCHMAKER' + Date.now(),
                 name: '红娘牵线VIP服务',
-                money: '99.99'
+                money: MATCHMAKER_PAYMENT_CONFIG.amount
             };
             
             console.log('红娘牵线支付参数生成成功:', paymentParams);
             console.log('选择的支付方式:', selectedMatchmakerPaymentMethod);
             
-            // 使用SDK的支付跳转方法 - 直接跳转到第三方支付平台
-            console.log('开始跳转到红娘牵线支付页面...');
-            
-            // 使用SDK的submitPayment方法进行POST跳转
-            epayCore.submitPayment(paymentParams);
+            // 显示支付过渡页面，而不是直接跳转
+            console.log('显示支付过渡页面...');
+            showPaymentRedirect(paymentParams.out_trade_no, paymentParams);
         }
         
         // 退款功能
@@ -5810,18 +8446,61 @@
         
         // 导航切换
         function switchSection(targetId) {
-            // 隐藏所有部分
-            document.querySelectorAll('.card').forEach(card => {
-                card.classList.add('hidden');
+            // 隐藏所有部分，包括反馈中心的所有子页面
+            document.querySelectorAll('.card, #feedbackSection > div[id$="Page"]').forEach(element => {
+                element.classList.add('hidden');
             });
             
             // 显示目标部分
             if (targetId === 'main') {
-                document.querySelectorAll('.card:not(#orderSection):not(#profileSection):not(#chatSection):not(#matchmakerSection):not(#userDetailSection)').forEach(card => {
+                // 切换到首页时，确保隐藏并清理反馈中心的所有内容
+                const feedbackSection = document.getElementById('feedbackSection');
+                if (feedbackSection) {
+                    feedbackSection.classList.add('hidden');
+                    // 重置反馈中心内部可能动态生成的内容
+                    const feedbackContent = document.getElementById('feedbackContent');
+                    const groupFeedbackList = document.getElementById('groupFeedbackList');
+                    const matchmakerFeedbackList = document.getElementById('matchmakerFeedbackList');
+                    
+                    if (groupFeedbackList) groupFeedbackList.innerHTML = '';
+                    if (matchmakerFeedbackList) matchmakerFeedbackList.innerHTML = '';
+                }
+                
+                // 显示首页内容
+                document.querySelectorAll('.card:not(#orderSection):not(#profileSection):not(#chatSection):not(#matchmakerSection):not(#userDetailSection):not(#feedbackSection)').forEach(card => {
                     card.classList.remove('hidden');
                 });
             } else {
-                document.getElementById(targetId).classList.remove('hidden');
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    targetElement.classList.remove('hidden');
+                }
+                
+                // 牵线服务特殊处理：检查用户是否已登录且未查看过通知
+                if (targetId === 'matchmakerSection') {
+                    const currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
+                    console.log('当前用户状态:', currentUser);
+                    console.log('是否已看过通知:', hasUserSeenNotification());
+                    
+                    // 只有当用户未看过通知时才显示
+                    if (!hasUserSeenNotification()) {
+                        setTimeout(() => {
+                            console.log('触发显示通知');
+                            showMatchmakerNotification();
+                        }, 300);
+                    }
+                    
+                    // 如果未登录，模拟登录状态以便测试功能
+                    if (!currentUser) {
+                        console.log('未登录，设置模拟用户');
+                        localStorage.setItem('currentUser', JSON.stringify({ username: 'testuser', vip: false }));
+                    }
+                    
+                    // 重新初始化牵线服务
+                    setTimeout(() => {
+                        initMatchmaker();
+                    }, 500);
+                }
             }
             
             // 更新导航状态
@@ -5840,31 +8519,37 @@
             const status = urlParams.get('status');
             const tradeNo = urlParams.get('out_trade_no');
             const payStatus = urlParams.get('pay_status');
+            const tradeStatus = urlParams.get('trade_status');
+            const totalAmount = urlParams.get('total_amount');
             
             // 只有在有支付参数时才处理支付结果
-            if (!status && !tradeNo && !payStatus) {
+            if (!status && !tradeNo && !payStatus && !tradeStatus) {
                 return;
             }
             
-            // 使用SDK验证支付结果签名
-            const params = Object.fromEntries(urlParams.entries());
-            const isValid = epayCore.verifyReturn(params);
+            console.log('检测到支付回调参数:', {
+                status, tradeNo, payStatus, tradeStatus, totalAmount
+            });
             
             // 支持多种支付结果参数格式
-            const isSuccess = (status === 'success' || payStatus === '1') && tradeNo && isValid;
+            const isSuccess = status === 'success' || 
+                            payStatus === '1' || 
+                            tradeStatus === 'TRADE_SUCCESS' ||
+                            tradeStatus === 'success';
             
-            if (isSuccess) {
+            if (isSuccess && tradeNo) {
                 // 支付成功
                 hasPaid = true;
                 localStorage.setItem('hasPaid', 'true');
                 
                 // 生成订单
                 const orderTime = new Date().toLocaleString();
+                const orderAmount = totalAmount ? parseFloat(totalAmount) : 39.99;
                 const newOrder = {
                     id: tradeNo,
                     province: selectedProvince,
                     city: selectedCity,
-                    amount: 39.99,
+                    amount: orderAmount,
                     time: orderTime,
                     status: 'paid'
                 };
@@ -5876,16 +8561,22 @@
                 initUI();
                 
                 // 显示详细的支付成功页面
-                showPaymentSuccess(tradeNo, 39.99, orderTime, '微信群聊VIP服务');
+                showPaymentSuccess(tradeNo, orderAmount, orderTime, '微信群聊VIP服务');
                 
                 // 清除URL参数
                 window.history.replaceState({}, document.title, window.location.pathname);
-            } else if (status === 'failed' || payStatus === '0' || !isValid) {
-                // 支付失败或签名验证失败
-                showPaymentFailed(tradeNo || '未知订单号', 39.99, '支付超时或网络异常');
+                
+                console.log('支付成功处理完成，订单号:', tradeNo);
+            } else if (status === 'failed' || payStatus === '0' || tradeStatus === 'TRADE_CLOSED') {
+                // 支付失败
+                const failedOrderNo = tradeNo || '未知订单号';
+                const failedAmount = totalAmount ? parseFloat(totalAmount) : 39.99;
+                showPaymentFailed(failedOrderNo, failedAmount, '支付超时或网络异常');
                 
                 // 清除URL参数
                 window.history.replaceState({}, document.title, window.location.pathname);
+                
+                console.log('支付失败处理完成，订单号:', failedOrderNo);
             }
         }
         
@@ -5898,6 +8589,12 @@
             
             // 显示支付成功模态框
             successModal.classList.remove('hidden');
+            
+            // 自动跳转到订单页面（5秒后）
+            setTimeout(() => {
+                successModal.classList.add('hidden');
+                switchSection('orderSection');
+            }, 5000);
         }
         
         // 显示支付失败页面
@@ -5966,6 +8663,32 @@
             // 监听用户登录状态变化
             window.addEventListener('userLogin', updateFeedbackCenterUI);
             window.addEventListener('userLogout', updateFeedbackCenterUI);
+            
+            // 初始化反馈页面导航点击事件
+            const feedbackTabs = document.querySelectorAll('.feedback-page-tab');
+            feedbackTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // 移除所有标签的active类
+                    feedbackTabs.forEach(t => t.classList.remove('active'));
+                    
+                    // 为当前点击的标签添加active类
+                    tab.classList.add('active');
+                    
+                    // 获取当前点击的页面类型
+                    const pageType = tab.dataset.page;
+                    
+                    // 隐藏所有反馈内容
+                    const feedbackContents = document.querySelectorAll('.feedback-mode-content');
+                    feedbackContents.forEach(content => content.classList.remove('active'));
+                    
+                    // 显示对应的反馈内容
+                    if (pageType === 'groupFeedbackPage') {
+                        document.getElementById('groupFeedbackContent').classList.add('active');
+                    } else if (pageType === 'matchmakerFeedbackPage') {
+                        document.getElementById('matchmakerFeedbackContent').classList.add('active');
+                    }
+                });
+            });
         }
         
         // 更新反馈中心UI显示
@@ -6048,34 +8771,24 @@
             
             const title = document.getElementById('feedbackTitle').value;
             const content = document.getElementById('feedbackContent').value;
-            const mode = document.getElementById('feedbackMode').value;
+            
+            // 获取当前选中的反馈模式
+            const activeTab = document.querySelector('.feedback-page-tab.active');
+            const mode = activeTab ? activeTab.dataset.page === 'groupFeedbackPage' ? 'group' : 'matchmaker' : 'group';
             
             if (!title || !content) {
                 alert('请填写反馈标题和内容');
                 return;
             }
             
-            // 检查VIP状态 - 保留群聊和牵线服务的VIP提交检查
-            if (mode === 'group') {
-                // 群聊用户反馈提交需要开通VIP入群特权
-                if (!currentUser.vip) {
-                    if (confirm('提交群聊用户反馈需要开通VIP入群特权。是否立即开通？')) {
-                        // 跳转到VIP开通页面
-                        switchSection('groupSection');
-                        return;
-                    }
+            // 检查私密交友特权 - 需要开通首页底部导航中的'私密交友特权'才能上传反馈
+            if (!currentUser.vip || !currentUser.vip.private) {
+                if (confirm('提交反馈需要开通私密交友特权。是否立即开通？')) {
+                    // 跳转到首页底部导航的私密交友特权页面
+                    switchSection('homeSection');
                     return;
                 }
-            } else if (mode === 'matchmaker') {
-                // 牵线服务用户提交反馈需要开通红娘牵线VIP服务
-                if (!currentUser.matchmakerVip) {
-                    if (confirm('提交牵线服务反馈需要开通红娘牵线VIP服务。是否立即开通？')) {
-                        // 跳转到VIP开通页面
-                        switchSection('matchmakerSection');
-                        return;
-                    }
-                    return;
-                }
+                return;
             }
             
             // 创建反馈对象
@@ -6154,21 +8867,7 @@
             event.target.value = '';
         }
         
-        // 切换反馈页面
-        function switchFeedbackPage(pageId) {
-            // 更新页面导航状态
-            document.querySelectorAll('.feedback-page-tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            document.querySelector(`.feedback-page-tab[data-page="${pageId}"]`).classList.add('active');
-            
-            // 隐藏所有反馈页面
-            document.getElementById('groupFeedbackPage').classList.add('hidden');
-            document.getElementById('matchmakerFeedbackPage').classList.add('hidden');
-            
-            // 显示目标反馈页面
-            document.getElementById(pageId).classList.remove('hidden');
-        }
+        // 切换反馈页面函数已删除 - 不再支持群聊和牵线反馈跳转功能
         
         // 切换反馈模式
         function switchFeedbackMode(mode) {
@@ -6191,18 +8890,27 @@
             const urlParams = new URLSearchParams(window.location.search);
             const status = urlParams.get('status');
             const tradeNo = urlParams.get('out_trade_no');
+            const payStatus = urlParams.get('pay_status');
+            const tradeStatus = urlParams.get('trade_status');
+            const totalAmount = urlParams.get('total_amount');
             const product = urlParams.get('name');
             
             // 只有在有支付参数时才处理支付结果
-            if (!status && !tradeNo) {
+            if (!status && !tradeNo && !payStatus && !tradeStatus) {
                 return;
             }
             
-            // 使用SDK验证支付结果签名
-            const params = Object.fromEntries(urlParams.entries());
-            const isValid = matchmakerEpayCore.verifyReturn(params);
+            console.log('检测到红娘牵线支付回调参数:', {
+                status, tradeNo, payStatus, tradeStatus, totalAmount, product
+            });
             
-            if (status === 'success' && tradeNo && product === '红娘牵线VIP服务' && isValid) {
+            // 支持多种支付结果参数格式
+            const isSuccess = status === 'success' || 
+                            payStatus === '1' || 
+                            tradeStatus === 'TRADE_SUCCESS' ||
+                            tradeStatus === 'success';
+            
+            if (isSuccess && tradeNo) {
                 // 红娘牵线VIP支付成功
                 hasMatchmakerVip = true;
                 localStorage.setItem('hasMatchmakerVip', 'true');
@@ -6212,16 +8920,23 @@
                 
                 // 显示详细的支付成功页面
                 const orderTime = new Date().toLocaleString();
-                showPaymentSuccess(tradeNo, 99.00, orderTime, '红娘牵线VIP服务');
+                const orderAmount = totalAmount ? parseFloat(totalAmount) : 99.99;
+                showPaymentSuccess(tradeNo, orderAmount, orderTime, '红娘牵线VIP服务');
                 
                 // 清除URL参数
                 window.history.replaceState({}, document.title, window.location.pathname);
-            } else if (status === 'failed' || !isValid) {
-                // 支付失败或签名验证失败
-                showPaymentFailed(tradeNo || '未知订单号', 99.00, '支付超时或网络异常');
+                
+                console.log('红娘牵线支付成功处理完成，订单号:', tradeNo);
+            } else if (status === 'failed' || payStatus === '0' || tradeStatus === 'TRADE_CLOSED') {
+                // 支付失败
+                const failedOrderNo = tradeNo || '未知订单号';
+                const failedAmount = totalAmount ? parseFloat(totalAmount) : 99.99;
+                showPaymentFailed(failedOrderNo, failedAmount, '支付超时或网络异常');
                 
                 // 清除URL参数
                 window.history.replaceState({}, document.title, window.location.pathname);
+                
+                console.log('红娘牵线支付失败处理完成，订单号:', failedOrderNo);
             }
         }
         
@@ -6514,6 +9229,9 @@
                 localStorage.setItem('currentUser', JSON.stringify(currentUser));
             }
             
+            // 牵线资料功能已关闭，不再同步更新牵线资料
+            
+            
             // 更新UI
             updateUserUI();
             
@@ -6521,7 +9239,7 @@
             profileContent.classList.remove('hidden');
             editProfileContent.classList.add('hidden');
             
-            alert('个人资料已更新');
+            alert('个人资料已更新，牵线资料也已同步更新');
         }
         
         // 显示编辑个人资料表单
@@ -6546,7 +9264,52 @@
         }
         
         // 初始化红娘牵线功能
-        function initMatchmaker() {
+        // 牵线服务通知相关函数
+// 移除重复的函数定义，保留下面的简化版本
+
+// 牵线服务通知相关功能
+function showMatchmakerNotification() {
+    matchmakerNotificationModal.classList.remove('hidden');
+}
+
+function hideMatchmakerNotification() {
+    matchmakerNotificationModal.classList.add('hidden');
+}
+
+// 检查用户是否已经看过通知
+function hasUserSeenNotification() {
+    return localStorage.getItem('matchmakerNotificationSeen') === 'true';
+}
+
+// 标记通知为已查看
+function markNotificationAsSeen() {
+    localStorage.setItem('matchmakerNotificationSeen', 'true');
+}
+
+// 确认按钮点击事件
+confirmNotificationBtn.addEventListener('click', function() {
+    markNotificationAsSeen();
+    hideMatchmakerNotification();
+});
+
+// 点击模态框外部关闭通知
+matchmakerNotificationModal.addEventListener('click', function(e) {
+    if (e.target === matchmakerNotificationModal) {
+        // 点击外部不标记为已查看，只有点击确认按钮才标记
+        hideMatchmakerNotification();
+    }
+});
+
+// 测试函数：允许用户在控制台手动触发通知显示（方便测试）
+window.testMatchmakerNotification = function() {
+    // 清除已查看标记，确保通知会显示
+    localStorage.removeItem('matchmakerNotificationSeen');
+    // 显示通知
+    showMatchmakerNotification();
+    console.log('牵线服务通知已显示，可通过 localStorage.removeItem("matchmakerNotificationSeen") 重置通知状态');
+};
+
+function initMatchmaker() {
             matchmakerContent.innerHTML = '';
             
             if (!currentUser) {
@@ -6569,123 +9332,1127 @@
                 return;
             }
             
-            // 用户已登录，显示红娘牵线功能
-            if (selectedMatchmakerCity) {
-                // 如果选择了城市，过滤用户
-                const filteredUsers = matchmakerUsers.filter(user => user.location === selectedMatchmakerCity);
-                if (filteredUsers.length > 0) {
-                    if (currentMatchIndex >= filteredUsers.length) {
-                        // 所有用户已浏览完，重置索引
-                        currentMatchIndex = 0;
-                    }
-                    
-                    const currentUserData = filteredUsers[currentMatchIndex];
-                    createUserCard(currentUserData);
-                } else {
-                    // 当前城市没有用户
-                    matchmakerContent.innerHTML = `
-                        <div class="no-chat-data">
-                            <i class="fas fa-users"></i>
-                            <p>当前城市暂无用户</p>
-                            <p style="font-size: 0.9rem; margin-top: 10px;">请尝试选择其他城市</p>
-                        </div>
-                    `;
-                }
-            } else {
-                // 未选择城市，显示所有用户
-                if (currentMatchIndex >= matchmakerUsers.length) {
-                    // 所有用户已浏览完，重置索引
-                    currentMatchIndex = 0;
-                }
-                
-                const currentUserData = matchmakerUsers[currentMatchIndex];
-                createUserCard(currentUserData);
-            }
-            
-            // 显示统计数据
-            const statsContainer = document.createElement('div');
-            statsContainer.className = 'matchmaker-stats';
-            statsContainer.innerHTML = `
-                <div class="matchmaker-stat">
-                    <div class="matchmaker-stat-value">${matchmakerStats.likes}</div>
-                    <div class="matchmaker-stat-label">喜欢</div>
-                </div>
-                <div class="matchmaker-stat">
-                    <div class="matchmaker-stat-value">${matchmakerStats.matches}</div>
-                    <div class="matchmaker-stat-label">匹配</div>
-                </div>
-                <div class="matchmaker-stat">
-                    <div class="matchmaker-stat-value">${matchmakerStats.views}</div>
-                    <div class="matchmaker-stat-label">浏览</div>
+            // 创建牵线功能头部
+            const matchmakerHeader = document.createElement('div');
+            matchmakerHeader.className = 'matchmaker-header';
+            matchmakerHeader.innerHTML = `
+                <h2>牵线用户数据</h2>
+                <p>浏览和查看牵线用户信息</p>
+                <div class="trust-guarantees">
+                    <div class="guarantee-item">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>绝对真实可靠</span>
+                    </div>
+                    <div class="guarantee-item">
+                        <i class="fas fa-undo-alt"></i>
+                        <span>24小时不满意随时退款</span>
+                    </div>
+                    <div class="guarantee-item">
+                        <i class="fas fa-database"></i>
+                        <span>资源齐全</span>
+                    </div>
+                    <div class="guarantee-item">
+                        <i class="fas fa-robot"></i>
+                        <span>自动退款系统</span>
+                    </div>
                 </div>
             `;
-            matchmakerContent.appendChild(statsContainer);
+            matchmakerContent.appendChild(matchmakerHeader);
+            
+            // 创建牵线资料操作区域
+            const profileActionSection = document.createElement('div');
+            profileActionSection.className = 'matchmaker-profile-action';
+            profileActionSection.innerHTML = `
+                <div class="profile-action-card">
+                    <div class="card-icon">
+                    </div>
+                    <div class="card-content">
+                        <h4>牵线服务</h4>
+                        <p>浏览和选择您感兴趣的用户，查看详细资料</p>
+                    </div>
+                </div>
+            `;
+            matchmakerContent.appendChild(profileActionSection);
+            
+            // 添加牵线资料提示样式
+            const style = document.createElement('style');
+            style.textContent = `
+                .matchmaker-header {
+                    text-align: center;
+                    margin-bottom: 20px;
+                    padding: 20px;
+                    background-color: #f8f9fa;
+                    border-radius: 8px;
+                }
+                .matchmaker-header h2 {
+                    margin: 0 0 10px 0;
+                    color: #333;
+                }
+                .matchmaker-header p {
+                    margin: 0;
+                    color: #666;
+                }
+                .trust-guarantees {
+                    display: flex;
+                    justify-content: center;
+                    flex-wrap: wrap;
+                    gap: 20px;
+                    margin-top: 15px;
+                    padding-top: 15px;
+                    border-top: 1px solid #e9ecef;
+                }
+                .guarantee-item {
+                    display: flex;
+                    align-items: center;
+                    gap: 5px;
+                    padding: 10px 15px;
+                    background-color: rgba(103, 58, 183, 0.1);
+                    border-radius: 20px;
+                    color: #673ab7;
+                    font-weight: 500;
+                    font-size: 14px;
+                }
+                .guarantee-item i {
+                    font-size: 16px;
+                }
+                .matchmaker-profile-info {
+                    margin: 20px 0;
+                    padding: 20px;
+                    background-color: #f8f9fa;
+                    border-radius: 8px;
+                    text-align: center;
+                }
+                .profile-info-card {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    padding: 20px;
+                    background-color: white;
+                    border-radius: 8px;
+                    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+                }
+                .card-icon {
+                    font-size: 48px;
+                    color: #4CAF50;
+                    margin-bottom: 15px;
+                }
+                .card-content h4 {
+                    margin: 10px 0;
+                    color: #333;
+                }
+                .card-content p {
+                    color: #666;
+                    margin: 0;
+                }
+                
+
+                .btn-secondary {
+                    background: #6c757d;
+                    color: white;
+                    border: none;
+                    padding: 8px 16px;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    margin-right: 10px;
+                }
+                .form-actions {
+                    margin-top: 30px;
+                    text-align: right;
+                }
+                .form-check {
+                    display: flex;
+                    align-items: center;
+                    margin-bottom: 10px;
+                }
+                .form-check input {
+                    margin-right: 8px;
+                }
+                .tags-input {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 8px;
+                    margin-top: 8px;
+                }
+                .tag {
+                    background: #e9ecef;
+                    padding: 4px 10px;
+                    border-radius: 16px;
+                    font-size: 12px;
+                    display: flex;
+                    align-items: center;
+                }
+                .tag .remove-tag {
+                    margin-left: 6px;
+                    cursor: pointer;
+                    font-size: 14px;
+                }
+            `;
+            document.head.appendChild(style);
+            
+            // 牵线资料上传功能已关闭
+            
+            
+            // VIP用户且已上传资料，显示牵线匹配界面
+            // 牵线资料上传和编辑功能已关闭，直接继续显示用户列表
+            
+            
+            
+            // 显示牵线匹配结果和用户列表
+            const matchResult = document.createElement('div');
+            matchResult.className = 'matchmaker-match-result';
+            matchResult.innerHTML = `
+                <div class="result-header">
+                    <h4>为您推荐的匹配对象</h4>
+                </div>
+                <div class="match-status">
+                    <div class="status-message">智能匹配已完成</div>
+                    <div class="status-tip">已根据您的条件进行智能匹配</div>
+                </div>
+                <button class="btn btn-primary" id="refreshMatchesBtn">刷新匹配结果</button>
+            `;
+            matchmakerContent.appendChild(matchResult);
+            
+            // 刷新匹配按钮事件
+            document.getElementById('refreshMatchesBtn').addEventListener('click', function() {
+                alert('匹配结果已更新！');
+                displayMatchmakerUserList();
+            });
+            
+            // 初始化城市选择和用户列表
+            initMatchmakerCitySelection();
+            
+            // 初始化性别筛选功能
+            initMatchmakerGenderFilter();
+            
+            console.log('牵线功能初始化完成');
         }
+        
+        // 显示牵线资料上传表单
+
+            
+            // 生成牵线用户数据的函数 - 生成固定的用户数据，确保每个用户数据唯一
+            function generateMatchmakerUsers() {
+                // 按地区组织的固定城市数据（扩展到更多城市）
+                const regionCities = {
+                    "华北地区": ["北京", "天津", "石家庄", "太原", "呼和浩特", "唐山", "秦皇岛", "邯郸", "邢台", "保定", "张家口", "承德", "沧州", "廊坊", "衡水", "大同", "阳泉", "长治", "晋城", "朔州", "晋中", "运城", "忻州", "临汾", "吕梁", "包头", "乌海", "赤峰", "通辽", "鄂尔多斯", "呼伦贝尔", "巴彦淖尔", "乌兰察布"],
+                    "东北地区": ["沈阳", "大连", "长春", "哈尔滨", "鞍山", "抚顺", "本溪", "丹东", "锦州", "营口", "阜新", "辽阳", "盘锦", "铁岭", "朝阳", "葫芦岛", "吉林", "四平", "辽源", "通化", "白山", "松原", "白城", "延边", "齐齐哈尔", "鸡西", "鹤岗", "双鸭山", "大庆", "伊春", "佳木斯", "七台河", "牡丹江", "黑河", "绥化", "大兴安岭"],
+                    "华东地区": ["上海", "南京", "杭州", "宁波", "温州", "苏州", "无锡", "徐州", "常州", "南通", "连云港", "淮安", "盐城", "扬州", "镇江", "泰州", "宿迁", "湖州", "嘉兴", "绍兴", "金华", "衢州", "舟山", "台州", "丽水", "合肥", "芜湖", "蚌埠", "淮南", "马鞍山", "淮北", "铜陵", "安庆", "黄山", "滁州", "阜阳", "宿州", "六安", "亳州", "池州", "宣城", "福州", "厦门", "莆田", "三明", "泉州", "漳州", "南平", "龙岩", "宁德", "南昌", "景德镇", "萍乡", "九江", "新余", "鹰潭", "赣州", "吉安", "宜春", "抚州", "上饶", "济南", "青岛", "淄博", "枣庄", "东营", "烟台", "潍坊", "济宁", "泰安", "威海", "日照", "临沂", "德州", "聊城", "滨州", "菏泽"],
+                    "中南地区": ["广州", "深圳", "武汉", "郑州", "长沙", "韶关", "珠海", "汕头", "佛山", "江门", "湛江", "茂名", "肇庆", "惠州", "梅州", "汕尾", "河源", "阳江", "清远", "东莞", "中山", "潮州", "揭阳", "云浮", "株洲", "湘潭", "衡阳", "邵阳", "岳阳", "常德", "张家界", "益阳", "郴州", "永州", "怀化", "娄底", "湘西", "洛阳", "开封", "平顶山", "安阳", "鹤壁", "新乡", "焦作", "濮阳", "许昌", "漯河", "三门峡", "南阳", "商丘", "信阳", "周口", "驻马店", "济源", "南宁", "柳州", "桂林", "梧州", "北海", "防城港", "钦州", "贵港", "玉林", "百色", "贺州", "河池", "来宾", "崇左", "海口", "三亚", "三沙", "儋州"],
+                    "西南地区": ["重庆", "成都", "昆明", "贵阳", "拉萨", "自贡", "攀枝花", "泸州", "德阳", "绵阳", "广元", "遂宁", "内江", "乐山", "南充", "眉山", "宜宾", "广安", "达州", "雅安", "巴中", "资阳", "阿坝", "甘孜", "凉山", "六盘水", "遵义", "安顺", "毕节", "铜仁", "黔西南", "黔东南", "黔南", "曲靖", "玉溪", "保山", "昭通", "丽江", "普洱", "临沧", "楚雄", "红河", "文山", "西双版纳", "大理", "德宏", "怒江", "迪庆", "山南", "日喀则", "那曲", "阿里", "林芝"],
+                    "西北地区": ["西安", "兰州", "银川", "西宁", "乌鲁木齐", "铜川", "宝鸡", "咸阳", "渭南", "延安", "汉中", "榆林", "安康", "商洛", "嘉峪关", "金昌", "白银", "天水", "武威", "张掖", "平凉", "酒泉", "庆阳", "定西", "陇南", "临夏", "甘南", "石嘴山", "吴忠", "固原", "中卫", "海东", "海北", "黄南", "海南", "果洛", "玉树", "海西", "克拉玛依", "吐鲁番", "哈密", "昌吉", "博尔塔拉", "巴音郭楞", "阿克苏", "克孜勒苏", "喀什", "和田", "伊犁", "塔城", "阿勒泰"]
+                };
+                
+                // 固定的姓名库 - 中国常见姓氏和名字
+                const commonFemaleFirstNames = ['雯', '婷', '莉', '娜', '艳', '娟', '秀', '敏', '静', '丽', '芳', '梅', '华', '琴', '慧', '莹', '霞', '香', '燕', '佳', '美', '雪', '红', '玉', '桂', '兰', '凤', '菊', '英', '萍'];
+                const commonMaleFirstNames = ['伟', '强', '军', '勇', '杰', '涛', '磊', '超', '明', '刚', '辉', '飞', '敏', '浩', '鑫', '洋', '兵', '宇', '轩', '晨', '峰', '龙', '虎', '豹', '彪', '忠', '孝', '义', '德', '智'];
+                const commonLastNames = ['王', '李', '张', '刘', '陈', '杨', '赵', '黄', '周', '吴', '徐', '孙', '胡', '朱', '高', '林', '何', '郭', '马', '罗', '梁', '宋', '郑', '谢', '韩', '唐', '冯', '于', '董', '萧'];
+                
+                // 偏远地区特有的少数民族姓氏和名字
+                const remoteLastNames = ['扎西', '卓玛', '阿依', '库尔班', '铁木尔', '巴特尔', '呼日勒', '苏日娜', '乌兰', '其木格', '布和', '图雅', '朝鲁', '格日勒', '达瓦', '央金', '拉姆', '顿珠', '尼玛', '次仁', '强巴', '卓嘎', '巴桑', '普布', '德吉', '白玛', '措姆', '多吉', '旺堆', '索朗'];
+                const remoteFemaleFirstNames = ['卓玛', '央金', '拉姆', '德吉', '白玛', '措姆', '次仁央宗', '格桑梅朵', '索朗卓玛', '达娃卓玛', '阿依古丽', '古丽仙', '帕丽达', '热依汗', '米热古丽', '迪丽娜尔', '玛依拉', '娜孜古丽', '苏日娜', '其木格', '乌兰托娅', '图雅', '格日勒', '萨日娜', '乌云其其格', '阿拉坦图雅', '诺敏', '其木格', '斯琴高娃', '塔娜'];
+                const remoteMaleFirstNames = ['扎西', '顿珠', '尼玛', '次仁', '强巴', '多吉', '旺堆', '索朗', '达瓦', '格桑', '库尔班', '铁木尔', '阿不都', '依明', '买买提', '艾力', '玉山', '吐尔逊', '吾买尔', '阿不力孜', '巴特尔', '呼日勒', '朝鲁', '布和', '斯琴巴特尔', '乌云毕力格', '那顺宝音', '宝力高', '巴雅尔', '吉日嘎拉'];
+                
+                // 定义偏远城市列表
+                const remoteCities = ['拉萨', '日喀则', '昌都', '林芝', '山南', '那曲', '阿里', '乌鲁木齐', '克拉玛依', '吐鲁番', '哈密', '昌吉', '博尔塔拉', '巴音郭楞', '阿克苏', '克孜勒苏', '喀什', '和田', '伊犁', '塔城', '阿勒泰', '西宁', '海东', '海北', '黄南', '海南', '果洛', '玉树', '海西', '呼和浩特', '包头', '乌海', '赤峰', '通辽', '鄂尔多斯', '呼伦贝尔', '巴彦淖尔', '乌兰察布', '兴安', '锡林郭勒', '阿拉善', '阿坝', '甘孜', '凉山', '西双版纳', '德宏', '怒江', '迪庆', '文山', '大理', '楚雄', '红河', '普洱', '临沧', '保山', '昭通', '丽江', '黔东南', '黔南', '黔西南', '毕节', '铜仁'];
+                
+                // 多样化的标签库
+                const personalityTags = ['温柔善良', '活泼开朗', '成熟稳重', '幽默风趣', '认真负责', '独立自主', '善解人意', '乐观向上', '沉稳内敛', '热情大方'];
+                const hobbyTags = ['爱好旅行', '喜欢运动', '热爱阅读', '音乐达人', '美食爱好者', '电影迷', '摄影爱好者', '健身达人', '瑜伽爱好者', '舞蹈爱好者'];
+                const lifestyleTags = ['早睡早起', '夜猫子', '素食主义', '喜欢烹饪', '注重养生', '追求时尚', '简约生活', '喜欢社交', '享受独处', '喜欢宠物'];
+                
+                // 女生特有吸引人的标签
+                const femaleAttractiveTags = ['身材曼妙', '气质优雅', '温柔体贴', '小鸟依人', '风情万种', '性感迷人', '曲线玲珑', '长发披肩', '甜美可爱', '优雅大方'];
+                
+                // 职业库
+                const professions = ['医生', '教师', '工程师', '设计师', '程序员', '销售经理', '市场营销', '人力资源', '财务会计', '金融分析师', '创业者', '公务员', '律师', '科研人员', '艺术家'];
+                
+                // 教育程度
+                const educationLevels = ['大专', '本科', '硕士', '博士'];
+                
+                // 收入范围
+                const incomeLevels = ['5k以下', '5k-10k', '10k-20k', '20k-30k', '30k以上'];
+                
+                // 性格特点
+                const characterTraits = ['开朗', '内向', '稳重', '幽默', '温柔', '直率', '豪爽', '细腻', '理性', '感性'];
+                
+                // 女生特有属性
+                const figures = ['苗条', '丰满', '匀称', '高挑'];
+                const appearances = ['甜美', '成熟', '可爱', '性感', '优雅'];
+                const clothingStyles = ['时尚', '休闲', '性感', '优雅', '运动'];
+                
+                // 生成固定数量的用户
+                const users = [];
+                let userId = 1;
+                
+                // 固定随机种子函数，确保每次生成的随机数相同
+                function seededRandom(seed) {
+                    const x = Math.sin(seed++) * 10000;
+                    return x - Math.floor(x);
+                }
+                
+                // 为每个区域的每个城市生成20-40个用户
+                Object.values(regionCities).forEach(regionCities => {
+                    regionCities.forEach(city => {
+                        // 为每个城市生成20-40个用户
+                        const citySeed = city.charCodeAt(0) + city.charCodeAt(city.length - 1);
+                        const userCount = Math.floor(seededRandom(citySeed) * 21) + 20; // 20-40个用户
+                        
+                        for (let userInCity = 0; userInCity < userCount; userInCity++) {
+                            const userSeed = citySeed * 100 + userInCity;
+                            
+                            // 控制性别比例，女多男少（约6:4）
+                            const isFemale = (userId % 5 < 3); // 60%的概率生成女性
+                            const gender = isFemale ? 'female' : 'male';
+                            
+                            // 检查是否为偏远城市，使用相应的名字库
+                            const isRemoteCity = remoteCities.includes(city);
+                            
+                            // 选择姓氏库和名字库
+                            const selectedLastNames = isRemoteCity ? remoteLastNames : commonLastNames;
+                            const selectedFemaleFirstNames = isRemoteCity ? remoteFemaleFirstNames : commonFemaleFirstNames;
+                            const selectedMaleFirstNames = isRemoteCity ? remoteMaleFirstNames : commonMaleFirstNames;
+                            
+                            // 生成固定的姓名，基于索引确保唯一性
+                            const lastNameIndex = (userId % selectedLastNames.length);
+                            const firstNameIndex = gender === 'female' 
+                                ? (userId % selectedFemaleFirstNames.length)
+                                : (userId % selectedMaleFirstNames.length);
+                            
+                            // 生成中国汉字名字（偏远城市使用少数民族名字，普通城市使用常见名字）
+                            const name = `${selectedLastNames[lastNameIndex]}${gender === 'female' ? selectedFemaleFirstNames[firstNameIndex] : selectedMaleFirstNames[firstNameIndex]}`;
+                            
+                            // 生成固定的年龄，18-30岁为主，极少数其他年龄段
+                            let age;
+                            if (userId % 10 === 0) { // 10%的概率生成31-35岁的用户
+                                age = 31 + (userId % 5); // 31-35岁
+                            } else { // 90%的概率生成18-30岁的用户
+                                age = 18 + (userId % 13); // 18-30岁
+                            }
+                            
+                            // 使用当前城市作为位置
+                            const location = city;
+                            
+                            // 选择固定的标签组合，确保每个用户的标签不同
+                            const userTags = [];
+                            
+                            // 为女生添加特有标签
+                            if (isFemale) {
+                                userTags.push(femaleAttractiveTags[(userId + 3) % femaleAttractiveTags.length]);
+                            }
+                            
+                            // 从不同类型的标签中选择固定的标签
+                            userTags.push(personalityTags[(userId + 5) % personalityTags.length]);
+                            userTags.push(hobbyTags[(userId + 7) % hobbyTags.length]);
+                            
+                            // 部分用户有更多标签
+                            if (userId % 3 === 0) {
+                                userTags.push(lifestyleTags[(userId + 9) % lifestyleTags.length]);
+                            }
+                            if (userId % 5 === 0 && !isFemale) {
+                                userTags.push(personalityTags[(userId + 11) % personalityTags.length]);
+                            }
+                            
+                            // 生成固定的照片URL，使用一致的ID确保加载相同的照片
+                            const photoId = (userId % 100) + 1;
+                            const photo = gender === 'female' 
+                                ? `https://picsum.photos/seed/girl${photoId}/200/300`
+                                : `https://picsum.photos/seed/boy${photoId}/200/300`;
+                            
+                            // 固定生成更多照片（数量基于ID）
+                            const morePhotos = [];
+                            const photoCount = isFemale 
+                                ? 3 + (userId % 6) // 女生3-8张照片
+                                : 1 + (userId % 5); // 男生1-5张照片
+                            
+                            for (let j = 0; j < photoCount; j++) {
+                                const morePhotoSeed = gender === 'female' 
+                                    ? `girlmore${photoId}${j}`
+                                    : `boymore${photoId}${j}`;
+                                morePhotos.push(`https://picsum.photos/seed/${morePhotoSeed}/400/600`);
+                            }
+                            
+                            // 详细资料（固定且唯一）
+                            const details = {
+                                height: gender === 'female' 
+                                    ? 155 + (userId % 20) // 155-175cm
+                                    : 165 + (userId % 30), // 165-195cm
+                                weight: gender === 'female' 
+                                    ? 45 + (userId % 20) // 45-65kg
+                                    : 60 + (userId % 30), // 60-90kg
+                                education: educationLevels[(userId + 2) % educationLevels.length],
+                                occupation: professions[(userId + 4) % professions.length],
+                                income: incomeLevels[(userId + 6) % incomeLevels.length],
+                                character: characterTraits[(userId + 8) % characterTraits.length],
+                                hobbies: userTags.slice(0, 1 + (userId % 3)), // 1-3个爱好
+                                // 更多照片（仅VIP可见）
+                                morePhotos
+                            };
+                            
+                            // 为女生添加更多吸引人的属性
+                            if (isFemale) {
+                                details.figure = figures[(userId + 1) % figures.length];
+                                details.appearance = appearances[(userId + 3) % appearances.length];
+                                details.clothingStyle = clothingStyles[(userId + 5) % clothingStyles.length];
+                            }
+                            
+                            // 生成个性化描述
+                            let description;
+                            if (isFemale) {
+                                const femaleDescriptions = [
+                                    `${name}，${age}岁，来自${location}。性格${details.character}，是个${details.appearance}的女生。`,
+                                    `大家好，我是${name}，在${location}工作。我${details.character}、${userTags[0]}，希望找到真诚的另一半。`,
+                                    `${name}，${location}人，${age}岁。我喜欢${details.hobbies.join('、')}，性格${details.character}。`
+                                ];
+                                description = femaleDescriptions[userId % femaleDescriptions.length];
+                            } else {
+                                const maleDescriptions = [
+                                    `我是${name}，${age}岁，在${location}从事${details.occupation}工作。`,
+                                    `${location}的${name}，${age}岁，性格${details.character}，喜欢${details.hobbies.join('、')}。`,
+                                    `大家好，我是${name}，来自${location}。我${details.character}、${userTags[0]}，期待认识有缘人。`
+                                ];
+                                description = maleDescriptions[userId % maleDescriptions.length];
+                            }
+                            
+                            // 固定的联系方式，基于用户ID生成
+                            const contact = {
+                                wechat: `match_${name}${(userId + 1000).toString().substr(-4)}`,
+                                phone: `1${3000000000 + (userId * 1000000)}`,
+                                email: `match_${name.toLowerCase()}@example.com`
+                            };
+                            
+                            // 创建用户对象，确保ID唯一且固定
+                            users.push({
+                                id: `match_user_${userId}`,
+                                name: name,
+                                age: age,
+                                gender: gender,
+                                location: location,
+                                tags: userTags,
+                                photo: photo,
+                                description: description,
+                                // 固定的验证状态
+                                verified: userId % 3 !== 0, // 约2/3的用户已验证
+                                // 固定的联系方式信息
+                                contact: contact,
+                                // 更多详细资料
+                                details: details,
+                                // 个性化配对信息，每个用户都不同
+                                idealPartner: {
+                                    ageRange: gender === 'female' 
+                                        ? [`${Math.max(25, age - 3)}`, `${Math.min(45, age + 8)}`] // 女生偏好稍大的男生
+                                        : [`${Math.max(22, age - 8)}`, `${Math.min(38, age + 3)}`], // 男生偏好稍小的女生
+                                    location: location, // 优先同城
+                                    heightRange: gender === 'female' 
+                                        ? ['170', '185'] // 女生偏好较高的男生
+                                        : ['155', '170'], // 男生偏好中等身高的女生
+                                    education: educationLevels[Math.min((userId + 1) % educationLevels.length, educationLevels.indexOf(details.education))], // 不低于自己的教育水平
+                                    income: gender === 'female' && userId % 3 !== 0 ? ['10k以上'] : [] // 部分女生对收入有要求
+                                }
+                            });
+                            
+                            userId++;
+                        }
+                    });
+                });
+                
+                console.log(`已为所有城市生成${users.length}个固定的牵线用户数据`);
+                return users;
+            }
+            
+            // 添加牵线用户列表功能
+            function displayMatchmakerUserList() {
+                // 调用generateMatchmakerUsers生成固定的用户数据
+                const fixedUsers = generateMatchmakerUsers();
+                
+                // 从localStorage读取用户上传的资料
+                const uploadedUsers = JSON.parse(localStorage.getItem('matchmakerUsers') || '[]');
+                
+                // 合并固定用户数据和上传的用户数据
+                const allUsers = [...fixedUsers, ...uploadedUsers];
+                
+                console.log('牵线用户数据统计:', { 
+                    fixedUsersCount: fixedUsers.length, 
+                    uploadedUsersCount: uploadedUsers.length,
+                    totalUsersCount: allUsers.length 
+                });
+                
+                // 根据选择的城市和性别过滤用户
+                let matchmakerUsersData = selectedMatchmakerCity && selectedMatchmakerCity !== '全国'
+                    ? allUsers.filter(user => user.location === selectedMatchmakerCity)
+                    : allUsers;
+                
+                // 按性别筛选
+                if (selectedMatchmakerGender !== 'all') {
+                    matchmakerUsersData = matchmakerUsersData.filter(user => user.gender === selectedMatchmakerGender);
+                }
+                    
+                console.log('牵线用户列表已更新，当前选择城市:', selectedMatchmakerCity || '全国', 
+                          '显示用户数量:', matchmakerUsersData.length);
+                
+                // 创建用户列表容器
+                const userListContainer = document.createElement('div');
+                userListContainer.className = 'matchmaker-user-list';
+                
+                // 添加标题和统计信息
+                const listTitle = selectedMatchmakerCity 
+                    ? `${selectedMatchmakerCity}的牵线用户` 
+                    : '全部牵线用户';
+                
+                userListContainer.innerHTML = `
+                    <div class="matchmaker-list-header">
+                        <h4>${listTitle}</h4>
+                        <span class="matchmaker-user-count">共${matchmakerUsersData.length}位用户</span>
+                    </div>
+                `;
+                
+                // 清空之前可能存在的用户列表
+                const existingList = matchmakerContent.querySelector('.matchmaker-user-list');
+                if (existingList) {
+                    matchmakerContent.removeChild(existingList);
+                }
+                
+                // 添加用户列表
+                matchmakerContent.appendChild(userListContainer);
+                
+                // 添加每个用户项
+                matchmakerUsersData.forEach(user => {
+                    const userItem = document.createElement('div');
+                    userItem.className = 'matchmaker-user-list-item';
+                    userItem.dataset.userId = user.id;
+                    userItem.innerHTML = `
+                        <div class="matchmaker-user-list-avatar">
+                            <img src="${user.photo}" alt="${user.name}">
+                        </div>
+                        <div class="matchmaker-user-list-info">
+                            <div class="matchmaker-user-list-name">${user.name}</div>
+                            <div class="matchmaker-user-list-basic">${user.age}岁 · ${user.gender === 'male' ? '男' : '女'} · ${user.location}</div>
+                            <div class="matchmaker-user-list-tags">
+                                ${user.tags.map(tag => `<div class="matchmaker-user-list-tag">${tag}</div>`).join('')}
+                            </div>
+                        </div>
+                        <button class="btn btn-primary view-contact-btn" data-user-id="${user.id}">查看联系方式</button>
+                    `;
+                    
+                    userListContainer.appendChild(userItem);
+                    
+                    // 添加查看联系方式按钮事件
+                    userItem.querySelector('.view-contact-btn').addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        const userId = this.getAttribute('data-user-id');
+                        viewUserContact(userId);
+                    });
+                    
+                    // 添加用户项点击事件，查看用户详情
+                    userItem.addEventListener('click', function() {
+                        const userId = this.getAttribute('data-user-id');
+                        // 查找对应的用户对象
+                        const userObj = allUsers.find(u => u.id === userId);
+                        if (userObj) {
+                            viewUserDetail(userObj);
+                        }
+                    });
+                });
+                
+                // 添加列表样式
+                const style = document.createElement('style');
+                style.textContent = `
+                    .matchmaker-list-header {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        margin-bottom: 20px;
+                        padding-bottom: 10px;
+                        border-bottom: 2px solid #f0f0f0;
+                    }
+                    .matchmaker-user-count {
+                        color: #666;
+                        font-size: 14px;
+                        font-weight: normal;
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+            
+            // 更新城市选择并刷新用户列表
+            function updateMatchmakerCitySelection(city) {
+                // 确保城市选择被正确设置
+                selectedMatchmakerCity = city;
+                console.log(`更新城市选择为: ${city}`);
+                
+                // 保存城市选择到localStorage
+                localStorage.setItem('selectedMatchmakerCity', city);
+                
+                // 刷新用户列表
+                displayMatchmakerUserList();
+            }
+            
+            // 初始化牵线功能的城市选择
+            function initMatchmakerCitySelection() {
+                // 从localStorage获取上次选择的城市，如果没有则默认选择"全国"
+                const savedCity = localStorage.getItem('selectedMatchmakerCity');
+                selectedMatchmakerCity = savedCity || '全国';
+                console.log(`牵线功能初始化，当前选择城市: ${selectedMatchmakerCity}`);
+                
+                // 初始化城市选择UI并更新用户列表
+                displayMatchmakerCityGrid();
+                displayMatchmakerUserList();
+            }
+            
+            // 初始化性别筛选功能
+            function initMatchmakerGenderFilter() {
+                // 获取性别筛选按钮和当前用户性别切换按钮
+                const genderButtons = document.querySelectorAll('.gender-btn[data-gender]');
+                const myGenderButtons = document.querySelectorAll('.gender-btn[data-my-gender]');
+                
+                // 恢复之前的选择
+                if (selectedMatchmakerGender) {
+                    genderButtons.forEach(btn => {
+                        if (btn.dataset.gender === selectedMatchmakerGender) {
+                            btn.classList.add('active');
+                        } else {
+                            btn.classList.remove('active');
+                        }
+                    });
+                }
+                
+                // 添加性别筛选点击事件监听器
+                genderButtons.forEach(btn => {
+                    // 先移除可能存在的旧事件监听器
+                    btn.onclick = null;
+                    
+                    btn.addEventListener('click', function() {
+                        // 移除所有性别筛选按钮的active类
+                        genderButtons.forEach(b => b.classList.remove('active'));
+                        
+                        // 添加当前按钮的active类
+                        this.classList.add('active');
+                        
+                        // 更新选择的性别
+                        selectedMatchmakerGender = this.dataset.gender;
+                        
+                        // 保存到localStorage
+                        localStorage.setItem('selectedMatchmakerGender', selectedMatchmakerGender);
+                        
+                        console.log(`牵线功能性别筛选已更新: ${selectedMatchmakerGender}`);
+                        
+                        // 立即更新用户列表
+                        setTimeout(() => {
+                            displayMatchmakerUserList();
+                        }, 100);
+                    });
+                });
+                
+                // 初始化当前用户性别
+                let currentUserGender = localStorage.getItem('currentUserGender') || 'male';
+                
+                // 恢复当前用户性别选择
+                myGenderButtons.forEach(btn => {
+                    if (btn.dataset.myGender === currentUserGender) {
+                        btn.classList.add('active');
+                    } else {
+                        btn.classList.remove('active');
+                    }
+                });
+                
+                // 添加当前用户性别切换点击事件监听器
+                myGenderButtons.forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        // 移除所有当前用户性别按钮的active类
+                        myGenderButtons.forEach(b => b.classList.remove('active'));
+                        
+                        // 添加当前按钮的active类
+                        this.classList.add('active');
+                        
+                        // 更新当前用户性别
+                        currentUserGender = this.dataset.myGender;
+                        
+                        // 保存到localStorage
+                        localStorage.setItem('currentUserGender', currentUserGender);
+                        
+                        console.log(`当前用户性别已更新: ${currentUserGender}`);
+                        
+                        // 根据当前用户性别自动调整推荐性别（默认推荐异性）
+                        if (selectedMatchmakerGender === 'all') {
+                            const recommendedGender = currentUserGender === 'male' ? 'female' : 'male';
+                            
+                            // 更新性别筛选按钮状态
+                            genderButtons.forEach(b => {
+                                b.classList.remove('active');
+                                if (b.dataset.gender === recommendedGender) {
+                                    b.classList.add('active');
+                                }
+                            });
+                            
+                            // 更新选择的性别
+                            selectedMatchmakerGender = recommendedGender;
+                            localStorage.setItem('selectedMatchmakerGender', selectedMatchmakerGender);
+                            
+                            console.log(`根据当前用户性别自动推荐: ${selectedMatchmakerGender}`);
+                            
+                            // 更新用户列表
+                            displayMatchmakerUserList();
+                        }
+                    });
+                });
+            }
+            
+            // 查看用户详情函数
+            function viewUserDetail(userObj) {
+                // 接收用户对象作为参数，避免变量作用域问题
+                const user = typeof userObj === 'object' ? userObj : {
+                    id: userObj,
+                    name: '未知用户',
+                    age: 0,
+                    gender: 'male',
+                    location: '未知城市',
+                    photo: 'https://via.placeholder.com/150',
+                    tags: [],
+                    description: '暂无简介',
+                    idealPartner: '暂无择偶要求',
+                    details: {},
+                    contact: {}
+                };
+                console.log('查看用户详情:', user);
+                if (user) {
+                    // 检查用户是否为VIP
+                    const hasMatchmakerVip = false; // 默认禁用联系方式查看
+                    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+                    const userVipStatus = currentUser && currentUser.vip && currentUser.vip.matchmaker === true;
+                    const isVip = hasMatchmakerVip || userVipStatus;
+                    
+                    // 创建联系方式部分的HTML
+                    let contactHtml;
+                    if (isVip && user.contact && (user.contact.wechat || user.contact.phone || user.contact.email)) {
+                        contactHtml = `
+                            <div class="matchmaker-contact-info">
+                                ${user.contact.wechat ? `<p><strong>微信:</strong> ${user.contact.wechat} <button class="matchmaker-copy-btn" data-text="${user.contact.wechat}">复制</button></p>` : ''}
+                                ${user.contact.phone ? `<p><strong>电话:</strong> ${user.contact.phone} <button class="matchmaker-copy-btn" data-text="${user.contact.phone}">复制</button></p>` : ''}
+                                ${user.contact.email ? `<p><strong>邮箱:</strong> ${user.contact.email} <button class="matchmaker-copy-btn" data-text="${user.contact.email}">复制</button></p>` : ''}
+                            </div>
+                        `;
+                    } else {
+                        contactHtml = `
+                            <div class="matchmaker-vip-restricted">
+                                <p>开通VIP后可查看联系方式</p>
+                                <button class="matchmaker-vip-btn">立即开通VIP</button>
+                            </div>
+                        `;
+                    }
+                    
+                    // 创建更多照片部分的HTML
+                    let morePhotosHtml;
+                    if (isVip && user.details.morePhotos && user.details.morePhotos.length > 0) {
+                        morePhotosHtml = `
+                            <div class="matchmaker-more-photos-grid">
+                                ${user.details.morePhotos.map(photoUrl => `
+                                    <div class="matchmaker-photo-item">
+                                        <img src="${photoUrl}" alt="${user.name}的照片">
+                                    </div>
+                                `).join('')}
+                            </div>
+                        `;
+                    } else {
+                        morePhotosHtml = `
+                            <div class="matchmaker-vip-restricted">
+                                <p>开通VIP后可查看更多照片</p>
+                                <button class="matchmaker-vip-btn">立即开通VIP</button>
+                            </div>
+                        `;
+                    }
+                    
+                    // 创建模态框
+                    const modal = document.createElement('div');
+                    modal.className = 'matchmaker-user-detail-modal';
+                    modal.innerHTML = `
+                        <div class="matchmaker-user-detail-content">
+                            <div class="matchmaker-user-detail-header">
+                                <h3>${user.name} ${user.age}岁</h3>
+                                ${isVip ? '<span class="matchmaker-vip-badge">VIP用户</span>' : ''}
+                                <span class="matchmaker-user-detail-close">×</span>
+                            </div>
+                            <div class="matchmaker-user-detail-body">
+                                <div class="matchmaker-user-detail-main-photo">
+                                    <img src="${user.photo}" alt="${user.name}">
+                                </div>
+                                <div class="matchmaker-user-detail-info">
+                                    <div class="matchmaker-user-detail-basic">
+                                        <p><strong>性别:</strong> ${user.gender === 'female' ? '女' : '男'}</p>
+                                        <p><strong>城市:</strong> ${user.location}</p>
+                                        <p><strong>身高:</strong> ${user.details.height || '未知'}cm</p>
+                                        <p><strong>体重:</strong> ${user.details.weight || '未知'}kg</p>
+                                        <p><strong>学历:</strong> ${user.details.education || '未知'}</p>
+                                        <p><strong>职业:</strong> ${user.details.occupation || '未知'}</p>
+                                        <p><strong>收入:</strong> ${user.details.income || '未知'}</p>
+                                        <p><strong>性格:</strong> ${user.details.character || '未知'}</p>
+                                    </div>
+                                    <div class="matchmaker-user-detail-tags">
+                                        <strong>标签:</strong>
+                                        ${user.tags && user.tags.length > 0 ? user.tags.map(tag => `<span class="tag">${tag}</span>`).join('') : '暂无标签'}
+                                    </div>
+                                    <div class="matchmaker-user-detail-description">
+                                        <strong>个人简介:</strong>
+                                        <p>${user.description || '暂无简介'}</p>
+                                    </div>
+                                    <div class="matchmaker-user-detail-ideal-partner">
+                                        <strong>择偶要求:</strong>
+                                        <p>${user.idealPartner || '暂无择偶要求'}</p>
+                                    </div>
+                                    <div class="matchmaker-user-detail-contact" id="matchmaker-contact-section">
+                                        <strong>联系方式:</strong>
+                                        ${contactHtml}
+                                    </div>
+                                    <div class="matchmaker-user-detail-more-photos" id="matchmaker-more-photos-section">
+                                        <strong>更多照片:</strong>
+                                        ${morePhotosHtml}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="matchmaker-user-detail-footer">
+                                <button class="matchmaker-contact-btn">获取联系方式</button>
+                                <button class="matchmaker-like-btn">喜欢</button>
+                            </div>
+                        </div>
+                    `;
+                    
+                    // 检查是否已存在模态框，如果存在则移除
+                    const existingModals = document.querySelectorAll('.matchmaker-user-detail-modal');
+                    existingModals.forEach(existingModal => {
+                        document.body.removeChild(existingModal);
+                    });
+                    
+                    // 添加到页面
+                    document.body.appendChild(modal);
+                    
+                    // 关闭模态框
+                    modal.querySelector('.matchmaker-user-detail-close').addEventListener('click', function() {
+                        document.body.removeChild(modal);
+                    });
+                    
+                    // 点击模态框外部关闭
+                    modal.addEventListener('click', function(e) {
+                        if (e.target === modal) {
+                            document.body.removeChild(modal);
+                        }
+                    });
+                    
+                    // 获取联系方式按钮
+                    modal.querySelector('.matchmaker-contact-btn').addEventListener('click', function() {
+                        viewUserContact(user.id);
+                    });
+                    
+                    // VIP按钮点击事件
+                    modal.querySelectorAll('.matchmaker-vip-btn').forEach(btn => {
+                        btn.addEventListener('click', function() {
+                            // 跳转到VIP购买页面
+                            alert('跳转到VIP购买页面');
+                        });
+                    });
+                    
+                    // 复制按钮事件处理
+                    modal.querySelectorAll('.matchmaker-copy-btn').forEach(btn => {
+                        btn.addEventListener('click', function() {
+                            const textToCopy = this.getAttribute('data-text');
+                            if (textToCopy) {
+                                navigator.clipboard.writeText(textToCopy).then(function() {
+                                    const originalText = btn.textContent;
+                                    btn.textContent = '已复制!';
+                                    btn.style.backgroundColor = '#4CAF50';
+                                    setTimeout(function() {
+                                        btn.textContent = originalText;
+                                        btn.style.backgroundColor = '';
+                                    }, 2000);
+                                }).catch(function(err) {
+                                    console.error('复制失败:', err);
+                                    alert('复制失败，请手动复制');
+                                });
+                            }
+                        });
+                    });
+                    
+                    // 添加模态框样式
+                    const style = document.createElement('style');
+                    style.textContent = `
+                        .matchmaker-user-detail-modal {
+                            position: fixed;
+                            top: 0;
+                            left: 0;
+                            width: 100%;
+                            height: 100%;
+                            background-color: rgba(0, 0, 0, 0.5);
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            z-index: 1000;
+                        }
+                        .matchmaker-user-detail-content {
+                            background-color: white;
+                            border-radius: 10px;
+                            width: 90%;
+                            max-width: 800px;
+                            max-height: 90vh;
+                            overflow-y: auto;
+                            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+                        }
+                        .matchmaker-user-detail-header {
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            padding: 20px;
+                            border-bottom: 1px solid #f0f0f0;
+                        }
+                        .matchmaker-user-detail-header h3 {
+                            margin: 0;
+                            color: #5a6069;
+                            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+                        }
+                        .matchmaker-vip-badge {
+                            background-color: rgba(255, 215, 0, 0.2);
+                            color: #b8860b;
+                            padding: 6px 12px;
+                            border-radius: 12px;
+                            font-size: 13px;
+                            font-weight: 600;
+                            margin-right: 15px;
+                        }
+                        .matchmaker-user-detail-close {
+                            font-size: 30px;
+                            cursor: pointer;
+                            color: #adb5bd;
+                            transition: color 0.2s ease;
+                        }
+                        .matchmaker-user-detail-close:hover {
+                            color: #6c757d;
+                        }
+                        .matchmaker-user-detail-close:hover {
+                            color: #333;
+                        }
+                        .matchmaker-user-detail-body {
+                            padding: 20px;
+                        }
+                        .matchmaker-user-detail-main-photo {
+                            width: 100%;
+                            text-align: center;
+                            margin-bottom: 20px;
+                        }
+                        .matchmaker-user-detail-main-photo img {
+                            width: 200px;
+                            height: 200px;
+                            border-radius: 10px;
+                            object-fit: cover;
+                            border: 3px solid #f0f0f0;
+                        }
+                        .matchmaker-user-detail-info {
+                            margin-top: 20px;
+                        }
+                        .matchmaker-user-detail-basic {
+                            display: grid;
+                            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                            gap: 10px;
+                            margin-bottom: 20px;
+                        }
+                        .matchmaker-user-detail-basic p {
+                            margin: 5px 0;
+                            color: #666;
+                        }
+                        .matchmaker-user-detail-tags {
+                            margin-bottom: 20px;
+                        }
+                        .matchmaker-user-detail-tags .tag {
+                            display: inline-block;
+                            background-color: #f0f0f0;
+                            padding: 5px 10px;
+                            margin: 5px;
+                            border-radius: 15px;
+                            font-size: 14px;
+                            color: #666;
+                        }
+                        .matchmaker-user-detail-description {
+                            margin-bottom: 20px;
+                            line-height: 1.6;
+                            color: #666;
+                        }
+                        .matchmaker-user-detail-contact,
+                        .matchmaker-user-detail-more-photos {
+                            margin-bottom: 20px;
+                        }
+                        .matchmaker-vip-restricted {
+                            background-color: #fff3cd;
+                            padding: 15px;
+                            border-radius: 5px;
+                            text-align: center;
+                            border: 1px solid #ffeaa7;
+                        }
+                        .matchmaker-vip-restricted p {
+                            margin: 10px 0;
+                            color: #856404;
+                        }
+                        .matchmaker-vip-btn {
+                            background-color: #ff6b6b;
+                            color: white;
+                            border: none;
+                            padding: 10px 20px;
+                            border-radius: 5px;
+                            cursor: pointer;
+                            font-weight: bold;
+                            transition: background-color 0.3s;
+                        }
+                        .matchmaker-vip-btn:hover {
+                            background-color: #ee5253;
+                        }
+                        .matchmaker-contact-info {
+                            background-color: #f8f9fa;
+                            padding: 15px;
+                            border-radius: 5px;
+                            border: 1px solid #e9ecef;
+                        }
+                        .matchmaker-contact-info p {
+                            margin: 10px 0;
+                            display: flex;
+                            align-items: center;
+                            justify-content: space-between;
+                            color: #495057;
+                        }
+                        .matchmaker-copy-btn {
+                            background-color: #007bff;
+                            color: white;
+                            border: none;
+                            padding: 5px 10px;
+                            border-radius: 3px;
+                            cursor: pointer;
+                            font-size: 12px;
+                            transition: background-color 0.3s;
+                        }
+                        .matchmaker-copy-btn:hover {
+                            background-color: #0056b3;
+                        }
+                        .matchmaker-more-photos-grid {
+                            display: grid;
+                            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                            gap: 10px;
+                            margin-top: 10px;
+                        }
+                        .matchmaker-photo-item {
+                            border-radius: 5px;
+                            overflow: hidden;
+                            border: 2px solid #e9ecef;
+                            cursor: pointer;
+                            transition: transform 0.3s, border-color 0.3s;
+                        }
+                        .matchmaker-photo-item:hover {
+                            transform: scale(1.05);
+                            border-color: #007bff;
+                        }
+                        .matchmaker-photo-item img {
+                            width: 100%;
+                            height: 150px;
+                            object-fit: cover;
+                        }
+                        .matchmaker-user-detail-footer {
+                            display: flex;
+                            justify-content: space-around;
+                            padding: 20px;
+                            border-top: 1px solid #eee;
+                        }
+                        .matchmaker-contact-btn,
+                        .matchmaker-like-btn {
+                            padding: 12px 30px;
+                            border: none;
+                            border-radius: 5px;
+                            cursor: pointer;
+                            font-size: 16px;
+                            font-weight: bold;
+                            transition: background-color 0.3s;
+                        }
+                        .matchmaker-contact-btn {
+                            background-color: #4CAF50;
+                            color: white;
+                        }
+                        .matchmaker-contact-btn:hover {
+                            background-color: #45a049;
+                        }
+                        .matchmaker-like-btn {
+                            background-color: #2196F3;
+                            color: white;
+                        }
+                        .matchmaker-like-btn:hover {
+                            background-color: #0b7dda;
+                        }
+                    `;
+                    document.head.appendChild(style);
+                }
+            }
+            
+            // 查看用户联系方式函数
+            function viewUserContact(userId) {
+                // 直接跳转到VIP服务付款页面
+                // 首先确保当前在牵线服务页面
+                switchSection('matchmakerSection');
+                
+                // 可以在这里添加一些逻辑，比如记录用户想要联系的用户ID
+                localStorage.setItem('intendedContactUserId', userId);
+                
+                // 弹出一个提示，告知用户需要开通VIP才能查看联系方式
+                alert('查看联系方式需要开通红娘牵线VIP服务，请在下方选择支付方式进行开通');
+            }
+            
+            // 初始显示牵线用户列表
+            displayMatchmakerUserList();
+            
+            // 城市选择器的VIP解锁逻辑
+            const citySelector = document.getElementById('matchmakerCitySelector');
+            if (citySelector) {
+                citySelector.classList.remove('vip-restricted');
+                // 生成城市选项
+                const cityGrid = document.getElementById('matchmakerCityGrid');
+                if (cityGrid) {
+                    const cities = ['北京', '上海', '广州', '深圳', '杭州', '成都', '武汉', '西安'];
+                    cityGrid.innerHTML = cities.map(city => `<div class="city-item">${city}</div>`).join('');
+                    
+                    // 添加城市选择事件
+                    cityGrid.querySelectorAll('.city-item').forEach(item => {
+                        item.addEventListener('click', function() {
+                            alert(`已选择城市：${this.textContent}`);
+                            selectedMatchmakerCity = this.textContent;
+                        });
+                    });
+                }
+            }
+            
+            // 已删除统计数据展示功能
+        // 修正语法：多余的右大括号，直接删除即可
         
         // 创建用户卡片
         function createUserCard(userData) {
             const userCard = document.createElement('div');
-            userCard.className = 'matchmaker-user-card';
+            // 为不同性别的用户卡片添加特定类名
+            const genderClass = userData.gender === 'male' ? 'user-card-male' : 'user-card-female';
+            userCard.className = `matchmaker-user-card ${genderClass}`;
+            
+            // 添加性别图标
+            const genderIcon = userData.gender === 'male' ? '<i class="fas fa-male gender-icon male-icon"></i>' : '<i class="fas fa-female gender-icon female-icon"></i>';
+            
             userCard.innerHTML = `
                 <div class="matchmaker-user-avatar">
                     <img src="${userData.avatar}" alt="${userData.name}">
+                    <div class="gender-badge">${genderIcon}</div>
                 </div>
-                <div class="matchmaker-user-name">${userData.name}</div>
+                <div class="matchmaker-user-name gradient-text">${userData.name}</div>
                 <div class="matchmaker-user-info">
-                    <span>${userData.age}岁</span>
-                    <span>${userData.gender === 'male' ? '男' : '女'}</span>
-                    <span>${userData.location}</span>
+                    <span class="user-stat">${userData.age}岁</span>
+                    <span class="user-stat gender-text">${genderIcon} ${userData.gender === 'male' ? '男' : '女'}</span>
+                    <span class="user-stat gradient-text">${userData.location}</span>
                 </div>
                 <div class="matchmaker-user-info">
-                    <span>${userData.job}</span>
+                    <span class="user-job highlight">${userData.job}</span>
                 </div>
                 <div class="matchmaker-user-tags">
-                    ${userData.tags.map(tag => `<div class="matchmaker-user-tag">${tag}</div>`).join('')}
+                    ${userData.tags.map(tag => `<div class="matchmaker-user-tag gradient-bg">${tag}</div>`).join('')}
                 </div>
-                <div class="matchmaker-user-bio">
+                <div class="matchmaker-user-bio enhanced-paragraph">
                     ${userData.bio}
-                </div>
-                <div class="matchmaker-user-actions">
-                    <button class="btn matchmaker-user-skip" id="skipBtn">跳过</button>
-                    <button class="btn matchmaker-user-like" id="likeBtn">喜欢</button>
                 </div>
             `;
             matchmakerContent.appendChild(userCard);
-            
-            // 添加卡片点击事件（查看用户详情）
-            userCard.addEventListener('click', (e) => {
-                // 防止按钮点击触发卡片点击事件
-                if (e.target.closest('.matchmaker-user-actions')) {
-                    return;
-                }
-                showUserDetail(userData);
-            });
-            
-            // 添加操作按钮事件
-            document.getElementById('skipBtn').addEventListener('click', (e) => {
-                e.stopPropagation(); // 阻止事件冒泡
-                currentMatchIndex++;
-                matchmakerStats.views++;
-                localStorage.setItem('matchmakerStats', JSON.stringify(matchmakerStats));
-                initMatchmaker();
-            });
-            
-            document.getElementById('likeBtn').addEventListener('click', (e) => {
-                e.stopPropagation(); // 阻止事件冒泡
-                currentMatchIndex++;
-                matchmakerStats.likes++;
-                matchmakerStats.views++;
-                localStorage.setItem('matchmakerStats', JSON.stringify(matchmakerStats));
-                
-                if (!hasMatchmakerVip) {
-                    // 未开通VIP，显示VIP限制提示
-                    vipRestrictedModal.classList.remove('hidden');
-                    return;
-                }
-                
-                alert(`您喜欢了${userData.name}！如果对方也喜欢您，我们会通知您！`);
-                initMatchmaker();
-            });
         }
         
 
@@ -6830,20 +10597,12 @@
         matchmakerAlipayBtn.addEventListener('click', submitMatchmakerPayment);
         matchmakerWxpayBtn.addEventListener('click', submitMatchmakerPayment);
         
-        // VIP开通按钮事件
-        openVipBtn.addEventListener('click', () => {
-            // 滚动到支付区域
-            document.querySelector('.matchmaker-payment').scrollIntoView({ behavior: 'smooth' });
-        });
+        // 移除了VIP按钮相关代码
         
-        openVipFromModalBtn.addEventListener('click', () => {
-            vipRestrictedModal.classList.add('hidden');
-            // 滚动到支付区域
-            document.querySelector('.matchmaker-payment').scrollIntoView({ behavior: 'smooth' });
-        });
+        // 移除了VIP按钮的事件监听
         
-        closeVipModalBtn.addEventListener('click', () => {
-            vipRestrictedModal.classList.add('hidden');
+        closeFeatureInfoModalBtn.addEventListener('click', () => {
+            featureInfoModal.classList.add('hidden');
         });
         
         orderBtn.addEventListener('click', () => {
@@ -7088,12 +10847,12 @@
             submitFeedbackBtn.addEventListener('click', submitFeedback);
         }
         
-        // 反馈页面导航切换
+        // 反馈页面导航切换 - 已禁用群聊和牵线反馈跳转功能
         const feedbackPageTabs = document.querySelectorAll('.feedback-page-tab');
         feedbackPageTabs.forEach(tab => {
             tab.addEventListener('click', () => {
-                const pageId = tab.getAttribute('data-page');
-                switchFeedbackPage(pageId);
+                // 不再切换到独立的反馈页面
+                return false;
             });
         });
         
@@ -7565,12 +11324,7 @@
             }
         }
         
-        // 初始化反馈中心
-        function initFeedbackCenter() {
-            if (typeof feedbackCenter === 'undefined') {
-                window.feedbackCenter = new FeedbackCenter();
-            }
-        }
+        // 已合并到第一个initFeedbackCenter函数中
         
 
         
@@ -7648,6 +11402,16 @@
                             '一对一红娘服务',
                             '优先推荐优质用户'
                         ]
+                    },
+                    private: {
+                        name: '私密交友特权',
+                        price: 39.99,
+                        features: [
+                            '开通上传反馈功能',
+                            '加入私密交友圈',
+                            '体验深夜陪伴',
+                            '私密认证保护'
+                        ]
                     }
                 };
             }
@@ -7660,6 +11424,8 @@
                     return user.vip.group === true;
                 } else if (vipType === 'matchmaker') {
                     return user.vip.matchmaker === true;
+                } else if (vipType === 'private') {
+                    return user.vip.private === true;
                 }
                 
                 return false;
@@ -7678,6 +11444,8 @@
                     user.vip.group = true;
                 } else if (vipType === 'matchmaker') {
                     user.vip.matchmaker = true;
+                } else if (vipType === 'private') {
+                    user.vip.private = true;
                 }
                 
                 // 更新用户数据
@@ -8480,56 +12248,91 @@
             initWebsiteStats();
             initUserAvatarClick();
             initMatchmakerCitySelector();
-            initFeedbackCenter();
             initLoginTypeTabs();
             initOrderSearch();
             initPhoneValidation();
             initVipServiceManager();
-            initMatchmakerFeedbackPage();
-            initGroupFeedbackPage();
+            // 移除自动初始化，反馈中心将在用户点击时初始化
+            // initMatchmakerFeedbackPage();
+            // initGroupFeedbackPage();
             initAgreementDoubleClick();
             initCustomerService();
         });
     </script>
     
-    <!-- 私密交友安全保障说明 -->
+    <!-- 私密约会体验 -->
     <div class="security-footer">
         <div class="security-footer-content">
-            <h3><i class="fas fa-shield-alt"></i> 私密交友安全保障</h3>
+            <h3><i class="fas fa-heart"></i> 深夜私密约会体验</h3>
             <div class="security-features">
                 <div class="security-feature">
-                    <i class="fas fa-lock"></i>
+                    <i class="fas fa-user-secret"></i>
                     <div>
-                        <h4>私密加密保护</h4>
-                        <p>所有聊天内容均采用加密传输，确保私密信息安全</p>
+                        <h4>绝对私密空间</h4>
+                        <p>全程匿名交流，让您无拘无束地释放真实自我</p>
                     </div>
                 </div>
                 <div class="security-feature">
-                    <i class="fas fa-user-shield"></i>
+                    <i class="fas fa-heartbeat"></i>
                     <div>
-                        <h4>匿名保护承诺</h4>
-                        <p>严格保护用户匿名性，确保深夜交友私密安全</p>
+                        <h4>心动瞬间</h4>
+                        <p>专业匹配算法，为您找到最契合的深夜伴侣</p>
                     </div>
                 </div>
                 <div class="security-feature">
-                    <i class="fas fa-money-bill-wave"></i>
+                    <i class="fas fa-moon"></i>
                     <div>
-                        <h4>资金安全保障</h4>
-                        <p>与知名支付机构合作，确保资金交易安全可靠</p>
+                        <h4>深夜暧昧</h4>
+                        <p>24小时在线陪伴，满足您的每一个深夜需求</p>
                     </div>
                 </div>
                 <div class="security-feature">
-                    <i class="fas fa-check-circle"></i>
+                    <i class="fas fa-hand-holding-heart"></i>
                     <div>
-                        <h4>深夜陪伴体系</h4>
-                        <p>专业深夜陪伴服务，确保交友体验真实可靠</p>
+                        <h4>真实体验</h4>
+                        <p>真人认证体系，确保每一次约会都真实可靠</p>
                     </div>
                 </div>
             </div>
             <div class="legal-info">
-                <p>© 2024 深夜密友私密交友平台 | 严格遵守《网络安全法》、《个人信息保护法》等相关法律法规</p>
+                <p>© 2024 深夜私密约会 | 本平台仅提供交友服务，严禁任何违法违规行为</p>
             </div>
         </div>
     </div>
+    
+    <script>
+        // 倒计时计时器功能
+        function startCountdown() {
+            const countdownElement = document.getElementById('countdown');
+            if (!countdownElement) return;
+            
+            // 设置倒计时时间为24小时
+            let seconds = 24 * 60 * 60;
+            
+            const timer = setInterval(() => {
+                if (seconds <= 0) {
+                    clearInterval(timer);
+                    countdownElement.textContent = '活动已结束';
+                    return;
+                }
+                
+                seconds--;
+                
+                // 计算时分秒
+                const hours = Math.floor(seconds / 3600);
+                const minutes = Math.floor((seconds % 3600) / 60);
+                const remainingSeconds = seconds % 60;
+                
+                // 格式化显示
+                countdownElement.textContent = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+            }, 1000);
+        }
+        
+        // 页面加载完成后启动倒计时
+        document.addEventListener('DOMContentLoaded', startCountdown);
+        
+        // 测试牵线功能的函数
+
+    </script>
 </body>
 </html>
