@@ -1312,6 +1312,15 @@
             position: relative;
             overflow: hidden;
             border: 2px solid rgba(255, 102, 130, 0.2);
+            max-height: 80vh; /* 设置模态框最大高度为视口高度的80% */
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* 确保通知内容区域能够伸缩，按钮区域保持在底部 */
+        .notification-content.modern-content {
+            flex: 1;
+            overflow-y: auto;
         }
         
         /* 装饰性心形元素 */
@@ -1418,6 +1427,9 @@
             position: relative;
             padding: 20px 0;
             z-index: 1;
+            max-height: 60vh; /* 设置最大高度为视口高度的60% */
+            overflow-y: auto; /* 添加垂直滚动 */
+            -webkit-overflow-scrolling: touch; /* 优化移动端滚动体验 */
         }
         
         /* 视觉元素 */
@@ -1583,6 +1595,8 @@
             margin-top: 30px;
             position: relative;
             z-index: 1;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 102, 130, 0.1);
         }
         
         .premium-button {
@@ -6776,20 +6790,10 @@ let selectedMatchmakerGender = localStorage.getItem('selectedMatchmakerGender') 
             // 默认选择全部
             allProvinceItem.click();
             
-            // 初始化折叠面板交互
-            cityCollapseToggle.addEventListener('click', function() {
-                const icon = this.querySelector('.toggle-icon');
-                if (cityCollapseContent.style.display === 'block') {
-                    cityCollapseContent.style.display = 'none';
-                    icon.classList.remove('rotate');
-                } else {
-                    cityCollapseContent.style.display = 'block';
-                    icon.classList.add('rotate');
-                }
-            });
-            
             // 默认展开城市列表
-            cityCollapseContent.style.display = 'block';
+            cityCollapseContent.classList.add('active');
+            cityCollapseContent.style.maxHeight = cityCollapseContent.scrollHeight + 'px';
+            cityCollapseToggle.classList.add('active');
             cityCollapseToggle.querySelector('.toggle-icon').classList.add('rotate');
             
             // 初始化搜索功能
