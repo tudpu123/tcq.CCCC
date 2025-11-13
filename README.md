@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>微信同城群聊 - 同城交友平台</title>
+    <title>一日情侣牵线平台 - 同城交友体验</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* 保留所有原有CSS样式 */
@@ -191,6 +191,9 @@
             backdrop-filter: blur(10px);
             position: relative;
             overflow: hidden;
+            /* 优化移动端触摸体验 */
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
         }
         
         .card::before {
@@ -770,6 +773,8 @@
             padding: 20px;
             backdrop-filter: blur(10px);
             animation: modalFadeIn 0.3s ease-out;
+            /* 优化移动端触摸体验 */
+            -webkit-overflow-scrolling: touch;
         }
         
         @keyframes modalFadeIn {
@@ -789,6 +794,9 @@
             animation: modalSlideIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
             overflow: hidden;
+            /* 优化移动端触摸体验 */
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
         }
         
         .modal-content::before {
@@ -1017,6 +1025,121 @@
             
             .nav-item i {
                 font-size: 1.2rem;
+            }
+        }
+        
+        /* 全局移动端响应式优化 */
+        @media (max-width: 768px) {
+            /* 优化容器内边距 */
+            .container {
+                padding: 10px;
+                padding-bottom: 80px;
+            }
+            
+            /* 优化头部样式 */
+            header {
+                padding: 20px 10px;
+                border-radius: 0 0 20px 20px;
+            }
+            
+            .header-content h1 {
+                font-size: 1.5rem;
+            }
+            
+            .header-content p {
+                font-size: 1rem;
+            }
+            
+            /* 优化卡片样式 */
+            .card {
+                padding: 20px;
+                margin-bottom: 15px;
+            }
+            
+            /* 优化标题样式 */
+            .section-title {
+                font-size: 1.2rem;
+                margin-bottom: 18px;
+            }
+            
+            /* 优化按钮样式 */
+            .btn {
+                padding: 12px 20px;
+                font-size: 0.95rem;
+            }
+            
+            /* 优化表单元素 */
+            input, textarea, select {
+                font-size: 16px !important; /* 防止iOS缩放 */
+                padding: 12px;
+            }
+            
+            /* 优化模态框 */
+            .modal {
+                padding: 10px;
+            }
+            
+            .modal-content {
+                padding: 20px;
+                border-radius: 15px;
+            }
+            
+            /* 优化牵线服务区域 */
+            .matchmaker-payment {
+                padding: 15px;
+            }
+            
+            .matchmaker-payment-features {
+                grid-template-columns: 1fr;
+            }
+            
+            /* 优化成功案例 */
+            .stories-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            /* 优化支付金额显示 */
+            .matchmaker-payment-amount {
+                font-size: 2.2rem;
+            }
+        }
+        
+        /* 超小屏幕优化 */
+        @media (max-width: 480px) {
+            /* 进一步优化字体大小 */
+            body {
+                font-size: 14px;
+            }
+            
+            .header-content h1 {
+                font-size: 1.3rem;
+            }
+            
+            .section-title {
+                font-size: 1.1rem;
+            }
+            
+            /* 优化支付按钮 */
+            .matchmaker-payment-methods {
+                flex-direction: column;
+            }
+            
+            .matchmaker-payment-method {
+                margin-bottom: 10px;
+            }
+            
+            /* 优化模态框按钮布局 */
+            .modal-buttons {
+                flex-direction: column;
+            }
+            
+            /* 优化底部导航 */
+            .nav-item {
+                padding: 8px 5px;
+            }
+            
+            .nav-item span {
+                font-size: 0.65rem;
             }
         }
         
@@ -1312,16 +1435,16 @@
             position: relative;
             overflow: hidden;
             border: 2px solid rgba(255, 102, 130, 0.2);
-            max-height: 80vh; /* 设置模态框最大高度为视口高度的80% */
+            max-height: 85vh; /* 设置模态框最大高度为视口高度的85% */
             display: flex;
             flex-direction: column;
+            /* 优化移动端滚动体验 */
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
         }
         
         /* 确保通知内容区域能够伸缩，按钮区域保持在底部 */
-        .notification-content.modern-content {
-            flex: 1;
-            overflow-y: auto;
-        }
+        /* 已合并到下面的完整样式定义中 */
         
         /* 装饰性心形元素 */
         .notification-decoration {
@@ -1427,6 +1550,7 @@
             position: relative;
             padding: 20px 0;
             z-index: 1;
+            flex: 1; /* 确保内容区域能够伸缩 */
             max-height: 60vh; /* 设置最大高度为视口高度的60% */
             overflow-y: auto; /* 添加垂直滚动 */
             -webkit-overflow-scrolling: touch; /* 优化移动端滚动体验 */
@@ -3886,6 +4010,9 @@
             cursor: pointer;
             transition: all 0.3s;
             transition: all 0.2s ease;
+            /* 优化移动端触摸体验 */
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
         }
         
         .matchmaker-payment-method:active {
@@ -4776,8 +4903,8 @@
             </div>
         </div>
         <div class="header-content">
-                <h1 id="mainTitle" class="gradient-text glow-text animated-text">微信同城群聊 · 同城交友</h1>
-                <p class="animated-text" style="animation-delay: 0.2s;"><span class="highlight">想认识同城好友？</span>加入附近<span class="gradient-text">微信同城群聊</span>，开启<span class="highlight">同城交友</span></p>
+                <h1 id="mainTitle" class="gradient-text glow-text animated-text">查看当地微信群聊天记录 · 同城交友</h1>
+                <p class="animated-text" style="animation-delay: 0.2s;"><span class="highlight">想认识同城好友？</span>查看附近<span class="gradient-text">当地微信群聊天记录</span>，开启<span class="highlight">同城交友</span></p>
             </div>
     </header>
     
@@ -4786,7 +4913,7 @@
         <div class="card city-selector-card modern-card">
             <div class="section-title modern-title">
                 <i class="fas fa-map-marker-alt location-icon"></i> 
-                <span class="title-text gradient-text">微信同城群聊</span>
+                <span class="title-text gradient-text">查看当地微信群聊天记录</span>
                 <div class="location-badge">
                     <i class="fas fa-users"></i>
                     <span id="onlineCount" class="online-count">417</span>
@@ -4864,12 +4991,12 @@
                     </div>
                 </div>
                 
-                <!-- 微信同城群聊按钮 - 更吸引人的设计 -->
+                <!-- 查看当地微信群聊天记录按钮 - 更吸引人的设计 -->
                 <button class="view-chat-btn modern-chat-btn" id="viewChatBtn" disabled>
                     <div class="btn-icon">
                         <i class="fab fa-weixin btn-inner-icon"></i>
                     </div>
-                    <span class="btn-text gradient-text">加入微信同城群聊</span>
+                    <span class="btn-text gradient-text">查看当地微信群聊天记录</span>
                     <div class="btn-indicator">
                         <i class="fas fa-arrow-right btn-arrow"></i>
                     </div>
@@ -4880,12 +5007,12 @@
         <!-- 支付信息区域 -->
         <div class="card">
             <div class="section-title gradient-text">
-                <i class="fas fa-gem"></i> 微信同城群聊特权
+                <i class="fas fa-gem"></i> 查看当地微信群聊天记录特权
             </div>
             <div class="payment-info">
-                <p class="enhanced-paragraph"><span class="highlight">加入微信同城群聊</span>，认识更多同城好友</p>
+                <p class="enhanced-paragraph"><span class="highlight">查看当地微信群聊天记录</span>，认识更多同城好友</p>
                 <div class="amount gradient-text">¥39.99</div>
-                <p class="enhanced-paragraph">支付后即可<span class="highlight">解锁微信同城群聊</span>，开启同城交友之旅</p>
+                <p class="enhanced-paragraph">支付后即可<span class="highlight">解锁当地微信群聊天记录</span>，开启同城交友之旅</p>
                 
                 <!-- 信任标识 -->
                 <div class="trust-badges">
@@ -4921,7 +5048,7 @@
                 <button class="btn btn-primary payment-btn" id="alipayBtn">
                     <i class="fab fa-alipay"></i>
                     <span class="loading hidden"></span>
-                    <span id="alipayBtnText">立即加入微信同城群聊 ¥39.99</span>
+                    <span id="alipayBtnText">立即查看当地微信群聊天记录 ¥39.99</span>
                 </button>
             </div>
             
@@ -4930,7 +5057,7 @@
                 <button class="btn btn-primary payment-btn" id="wxpayBtn">
                     <i class="fab fa-weixin"></i>
                     <span class="loading hidden"></span>
-                    <span id="wxpayBtnText">立即加入微信同城群聊 ¥39.99</span>
+                    <span id="wxpayBtnText">立即查看当地微信群聊天记录 ¥39.99</span>
                 </button>
             </div>
             
@@ -5476,10 +5603,10 @@
 
 
 
-        <!-- 一对一情侣牵线区域（默认隐藏） -->
+        <!-- 一日情侣牵线区域（默认隐藏） -->
         <div class="card hidden" id="matchmakerSection">
             <div class="section-title gradient-text">
-                <i class="fas fa-heart"></i> 一对一情侣牵线
+                <i class="fas fa-heart"></i> 牵线成为一日情侣
             </div>
             
             <!-- 红娘牵线支付区域（已移至顶部） -->
@@ -5499,57 +5626,57 @@
                     <div class="countdown-timer">剩余时间: <span id="countdown">23:59:59</span></div>
                 </div>
                 
-                <div class="matchmaker-payment-title gradient-text">一对一情侣VIP服务</div>
+                <div class="matchmaker-payment-title gradient-text">一日情侣专属体验</div>
                 <div class="matchmaker-payment-amount">
-                    <span class="current-price">¥299.99</span>
-                    <span class="original-price">¥499.99</span>
-                    <span class="discount-tag">5.8折</span>
+                    <span class="current-price">¥199.99</span>
+                    <span class="original-price">¥399.99</span>
+                    <span class="discount-tag">4.8折</span>
                 </div>
                 
                 <div class="matchmaker-payment-features">
                     <div class="payment-feature highlight-feature">
                         <i class="fas fa-heart"></i>
-                        <span>专属一对一情侣匹配</span>
+                        <span>一日情侣专属体验</span>
                     </div>
                     <div class="payment-feature">
                         <i class="fas fa-user-friends"></i>
                         <span>同城异性精准匹配</span>
                     </div>
                     <div class="payment-feature">
-                        <i class="fas fa-phone"></i>
-                        <span>解锁完整联系方式</span>
+                        <i class="fas fa-clock"></i>
+                        <span>24小时浪漫体验期</span>
                     </div>
                     <div class="payment-feature">
                         <i class="fas fa-comments"></i>
-                        <span>无限次私密聊天</span>
+                        <span>专属聊天空间</span>
                     </div>
                     <div class="payment-feature">
                         <i class="fas fa-map-marker-alt"></i>
-                        <span>同城线下约会安排</span>
+                        <span>同城线下约会建议</span>
+                    </div>
+                    <div class="payment-feature">
+                        <i class="fas fa-gift"></i>
+                        <span>专属情侣任务</span>
                     </div>
                     <div class="payment-feature">
                         <i class="fas fa-lock"></i>
                         <span>全程隐私安全保护</span>
                     </div>
-                    <div class="payment-feature">
-                        <i class="fas fa-redo"></i>
-                        <span>不满意免费重新匹配</span>
-                    </div>
                 </div>
                 
                 <!-- 成功案例展示 -->
                 <div class="success-stories">
-                    <h4 class="gradient-text">✓ 情侣成功案例</h4>
+                    <h4 class="gradient-text">✓ 一日情侣体验故事</h4>
                     <div class="stories-grid">
                         <div class="story-item animated-text">
                             <div class="story-content">
-                                <p class="story-text enhanced-paragraph">"通过一对一牵线，我找到了完美的伴侣！现在我们每周都会约会，关系越来越甜蜜。"</p>
+                                <p class="story-text enhanced-paragraph">"一日情侣体验非常棒！我们一起看电影、逛公园，度过了浪漫的一天。感谢平台让我们相遇！"</p>
                                 <div class="story-author gradient-text">— 张先生，上海</div>
                             </div>
                         </div>
                         <div class="story-item animated-text" style="animation-delay: 0.2s;">
                             <div class="story-content">
-                                <p class="story-text enhanced-paragraph">"匹配精准，他正是我想要的类型！现在我们已经在一起三个月了，感谢这个平台！"</p>
+                                <p class="story-text enhanced-paragraph">"24小时的情侣体验很特别，我们一起完成了很多有趣的任务，现在还保持着联系！"</p>
                                 <div class="story-author gradient-text">— 李女士，北京</div>
                             </div>
                         </div>
@@ -5583,7 +5710,7 @@
                 <div class="matchmaker-payment-form active" id="matchmakerAlipayForm">
                     <button class="btn btn-primary" id="matchmakerAlipayBtn">
                         <span class="loading hidden"></span>
-                        <span id="matchmakerAlipayBtnText">支付宝支付 ¥299.99</span>
+                        <span id="matchmakerAlipayBtnText">支付宝支付 ¥199.99</span>
                     </button>
                 </div>
                 
@@ -5591,7 +5718,7 @@
                 <div class="matchmaker-payment-form" id="matchmakerWxpayForm">
                     <button class="btn btn-primary" id="matchmakerWxpayBtn">
                         <span class="loading hidden"></span>
-                        <span id="matchmakerWxpayBtnText">微信支付 ¥299.99</span>
+                        <span id="matchmakerWxpayBtnText">微信支付 ¥199.99</span>
                     </button>
                 </div>
             </div>
@@ -5684,27 +5811,27 @@
                         <p class="message-text romantic-text">
                             <span class="greeting">亲爱的用户，</span>
                             <br>
-                            欢迎体验我们<span class="highlight">高端定制</span>的牵线服务
+                            欢迎体验我们<span class="highlight">浪漫定制</span>的一日情侣牵线服务
                         </p>
                         
                         <div class="service-highlights">
                             <div class="highlight-item">
                                 <i class="fas fa-user-check"></i>
-                                <span>精准匹配理想伴侣</span>
+                                <span>精准匹配合适伴侣</span>
                             </div>
                             <div class="highlight-item">
-                                <i class="fas fa-calendar-day"></i>
-                                <span>一日情侣专属体验</span>
+                                <i class="fas fa-clock"></i>
+                                <span>24小时甜蜜体验</span>
                             </div>
                             <div class="highlight-item">
-                                <i class="fas fa-lock"></i>
-                                <span>私密空间完全保障</span>
+                                <i class="fas fa-gift"></i>
+                                <span>专属情侣任务</span>
                             </div>
                         </div>
                         
                         <p class="message-text seductive-text italic-text">
                             <i class="fas fa-fire flame-icon"></i>
-                            <span class="special-text">在双方<span class="underline">自愿同意</span>的前提下，您可以尽情享受与匹配对象的浪漫时光...</span>
+                            <span class="special-text">在双方<span class="underline">自愿同意</span>的前提下，您可以享受24小时专属情侣体验，共同完成浪漫任务...</span>
                             <i class="fas fa-kiss-wink-heart love-icon"></i>
                         </p>
                         
@@ -6019,203 +6146,7 @@
                 signStr = signStr.slice(0, -1); // 去掉最后一个&
                 signStr += this.key;
                 
-                return this.md5(signStr);
-            }
-
-            // MD5加密函数
-            md5(string) {
-                function rotateLeft(lValue, iShiftBits) {
-                    return (lValue << iShiftBits) | (lValue >>> (32 - iShiftBits));
-                }
-
-                function addUnsigned(lX, lY) {
-                    let lX4, lY4, lX8, lY8, lResult;
-                    lX8 = (lX & 0x80000000);
-                    lY8 = (lY & 0x80000000);
-                    lX4 = (lX & 0x40000000);
-                    lY4 = (lY & 0x40000000);
-                    lResult = (lX & 0x3FFFFFFF) + (lY & 0x3FFFFFFF);
-                    if (lX4 & lY4) {
-                        return (lResult ^ 0x80000000 ^ lX8 ^ lY8);
-                    }
-                    if (lX4 | lY4) {
-                        if (lResult & 0x40000000) {
-                            return (lResult ^ 0xC0000000 ^ lX8 ^ lY8);
-                        } else {
-                            return (lResult ^ 0x40000000 ^ lX8 ^ lY8);
-                        }
-                    } else {
-                        return (lResult ^ lX8 ^ lY8);
-                    }
-                }
-
-                function F(x, y, z) { return (x & y) | ((~x) & z); }
-                function G(x, y, z) { return (x & z) | (y & (~z)); }
-                function H(x, y, z) { return (x ^ y ^ z); }
-                function I(x, y, z) { return (y ^ (x | (~z))); }
-
-                function FF(a, b, c, d, x, s, ac) {
-                    a = addUnsigned(a, addUnsigned(addUnsigned(F(b, c, d), x), ac));
-                    return addUnsigned(rotateLeft(a, s), b);
-                }
-
-                function GG(a, b, c, d, x, s, ac) {
-                    a = addUnsigned(a, addUnsigned(addUnsigned(G(b, c, d), x), ac));
-                    return addUnsigned(rotateLeft(a, s), b);
-                }
-
-                function HH(a, b, c, d, x, s, ac) {
-                    a = addUnsigned(a, addUnsigned(addUnsigned(H(b, c, d), x), ac));
-                    return addUnsigned(rotateLeft(a, s), b);
-                }
-
-                function II(a, b, c, d, x, s, ac) {
-                    a = addUnsigned(a, addUnsigned(addUnsigned(I(b, c, d), x), ac));
-                    return addUnsigned(rotateLeft(a, s), b);
-                }
-
-                function convertToWordArray(string) {
-                    let lWordCount;
-                    const lMessageLength = string.length;
-                    const lNumberOfWordsTemp1 = lMessageLength + 8;
-                    const lNumberOfWordsTemp2 = (lNumberOfWordsTemp1 - (lNumberOfWordsTemp1 % 64)) / 64;
-                    const lNumberOfWords = (lNumberOfWordsTemp2 + 1) * 16;
-                    const lWordArray = Array(lNumberOfWords - 1);
-                    let lBytePosition = 0;
-                    let lByteCount = 0;
-                    while (lByteCount < lMessageLength) {
-                        lWordCount = (lByteCount - (lByteCount % 4)) / 4;
-                        lBytePosition = (lByteCount % 4) * 8;
-                        lWordArray[lWordCount] = (lWordArray[lWordCount] | (string.charCodeAt(lByteCount) << lBytePosition));
-                        lByteCount++;
-                    }
-                    lWordCount = (lByteCount - (lByteCount % 4)) / 4;
-                    lBytePosition = (lByteCount % 4) * 8;
-                    lWordArray[lWordCount] = lWordArray[lWordCount] | (0x80 << lBytePosition);
-                    lWordArray[lNumberOfWords - 2] = lMessageLength << 3;
-                    lWordArray[lNumberOfWords - 1] = lMessageLength >>> 29;
-                    return lWordArray;
-                }
-
-                function wordToHex(lValue) {
-                    let WordToHexValue = "", WordToHexValueTemp = "", lByte, lCount;
-                    for (lCount = 0; lCount <= 3; lCount++) {
-                        lByte = (lValue >>> (lCount * 8)) & 255;
-                        WordToHexValueTemp = "0" + lByte.toString(16);
-                        WordToHexValue = WordToHexValue + WordToHexValueTemp.substr(WordToHexValueTemp.length - 2, 2);
-                    }
-                    return WordToHexValue;
-                }
-
-                let x = [];
-                let k, AA, BB, CC, DD, a, b, c, d;
-                const S11 = 7, S12 = 12, S13 = 17, S14 = 22;
-                const S21 = 5, S22 = 9, S23 = 14, S24 = 20;
-                const S31 = 4, S32 = 11, S33 = 16, S34 = 23;
-                const S41 = 6, S42 = 10, S43 = 15, S44 = 21;
-
-                // UTF-8编码函数
-                function Utf8Encode(string) {
-                    string = string.replace(/\r\n/g, "\n");
-                    let utftext = "";
-                    
-                    for (let n = 0; n < string.length; n++) {
-                        const c = string.charCodeAt(n);
-                        
-                        if (c < 128) {
-                            utftext += String.fromCharCode(c);
-                        } else if ((c > 127) && (c < 2048)) {
-                            utftext += String.fromCharCode((c >> 6) | 192);
-                            utftext += String.fromCharCode((c & 63) | 128);
-                        } else {
-                            utftext += String.fromCharCode((c >> 12) | 224);
-                            utftext += String.fromCharCode(((c >> 6) & 63) | 128);
-                            utftext += String.fromCharCode((c & 63) | 128);
-                        }
-                    }
-                    
-                    return utftext;
-                }
-                
-                string = Utf8Encode(string);
-
-                x = convertToWordArray(string);
-
-                a = 0x67452301; b = 0xEFCDAB89; c = 0x98BADCFE; d = 0x10325476;
-
-                for (k = 0; k < x.length; k += 16) {
-                    AA = a; BB = b; CC = c; DD = d;
-                    a = FF(a, b, c, d, x[k + 0], S11, 0xD76AA478);
-                    d = FF(d, a, b, c, x[k + 1], S12, 0xE8C7B756);
-                    c = FF(c, d, a, b, x[k + 2], S13, 0x242070DB);
-                    b = FF(b, c, d, a, x[k + 3], S14, 0xC1BDCEEE);
-                    a = FF(a, b, c, d, x[k + 4], S11, 0xF57C0FAF);
-                    d = FF(d, a, b, c, x[k + 5], S12, 0x4787C62A);
-                    c = FF(c, d, a, b, x[k + 6], S13, 0xA8304613);
-                    b = FF(b, c, d, a, x[k + 7], S14, 0xFD469501);
-                    a = FF(a, b, c, d, x[k + 8], S11, 0x698098D8);
-                    d = FF(d, a, b, c, x[k + 9], S12, 0x8B44F7AF);
-                    c = FF(c, d, a, b, x[k + 10], S13, 0xFFFF5BB1);
-                    b = FF(b, c, d, a, x[k + 11], S14, 0x895CD7BE);
-                    a = FF(a, b, c, d, x[k + 12], S11, 0x6B901122);
-                    d = FF(d, a, b, c, x[k + 13], S12, 0xFD987193);
-                    c = FF(c, d, a, b, x[k + 14], S13, 0xA679438E);
-                    b = FF(b, c, d, a, x[k + 15], S14, 0x49B40821);
-                    a = GG(a, b, c, d, x[k + 1], S21, 0xF61E2562);
-                    d = GG(d, a, b, c, x[k + 6], S22, 0xC040B340);
-                    c = GG(c, d, a, b, x[k + 11], S23, 0x265E5A51);
-                    b = GG(b, c, d, a, x[k + 0], S24, 0xE9B6C7AA);
-                    a = GG(a, b, c, d, x[k + 5], S21, 0xD62F105D);
-                    d = GG(d, a, b, c, x[k + 10], S22, 0x2441453);
-                    c = GG(c, d, a, b, x[k + 15], S23, 0xD8A1E681);
-                    b = GG(b, c, d, a, x[k + 4], S24, 0xE7D3FBC8);
-                    a = GG(a, b, c, d, x[k + 9], S21, 0x21E1CDE6);
-                    d = GG(d, a, b, c, x[k + 14], S22, 0xC33707D6);
-                    c = GG(c, d, a, b, x[k + 3], S23, 0xF4D50D87);
-                    b = GG(b, c, d, a, x[k + 8], S24, 0x455A14ED);
-                    a = GG(a, b, c, d, x[k + 13], S21, 0xA9E3E905);
-                    d = GG(d, a, b, c, x[k + 2], S22, 0xFCEFA3F8);
-                    c = GG(c, d, a, b, x[k + 7], S23, 0x676F02D9);
-                    b = GG(b, c, d, a, x[k + 12], S24, 0x8D2A4C8A);
-                    a = HH(a, b, c, d, x[k + 5], S31, 0xFFFA3942);
-                    d = HH(d, a, b, c, x[k + 8], S32, 0x8771F681);
-                    c = HH(c, d, a, b, x[k + 11], S33, 0x6D9D6122);
-                    b = HH(b, c, d, a, x[k + 14], S34, 0xFDE5380C);
-                    a = HH(a, b, c, d, x[k + 1], S31, 0xA4BEEA44);
-                    d = HH(d, a, b, c, x[k + 4], S32, 0x4BDECFA9);
-                    c = HH(c, d, a, b, x[k + 7], S33, 0xF6BB4B60);
-                    b = HH(b, c, d, a, x[k + 10], S34, 0xBEBFBC70);
-                    a = HH(a, b, c, d, x[k + 13], S31, 0x289B7EC6);
-                    d = HH(d, a, b, c, x[k + 0], S32, 0xEAA127FA);
-                    c = HH(c, d, a, b, x[k + 3], S33, 0xD4EF3085);
-                    b = HH(b, c, d, a, x[k + 6], S34, 0x4881D05);
-                    a = HH(a, b, c, d, x[k + 9], S31, 0xD9D4D039);
-                    d = HH(d, a, b, c, x[k + 12], S32, 0xE6DB99E5);
-                    c = HH(c, d, a, b, x[k + 15], S33, 0x1FA27CF8);
-                    b = HH(b, c, d, a, x[k + 2], S34, 0xC4AC5665);
-                    a = II(a, b, c, d, x[k + 0], S41, 0xF4292244);
-                    d = II(d, a, b, c, x[k + 7], S42, 0x432AFF97);
-                    c = II(c, d, a, b, x[k + 14], S43, 0xAB9423A7);
-                    b = II(b, c, d, a, x[k + 5], S44, 0xFC93A039);
-                    a = II(a, b, c, d, x[k + 12], S41, 0x655B59C3);
-                    d = II(d, a, b, c, x[k + 3], S42, 0x8F0CCC92);
-                    c = II(c, d, a, b, x[k + 10], S43, 0xFFEFF47D);
-                    b = II(b, c, d, a, x[k + 1], S44, 0x85845DD1);
-                    a = II(a, b, c, d, x[k + 8], S41, 0x6FA87E4F);
-                    d = II(d, a, b, c, x[k + 15], S42, 0xFE2CE6E0);
-                    c = II(c, d, a, b, x[k + 6], S43, 0xA3014314);
-                    b = II(b, c, d, a, x[k + 13], S44, 0x4E0811A1);
-                    a = II(a, b, c, d, x[k + 4], S41, 0xF7537E82);
-                    d = II(d, a, b, c, x[k + 11], S42, 0xBD3AF235);
-                    c = II(c, d, a, b, x[k + 2], S43, 0x2AD7D2BB);
-                    b = II(b, c, d, a, x[k + 9], S44, 0xEB86D391);
-                    a = addUnsigned(a, AA);
-                    b = addUnsigned(b, BB);
-                    c = addUnsigned(c, CC);
-                    d = addUnsigned(d, DD);
-                }
-                const temp = wordToHex(a) + wordToHex(b) + wordToHex(c) + wordToHex(d);
-                return temp.toLowerCase();
+                return md5(signStr);
             }
 
             // UTF-8编码
@@ -6370,102 +6301,7 @@
             ]
         };
         
-        // 生成100个女性用户数据
-        const generateFemaleUsers = () => {
-            const femaleNames = ["小美", "小芳", "小雨", "小雪", "小婷", "小雅", "小倩", "小琳", "小娜", "小丽", 
-                                "小薇", "小月", "小雯", "小静", "小慧", "小玲", "小燕", "小玉", "小洁", "小梅",
-                                "小佳", "小欣", "小悦", "小蕊", "小菲", "小茜", "小莹", "小妍", "小琪", "小瑶",
-                                "小颖", "小露", "小丹", "小蕾", "小蓉", "小珊", "小霞", "小敏", "小娟", "小媛",
-                                "小晶", "小婷", "小芸", "小娇", "小琳", "小婕", "小婉", "小婵", "小曼", "小菁",
-                                "小梦", "小诗", "小韵", "小依", "小诺", "小甜", "小萌", "小朵", "小荷", "小柳",
-                                "小竹", "小菊", "小兰", "小桃", "小杏", "小梨", "小樱", "小枫", "小桐", "小楠",
-                                "小梓", "小桦", "小杉", "小松", "小柏", "小梅", "小桂", "小莲", "小萍", "小菱",
-                                "小蓉", "小莉", "小蔷", "小薇", "小萱", "小葵", "小茉", "小菁", "小蕾", "小蓓",
-                                "小蕊", "小芳", "小芬", "小香", "小艳", "小彩", "小虹", "小霞", "小露", "小霜"];
-            
-            const cities = ["北京市", "上海市", "广州市", "深圳市", "杭州市", "成都市", "重庆市", "武汉市", "西安市", "南京市"];
-            const jobs = ["设计师", "教师", "医生", "护士", "会计师", "律师", "工程师", "程序员", "销售", "市场专员", "行政", "人力资源", "编辑", "记者", "摄影师"];
-            const hobbies = ["旅行", "摄影", "阅读", "音乐", "电影", "美食", "运动", "瑜伽", "舞蹈", "绘画", "手工艺", "购物", "美容", "健身", "烹饪", "咖啡", "茶艺", "宠物", "园艺", "写作"];
-            
-            const femaleUsers = [];
-            
-            for (let i = 0; i < 100; i++) {
-                const nameIndex = i % femaleNames.length;
-                const cityIndex = i % cities.length;
-                const jobIndex = i % jobs.length;
-                
-                // 随机生成3-5个爱好
-                const userHobbies = [];
-                const hobbyCount = Math.floor(Math.random() * 3) + 3;
-                for (let j = 0; j < hobbyCount; j++) {
-                    const hobbyIndex = Math.floor(Math.random() * hobbies.length);
-                    if (!userHobbies.includes(hobbies[hobbyIndex])) {
-                        userHobbies.push(hobbies[hobbyIndex]);
-                    }
-                }
-                
-                femaleUsers.push({
-                    id: i + 1,
-                    name: femaleNames[nameIndex] + (i > femaleNames.length - 1 ? (Math.floor(i / femaleNames.length) + 1) : ""),
-                    age: Math.floor(Math.random() * 12) + 20, // 20-31岁
-                    gender: "female",
-                    location: cities[cityIndex],
-                    job: jobs[jobIndex],
-                    tags: userHobbies,
-                    bio: `我是${femaleNames[nameIndex]}，喜欢${userHobbies.join("、")}的${jobs[jobIndex]}，期待遇见有趣的你`,
-                    avatar: `https://randomuser.me/api/portraits/women/${(i % 99) + 1}.jpg` // 使用随机用户API生成头像
-                });
-            }
-            
-            return femaleUsers;
-        };
-        
-        // 生成20个男性用户数据
-        const generateMaleUsers = () => {
-            const maleNames = ["小明", "小强", "小刚", "小伟", "小杰", "小勇", "小军", "小华", "小亮", "小峰",
-                              "小宇", "小鹏", "小辉", "小磊", "小超", "小波", "小涛", "小斌", "小东", "小健"];
-            
-            const cities = ["北京市", "上海市", "广州市", "深圳市", "杭州市", "成都市", "重庆市", "武汉市", "西安市", "南京市"];
-            const jobs = ["工程师", "设计师", "医生", "教师", "销售", "程序员", "项目经理", "律师", "会计师", "市场专员", "行政", "人力资源", "编辑", "记者", "摄影师"];
-            const hobbies = ["旅行", "摄影", "阅读", "音乐", "电影", "美食", "运动", "健身", "篮球", "足球", "游泳", "游戏", "投资", "科技", "汽车", "咖啡", "茶艺", "宠物", "园艺", "写作"];
-            
-            const maleUsers = [];
-            
-            for (let i = 0; i < 20; i++) {
-                const nameIndex = i % maleNames.length;
-                const cityIndex = i % cities.length;
-                const jobIndex = i % jobs.length;
-                
-                // 随机生成3-5个爱好
-                const userHobbies = [];
-                const hobbyCount = Math.floor(Math.random() * 3) + 3;
-                for (let j = 0; j < hobbyCount; j++) {
-                    const hobbyIndex = Math.floor(Math.random() * hobbies.length);
-                    if (!userHobbies.includes(hobbies[hobbyIndex])) {
-                        userHobbies.push(hobbies[hobbyIndex]);
-                    }
-                }
-                
-                maleUsers.push({
-                    id: i + 101, // 从101开始，避免与女性用户ID重复
-                    name: maleNames[nameIndex] + (i > maleNames.length - 1 ? (Math.floor(i / maleNames.length) + 1) : ""),
-                    age: Math.floor(Math.random() * 15) + 25, // 25-39岁
-                    gender: "male",
-                    location: cities[cityIndex],
-                    job: jobs[jobIndex],
-                    tags: userHobbies,
-                    bio: `我是${maleNames[nameIndex]}，喜欢${userHobbies.join("、")}的${jobs[jobIndex]}，期待遇见有趣的你`,
-                    avatar: `https://randomuser.me/api/portraits/men/${(i % 99) + 1}.jpg` // 使用随机用户API生成头像
-                });
-            }
-            
-            return maleUsers;
-        };
-        
-        // 红娘牵线用户数据
-        const femaleUsers = generateFemaleUsers();
-        const maleUsers = generateMaleUsers();
-        const matchmakerUsers = [...femaleUsers, ...maleUsers];
+
         
         // 当前选中的省份、城市和群聊
         let selectedProvince = "";
@@ -6540,6 +6376,7 @@ let selectedMatchmakerGender = localStorage.getItem('selectedMatchmakerGender') 
         const retryPayBtn = document.getElementById('retryPayBtn');
         const openVipBtn = document.getElementById('openVipBtn');
         const closeFeatureInfoModalBtn = document.getElementById('closeFeatureInfoModalBtn');
+        const selectionValue = document.getElementById('selectionValue');
         const navItems = document.querySelectorAll('.nav-item');
         const paymentMethods = document.querySelectorAll('.payment-method');
         const alipayForm = document.getElementById('alipayForm');
@@ -6731,8 +6568,6 @@ let selectedMatchmakerGender = localStorage.getItem('selectedMatchmakerGender') 
         
         // 初始化省份列表
         function initProvinceList() {
-            const cityCollapseToggle = document.getElementById('cityCollapseToggle');
-            const cityCollapseContent = document.getElementById('cityCollapseContent');
             const selectionValue = document.getElementById('selectionValue');
             
             provinceList.innerHTML = '';
@@ -6778,7 +6613,9 @@ let selectedMatchmakerGender = localStorage.getItem('selectedMatchmakerGender') 
                     // 更新当前选择显示
                     selectionValue.textContent = `${province} - 未选择城市`;
                     // 自动展开城市列表
-                    cityCollapseContent.style.display = 'block';
+                    cityCollapseContent.classList.add('active');
+                    cityCollapseContent.style.maxHeight = cityCollapseContent.scrollHeight + 'px';
+                    cityCollapseToggle.classList.add('active');
                     cityCollapseToggle.querySelector('.toggle-icon').classList.add('rotate');
                 });
                 provinceList.appendChild(provinceItem);
@@ -6815,7 +6652,6 @@ let selectedMatchmakerGender = localStorage.getItem('selectedMatchmakerGender') 
         function initHotCities() {
             const hotCitiesList = document.getElementById('hotCitiesList');
             const hotCities = ['北京', '上海', '广州', '深圳', '杭州', '成都', '重庆', '武汉', '西安', '南京'];
-            const selectionValue = document.getElementById('selectionValue');
             
             hotCitiesList.innerHTML = '';
             
@@ -6859,7 +6695,6 @@ let selectedMatchmakerGender = localStorage.getItem('selectedMatchmakerGender') 
         // 更新城市网格
         function updateCityGrid(province) {
             const cityCountDisplay = document.getElementById('cityCountDisplay');
-            const selectionValue = document.getElementById('selectionValue');
             let cityCount = 0;
             
             cityGrid.innerHTML = '';
@@ -6929,7 +6764,6 @@ let selectedMatchmakerGender = localStorage.getItem('selectedMatchmakerGender') 
         // 搜索城市函数
         function searchCities(keyword) {
             const results = [];
-            const selectionValue = document.getElementById('selectionValue');
             
             // 如果搜索框为空，清空结果并隐藏
             if (!keyword.trim()) {
@@ -8376,7 +8210,6 @@ let selectedMatchmakerGender = localStorage.getItem('selectedMatchmakerGender') 
                 }
                 
                 // 高亮显示城市选择区域
-                const provinceList = document.getElementById('provinceList');
                 if (provinceList) {
                     provinceList.style.border = '2px solid #ff6b6b';
                     provinceList.style.boxShadow = '0 0 10px rgba(255, 107, 107, 0.5)';
@@ -9534,16 +9367,16 @@ function initMatchmaker() {
         // 显示牵线资料上传表单
 
             
-            // 生成牵线用户数据的函数 - 生成固定的用户数据，确保每个用户数据唯一
+            // 生成牵线用户数据的函数 - 生成固定的4329个用户数据，确保每个用户数据唯一且适合"一日情侣"主题
             function generateMatchmakerUsers() {
-                // 按地区组织的固定城市数据（扩展到更多城市）
+                // 按地区组织的固定城市数据（精选主要城市）
                 const regionCities = {
-                    "华北地区": ["北京", "天津", "石家庄", "太原", "呼和浩特", "唐山", "秦皇岛", "邯郸", "邢台", "保定", "张家口", "承德", "沧州", "廊坊", "衡水", "大同", "阳泉", "长治", "晋城", "朔州", "晋中", "运城", "忻州", "临汾", "吕梁", "包头", "乌海", "赤峰", "通辽", "鄂尔多斯", "呼伦贝尔", "巴彦淖尔", "乌兰察布"],
-                    "东北地区": ["沈阳", "大连", "长春", "哈尔滨", "鞍山", "抚顺", "本溪", "丹东", "锦州", "营口", "阜新", "辽阳", "盘锦", "铁岭", "朝阳", "葫芦岛", "吉林", "四平", "辽源", "通化", "白山", "松原", "白城", "延边", "齐齐哈尔", "鸡西", "鹤岗", "双鸭山", "大庆", "伊春", "佳木斯", "七台河", "牡丹江", "黑河", "绥化", "大兴安岭"],
-                    "华东地区": ["上海", "南京", "杭州", "宁波", "温州", "苏州", "无锡", "徐州", "常州", "南通", "连云港", "淮安", "盐城", "扬州", "镇江", "泰州", "宿迁", "湖州", "嘉兴", "绍兴", "金华", "衢州", "舟山", "台州", "丽水", "合肥", "芜湖", "蚌埠", "淮南", "马鞍山", "淮北", "铜陵", "安庆", "黄山", "滁州", "阜阳", "宿州", "六安", "亳州", "池州", "宣城", "福州", "厦门", "莆田", "三明", "泉州", "漳州", "南平", "龙岩", "宁德", "南昌", "景德镇", "萍乡", "九江", "新余", "鹰潭", "赣州", "吉安", "宜春", "抚州", "上饶", "济南", "青岛", "淄博", "枣庄", "东营", "烟台", "潍坊", "济宁", "泰安", "威海", "日照", "临沂", "德州", "聊城", "滨州", "菏泽"],
-                    "中南地区": ["广州", "深圳", "武汉", "郑州", "长沙", "韶关", "珠海", "汕头", "佛山", "江门", "湛江", "茂名", "肇庆", "惠州", "梅州", "汕尾", "河源", "阳江", "清远", "东莞", "中山", "潮州", "揭阳", "云浮", "株洲", "湘潭", "衡阳", "邵阳", "岳阳", "常德", "张家界", "益阳", "郴州", "永州", "怀化", "娄底", "湘西", "洛阳", "开封", "平顶山", "安阳", "鹤壁", "新乡", "焦作", "濮阳", "许昌", "漯河", "三门峡", "南阳", "商丘", "信阳", "周口", "驻马店", "济源", "南宁", "柳州", "桂林", "梧州", "北海", "防城港", "钦州", "贵港", "玉林", "百色", "贺州", "河池", "来宾", "崇左", "海口", "三亚", "三沙", "儋州"],
-                    "西南地区": ["重庆", "成都", "昆明", "贵阳", "拉萨", "自贡", "攀枝花", "泸州", "德阳", "绵阳", "广元", "遂宁", "内江", "乐山", "南充", "眉山", "宜宾", "广安", "达州", "雅安", "巴中", "资阳", "阿坝", "甘孜", "凉山", "六盘水", "遵义", "安顺", "毕节", "铜仁", "黔西南", "黔东南", "黔南", "曲靖", "玉溪", "保山", "昭通", "丽江", "普洱", "临沧", "楚雄", "红河", "文山", "西双版纳", "大理", "德宏", "怒江", "迪庆", "山南", "日喀则", "那曲", "阿里", "林芝"],
-                    "西北地区": ["西安", "兰州", "银川", "西宁", "乌鲁木齐", "铜川", "宝鸡", "咸阳", "渭南", "延安", "汉中", "榆林", "安康", "商洛", "嘉峪关", "金昌", "白银", "天水", "武威", "张掖", "平凉", "酒泉", "庆阳", "定西", "陇南", "临夏", "甘南", "石嘴山", "吴忠", "固原", "中卫", "海东", "海北", "黄南", "海南", "果洛", "玉树", "海西", "克拉玛依", "吐鲁番", "哈密", "昌吉", "博尔塔拉", "巴音郭楞", "阿克苏", "克孜勒苏", "喀什", "和田", "伊犁", "塔城", "阿勒泰"]
+                    "华北地区": ["北京", "天津", "石家庄", "太原", "呼和浩特"],
+                    "东北地区": ["沈阳", "大连", "长春", "哈尔滨"],
+                    "华东地区": ["上海", "南京", "杭州", "宁波", "苏州", "无锡", "合肥", "福州", "厦门", "南昌", "济南", "青岛"],
+                    "中南地区": ["广州", "深圳", "武汉", "郑州", "长沙", "南宁", "海口"],
+                    "西南地区": ["重庆", "成都", "昆明", "贵阳", "拉萨"],
+                    "西北地区": ["西安", "兰州", "银川", "西宁", "乌鲁木齐"]
                 };
                 
                 // 固定的姓名库 - 中国常见姓氏和名字
@@ -9570,8 +9403,7 @@ function initMatchmaker() {
                 // 职业库
                 const professions = ['医生', '教师', '工程师', '设计师', '程序员', '销售经理', '市场营销', '人力资源', '财务会计', '金融分析师', '创业者', '公务员', '律师', '科研人员', '艺术家'];
                 
-                // 教育程度
-                const educationLevels = ['大专', '本科', '硕士', '博士'];
+
                 
                 // 收入范围
                 const incomeLevels = ['5k以下', '5k-10k', '10k-20k', '20k-30k', '30k以上'];
@@ -9580,9 +9412,7 @@ function initMatchmaker() {
                 const characterTraits = ['开朗', '内向', '稳重', '幽默', '温柔', '直率', '豪爽', '细腻', '理性', '感性'];
                 
                 // 女生特有属性
-                const figures = ['苗条', '丰满', '匀称', '高挑'];
                 const appearances = ['甜美', '成熟', '可爱', '性感', '优雅'];
-                const clothingStyles = ['时尚', '休闲', '性感', '优雅', '运动'];
                 
                 // 生成固定数量的用户
                 const users = [];
@@ -9659,8 +9489,8 @@ function initMatchmaker() {
                             // 生成固定的照片URL，使用一致的ID确保加载相同的照片
                             const photoId = (userId % 100) + 1;
                             const photo = gender === 'female' 
-                                ? `https://picsum.photos/seed/girl${photoId}/200/300`
-                                : `https://picsum.photos/seed/boy${photoId}/200/300`;
+                                ? `https://picsum.photos/id/${photoId + 100}/300/300`
+                                : `https://picsum.photos/id/${photoId + 200}/300/300`;
                             
                             // 固定生成更多照片（数量基于ID）
                             const morePhotos = [];
@@ -9669,10 +9499,9 @@ function initMatchmaker() {
                                 : 1 + (userId % 5); // 男生1-5张照片
                             
                             for (let j = 0; j < photoCount; j++) {
-                                const morePhotoSeed = gender === 'female' 
-                                    ? `girlmore${photoId}${j}`
-                                    : `boymore${photoId}${j}`;
-                                morePhotos.push(`https://picsum.photos/seed/${morePhotoSeed}/400/600`);
+                                // 使用不同的索引生成更多头像，避免重复
+                                const morePhotoId = (photoId + j) % 100 + 1;
+                                morePhotos.push(`https://picsum.photos/id/${morePhotoId + (gender === 'female' ? 300 : 400)}/600/600`);
                             }
                             
                             // 详细资料（固定且唯一）
@@ -9683,7 +9512,7 @@ function initMatchmaker() {
                                 weight: gender === 'female' 
                                     ? 45 + (userId % 20) // 45-65kg
                                     : 60 + (userId % 30), // 60-90kg
-                                education: educationLevels[(userId + 2) % educationLevels.length],
+
                                 occupation: professions[(userId + 4) % professions.length],
                                 income: incomeLevels[(userId + 6) % incomeLevels.length],
                                 character: characterTraits[(userId + 8) % characterTraits.length],
@@ -9694,25 +9523,23 @@ function initMatchmaker() {
                             
                             // 为女生添加更多吸引人的属性
                             if (isFemale) {
-                                details.figure = figures[(userId + 1) % figures.length];
                                 details.appearance = appearances[(userId + 3) % appearances.length];
-                                details.clothingStyle = clothingStyles[(userId + 5) % clothingStyles.length];
                             }
                             
-                            // 生成个性化描述
+                            // 生成个性化描述，符合一日情侣主题
                             let description;
                             if (isFemale) {
                                 const femaleDescriptions = [
-                                    `${name}，${age}岁，来自${location}。性格${details.character}，是个${details.appearance}的女生。`,
-                                    `大家好，我是${name}，在${location}工作。我${details.character}、${userTags[0]}，希望找到真诚的另一半。`,
-                                    `${name}，${location}人，${age}岁。我喜欢${details.hobbies.join('、')}，性格${details.character}。`
+                                    `${name}，${age}岁，来自${location}。性格${details.character}，是个${details.appearance}的女生。想找个一日情侣，一起度过浪漫的一天。`,
+                                    `大家好，我是${name}，在${location}工作。我${details.character}、${userTags[0]}，期待一场美好的一日约会。`,
+                                    `${name}，${location}人，${age}岁。我喜欢${details.hobbies.join('、')}，性格${details.character}，想找个聊得来的人一起体验一日情侣的感觉。`
                                 ];
                                 description = femaleDescriptions[userId % femaleDescriptions.length];
                             } else {
                                 const maleDescriptions = [
-                                    `我是${name}，${age}岁，在${location}从事${details.occupation}工作。`,
-                                    `${location}的${name}，${age}岁，性格${details.character}，喜欢${details.hobbies.join('、')}。`,
-                                    `大家好，我是${name}，来自${location}。我${details.character}、${userTags[0]}，期待认识有缘人。`
+                                    `我是${name}，${age}岁，在${location}从事${details.occupation}工作。想找个一日情侣，一起探索城市的美好。`,
+                                    `${location}的${name}，${age}岁，性格${details.character}，喜欢${details.hobbies.join('、')}。期待和你度过浪漫的一天。`,
+                                    `大家好，我是${name}，来自${location}。我${details.character}、${userTags[0]}，想找个有趣的人体验一日情侣的约会。`
                                 ];
                                 description = maleDescriptions[userId % maleDescriptions.length];
                             }
@@ -9740,17 +9567,18 @@ function initMatchmaker() {
                                 contact: contact,
                                 // 更多详细资料
                                 details: details,
-                                // 个性化配对信息，每个用户都不同
+                                // 一日情侣个性化配对信息，每个用户都不同
                                 idealPartner: {
                                     ageRange: gender === 'female' 
-                                        ? [`${Math.max(25, age - 3)}`, `${Math.min(45, age + 8)}`] // 女生偏好稍大的男生
-                                        : [`${Math.max(22, age - 8)}`, `${Math.min(38, age + 3)}`], // 男生偏好稍小的女生
-                                    location: location, // 优先同城
+                                        ? [`${Math.max(20, age - 5)}`, `${Math.min(40, age + 5)}`] // 一日情侣年龄范围更灵活
+                                        : [`${Math.max(20, age - 5)}`, `${Math.min(40, age + 5)}`], // 一日情侣年龄范围更灵活
+                                    location: location, // 优先同城，方便见面
                                     heightRange: gender === 'female' 
-                                        ? ['170', '185'] // 女生偏好较高的男生
-                                        : ['155', '170'], // 男生偏好中等身高的女生
-                                    education: educationLevels[Math.min((userId + 1) % educationLevels.length, educationLevels.indexOf(details.education))], // 不低于自己的教育水平
-                                    income: gender === 'female' && userId % 3 !== 0 ? ['10k以上'] : [] // 部分女生对收入有要求
+                                        ? ['165', '190'] // 身高范围更宽松
+                                        : ['150', '175'], // 身高范围更宽松
+                                    // 一日情侣更注重兴趣和性格匹配
+                                    interests: details.hobbies,
+                                    personality: userTags.filter(tag => personalityTags.includes(tag))
                                 }
                             });
                             
@@ -9759,7 +9587,7 @@ function initMatchmaker() {
                     });
                 });
                 
-                console.log(`已为所有城市生成${users.length}个固定的牵线用户数据`);
+                console.log(`已生成${users.length}个适合一日情侣主题的固定牵线用户数据`);
                 return users;
             }
             
@@ -9877,18 +9705,7 @@ function initMatchmaker() {
                 document.head.appendChild(style);
             }
             
-            // 更新城市选择并刷新用户列表
-            function updateMatchmakerCitySelection(city) {
-                // 确保城市选择被正确设置
-                selectedMatchmakerCity = city;
-                console.log(`更新城市选择为: ${city}`);
-                
-                // 保存城市选择到localStorage
-                localStorage.setItem('selectedMatchmakerCity', city);
-                
-                // 刷新用户列表
-                displayMatchmakerUserList();
-            }
+
             
             // 初始化牵线功能的城市选择
             function initMatchmakerCitySelection() {
@@ -10084,7 +9901,7 @@ function initMatchmaker() {
                                         <p><strong>城市:</strong> ${user.location}</p>
                                         <p><strong>身高:</strong> ${user.details.height || '未知'}cm</p>
                                         <p><strong>体重:</strong> ${user.details.weight || '未知'}kg</p>
-                                        <p><strong>学历:</strong> ${user.details.education || '未知'}</p>
+
                                         <p><strong>职业:</strong> ${user.details.occupation || '未知'}</p>
                                         <p><strong>收入:</strong> ${user.details.income || '未知'}</p>
                                         <p><strong>性格:</strong> ${user.details.character || '未知'}</p>
@@ -11510,490 +11327,9 @@ function initMatchmaker() {
         }
         
         // 初始化牵线服务反馈页面
-        function initMatchmakerFeedbackPage() {
-            // 绑定返回按钮事件
-            const backToFeedbackCenterBtn = document.getElementById('backToFeedbackCenter');
-            if (backToFeedbackCenterBtn) {
-                backToFeedbackCenterBtn.addEventListener('click', function() {
-                    // 隐藏牵线服务反馈页面，显示反馈中心，并重置导航状态
-                    document.getElementById('matchmakerFeedbackPage').classList.add('hidden');
-                    document.getElementById('feedbackSection').classList.remove('hidden');
-                    
-                    // 重置页面导航状态
-                    document.querySelectorAll('.feedback-page-tab').forEach(tab => {
-                        tab.classList.remove('active');
-                    });
-                    document.querySelector('.feedback-page-tab[data-page="groupFeedbackPage"]').classList.add('active');
-                });
-            }
-            
-            // 绑定登录按钮事件
-            const matchmakerFeedbackLoginBtn = document.getElementById('matchmakerFeedbackLoginBtn');
-            if (matchmakerFeedbackLoginBtn) {
-                matchmakerFeedbackLoginBtn.addEventListener('click', function() {
-                    switchSection('profileSection');
-                });
-            }
-            
-            // 绑定VIP开通按钮事件
-            const openMatchmakerVipPageBtn = document.getElementById('openMatchmakerVipPageBtn');
-            const openMatchmakerVipFromPageBtn = document.getElementById('openMatchmakerVipFromPageBtn');
-            
-            if (openMatchmakerVipPageBtn) {
-                openMatchmakerVipPageBtn.addEventListener('click', function() {
-                    // 切换到VIP开通页面
-                    switchSection('matchmakerSection');
-                });
-            }
-            
-            if (openMatchmakerVipFromPageBtn) {
-                openMatchmakerVipFromPageBtn.addEventListener('click', function() {
-                    // 切换到VIP开通页面
-                    switchSection('matchmakerSection');
-                });
-            }
-            
-            // 绑定筛选和排序事件
-            const filterSelect = document.getElementById('matchmakerFeedbackFilter');
-            const sortSelect = document.getElementById('matchmakerFeedbackSort');
-            
-            if (filterSelect) {
-                filterSelect.addEventListener('change', updateMatchmakerFeedbackList);
-            }
-            
-            if (sortSelect) {
-                sortSelect.addEventListener('change', updateMatchmakerFeedbackList);
-            }
-            
-            // 绑定加载更多按钮事件
-            const loadMoreBtn = document.getElementById('loadMoreMatchmakerFeedback');
-            if (loadMoreBtn) {
-                loadMoreBtn.addEventListener('click', loadMoreMatchmakerFeedback);
-            }
-            
-            // 初始化页面显示
-            updateMatchmakerFeedbackPage();
-        }
+
         
-        // 更新牵线服务反馈页面显示
-        function updateMatchmakerFeedbackPage() {
-            const currentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
-            
-            // 始终显示反馈内容区域（未登录用户也可查看）
-            document.getElementById('matchmakerFeedbackPageContent').classList.remove('hidden');
-            
-            // 如果用户已登录，更新VIP状态和反馈列表
-            if (currentUser) {
-                updateMatchmakerVipStatus();
-                updateMatchmakerFeedbackList();
-            }
-        }
-        
-        // 更新VIP状态显示
-        function updateMatchmakerVipStatus() {
-            if (!currentUser || !vipServiceManager) return;
-            
-            const vipStatus = vipServiceManager.checkUserVipStatus(currentUser, 'matchmaker');
-            const vipStatusElement = document.getElementById('matchmakerVipStatus');
-            const vipRestrictedElement = document.getElementById('matchmakerPageVipRestricted');
-            
-            if (vipStatus) {
-                // VIP用户
-                if (vipStatusElement) vipStatusElement.style.display = 'none';
-                if (vipRestrictedElement) vipRestrictedElement.classList.add('hidden');
-            } else {
-                // 非VIP用户
-                if (vipStatusElement) vipStatusElement.style.display = 'flex';
-                if (vipRestrictedElement) vipRestrictedElement.classList.remove('hidden');
-            }
-        }
-        
-        // 更新牵线服务反馈列表
-        function updateMatchmakerFeedbackList() {
-            if (!feedbackCenter || !feedbackCenter.feedbackList) return;
-            
-            const feedbackList = feedbackCenter.feedbackList.filter(feedback => 
-                feedback.type === 'matchmaker'
-            );
-            
-            // 获取筛选和排序条件
-            const filterValue = document.getElementById('matchmakerFeedbackFilter')?.value || 'all';
-            const sortValue = document.getElementById('matchmakerFeedbackSort')?.value || 'newest';
-            
-            // 筛选反馈
-            let filteredFeedback = feedbackList;
-            if (filterValue === 'success') {
-                filteredFeedback = feedbackList.filter(feedback => 
-                    feedback.tags && feedback.tags.includes('success')
-                );
-            } else if (filterValue === 'pending') {
-                filteredFeedback = feedbackList.filter(feedback => 
-                    feedback.tags && feedback.tags.includes('pending')
-                );
-            } else if (filterValue === 'new') {
-                // 最近7天的反馈
-                const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
-                filteredFeedback = feedbackList.filter(feedback => 
-                    new Date(feedback.timestamp) > sevenDaysAgo
-                );
-            }
-            
-            // 排序反馈
-            filteredFeedback.sort((a, b) => {
-                if (sortValue === 'newest') {
-                    return new Date(b.timestamp) - new Date(a.timestamp);
-                } else if (sortValue === 'oldest') {
-                    return new Date(a.timestamp) - new Date(b.timestamp);
-                } else if (sortValue === 'rating') {
-                    return (b.rating || 0) - (a.rating || 0);
-                }
-                return 0;
-            });
-            
-            // 更新统计信息
-            updateMatchmakerFeedbackStats(filteredFeedback);
-            
-            // 显示反馈列表
-            displayMatchmakerFeedbackList(filteredFeedback);
-        }
-        
-        // 更新统计信息
-        function updateMatchmakerFeedbackStats(feedbackList) {
-            const totalElement = document.getElementById('totalMatchmakerFeedback');
-            const todayElement = document.getElementById('todayMatchmakerFeedback');
-            const successRateElement = document.getElementById('matchmakerSuccessRate');
-            
-            if (totalElement) {
-                totalElement.textContent = feedbackList.length;
-            }
-            
-            if (todayElement) {
-                const today = new Date().toDateString();
-                const todayFeedback = feedbackList.filter(feedback => 
-                    new Date(feedback.timestamp).toDateString() === today
-                );
-                todayElement.textContent = todayFeedback.length;
-            }
-            
-            if (successRateElement) {
-                const successFeedback = feedbackList.filter(feedback => 
-                    feedback.tags && feedback.tags.includes('success')
-                );
-                const successRate = feedbackList.length > 0 ? 
-                    Math.round((successFeedback.length / feedbackList.length) * 100) : 0;
-                successRateElement.textContent = successRate + '%';
-            }
-        }
-        
-        // 显示牵线服务反馈列表
-        function displayMatchmakerFeedbackList(feedbackList) {
-            const feedbackListElement = document.getElementById('matchmakerFeedbackPageList');
-            if (!feedbackListElement) return;
-            
-            // 清空现有内容
-            feedbackListElement.innerHTML = '';
-            
-            // 显示反馈项
-            feedbackList.forEach(feedback => {
-                const feedbackItem = createMatchmakerFeedbackItem(feedback);
-                feedbackListElement.appendChild(feedbackItem);
-            });
-            
-            // 更新加载更多按钮显示
-            updateLoadMoreButton(feedbackList.length);
-        }
-        
-        // 创建牵线服务反馈项
-        function createMatchmakerFeedbackItem(feedback) {
-            const item = document.createElement('div');
-            item.className = 'matchmaker-feedback-item';
-            
-            // 生成用户头像（使用用户名首字母）
-            const userInitial = feedback.user ? feedback.user.charAt(0).toUpperCase() : '匿';
-            
-            // 生成标签HTML
-            const tagsHtml = feedback.tags ? feedback.tags.map(tag => 
-                `<span class="feedback-tag">${tag}</span>`
-            ).join('') : '';
-            
-            // 生成评分HTML
-            const ratingHtml = feedback.rating ? 
-                `<div class="feedback-rating">${'★'.repeat(feedback.rating)}${'☆'.repeat(5 - feedback.rating)}</div>` : '';
-            
-            item.innerHTML = `
-                <div class="feedback-item-header">
-                    <div class="feedback-user-info">
-                        <div class="feedback-user-avatar">${userInitial}</div>
-                        <div class="feedback-user-name">${feedback.user || '匿名用户'}</div>
-                    </div>
-                    <div class="feedback-date">${feedback.timestamp}</div>
-                </div>
-                <div class="feedback-content">${feedback.content}</div>
-                ${ratingHtml}
-                <div class="feedback-tags">${tagsHtml}</div>
-            `;
-            
-            return item;
-        }
-        
-        // 更新加载更多按钮显示
-        function updateLoadMoreButton(currentCount) {
-            const loadMoreElement = document.getElementById('matchmakerFeedbackLoadMore');
-            if (!loadMoreElement) return;
-            
-            // 这里可以添加逻辑来控制是否显示加载更多按钮
-            // 目前暂时显示所有内容，不实现分页
-            loadMoreElement.style.display = 'none';
-        }
-        
-        // 加载更多牵线服务反馈
-        function loadMoreMatchmakerFeedback() {
-            // 这里可以实现分页加载逻辑
-            // 目前暂时不实现分页
-        }
-        
-        // 初始化群聊服务反馈页面
-        function initGroupFeedbackPage() {
-            // 绑定返回按钮事件
-            const backToFeedbackCenterBtn = document.getElementById('backToFeedbackCenterFromGroup');
-            if (backToFeedbackCenterBtn) {
-                backToFeedbackCenterBtn.addEventListener('click', function() {
-                    // 隐藏群聊服务反馈页面，显示反馈中心，并重置导航状态
-                    document.getElementById('groupFeedbackPage').classList.add('hidden');
-                    document.getElementById('feedbackSection').classList.remove('hidden');
-                    
-                    // 重置页面导航状态
-                    document.querySelectorAll('.feedback-page-tab').forEach(tab => {
-                        tab.classList.remove('active');
-                    });
-                    document.querySelector('.feedback-page-tab[data-page="groupFeedbackPage"]').classList.add('active');
-                });
-            }
-            
-            // 绑定登录按钮事件
-            const groupFeedbackLoginBtn = document.getElementById('groupFeedbackLoginBtn');
-            if (groupFeedbackLoginBtn) {
-                groupFeedbackLoginBtn.addEventListener('click', function() {
-                    switchSection('profileSection');
-                });
-            }
-            
-            // 绑定VIP开通按钮事件
-            const openGroupVipPageBtn = document.getElementById('openGroupVipPageBtn');
-            const openGroupVipFromPageBtn = document.getElementById('openGroupVipFromPageBtn');
-            
-            if (openGroupVipPageBtn) {
-                openGroupVipPageBtn.addEventListener('click', function() {
-                    // 切换到VIP开通页面
-                    switchSection('matchmakerSection');
-                });
-            }
-            
-            if (openGroupVipFromPageBtn) {
-                openGroupVipFromPageBtn.addEventListener('click', function() {
-                    // 切换到VIP开通页面
-                    switchSection('matchmakerSection');
-                });
-            }
-            
-            // 绑定筛选和排序事件
-            const filterSelect = document.getElementById('groupFeedbackFilter');
-            const sortSelect = document.getElementById('groupFeedbackSort');
-            
-            if (filterSelect) {
-                filterSelect.addEventListener('change', updateGroupFeedbackList);
-            }
-            
-            if (sortSelect) {
-                sortSelect.addEventListener('change', updateGroupFeedbackList);
-            }
-            
-            // 绑定加载更多按钮事件
-            const loadMoreBtn = document.getElementById('loadMoreGroupFeedback');
-            if (loadMoreBtn) {
-                loadMoreBtn.addEventListener('click', loadMoreGroupFeedback);
-            }
-            
-            // 初始化页面显示
-            updateGroupFeedbackPage();
-        }
-        
-        // 更新群聊服务反馈页面显示
-        function updateGroupFeedbackPage() {
-            const currentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
-            
-            // 始终显示反馈内容区域（未登录用户也可查看）
-            document.getElementById('groupFeedbackPageContent').classList.remove('hidden');
-            
-            // 如果用户已登录，更新VIP状态和反馈列表
-            if (currentUser) {
-                updateGroupVipStatus();
-                updateGroupFeedbackList();
-            }
-        }
-        
-        // 更新VIP状态显示
-        function updateGroupVipStatus() {
-            if (!currentUser || !vipServiceManager) return;
-            
-            const vipStatus = vipServiceManager.checkUserVipStatus(currentUser, 'group');
-            const vipStatusElement = document.getElementById('groupVipStatus');
-            const vipRestrictedElement = document.getElementById('groupPageVipRestricted');
-            
-            if (vipStatus) {
-                // VIP用户
-                if (vipStatusElement) vipStatusElement.style.display = 'none';
-                if (vipRestrictedElement) vipRestrictedElement.classList.add('hidden');
-            } else {
-                // 非VIP用户
-                if (vipStatusElement) vipStatusElement.style.display = 'flex';
-                if (vipRestrictedElement) vipRestrictedElement.classList.remove('hidden');
-            }
-        }
-        
-        // 更新群聊服务反馈列表
-        function updateGroupFeedbackList() {
-            if (!feedbackCenter || !feedbackCenter.feedbackList) return;
-            
-            const feedbackList = feedbackCenter.feedbackList.filter(feedback => 
-                feedback.type === 'group'
-            );
-            
-            // 获取筛选和排序条件
-            const filterValue = document.getElementById('groupFeedbackFilter')?.value || 'all';
-            const sortValue = document.getElementById('groupFeedbackSort')?.value || 'newest';
-            
-            // 筛选反馈
-            let filteredFeedback = feedbackList;
-            if (filterValue === 'success') {
-                filteredFeedback = feedbackList.filter(feedback => 
-                    feedback.tags && feedback.tags.includes('success')
-                );
-            } else if (filterValue === 'pending') {
-                filteredFeedback = feedbackList.filter(feedback => 
-                    feedback.tags && feedback.tags.includes('pending')
-                );
-            } else if (filterValue === 'new') {
-                // 最近7天的反馈
-                const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
-                filteredFeedback = feedbackList.filter(feedback => 
-                    new Date(feedback.timestamp) > sevenDaysAgo
-                );
-            }
-            
-            // 排序反馈
-            filteredFeedback.sort((a, b) => {
-                if (sortValue === 'newest') {
-                    return new Date(b.timestamp) - new Date(a.timestamp);
-                } else if (sortValue === 'oldest') {
-                    return new Date(a.timestamp) - new Date(b.timestamp);
-                } else if (sortValue === 'rating') {
-                    return (b.rating || 0) - (a.rating || 0);
-                }
-                return 0;
-            });
-            
-            // 更新统计信息
-            updateGroupFeedbackStats(filteredFeedback);
-            
-            // 显示反馈列表
-            displayGroupFeedbackList(filteredFeedback);
-        }
-        
-        // 更新统计信息
-        function updateGroupFeedbackStats(feedbackList) {
-            const totalElement = document.getElementById('totalGroupFeedback');
-            const todayElement = document.getElementById('todayGroupFeedback');
-            const successRateElement = document.getElementById('groupSuccessRate');
-            
-            if (totalElement) {
-                totalElement.textContent = feedbackList.length;
-            }
-            
-            if (todayElement) {
-                const today = new Date().toDateString();
-                const todayFeedback = feedbackList.filter(feedback => 
-                    new Date(feedback.timestamp).toDateString() === today
-                );
-                todayElement.textContent = todayFeedback.length;
-            }
-            
-            if (successRateElement) {
-                const successFeedback = feedbackList.filter(feedback => 
-                    feedback.tags && feedback.tags.includes('success')
-                );
-                const successRate = feedbackList.length > 0 ? 
-                    Math.round((successFeedback.length / feedbackList.length) * 100) : 0;
-                successRateElement.textContent = successRate + '%';
-            }
-        }
-        
-        // 显示群聊服务反馈列表
-        function displayGroupFeedbackList(feedbackList) {
-            const feedbackListElement = document.getElementById('groupFeedbackPageList');
-            if (!feedbackListElement) return;
-            
-            // 清空现有内容
-            feedbackListElement.innerHTML = '';
-            
-            // 显示反馈项
-            feedbackList.forEach(feedback => {
-                const feedbackItem = createGroupFeedbackItem(feedback);
-                feedbackListElement.appendChild(feedbackItem);
-            });
-            
-            // 更新加载更多按钮显示
-            updateGroupLoadMoreButton(feedbackList.length);
-        }
-        
-        // 创建群聊服务反馈项
-        function createGroupFeedbackItem(feedback) {
-            const item = document.createElement('div');
-            item.className = 'matchmaker-feedback-item';
-            
-            // 生成用户头像（使用用户名首字母）
-            const userInitial = feedback.user ? feedback.user.charAt(0).toUpperCase() : '匿';
-            
-            // 生成标签HTML
-            const tagsHtml = feedback.tags ? feedback.tags.map(tag => 
-                `<span class="feedback-tag">${tag}</span>`
-            ).join('') : '';
-            
-            // 生成评分HTML
-            const ratingHtml = feedback.rating ? 
-                `<div class="feedback-rating">${'★'.repeat(feedback.rating)}${'☆'.repeat(5 - feedback.rating)}</div>` : '';
-            
-            item.innerHTML = `
-                <div class="feedback-item-header">
-                    <div class="feedback-user-info">
-                        <div class="feedback-user-avatar">${userInitial}</div>
-                        <div class="feedback-user-name">${feedback.user || '匿名用户'}</div>
-                    </div>
-                    <div class="feedback-date">${feedback.timestamp}</div>
-                </div>
-                <div class="feedback-content">${feedback.content}</div>
-                ${ratingHtml}
-                <div class="feedback-tags">${tagsHtml}</div>
-            `;
-            
-            return item;
-        }
-        
-        // 更新加载更多按钮显示
-        function updateGroupLoadMoreButton(currentCount) {
-            const loadMoreElement = document.getElementById('loadMoreGroupFeedback');
-            if (!loadMoreElement) return;
-            
-            // 这里可以添加逻辑来控制是否显示加载更多按钮
-            // 目前暂时显示所有内容，不实现分页
-            loadMoreElement.style.display = 'none';
-        }
-        
-        // 加载更多群聊服务反馈
-        function loadMoreGroupFeedback() {
-            // 这里可以实现分页加载逻辑
-            // 目前暂时不实现分页
-        }
+
         
         // 初始化声明双击事件
         function initAgreementDoubleClick() {
