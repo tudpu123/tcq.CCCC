@@ -13025,103 +13025,14 @@ function initMatchmaker() {
             };
             
             const userFeedbacks = [
-                {
-                    id: 1,
-                    name: '李先生',
-                    avatar: 'https://ui-avatars.com/api/?name=李先生&background=random',
-                    location: '北京',
-                    date: formatDate(new Date(today.getTime() - Math.floor(Math.random() * 3) * 24 * 60 * 60 * 1000)),
-                    rating: 5,
-                    comment: '服务非常专业，体验超出预期！从咨询到完成，整个过程都很顺畅，工作人员态度也很好。',
-                    isVerified: true,
-                    image: 'c:\\Users\\Administrator\\xwechat_files\\wxid_gllglcghza7p22_36e7\\temp\\RWTemp\\2025-11\\9e20f478899dc29eb19741386f9343c8\\418d8a8851e4a73941aac88d8a2bdccb.png'
-                },
-                {
-                    id: 2,
-                    name: '张先生',
-                    avatar: 'https://ui-avatars.com/api/?name=张先生&background=random',
-                    location: '上海',
-                    date: formatDate(new Date(today.getTime() - Math.floor(Math.random() * 3) * 24 * 60 * 60 * 1000)),
-                    rating: 4,
-                    comment: '整体不错，细节处理得很好！尤其是最后的效果让我非常满意，值得推荐。',
-                    isVerified: true,
-                    image: 'c:\\Users\\Administrator\\xwechat_files\\wxid_gllglcghza7p22_36e7\\temp\\RWTemp\\2025-11\\9e20f478899dc29eb19741386f9343c8\\5aafe5c13344019aa0c1839b6c3e898e.png'
-                },
-                {
-                    id: 3,
-                    name: '王女士',
-                    avatar: 'https://ui-avatars.com/api/?name=王女士&background=random',
-                    location: '广州',
-                    date: formatDate(new Date(today.getTime() - Math.floor(Math.random() * 3) * 24 * 60 * 60 * 1000)),
-                    rating: 5,
-                    comment: '非常满意这次的服务！提供了很多专业建议，结果超出了我的期望，强烈推荐给大家！',
-                    isVerified: true,
-                    images: [
-                        'c:\\Users\\Administrator\\xwechat_files\\wxid_gllglcghza7p22_36e7\\temp\\RWTemp\\2025-11\\9e20f478899dc29eb19741386f9343c8\\244eb3f89814ebfaf9cb55de0bc2b43b.jpg',
-                        'c:\\Users\\Administrator\\xwechat_files\\wxid_gllglcghza7p22_36e7\\temp\\RWTemp\\2025-11\\9e20f478899dc29eb19741386f9343c8\\81f7b056e53c4c4b2dac582b424415e5.jpg'
-                    ]
-                },
-                {
-                    id: 4,
-                    name: '赵先生',
-                    avatar: 'https://ui-avatars.com/api/?name=赵先生&background=random',
-                    location: '深圳',
-                    date: formatDate(new Date(today.getTime() - Math.floor(Math.random() * 3) * 24 * 60 * 60 * 1000)),
-                    rating: 5,
-                    comment: '服务态度很好，工作效率也很高，非常满意！',
-                    isVerified: true,
-                    image: 'c:\\Users\\Administrator\\xwechat_files\\wxid_gllglcghza7p22_36e7\\temp\\RWTemp\\2025-11\\9e20f478899dc29eb19741386f9343c8\\f797dbb14aba1adf2d7f88ef12ebe3f2.jpg'
-                },
-                {
-                    id: 5,
-                    name: '刘女士',
-                    avatar: 'https://ui-avatars.com/api/?name=刘女士&background=random',
-                    location: '杭州',
-                    date: formatDate(new Date(today.getTime() - Math.floor(Math.random() * 3) * 24 * 60 * 60 * 1000)),
-                    rating: 4,
-                    comment: '整体服务不错，值得信赖！',
-                    isVerified: true,
-                    image: 'c:\\Users\\Administrator\\xwechat_files\\wxid_gllglcghza7p22_36e7\\temp\\RWTemp\\2025-11\\9e20f478899dc29eb19741386f9343c8\\978a7db0a8729185bfbdbfe5c4e0470d.jpg'
-                },
-                {
-                    id: 6,
-                    name: '陈先生',
-                    avatar: 'https://ui-avatars.com/api/?name=陈先生&background=random',
-                    location: '成都',
-                    date: formatDate(new Date(today.getTime() - Math.floor(Math.random() * 3) * 24 * 60 * 60 * 1000)),
-                    rating: 5,
-                    comment: '非常专业的团队，效果超出预期！',
-                    isVerified: true,
-                    image: 'c:\\Users\\Administrator\\xwechat_files\\wxid_gllglcghza7p22_36e7\\temp\\RWTemp\\2025-11\\9e20f478899dc29eb19741386f9343c8\\ef70d89b37684dfc103d743338bf9fad.jpg'
-                },
-                {
-                    id: 7,
-                    name: '杨女士',
-                    avatar: 'https://ui-avatars.com/api/?name=杨女士&background=random',
-                    location: '武汉',
-                    date: formatDate(new Date(today.getTime() - Math.floor(Math.random() * 3) * 24 * 60 * 60 * 1000)),
-                    rating: 5,
-                    comment: '服务非常周到，团队专业可靠，强烈推荐！',
-                    isVerified: true,
-                    images: [
-                        'c:\\Users\\Administrator\\xwechat_files\\wxid_gllglcghza7p22_36e7\\temp\\RWTemp\\2025-11\\9e20f478899dc29eb19741386f9343c8\\d4f0c4965efe9ffab581967176d32ca8.jpg',
-                        'c:\\Users\\Administrator\\xwechat_files\\wxid_gllglcghza7p22_36e7\\temp\\RWTemp\\2025-11\\9e20f478899dc29eb19741386f9343c8\\31e731a17372720d13a742f9ebd1b77c.jpg'
-                    ]
-                },
-                {
-                    id: 8,
-                    name: '吴先生',
-                    avatar: 'https://ui-avatars.com/api/?name=吴先生&background=random',
-                    location: '西安',
-                    date: formatDate(new Date(today.getTime() - Math.floor(Math.random() * 3) * 24 * 60 * 60 * 1000)),
-                    rating: 5,
-                    comment: '服务质量非常高，团队协作默契，值得信赖！',
-                    isVerified: true,
-                    images: [
-                        'c:\\Users\\Administrator\\xwechat_files\\wxid_gllglcghza7p22_36e7\\temp\\RWTemp\\2025-11\\9e20f478899dc29eb19741386f9343c8\\99119f1cc38f9e8c339b02cdf37a6d07.png',
-                        'c:\\Users\\Administrator\\xwechat_files\\wxid_gllglcghza7p22_36e7\\temp\\RWTemp\\2025-11\\9e20f478899dc29eb19741386f9343c8\\2f7dff108301d1b1b02129b19031bee5.jpg'
-                    ]
-                }
+                {                    id: 1,                    name: '李先生',                    avatar: 'https://ui-avatars.com/api/?name=李先生&background=random',                    location: '北京',                    date: formatDate(new Date(today.getTime() - Math.floor(Math.random() * 3) * 24 * 60 * 60 * 1000)),                    rating: 5,                    comment: '服务非常专业，体验超出预期！从咨询到完成，整个过程都很顺畅，工作人员态度也很好。',                    isVerified: true,                    image: 'https://s10.aconvert.com/convert/p3r68-cdx67/a6ryq-elt7n.jpg'                },
+                {                    id: 2,                    name: '张先生',                    avatar: 'https://ui-avatars.com/api/?name=张先生&background=random',                    location: '上海',                    date: formatDate(new Date(today.getTime() - Math.floor(Math.random() * 3) * 24 * 60 * 60 * 1000)),                    rating: 4,                    comment: '整体不错，细节处理得很好！尤其是最后的效果让我非常满意，值得推荐。',                    isVerified: true,                    image: 'https://s11.aconvert.com/convert/p3r68-cdx67/0g77e-8p8pc.jpg'                },
+                {                    id: 3,                    name: '王先生',                    avatar: 'https://ui-avatars.com/api/?name=王先生&background=random',                    location: '广州',                    date: formatDate(new Date(today.getTime() - Math.floor(Math.random() * 3) * 24 * 60 * 60 * 1000)),                    rating: 5,                    comment: '非常满意这次的服务！提供了很多专业建议，结果超出了我的期望，强烈推荐给大家！',                    isVerified: true,                    images: [                        'https://s11.aconvert.com/convert/p3r68-cdx67/nmfkx-4278t.jpg',                        'https://s11.aconvert.com/convert/p3r68-cdx67/m3nqj-7uvbg.jpg'                    ]                },
+                {                    id: 4,                    name: '赵先生',                    avatar: 'https://ui-avatars.com/api/?name=赵先生&background=random',                    location: '深圳',                    date: formatDate(new Date(today.getTime() - Math.floor(Math.random() * 3) * 24 * 60 * 60 * 1000)),                    rating: 5,                    comment: '服务态度很好，工作效率也很高，非常满意！',                    isVerified: true,                    image: 'https://s11.aconvert.com/convert/p3r68-cdx67/sub0i-a74ll.jpg'                },
+                {                    id: 5,                    name: '刘先生',                    avatar: 'https://ui-avatars.com/api/?name=刘先生&background=random',                    location: '杭州',                    date: formatDate(new Date(today.getTime() - Math.floor(Math.random() * 3) * 24 * 60 * 60 * 1000)),                    rating: 4,                    comment: '整体服务不错，值得信赖！',                    isVerified: true,                    image: 'https://s11.aconvert.com/convert/p3r68-cdx67/nxe16-c1w53.jpg'                },
+                {                    id: 6,                    name: '陈先生',                    avatar: 'https://ui-avatars.com/api/?name=陈先生&background=random',                    location: '成都',                    date: formatDate(new Date(today.getTime() - Math.floor(Math.random() * 3) * 24 * 60 * 60 * 1000)),                    rating: 5,                    comment: '非常专业的团队，效果超出预期！',                    isVerified: true,                    image: 'https://s11.aconvert.com/convert/p3r68-cdx67/b340i-zxaxd.jpg'                },
+                {                    id: 7,                    name: '杨先生',                    avatar: 'https://ui-avatars.com/api/?name=杨先生&background=random',                    location: '武汉',                    date: formatDate(new Date(today.getTime() - Math.floor(Math.random() * 3) * 24 * 60 * 60 * 1000)),                    rating: 5,                    comment: '服务非常周到，团队专业可靠，强烈推荐！',                    isVerified: true,                    images: [                        'https://s11.aconvert.com/convert/p3r68-cdx67/ntxgs-qx98f.jpg',                        'https://s11.aconvert.com/convert/p3r68-cdx67/migcc-ztn4d.jpg'                    ]                },
+                {                    id: 8,                    name: '吴先生',                    avatar: 'https://ui-avatars.com/api/?name=吴先生&background=random',                    location: '西安',                    date: formatDate(new Date(today.getTime() - Math.floor(Math.random() * 3) * 24 * 60 * 60 * 1000)),                    rating: 5,                    comment: '服务质量非常高，团队协作默契，值得信赖！',                    isVerified: true,                    images: [                        'https://s10.aconvert.com/convert/p3r68-cdx67/ach6l-xebkr.jpg',                        'https://s10.aconvert.com/convert/p3r68-cdx67/atfch-28gbc.jpg'                    ]                }
             ];
             
             // 添加用户反馈到网格，使用交错布局增加视觉多样性
