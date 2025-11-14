@@ -6,7 +6,10 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>一日情侣牵线平台 - 同城交友体验</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 替换为国内可用的CDN -->
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 或者使用本地字体图标库（如果有） -->
+    <!-- <link rel="stylesheet" href="fonts/font-awesome.min.css"> -->
     <style>
         /* 保留所有原有CSS样式 */
         * {
@@ -18,17 +21,15 @@
         }
         
         :root {
-            --primary: #818cf8; /* 调淡的蓝紫色 */
+            --primary: #667eea;
             --primary-light: #a5b4fc;
-            --secondary: #a78bfa;
-            --accent: #60a5fa;
-            --text: #374151; /* 调淡的文本色 */
-            --text-light: #9ca3af;
-            --text-softer: #d1d5db;
-            --text-accent: #6366f1;
-            --bg: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%); /* 保持原背景色 */
-            --card-bg: rgba(255, 255, 255, 0.98);
-            --shadow: 0 8px 30px rgba(129, 140, 248, 0.12); /* 调淡的阴影 */
+            --secondary: #764ba2;
+            --accent: #f093fb;
+            --text: #2d3748;
+            --text-light: #718096;
+            --bg: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --shadow: 0 4px 20px rgba(102, 126, 234, 0.1);
             --success: #34d399;
             --warning: #fbbf24;
             --danger: #f87171;
@@ -37,37 +38,39 @@
         body {
             background: var(--bg);
             color: var(--text);
-            line-height: 1.7;
+            line-height: 1.5;
             padding: 0;
+            font-family: "PingFang SC", "Helvetica Neue", Arial, sans-serif;
             margin: 0;
             min-height: 100vh;
-            font-family: "PingFang SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+            font-family: var(--font-family);
             font-smooth: always;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            letter-spacing: 0.01em; /* 增加一点字间距，提高可读性 */
+            letter-spacing: 0.02em; /* 优化字间距 */
             overflow-x: hidden;
             position: relative;
+            font-size: 15px; /* 基础字体大小 */
         }
         
         .container {
             max-width: 100%;
-            padding: 15px;
-            padding-bottom: 80px;
+            padding: 10px;
+            padding-bottom: 70px;
             overflow-x: hidden;
         }
         
         .alert-message {
             display: flex;
             align-items: center;
-            margin-top: 15px;
-            padding: 12px 15px;
+            margin-top: 10px;
+            padding: 10px 12px;
             background-color: rgba(251, 191, 36, 0.1);
             border-left: 4px solid var(--warning);
             border-radius: 8px;
-            font-size: 14px;
+            font-size: 13px;
             color: var(--warning);
-            font-weight: 500;
+            font-weight: var(--font-weight-medium);
         }
         
         .alert-message i {
@@ -76,16 +79,16 @@
         }
         
         header {
-            background: linear-gradient(135deg, #ff6b9d 0%, #c026d3 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 25px 15px;
+            padding: 18px 10px;
             text-align: center;
-            border-radius: 0 0 30px 30px;
-            box-shadow: 0 10px 40px rgba(255, 107, 157, 0.4);
-            margin-bottom: 25px;
+            border-radius: 0 0 25px 25px;
+            box-shadow: 0 8px 30px rgba(102, 126, 234, 0.35);
+            margin-bottom: 18px;
             position: relative;
             overflow: hidden;
-            border-bottom: 3px solid rgba(255, 255, 255, 0.3);
+            border-bottom: 2px solid rgba(255, 255, 255, 0.3);
             backdrop-filter: blur(10px);
         }
         
@@ -96,7 +99,7 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 70%);
+            background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 70%);
             transform: rotate(30deg);
         }
         
@@ -114,20 +117,20 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
         
         .user-avatar {
             width: 55px;
             height: 55px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
             font-size: 1.8rem;
-            box-shadow: 0 6px 15px rgba(255, 20, 147, 0.4);
+            box-shadow: 0 6px 15px rgba(245, 87, 108, 0.4);
             cursor: pointer;
             transition: all 0.3s ease;
             border: 2px solid rgba(255, 255, 255, 0.3);
@@ -179,13 +182,10 @@
         .header-content h1 {
             font-size: 1.8rem;
             margin-bottom: 8px;
-            text-shadow: 0 3px 15px rgba(255, 107, 157, 0.7);
+            text-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
             cursor: pointer;
             transition: all 0.3s ease;
-            background: linear-gradient(135deg, #ff87b2 0%, #ff6b9d 50%, #e879f9 100%);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: white;
             font-weight: 800;
             letter-spacing: 1px;
         }
@@ -205,11 +205,11 @@
         
         .card {
             background: var(--card-bg);
-            border-radius: 20px;
-            padding: 24px;
-            margin-bottom: 20px;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 12px;
             box-shadow: var(--shadow);
-            border: 1px solid rgba(255, 107, 157, 0.2);
+            border: 1px solid rgba(226, 232, 240, 0.5);
             transition: all 0.3s ease;
             backdrop-filter: blur(10px);
             position: relative;
@@ -257,13 +257,13 @@
         }
         
         .section-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 22px;
+            font-size: 1.2rem;
+            font-weight: var(--font-weight-bold);
+            margin-bottom: 16px;
             color: var(--text);
             display: flex;
             align-items: center;
-            padding-bottom: 12px;
+            padding-bottom: 8px;
             border-bottom: 1px solid rgba(255, 45, 142, 0.1);
             letter-spacing: -0.5px;
         }
@@ -284,7 +284,7 @@
         
         /* 城市搜索样式 */
         .city-search {
-            margin: 15px 0;
+            margin: 10px 0;
             position: relative;
         }
         
@@ -1210,6 +1210,40 @@
                 font-size: 1.1rem;
             }
             
+            /* 优化按钮大小，确保移动端易于点击 */
+            .btn {
+                padding: 14px 24px;
+                font-size: 1rem;
+                min-height: 48px;
+            }
+            
+            /* 优化表单元素，确保移动端易于输入 */
+            input, textarea, select {
+                min-height: 48px;
+                padding: 14px;
+            }
+            
+            /* 优化底部导航，确保移动端易于点击 */
+            .bottom-nav {
+                padding: 8px 0;
+            }
+            
+            .nav-item {
+                font-size: 0.75rem;
+                padding: 8px;
+            }
+            
+            .nav-item i {
+                font-size: 1.3rem;
+                margin-bottom: 3px;
+            }
+            
+            /* 优化卡片在超小屏幕上的显示 */
+             .card {
+                 padding: 16px;
+                 margin-bottom: 12px;
+             }
+            
             /* 优化支付按钮 */
             .matchmaker-payment-methods {
                 flex-direction: column;
@@ -1251,81 +1285,115 @@
             box-shadow: 0 -2px 15px rgba(255, 107, 157, 0.15);
         }
         
-        /* 文字美化 - 添加渐变文字效果 */
+        /* 简化文字样式 */
         .gradient-text {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--primary);
             font-weight: 600;
         }
         
-        /* 文字美化 - 添加发光效果 */
-        .glow-text {
-            text-shadow: 0 0 10px rgba(255, 107, 157, 0.3), 0 0 20px rgba(255, 107, 157, 0.2);
-        }
-        
-        /* 文字美化 - 标题样式增强 */
+        /* 简化标题样式 */
         h1, h2, h3, h4, h5, h6 {
-            font-weight: 700;
-            margin-bottom: 15px;
-            letter-spacing: -0.5px;
-            background: linear-gradient(135deg, var(--text) 0%, var(--primary) 100%);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--text);
         }
         
         h1 {
-            font-size: 2rem;
+            font-size: 1.85rem;
+            font-weight: var(--font-weight-bold);
             line-height: 1.2;
         }
         
         h2 {
-            font-size: 1.6rem;
-            line-height: 1.3;
+            font-size: 1.45rem;
+            line-height: 1.25;
         }
         
         h3 {
-            font-size: 1.4rem;
-            line-height: 1.4;
+            font-size: 1.25rem;
+            line-height: 1.3;
+        }
+        
+        h4 {
+            font-size: 1.1rem;
+            font-weight: var(--font-weight-medium);
+            line-height: 1.35;
         }
         
         /* 文字美化 - 正文样式增强 */
         p {
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             color: var(--text);
-            font-size: 1rem;
-            line-height: 1.8;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            font-weight: var(--font-weight-regular);
         }
         
-        /* 文字美化 - 链接样式增强 */
+        /* 简化段落样式 */
+        .enhanced-paragraph {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: var(--text-light);
+            margin-bottom: 10px;
+        }
+        
+        /* 简化强调文本 */
+        .highlight {
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        /* 可折叠区块样式 */
+        .collapsible-section {
+            margin-bottom: 1rem;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            background-color: var(--card-bg-color);
+            box-shadow: var(--box-shadow-light);
+        }
+        
+        .collapsible-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .collapsible-header:hover {
+            background-color: var(--hover-color);
+        }
+        
+        .collapsible-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+        
+        .collapsible-content.show {
+            max-height: 500px;
+            padding: 0 1rem 1rem;
+        }
+        
+        .collapse-icon {
+            transition: transform 0.3s ease;
+        }
+        
+        .collapse-icon.rotate {
+            transform: rotate(180deg);
+        }
+
+        /* 简化链接样式 */
         a {
             color: var(--primary);
             text-decoration: none;
-            transition: all 0.3s ease;
+            transition: color 0.3s ease;
             font-weight: 500;
-            position: relative;
         }
         
         a:hover {
             color: var(--secondary);
-            text-shadow: 0 0 5px rgba(255, 107, 157, 0.3);
-        }
-        
-        a::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            transition: width 0.3s ease;
-        }
-        
-        a:hover::after {
-            width: 100%;
         }
         
         /* 文字美化 - 按钮文字样式增强 */
@@ -1343,30 +1411,12 @@
             color: var(--text-light);
         }
         
-        /* 文字美化 - 添加动画效果 */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+        /* 移除动画效果 */
         
-        .animated-text {
-            animation: fadeInUp 0.6s ease-out forwards;
-        }
-        
-        /* 文字美化 - 强调文字 */
+        /* 简化强调文字 */
         .highlight {
-            background: linear-gradient(120deg, #ff9a9e 0%, #fad0c4 100%);
-            background-repeat: no-repeat;
-            background-size: 100% 30%;
-            background-position: 0 90%;
-            padding: 0 4px;
-            border-radius: 4px;
+            color: var(--primary);
+            font-weight: 600;
         }
         
         /* 文字美化 - 标签文字 */
@@ -5603,8 +5653,8 @@
             </div>
         </div>
         <div class="header-content">
-                <h1 id="mainTitle" class="gradient-text glow-text animated-text">进微信同城群聊 · 同城交友</h1>
-                <p class="animated-text" style="animation-delay: 0.2s;"><span class="highlight">想认识同城好友？</span>查看附近<span class="gradient-text">当地微信群聊天记录</span>，开启<span class="highlight">同城交友</span></p>
+                <h1 id="mainTitle">进微信同城群聊 · 同城交友</h1>
+                <p>想认识同城好友？查看附近当地微信群聊天记录，开启同城交友</p>
             </div>
     </header>
     
@@ -5691,15 +5741,10 @@
                     </div>
                 </div>
                 
-                <!-- 进微信同城群聊按钮 - 更吸引人的设计 -->
-                <button class="view-chat-btn modern-chat-btn" id="viewChatBtn" disabled>
-                    <div class="btn-icon">
-                        <i class="fab fa-weixin btn-inner-icon"></i>
-                    </div>
-                    <span class="btn-text gradient-text">进微信同城群聊</span>
-                    <div class="btn-indicator">
-                        <i class="fas fa-arrow-right btn-arrow"></i>
-                    </div>
+                <!-- 进微信同城群聊按钮 -->
+                <button class="view-chat-btn" id="viewChatBtn" disabled>
+                    <i class="fab fa-weixin"></i>
+                    <span>进微信同城群聊</span>
                 </button>
             </div>
         </div>
@@ -5749,19 +5794,17 @@
             
             <!-- 支付宝支付表单 -->
             <div class="payment-form active" id="alipayForm">
-                <button class="btn btn-primary payment-btn" id="alipayBtn">
+                <button class="btn btn-primary" id="alipayBtn">
                     <i class="fab fa-alipay"></i>
-                    <span class="loading hidden"></span>
-                    <span id="alipayBtnText">立即进微信同城群聊 ¥39.99</span>
+                    <span>立即进微信同城群聊 ¥39.99</span>
                 </button>
             </div>
             
             <!-- 微信支付表单 -->
             <div class="payment-form" id="wxpayForm">
-                <button class="btn btn-primary payment-btn" id="wxpayBtn">
+                <button class="btn btn-primary" id="wxpayBtn">
                     <i class="fab fa-weixin"></i>
-                    <span class="loading hidden"></span>
-                    <span id="wxpayBtnText">立即进微信同城群聊 ¥39.99</span>
+                    <span>立即进微信同城群聊 ¥39.99</span>
                 </button>
             </div>
             
@@ -5770,13 +5813,13 @@
             <!-- 声明和免责声明 -->
             <div class="agreement-section">
                 <div class="agreement-title">
-                    <i class="fas fa-exclamation-circle"></i> 法律声明与免责声明
+                    <i class="fas fa-info-circle"></i> 法律声明与免责声明
                 </div>
                 
                 <div class="agreement-content hidden" id="paymentAgreementContent">
                     <div class="agreement-summary">
-                        <p><strong>重要提示：</strong>在使用本平台服务前，请仔细阅读以下声明内容。双击"我已阅读同意上述法律声明和免责声明"复选框即可查看完整内容。</p>
-                        <p class="agreement-preview">本平台严格遵守国家法律法规，提供婚恋交友信息服务。用户需对自身行为承担法律责任，平台仅提供信息交流服务...</p>
+                        <p><strong>重要提示：</strong>在使用本平台服务前，请仔细阅读以下声明内容。</p>
+                        <p>本平台严格遵守国家法律法规，提供婚恋交友信息服务。用户需对自身行为承担法律责任，平台仅提供信息交流服务...</p>
                     </div>
                     
                     <div class="agreement-details">
@@ -6453,33 +6496,41 @@
                     </div>
                 </div>
                 
-                <!-- 成功案例展示 -->
-                <div class="success-stories">
-                    <h4 class="gradient-text">✓ 一日情侣体验故事</h4>
-                    <div class="stories-grid">
-                        <div class="story-item animated-text">
-                            <div class="story-content">
-                                <p class="story-text enhanced-paragraph">"一日情侣体验非常棒！我们一起看电影、逛公园，度过了浪漫的一天。感谢平台让我们相遇！"</p>
-                                <div class="story-author gradient-text">— 张先生，上海</div>
+                <!-- 成功案例展示 (可折叠) -->
+                <div class="collapsible-section success-stories">
+                    <div class="collapsible-header" onclick="toggleCollapse(this)">
+                        <h4 class="gradient-text">✓ 一日情侣体验故事</h4>
+                        <i class="fas fa-chevron-down collapse-icon"></i>
+                    </div>
+                    <div class="collapsible-content">
+                        <div class="stories-grid">
+                            <div class="story-item animated-text">
+                                <div class="story-content">
+                                    <p class="story-text enhanced-paragraph">"一日情侣体验非常棒！我们一起看电影、逛公园，度过了浪漫的一天。感谢平台让我们相遇！"</p>
+                                    <div class="story-author gradient-text">— 张先生，上海</div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="story-item animated-text" style="animation-delay: 0.2s;">
-                            <div class="story-content">
-                                <p class="story-text enhanced-paragraph">"24小时的情侣体验很特别，我们一起完成了很多有趣的任务，现在还保持着联系！"</p>
-                                <div class="story-author gradient-text">— 李女士，北京</div>
+                            <div class="story-item animated-text" style="animation-delay: 0.2s;">
+                                <div class="story-content">
+                                    <p class="story-text enhanced-paragraph">"24小时的情侣体验很特别，我们一起完成了很多有趣的任务，现在还保持着联系！"</p>
+                                    <div class="story-author gradient-text">— 李女士，北京</div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 
-                <!-- 用户评价 -->
-                <div class="user-reviews">
-                    <div class="review-stats">
-                        <div class="rating">
-                            <span class="stars">★★★★★</span>
-                            <span class="rating-number">4.9/5</span>
+                <!-- 用户评价 (可折叠) -->
+                <div class="collapsible-section user-reviews">
+                    <div class="collapsible-header" onclick="toggleCollapse(this)">
+                        <div class="review-stats">
+                            <div class="rating">
+                                <span class="stars">★★★★★</span>
+                                <span class="rating-number">4.9/5</span>
+                            </div>
+                            <div class="review-count">基于1200+真实用户评价</div>
                         </div>
-                        <div class="review-count">基于1200+真实用户评价</div>
+                        <i class="fas fa-chevron-down collapse-icon"></i>
                     </div>
                 </div>
                 
@@ -6898,6 +6949,21 @@
             notify_url: '/api/notify',
             return_url: '/api/return'
         };
+        
+        // 添加网络加载错误处理
+        window.addEventListener('error', function(e) {
+            console.error('资源加载错误:', e.target.src || e.target.href);
+        });
+        
+        // 添加图片加载失败的默认处理
+        document.addEventListener('DOMContentLoaded', function() {
+            const images = document.querySelectorAll('img');
+            images.forEach(img => {
+                img.onerror = function() {
+                    this.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 24 24" fill="none" stroke="%23ccc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"%3E%3Crect x="3" y="3" width="18" height="18" rx="2" ry="2"%3E%3C/rect%3E%3Ccircle cx="8.5" cy="8.5" r="1.5"%3E%3C/circle%3E%3Cpolyline points="21 15 16 10 5 21"%3E%3C/polyline%3E%3C/svg%3E';
+                };
+            });
+        });
         
         // 城市数据（包含全国各市级城市地区）
         const citiesData = {
@@ -8901,13 +8967,6 @@ let selectedMatchmakerGender = localStorage.getItem('selectedMatchmakerGender') 
             // HTTP请求
             async getHttpResponse(url, postData = false, timeout = 10000) {
                 try {
-                    // 检查网络连接状态
-                    if (!navigator.onLine) {
-                        // 模拟成功响应或返回默认数据，避免页面崩溃
-                        console.warn('网络连接不可用，使用本地模拟数据');
-                        return JSON.stringify({status: 0, message: '网络连接不可用', data: null});
-                    }
-                    
                     const controller = new AbortController();
                     const timeoutId = setTimeout(() => controller.abort(), timeout);
                     
@@ -8930,16 +8989,13 @@ let selectedMatchmakerGender = localStorage.getItem('selectedMatchmakerGender') 
                     clearTimeout(timeoutId);
                     
                     if (!response.ok) {
-                        console.warn(`HTTP请求失败，状态码: ${response.status}`);
-                        // 模拟成功响应，避免页面崩溃
-                        return JSON.stringify({status: 0, message: `请求失败 (${response.status})`, data: null});
+                        throw new Error(`HTTP error! status: ${response.status}`);
                     }
                     
                     return await response.text();
                 } catch (error) {
                     console.error('HTTP请求失败:', error);
-                    // 模拟成功响应，避免页面崩溃
-                    return JSON.stringify({status: 0, message: '网络请求失败', data: null});
+                    throw error;
                 }
             }
         }
@@ -9539,6 +9595,8 @@ let selectedMatchmakerGender = localStorage.getItem('selectedMatchmakerGender') 
         
         // 导航切换
         function switchSection(targetId) {
+            // 切换页面时滚动到顶部，提升用户体验
+            window.scrollTo(0, 0);
             // 隐藏所有部分，包括反馈中心的所有子页面
             document.querySelectorAll('.card, #feedbackSection > div[id$="Page"]').forEach(element => {
                 element.classList.add('hidden');
@@ -9760,7 +9818,7 @@ let selectedMatchmakerGender = localStorage.getItem('selectedMatchmakerGender') 
                     <div class="feedback-item-content">${feedback.content}</div>
                     ${feedback.photos && feedback.photos.length > 0 ? `
                         <div class="feedback-item-photos">
-                            ${feedback.photos.map(photo => `<img src="${photo}" class="feedback-photo" alt="反馈照片" onerror="this.src='https://via.placeholder.com/300x200?text=图片加载失败'">`).join('')}
+                            ${feedback.photos.map(photo => `<img src="${photo}" class="feedback-photo" alt="反馈照片">`).join('')}
                         </div>
                     ` : ''}
                 `;
@@ -9838,7 +9896,7 @@ let selectedMatchmakerGender = localStorage.getItem('selectedMatchmakerGender') 
                 const photoItem = document.createElement('div');
                 photoItem.className = 'photo-item';
                 photoItem.innerHTML = `
-                    <img src="${photo}" alt="上传的照片" onerror="this.src='https://via.placeholder.com/200x200?text=图片加载失败'">
+                    <img src="${photo}" alt="上传的照片">
                     <div class="photo-remove" onclick="removePhoto(${index})">×</div>
                 `;
                 photoList.appendChild(photoItem);
@@ -11114,7 +11172,7 @@ function initMatchmaker() {
                             <div class="matchmaker-more-photos-grid">
                                 ${user.details.morePhotos.map(photoUrl => `
                                     <div class="matchmaker-photo-item">
-                                        <img src="${photoUrl}" alt="${user.name}的照片" onerror="this.src='https://via.placeholder.com/150?text=照片加载失败'">
+                                        <img src="${photoUrl}" alt="${user.name}的照片">
                                     </div>
                                 `).join('')}
                             </div>
@@ -12169,7 +12227,7 @@ function initMatchmaker() {
                             <div class="feedback-time">${feedback.timestamp}</div>
                         </div>
                         <div class="feedback-content">${feedback.content}</div>
-                        ${feedback.image ? `<div class="feedback-image"><img src="${feedback.image}" alt="反馈图片" onerror="this.src='https://via.placeholder.com/400x300?text=图片加载失败'">` : ''}
+                        ${feedback.image ? `<div class="feedback-image"><img src="${feedback.image}" alt="反馈图片"></div>` : ''}
                         <div class="feedback-user">发布者: ${feedback.user}</div>
                     `;
                     
@@ -12247,7 +12305,7 @@ function initMatchmaker() {
                                 <div class="feedback-detail-time">时间: ${feedback.timestamp}</div>
                             </div>
                             <div class="feedback-detail-content-text">${feedback.content}</div>
-                            ${feedback.image ? `<div class="feedback-detail-image"><img src="${feedback.image}" alt="反馈图片" onerror="this.src='https://via.placeholder.com/400x300?text=图片加载失败'">` : ''}
+                            ${feedback.image ? `<div class="feedback-detail-image"><img src="${feedback.image}" alt="反馈图片"></div>` : ''}
                         </div>
                     </div>
                 `;
@@ -12840,27 +12898,7 @@ function initMatchmaker() {
         }
         
         // 初始化
-        // 网络状态检测和处理
-        function handleNetworkStatus() {
-            if (navigator.onLine) {
-                // 网络连接已恢复
-                console.log('网络连接已恢复');
-                // 可以在这里添加网络恢复后的处理逻辑
-            } else {
-                // 网络连接已断开
-                console.warn('网络连接已断开，将使用离线模式');
-                // 可以在这里添加网络断开后的处理逻辑
-            }
-        }
-
-        // 监听网络状态变化
-        window.addEventListener('online', handleNetworkStatus);
-        window.addEventListener('offline', handleNetworkStatus);
-
         document.addEventListener('DOMContentLoaded', () => {
-            // 检查初始网络状态
-            handleNetworkStatus();
-            
             initProvinceList();
             initOrderList();
             initUI();
@@ -12956,6 +12994,15 @@ function initMatchmaker() {
         
         // 页面加载完成后启动倒计时
         document.addEventListener('DOMContentLoaded', startCountdown);
+
+        // 可折叠区块功能
+        function toggleCollapse(header) {
+            const content = header.nextElementSibling;
+            const icon = header.querySelector('.collapse-icon');
+            
+            content.classList.toggle('show');
+            icon.classList.toggle('rotate');
+        }
         
         // 测试牵线功能的函数
         
