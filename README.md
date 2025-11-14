@@ -2,7 +2,10 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="format-detection" content="telephone=no, email=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>一日情侣牵线平台 - 同城交友体验</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -44,12 +47,33 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             letter-spacing: 0.01em; /* 增加一点字间距，提高可读性 */
+            overflow-x: hidden;
+            position: relative;
         }
         
         .container {
             max-width: 100%;
             padding: 15px;
             padding-bottom: 80px;
+            overflow-x: hidden;
+        }
+        
+        .alert-message {
+            display: flex;
+            align-items: center;
+            margin-top: 15px;
+            padding: 12px 15px;
+            background-color: rgba(251, 191, 36, 0.1);
+            border-left: 4px solid var(--warning);
+            border-radius: 8px;
+            font-size: 14px;
+            color: var(--warning);
+            font-weight: 500;
+        }
+        
+        .alert-message i {
+            margin-right: 10px;
+            font-size: 16px;
         }
         
         header {
@@ -436,20 +460,44 @@
         .btn {
             display: block;
             width: 100%;
-            padding: 18px;
+            padding: 18px 24px;
             border: none;
-            border-radius: 12px;
+            border-radius: 16px;
             font-size: 1.1rem;
-            font-weight: 600;
+            font-weight: 700;
             text-align: center;
             cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.15);
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.6s;
+        }
+        
+        .btn:hover::before {
+            left: 100%;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
         }
         
         .btn:active {
-            transform: scale(0.98);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
         }
         
         .trust-badges {
@@ -466,8 +514,28 @@
             flex-direction: column;
             align-items: center;
             gap: 8px;
-            color: var(--success);
+            color: white;
             font-size: 0.85rem;
+            padding: 12px 15px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        }
+        
+        .trust-badge:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+        }
+        
+        .trust-badge i {
+            font-size: 1.5rem;
+            color: white;
+        }
+        
+        .trust-badge .badge-text {
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
         }
         
         .trust-badge i {
@@ -479,9 +547,12 @@
         }
         
         .user-reviews {
-            margin-top: 25px;
-            padding-top: 25px;
-            border-top: 1px solid rgba(37, 99, 235, 0.1);
+            margin-top: 35px;
+            padding: 25px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
         
         .review-list {
@@ -666,25 +737,37 @@
         .btn-primary {
             background: linear-gradient(135deg, #ff6b9d 0%, #c084fc 50%, #8b5cf6 100%);
             color: white;
-            font-weight: 600;
-            box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4);
+            font-weight: 700;
+            box-shadow: 0 6px 25px rgba(139, 92, 246, 0.45);
             text-shadow: 0 1px 2px rgba(0,0,0,0.3);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.25);
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #ff528f 0%, #b75cff 50%, #7c3aed 100%);
+            box-shadow: 0 12px 40px rgba(139, 92, 246, 0.6);
         }
         
         .btn-primary:active {
-            transform: scale(0.98);
-            box-shadow: 0 2px 10px rgba(255, 45, 142, 0.4);
+            background: linear-gradient(135deg, #ff4285 0%, #a855ff 50%, #6d28d9 100%);
+            box-shadow: 0 4px 20px rgba(139, 92, 246, 0.5);
         }
         
         .btn-secondary {
-            background: linear-gradient(to bottom, #f8f8f8, #f0f0f0);
+            background: linear-gradient(to bottom, #ffffff, #f8fafc);
             color: var(--text);
             margin-top: 15px;
+            border: 2px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-secondary:hover {
+            background: linear-gradient(to bottom, #f8fafc, #f1f5f9);
+            border-color: rgba(0, 0, 0, 0.15);
         }
         
         .btn-secondary:active {
-            transform: scale(0.98);
+            background: linear-gradient(to bottom, #e2e8f0, #cbd5e1);
+            border-color: rgba(0, 0, 0, 0.2);
         }
         
         .order-list {
@@ -1017,6 +1100,14 @@
         @media (max-height: 600px) {
             .bottom-nav {
                 padding: 8px 0;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                z-index: 9999;
+                background: rgba(255, 255, 255, 0.95);
+                backdrop-filter: blur(10px);
+                border-top: 1px solid rgba(0, 0, 0, 0.1);
             }
             
             .nav-item {
@@ -1034,6 +1125,7 @@
             .container {
                 padding: 10px;
                 padding-bottom: 80px;
+                overflow-x: hidden;
             }
             
             /* 优化头部样式 */
@@ -1239,10 +1331,12 @@
         
         /* 文字美化 - 按钮文字样式增强 */
         .btn {
-            font-weight: 600;
-            letter-spacing: 0.5px;
+            font-weight: 700;
+            letter-spacing: 0.7px;
             text-transform: uppercase;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
         }
         
         /* 文字美化 - 卡片内文字样式 */
@@ -2305,6 +2399,22 @@
     margin-bottom: 30px;
 }
 
+@media (max-width: 768px) {
+    .feedback-exhibition-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 18px;
+        margin-bottom: 25px;
+    }
+}
+
+@media (max-width: 480px) {
+    .feedback-exhibition-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+}
+
 .feedback-exhibition-item {
     background-color: rgba(255, 255, 255, 0.12);
     border-radius: 15px;
@@ -2326,6 +2436,18 @@
             height: 220px;
             display: flex;
             gap: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .feedback-exhibition-image-container {
+                height: 190px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .feedback-exhibition-image-container {
+                height: 170px;
+            }
         }
 
         .feedback-exhibition-image {
@@ -4020,29 +4142,39 @@
         .trust-badges {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 20px;
+            gap: 12px;
+            margin-bottom: 25px;
             justify-content: center;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
         }
         
         .trust-badges .badge {
             display: inline-flex;
             align-items: center;
-            padding: 5px 12px;
-            background-color: rgba(255, 45, 142, 0.1);
-            border-radius: 20px;
-            font-size: 0.85rem;
-            color: var(--primary);
+            padding: 8px 15px;
+            background-color: rgba(255, 107, 157, 0.12);
+            border-radius: 24px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text);
             transition: all 0.3s ease;
+            border: 1px solid rgba(255, 107, 157, 0.2);
         }
         
         .trust-badges .badge:hover {
-            background-color: rgba(255, 45, 142, 0.2);
-            transform: translateY(-2px);
+            background-color: rgba(255, 107, 157, 0.25);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 107, 157, 0.2);
+            border-color: rgba(255, 107, 157, 0.4);
         }
         
         .trust-badges .badge i {
-            margin-right: 5px;
+            margin-right: 7px;
+            color: var(--success);
+            font-size: 1.1rem;
         }
         
         /* 限时优惠样式 */
@@ -5597,6 +5729,10 @@
                         <i class="fas fa-check-circle"></i>
                         <span class="badge-text">同城真实</span>
                     </div>
+                    <div class="trust-badge gradient-bg">
+                        <i class="fas fa-users"></i>
+                        <span class="badge-text">超10万用户</span>
+                    </div>
                 </div>
             </div>
             
@@ -5631,6 +5767,82 @@
             </div>
             
             <button class="btn btn-secondary" id="orderBtn">查看我的订单</button>
+            
+            <!-- 声明和免责声明 -->
+            <div class="agreement-section">
+                <div class="agreement-title">
+                    <i class="fas fa-exclamation-circle"></i> 法律声明与免责声明
+                </div>
+                
+                <div class="agreement-content hidden" id="paymentAgreementContent">
+                    <div class="agreement-summary">
+                        <p><strong>重要提示：</strong>在使用本平台服务前，请仔细阅读以下声明内容。双击"我已阅读同意上述法律声明和免责声明"复选框即可查看完整内容。</p>
+                        <p class="agreement-preview">本平台严格遵守国家法律法规，提供婚恋交友信息服务。用户需对自身行为承担法律责任，平台仅提供信息交流服务...</p>
+                    </div>
+                    
+                    <div class="agreement-details">
+                        <p><strong>法律声明：</strong></p>
+                        <ul>
+                            <li>本平台严格遵守《中华人民共和国网络安全法》、《个人信息保护法》、《民法典》等相关法律法规</li>
+                            <li>用户需保证所提供信息的真实性和合法性，不得冒用他人身份或提供虚假信息</li>
+                            <li>禁止发布涉及色情、暴力、赌博、诈骗、传销等违法信息及不当言论</li>
+                            <li>用户需对自身行为承担全部法律责任，包括但不限于民事、行政、刑事责任</li>
+                            <li>平台有权对违规内容进行删除，对违规用户进行警告、限制功能或封禁处理</li>
+                            <li>用户应妥善保管账号信息，不得转让、出租或出借账号给他人使用</li>
+                            <li>禁止利用平台进行商业推广、广告宣传等未经授权的商业活动</li>
+                            <li>用户应遵守平台社区规范，维护良好的交流环境</li>
+                        </ul>
+                        
+                        <p><strong>免责声明：</strong></p>
+                        <ul>
+                            <li>本平台仅提供信息交流服务，不承担用户间纠纷责任，用户应自行协商解决</li>
+                            <li>用户需自行判断信息真实性，平台不保证用户发布信息的准确性、完整性和时效性</li>
+                            <li>因用户行为造成的任何损失，包括但不限于财产损失、人身伤害等，平台概不负责</li>
+                            <li>平台有权根据法律法规变化或业务需要调整服务内容，恕不另行通知</li>
+                            <li>因不可抗力、网络故障、黑客攻击等导致的服务中断，平台不承担责任</li>
+                            <li>用户应遵守社会公德，文明交流，不得进行骚扰、诽谤等不当行为</li>
+                            <li>平台不保证服务的连续性、及时性、安全性，用户需自行承担使用风险</li>
+                            <li>用户应自行备份重要信息，平台不承担数据丢失责任</li>
+                        </ul>
+                        
+                        <p><strong>隐私保护：</strong></p>
+                        <ul>
+                            <li>平台将依法保护用户个人信息，未经用户同意不得向第三方泄露</li>
+                            <li>用户应保护个人隐私，不要轻易透露身份证号、银行卡号等敏感信息</li>
+                            <li>平台有权依法向司法机关提供用户信息以配合调查</li>
+                            <li>用户有权查询、更正、删除个人信息的权利</li>
+                            <li>平台将采取合理措施保护用户信息安全，但无法保证绝对安全</li>
+                        </ul>
+                        
+                        <p><strong>安全提示：</strong></p>
+                        <ul>
+                            <li>建议用户在线下见面时选择公共场所，注意人身和财产安全</li>
+                            <li>如遇不当内容或行为，请及时通过举报功能反馈，平台将及时处理</li>
+                            <li>如发现违法犯罪行为，请立即向公安机关举报</li>
+                            <li>用户应理性对待情感关系，谨慎处理个人隐私</li>
+                            <li>禁止进行金钱交易，谨防网络诈骗</li>
+                        </ul>
+                        
+                        <p><strong>服务条款：</strong></p>
+                        <ul>
+                            <li>用户注册即表示同意本平台的服务条款和隐私政策</li>
+                            <li>平台有权收集和使用用户信息以提供更好的服务，具体详见隐私政策</li>
+                            <li>VIP服务购买后不支持退款，请谨慎选择</li>
+                            <li>平台保留最终解释权和修改权</li>
+                            <li>用户应遵守平台使用规则，不得恶意攻击系统或干扰正常运营</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="agreement-checkbox required">
+                    <input type="checkbox" id="paymentAgreementCheckbox">
+                    <label for="paymentAgreementCheckbox">我已阅读同意上述法律声明和免责声明</label>
+                </div>
+                
+                <div class="agreement-error" id="paymentAgreementError">
+                    <i class="fas fa-exclamation-triangle"></i> 请先阅读并同意法律声明和免责声明
+                </div>
+            </div>
             
             <!-- 安全保障说明 -->
             <div class="security-info">
@@ -6194,6 +6406,7 @@
                     <span class="badge"><i class="fas fa-user-check"></i> 人工审核</span>
                     <span class="badge"><i class="fas fa-thumbs-up"></i> 98.5%好评</span>
                     <span class="badge"><i class="fas fa-lock"></i> 安全支付</span>
+                    <span class="badge"><i class="fas fa-heart"></i> 成功匹配3万+</span>
                 </div>
                 
                 <!-- 限时优惠提示 -->
@@ -6298,6 +6511,82 @@
                         <span id="matchmakerWxpayBtnText">微信支付 ¥199.99</span>
                     </button>
                 </div>
+                
+                <!-- 声明和免责声明 -->
+                <div class="agreement-section">
+                    <div class="agreement-title">
+                        <i class="fas fa-exclamation-circle"></i> 法律声明与免责声明
+                    </div>
+                    
+                    <div class="agreement-content hidden" id="matchmakerPaymentAgreementContent">
+                        <div class="agreement-summary">
+                            <p><strong>重要提示：</strong>在使用本平台服务前，请仔细阅读以下声明内容。双击"我已阅读同意上述法律声明和免责声明"复选框即可查看完整内容。</p>
+                            <p class="agreement-preview">本平台严格遵守国家法律法规，提供婚恋交友信息服务。用户需对自身行为承担法律责任，平台仅提供信息交流服务...</p>
+                        </div>
+                        
+                        <div class="agreement-details">
+                            <p><strong>法律声明：</strong></p>
+                            <ul>
+                                <li>本平台严格遵守《中华人民共和国网络安全法》、《个人信息保护法》、《民法典》等相关法律法规</li>
+                                <li>用户需保证所提供信息的真实性和合法性，不得冒用他人身份或提供虚假信息</li>
+                                <li>禁止发布涉及色情、暴力、赌博、诈骗、传销等违法信息及不当言论</li>
+                                <li>用户需对自身行为承担全部法律责任，包括但不限于民事、行政、刑事责任</li>
+                                <li>平台有权对违规内容进行删除，对违规用户进行警告、限制功能或封禁处理</li>
+                                <li>用户应妥善保管账号信息，不得转让、出租或出借账号给他人使用</li>
+                                <li>禁止利用平台进行商业推广、广告宣传等未经授权的商业活动</li>
+                                <li>用户应遵守平台社区规范，维护良好的交流环境</li>
+                            </ul>
+                            
+                            <p><strong>免责声明：</strong></p>
+                            <ul>
+                                <li>本平台仅提供信息交流服务，不承担用户间纠纷责任，用户应自行协商解决</li>
+                                <li>用户需自行判断信息真实性，平台不保证用户发布信息的准确性、完整性和时效性</li>
+                                <li>因用户行为造成的任何损失，包括但不限于财产损失、人身伤害等，平台概不负责</li>
+                                <li>平台有权根据法律法规变化或业务需要调整服务内容，恕不另行通知</li>
+                                <li>因不可抗力、网络故障、黑客攻击等导致的服务中断，平台不承担责任</li>
+                                <li>用户应遵守社会公德，文明交流，不得进行骚扰、诽谤等不当行为</li>
+                                <li>平台不保证服务的连续性、及时性、安全性，用户需自行承担使用风险</li>
+                                <li>用户应自行备份重要信息，平台不承担数据丢失责任</li>
+                            </ul>
+                            
+                            <p><strong>隐私保护：</strong></p>
+                            <ul>
+                                <li>平台将依法保护用户个人信息，未经用户同意不得向第三方泄露</li>
+                                <li>用户应保护个人隐私，不要轻易透露身份证号、银行卡号等敏感信息</li>
+                                <li>平台有权依法向司法机关提供用户信息以配合调查</li>
+                                <li>用户有权查询、更正、删除个人信息的权利</li>
+                                <li>平台将采取合理措施保护用户信息安全，但无法保证绝对安全</li>
+                            </ul>
+                            
+                            <p><strong>安全提示：</strong></p>
+                            <ul>
+                                <li>建议用户在线下见面时选择公共场所，注意人身和财产安全</li>
+                                <li>如遇不当内容或行为，请及时通过举报功能反馈，平台将及时处理</li>
+                                <li>如发现违法犯罪行为，请立即向公安机关举报</li>
+                                <li>用户应理性对待情感关系，谨慎处理个人隐私</li>
+                                <li>禁止进行金钱交易，谨防网络诈骗</li>
+                            </ul>
+                            
+                            <p><strong>服务条款：</strong></p>
+                            <ul>
+                                <li>用户注册即表示同意本平台的服务条款和隐私政策</li>
+                                <li>平台有权收集和使用用户信息以提供更好的服务，具体详见隐私政策</li>
+                                <li>VIP服务购买后不支持退款，请谨慎选择</li>
+                                <li>平台保留最终解释权和修改权</li>
+                                <li>用户应遵守平台使用规则，不得恶意攻击系统或干扰正常运营</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="agreement-checkbox required">
+                        <input type="checkbox" id="matchmakerPaymentAgreementCheckbox">
+                        <label for="matchmakerPaymentAgreementCheckbox">我已阅读同意上述法律声明和免责声明</label>
+                    </div>
+                    
+                    <div class="agreement-error" id="matchmakerPaymentAgreementError">
+                        <i class="fas fa-exclamation-triangle"></i> 请先阅读并同意法律声明和免责声明
+                    </div>
+                </div>
             </div>
             
             <!-- 城市选择区域 - 优化折叠面板 -->
@@ -6339,6 +6628,10 @@
                     <div class="detail-item">
                         <span class="detail-label">订单号：</span>
                         <span class="detail-value" id="redirectOrderNumber">WXGROUP20241234567890</span>
+                    </div>
+                    <div class="detail-item alert-message">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span>提示：如果支付成功后未开通对应的VIP功能，请及时联系客服</span>
                     </div>
                 </div>
                 <div class="countdown-area">
@@ -6586,302 +6879,25 @@
 
     <script>
         // 彩虹易支付SDK类
-        class EpayCore {
-            constructor(config) {
-                this.pid = config.pid;
-                this.key = config.key;
-                this.submitUrl = config.apiUrl + 'submit.php'; // 页面跳转支付使用submit.php
-                this.mapiUrl = config.apiUrl + 'mapi.php'; // API调用使用mapi.php
-                this.apiUrl = config.apiUrl + 'api.php';
-                this.signType = 'MD5';
-            }
-
-            // HTML转义函数，防止XSS攻击
-            escapeHtml(text) {
-                const div = document.createElement('div');
-                div.textContent = text;
-                return div.innerHTML;
-            }
-
-            // 页面跳转支付方法已移除，统一使用submitPayment方法
-
-            // 发起支付（获取链接）
-            getPayLink(param) {
-                const params = this.buildRequestParam(param);
-                // 使用传统的URL参数构建方式，与PHP后端保持一致
-                // 注意：不要对参数值进行过滤，这会破坏签名
-                const queryString = Object.keys(params)
-                    .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(String(params[key])))
-                    .join('&');
-                const url = this.submitUrl + '?' + queryString;
-                
-                console.log('=== 支付链接生成信息 ===');
-                console.log('原始参数:', param);
-                console.log('带签名的参数:', params);
-                console.log('生成的支付链接:', url);
-                console.log('=== 支付链接生成结束 ===');
-                
-                return url;
-            }
-
-            // 发起支付（页面跳转）
-            submitPayment(param) {
-                // 检查用户是否已同意条款
-                if (!localStorage.getItem('userAgreedToTerms')) {
-                    alert('请先阅读并同意平台服务条款和双方同意原则');
-                    showLegalTerms();
-                    return;
-                }
-                
-                // 创建隐藏的form表单进行支付跳转，确保支付平台正确识别支付方式
-                const params = this.buildRequestParam(param);
-                const form = document.createElement('form');
-                form.method = 'POST';
-                form.action = this.submitUrl;
-                form.style.display = 'none';
-                
-                // 添加所有参数到表单
-                for (const key in params) {
-                    if (params.hasOwnProperty(key)) {
-                        const input = document.createElement('input');
-                        input.type = 'hidden';
-                        input.name = key;
-                        // 注意：不要对参数值进行过滤，这会破坏签名
-                        // 签名是基于原始参数计算的，过滤后会导致签名不匹配
-                        input.value = params[key];
-                        form.appendChild(input);
-                    }
-                }
-                
-                console.log('=== 支付表单提交信息 ===');
-                console.log('原始参数:', param);
-                console.log('带签名的参数:', params);
-                console.log('表单提交地址:', this.submitUrl);
-                console.log('=== 支付表单提交结束 ===');
-                
-                // 将表单添加到页面并自动提交
-                document.body.appendChild(form);
-                form.submit();
-            }
-
-            // 异步回调验证（已修改为跳过签名验证）
-            verifyNotify(getParams) {
-                if (!getParams || Object.keys(getParams).length === 0) return false;
-                
-                // 跳过签名验证，直接返回true
-                // const sign = this.getSign(getParams);
-                // return sign === getParams.sign;
-                return true;
-            }
-
-            // 以上未使用的验证和订单管理功能已删除，只保留核心支付功能
-
-            // 私有方法
-            buildRequestParam(param) {
-                // 创建参数副本，不进行严格的参数名过滤
-                // 注意：过滤会破坏签名，服务器端应该有自己的验证机制
-                const safeParam = {};
-                
-                // 复制所有非空参数，特别处理金额参数确保两位小数
-                for (const key in param) {
-                    if (param.hasOwnProperty(key) && 
-                        param[key] !== '' && 
-                        param[key] !== undefined && 
-                        param[key] !== null && 
-                        key !== 'sign' && 
-                        key !== 'sign_type') {
-                        let value = param[key];
-                        // 确保金额参数为两位小数的字符串
-                        if ((key === 'money' || key === 'amount') && !isNaN(value)) {
-                            value = parseFloat(value).toFixed(2);
-                        }
-                        safeParam[key] = String(value);
-                    }
-                }
-                
-                // 确保pid参数被添加到支付请求中
-                if (!safeParam.pid) {
-                    safeParam.pid = this.pid;
-                }
-                
-                // 页面跳转支付不需要act参数，API调用才需要
-                
-                console.log('=== 参数构建信息 ===');
-                console.log('原始输入参数:', param);
-                console.log('处理后的参数:', safeParam);
-                console.log('使用的PID:', this.pid);
-                
-                const mysign = this.getSign(safeParam);
-                safeParam.sign = mysign;
-                safeParam.sign_type = this.signType;
-                
-                console.log('生成的签名:', mysign);
-                console.log('最终发送的参数:', safeParam);
-                console.log('=== 参数构建结束 ===');
-                
-                return safeParam;
-            }
-
-            // 计算签名
-            getSign(param) {
-                // 创建参数副本，避免修改原始参数
-                const paramCopy = JSON.parse(JSON.stringify(param));
-                
-                // 移除sign和sign_type参数（如果存在）
-                delete paramCopy.sign;
-                delete paramCopy.sign_type;
-                
-                // 按照参数名ASCII码从小到大排序，完全模拟PHP的ksort()函数
-                const sortedKeys = Object.keys(paramCopy).sort(function(a, b) {
-                    // 严格按照ASCII码顺序排序，确保与PHP的ksort()完全一致
-                    for (let i = 0; i < Math.min(a.length, b.length); i++) {
-                        if (a.charCodeAt(i) !== b.charCodeAt(i)) {
-                            return a.charCodeAt(i) - b.charCodeAt(i);
-                        }
-                    }
-                    return a.length - b.length;
-                });
-                
-                // 构建签名字符串，使用数组join避免多余的&符号
-                const signParts = [];
-                sortedKeys.forEach(paramKey => {
-                    let value = paramCopy[paramKey];
-                    
-                    // 处理空值和特殊情况
-                    if (value === undefined || value === null || value === '') {
-                        return; // 跳过空值
-                    }
-                    
-                    // 确保参数值是字符串类型
-                    let strValue = String(value);
-                    
-                    // 特别处理金额参数，确保为两位小数
-                    if ((paramKey === 'money' || paramKey === 'amount') && !isNaN(strValue)) {
-                        strValue = parseFloat(strValue).toFixed(2);
-                    }
-                    
-                    // 处理特殊字符，确保与PHP的处理方式一致
-                    // PHP在处理字符串时会保留原始字符，所以我们也不进行任何转义
-                    signParts.push(paramKey + '=' + strValue);
-                });
-                
-                // 正确的key拼接方式：参数字符串 + &key=密钥
-                const signStr = signParts.length > 0 ? signParts.join('&') + '&key=' + this.key : 'key=' + this.key;
-                
-                // 输出详细调试信息（生产环境应关闭）
-                console.log('=== 签名生成调试信息 ===');
-                console.log('原始参数:', param);
-                console.log('处理后的参数:', paramCopy);
-                console.log('严格排序后的参数键:', sortedKeys);
-                console.log('最终签名字符串:', signStr);
-                console.log('使用的密钥:', this.key);
-                
-                // 注意：md5方法内部已经会进行UTF-8编码，这里不需要再编码
-                // 使用MD5生成签名
-                const sign = this.md5(signStr);
-                // 彩虹易支付要求签名必须是大写
-                const upperSign = sign.toUpperCase();
-                console.log('生成的MD5签名:', sign);
-                console.log('转换为大写后的签名:', upperSign);
-                console.log('签名类型:', this.signType);
-                console.log('=== 签名生成结束 ===');
-                
-                return upperSign;
-            }
-
-            // UTF-8编码
-            Utf8Encode(string) {
-                string = string.replace(/\r\n/g, "\n");
-                let utftext = "";
-                for (let n = 0; n < string.length; n++) {
-                    const c = string.charCodeAt(n);
-                    if (c < 128) {
-                        utftext += String.fromCharCode(c);
-                    } else if ((c > 127) && (c < 2048)) {
-                        utftext += String.fromCharCode((c >> 6) | 192);
-                        utftext += String.fromCharCode((c & 63) | 128);
-                    } else {
-                        utftext += String.fromCharCode((c >> 12) | 224);
-                        utftext += String.fromCharCode(((c >> 6) & 63) | 128);
-                        utftext += String.fromCharCode((c & 63) | 128);
-                    }
-                }
-                return utftext;
-            }
-
-            // HTTP请求
-            async getHttpResponse(url, postData = false, timeout = 10000) {
 
 
-                try {
-                    const controller = new AbortController();
-                    const timeoutId = setTimeout(() => controller.abort(), timeout);
-                    
-                    const options = {
-                        method: postData ? 'POST' : 'GET',
-                        headers: {
-                            'Accept': '*/*',
-                            'Accept-Language': 'zh-CN,zh;q=0.8',
-                            'Connection': 'close',
-                            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-                            'Referer': window.location.origin + window.location.pathname
-                        },
-                        signal: controller.signal,
-                        mode: 'cors',
-                        credentials: 'omit'
-                    };
-                    
-                    if (postData) {
-                        options.headers['Content-Type'] = 'application/x-www-form-urlencoded';
-                        // 注意：不要对POST数据进行过滤，这会破坏签名
-                        // 签名是基于原始参数计算的，过滤后会导致签名不匹配
-                        options.body = postData;
-                    }
-                    
-                    console.log('发起HTTP请求:', {
-                        url: url,
-                        method: options.method,
-                        headers: options.headers,
-                        body: options.body
-                    });
-                    
-                    const response = await fetch(url, options);
-                    clearTimeout(timeoutId);
-                    
-                    console.log('HTTP请求响应:', {
-                        status: response.status,
-                        statusText: response.statusText,
-                        headers: Object.fromEntries(response.headers)
-                    });
-                    
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}, text: ${response.statusText}`);
-                    }
-                    
-                    const responseText = await response.text();
-                    console.log('HTTP请求响应内容:', responseText);
-                    return responseText;
-                } catch (error) {
-                    console.error('HTTP请求失败:', {
-                        error: error.message,
-                        stack: error.stack,
-                        type: error.name
-                    });
-                    throw error;
-                }
-            }
-        }
-
-        // 支付API配置（使用第三方易支付平台）
-        // 支付配置（统一配置，用于所有支付类型）
         const PAYMENT_CONFIG = {
             apiUrl: 'https://2a.mazhifupay.com/',
             pid: '131517535',
             key: '6K1yVk6M16BK72Ms2ZB8wEyM020bZxK2',
-            notify_url: window.location.protocol + '//' + window.location.host + '/api/notify',
-            return_url: window.location.protocol + '//' + window.location.host + '/api/return',
-            // 支付金额通过参数传入，不再固定配置
-            // amount: '39.99'
+            amount: '39.99',
+            notify_url: '/api/notify',
+            return_url: '/api/return'
+        };
+        
+        // 红娘牵线支付配置
+        const MATCHMAKER_PAYMENT_CONFIG = {
+            apiUrl: 'https://2a.mazhifupay.com/',
+            pid: '131517535',
+            key: '6K1yVk6M16BK72Ms2ZB8wEyM020bZxK2',
+            amount: '299.99',
+            notify_url: '/api/notify',
+            return_url: '/api/return'
         };
         
         // 城市数据（包含全国各市级城市地区）
@@ -8525,44 +8541,787 @@ let selectedMatchmakerGender = localStorage.getItem('selectedMatchmakerGender') 
         }
         
         // 初始化彩虹易支付SDK
+        // EpayCore类定义
+        class EpayCore {
+            constructor(config) {
+                this.pid = config.pid;
+                this.key = config.key;
+                this.submitUrl = config.apiUrl + 'submit.php';
+                this.mapiUrl = config.apiUrl + 'mapi.php';
+                this.apiUrl = config.apiUrl + 'api.php';
+                this.signType = 'MD5';
+                
+                // 调试信息
+                console.log('EpayCore配置:', {
+                    pid: this.pid,
+                    key: this.key,
+                    submitUrl: this.submitUrl,
+                    mapiUrl: this.mapiUrl,
+                    apiUrl: this.apiUrl
+                });
+            }
+
+            // 发起支付（页面跳转）
+            pagePay(param, button = '正在跳转') {
+                const params = this.buildRequestParam(param);
+                
+                let html = '<form id="dopay" action="' + this.submitUrl + '" method="post">';
+                for (const key in params) {
+                    if (params.hasOwnProperty(key)) {
+                        html += '<input type="hidden" name="' + key + '" value="' + params[key] + '"/>';
+                    }
+                }
+                html += '<input type="submit" value="' + button + '"><\/form><script>document.getElementById("dopay").submit();<\/script>';
+                
+                return html;
+            }
+
+            // 发起支付（获取链接）
+            getPayLink(param) {
+                const params = this.buildRequestParam(param);
+                // 使用传统的URL参数构建方式，与PHP后端保持一致
+                const queryString = Object.keys(params)
+                    .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(params[key]))
+                    .join('&');
+                const url = this.submitUrl + '?' + queryString;
+                return url;
+            }
+
+            // 发起支付（页面跳转）
+            submitPayment(param) {
+                // 创建隐藏的form表单进行支付跳转，确保支付平台正确识别支付方式
+                const params = this.buildRequestParam(param);
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = this.submitUrl;
+                form.style.display = 'none';
+                
+                // 添加所有参数到表单
+                for (const key in params) {
+                    if (params.hasOwnProperty(key)) {
+                        const input = document.createElement('input');
+                        input.type = 'hidden';
+                        input.name = key;
+                        input.value = params[key];
+                        form.appendChild(input);
+                    }
+                }
+                
+                // 将表单添加到页面并自动提交
+                document.body.appendChild(form);
+                form.submit();
+            }
+
+            // 异步回调验证
+            verifyNotify(getParams) {
+                if (!getParams || Object.keys(getParams).length === 0) return false;
+                
+                const sign = this.getSign(getParams);
+                return sign === getParams.sign;
+            }
+
+            // 同步回调验证
+            verifyReturn(getParams) {
+                if (!getParams || Object.keys(getParams).length === 0) return false;
+                
+                const sign = this.getSign(getParams);
+                return sign === getParams.sign;
+            }
+
+            // 查询订单支付状态
+            async orderStatus(tradeNo) {
+                const result = await this.queryOrder(tradeNo);
+                return result.status === 1;
+            }
+
+            // 查询订单
+            async queryOrder(tradeNo) {
+                const url = this.apiUrl + '?act=order&pid=' + this.pid + '&key=' + this.key + '&trade_no=' + tradeNo;
+                const response = await this.getHttpResponse(url);
+                return JSON.parse(response);
+            }
+
+            // 订单退款
+            async refund(tradeNo, money) {
+                const url = this.apiUrl + '?act=refund';
+                const postData = 'pid=' + this.pid + '&key=' + this.key + '&trade_no=' + tradeNo + '&money=' + money;
+                const response = await this.getHttpResponse(url, postData);
+                return JSON.parse(response);
+            }
+
+            // 私有方法
+            buildRequestParam(param) {
+                // 确保pid参数被添加到支付请求中
+                if (!param.pid) {
+                    param.pid = this.pid;
+                }
+                const mysign = this.getSign(param);
+                param.sign = mysign;
+                param.sign_type = this.signType;
+                return param;
+            }
+
+            // 计算签名
+            getSign(param) {
+                const sortedParams = Object.keys(param)
+                    .sort()
+                    .reduce((result, key) => {
+                        if (key !== "sign" && key !== "sign_type" && param[key] !== '') {
+                            result[key] = param[key];
+                        }
+                        return result;
+                    }, {});
+                
+                let signStr = '';
+                for (const key in sortedParams) {
+                    signStr += key + '=' + sortedParams[key] + '&';
+                }
+                signStr = signStr.slice(0, -1); // 去掉最后一个&
+                signStr += this.key;
+                
+                // 确保在MD5之前进行UTF-8编码
+                signStr = this.Utf8Encode(signStr);
+                
+                return this.md5(signStr);
+            }
+
+            // MD5加密函数
+            md5(string) {
+                function rotateLeft(lValue, iShiftBits) {
+                    return (lValue << iShiftBits) | (lValue >>> (32 - iShiftBits));
+                }
+
+                function addUnsigned(lX, lY) {
+                    let lX4, lY4, lX8, lY8, lResult;
+                    lX8 = (lX & 0x80000000);
+                    lY8 = (lY & 0x80000000);
+                    lX4 = (lX & 0x40000000);
+                    lY4 = (lY & 0x40000000);
+                    lResult = (lX & 0x3FFFFFFF) + (lY & 0x3FFFFFFF);
+                    if (lX4 & lY4) {
+                        return (lResult ^ 0x80000000 ^ lX8 ^ lY8);
+                    }
+                    if (lX4 | lY4) {
+                        if (lResult & 0x40000000) {
+                            return (lResult ^ 0xC0000000 ^ lX8 ^ lY8);
+                        } else {
+                            return (lResult ^ 0x40000000 ^ lX8 ^ lY8);
+                        }
+                    } else {
+                        return (lResult ^ lX8 ^ lY8);
+                    }
+                }
+
+                function F(x, y, z) { return (x & y) | ((~x) & z); }
+                function G(x, y, z) { return (x & z) | (y & (~z)); }
+                function H(x, y, z) { return (x ^ y ^ z); }
+                function I(x, y, z) { return (y ^ (x | (~z))); }
+
+                function FF(a, b, c, d, x, s, ac) {
+                    a = addUnsigned(a, addUnsigned(addUnsigned(F(b, c, d), x), ac));
+                    return addUnsigned(rotateLeft(a, s), b);
+                }
+
+                function GG(a, b, c, d, x, s, ac) {
+                    a = addUnsigned(a, addUnsigned(addUnsigned(G(b, c, d), x), ac));
+                    return addUnsigned(rotateLeft(a, s), b);
+                }
+
+                function HH(a, b, c, d, x, s, ac) {
+                    a = addUnsigned(a, addUnsigned(addUnsigned(H(b, c, d), x), ac));
+                    return addUnsigned(rotateLeft(a, s), b);
+                }
+
+                function II(a, b, c, d, x, s, ac) {
+                    a = addUnsigned(a, addUnsigned(addUnsigned(I(b, c, d), x), ac));
+                    return addUnsigned(rotateLeft(a, s), b);
+                }
+
+                function convertToWordArray(string) {
+                    let lWordCount;
+                    const lMessageLength = string.length;
+                    const lNumberOfWordsTemp1 = lMessageLength + 8;
+                    const lNumberOfWordsTemp2 = (lNumberOfWordsTemp1 - (lNumberOfWordsTemp1 % 64)) / 64;
+                    const lNumberOfWords = (lNumberOfWordsTemp2 + 1) * 16;
+                    const lWordArray = Array(lNumberOfWords - 1);
+                    let lBytePosition = 0;
+                    let lByteCount = 0;
+                    while (lByteCount < lMessageLength) {
+                        lWordCount = (lByteCount - (lByteCount % 4)) / 4;
+                        lBytePosition = (lByteCount % 4) * 8;
+                        lWordArray[lWordCount] = (lWordArray[lWordCount] | (string.charCodeAt(lByteCount) << lBytePosition));
+                        lByteCount++;
+                    }
+                    lWordCount = (lByteCount - (lByteCount % 4)) / 4;
+                    lBytePosition = (lByteCount % 4) * 8;
+                    lWordArray[lWordCount] = lWordArray[lWordCount] | (0x80 << lBytePosition);
+                    lWordArray[lNumberOfWords - 2] = lMessageLength << 3;
+                    lWordArray[lNumberOfWords - 1] = lMessageLength >>> 29;
+                    return lWordArray;
+                }
+
+                function wordToHex(lValue) {
+                    let WordToHexValue = "", WordToHexValueTemp = "", lByte, lCount;
+                    for (lCount = 0; lCount <= 3; lCount++) {
+                        lByte = (lValue >>> (lCount * 8)) & 255;
+                        WordToHexValueTemp = "0" + lByte.toString(16);
+                        WordToHexValue = WordToHexValue + WordToHexValueTemp.substr(WordToHexValueTemp.length - 2, 2);
+                    }
+                    return WordToHexValue;
+                }
+
+                let x = [];
+                let k, AA, BB, CC, DD, a, b, c, d;
+                const S11 = 7, S12 = 12, S13 = 17, S14 = 22;
+                const S21 = 5, S22 = 9, S23 = 14, S24 = 20;
+                const S31 = 4, S32 = 11, S33 = 16, S34 = 23;
+                const S41 = 6, S42 = 10, S43 = 15, S44 = 21;
+
+                // UTF-8编码函数
+                function Utf8Encode(string) {
+                    string = string.replace(/\r\n/g, "\n");
+                    let utftext = "";
+                    
+                    for (let n = 0; n < string.length; n++) {
+                        const c = string.charCodeAt(n);
+                        
+                        if (c < 128) {
+                            utftext += String.fromCharCode(c);
+                        } else if ((c > 127) && (c < 2048)) {
+                            utftext += String.fromCharCode((c >> 6) | 192);
+                            utftext += String.fromCharCode((c & 63) | 128);
+                        } else {
+                            utftext += String.fromCharCode((c >> 12) | 224);
+                            utftext += String.fromCharCode(((c >> 6) & 63) | 128);
+                            utftext += String.fromCharCode((c & 63) | 128);
+                        }
+                    }
+                    
+                    return utftext;
+                }
+                
+                x = convertToWordArray(string);
+
+                a = 0x67452301; b = 0xEFCDAB89; c = 0x98BADCFE; d = 0x10325476;
+
+                for (k = 0; k < x.length; k += 16) {
+                    AA = a; BB = b; CC = c; DD = d;
+                    a = FF(a, b, c, d, x[k + 0], S11, 0xD76AA478);
+                    d = FF(d, a, b, c, x[k + 1], S12, 0xE8C7B756);
+                    c = FF(c, d, a, b, x[k + 2], S13, 0x242070DB);
+                    b = FF(b, c, d, a, x[k + 3], S14, 0xC1BDCEEE);
+                    a = FF(a, b, c, d, x[k + 4], S11, 0xF57C0FAF);
+                    d = FF(d, a, b, c, x[k + 5], S12, 0x4787C62A);
+                    c = FF(c, d, a, b, x[k + 6], S13, 0xA8304613);
+                    b = FF(b, c, d, a, x[k + 7], S14, 0xFD469501);
+                    a = FF(a, b, c, d, x[k + 8], S11, 0x698098D8);
+                    d = FF(d, a, b, c, x[k + 9], S12, 0x8B44F7AF);
+                    c = FF(c, d, a, b, x[k + 10], S13, 0xFFFF5BB1);
+                    b = FF(b, c, d, a, x[k + 11], S14, 0x895CD7BE);
+                    a = FF(a, b, c, d, x[k + 12], S11, 0x6B901122);
+                    d = FF(d, a, b, c, x[k + 13], S12, 0xFD987193);
+                    c = FF(c, d, a, b, x[k + 14], S13, 0xA679438E);
+                    b = FF(b, c, d, a, x[k + 15], S14, 0x49B40821);
+                    a = GG(a, b, c, d, x[k + 1], S21, 0xF61E2562);
+                    d = GG(d, a, b, c, x[k + 6], S22, 0xC040B340);
+                    c = GG(c, d, a, b, x[k + 11], S23, 0x265E5A51);
+                    b = GG(b, c, d, a, x[k + 0], S24, 0xE9B6C7AA);
+                    a = GG(a, b, c, d, x[k + 5], S21, 0xD62F105D);
+                    d = GG(d, a, b, c, x[k + 10], S22, 0x2441453);
+                    c = GG(c, d, a, b, x[k + 15], S23, 0xD8A1E681);
+                    b = GG(b, c, d, a, x[k + 4], S24, 0xE7D3FBC8);
+                    a = GG(a, b, c, d, x[k + 9], S21, 0x21E1CDE6);
+                    d = GG(d, a, b, c, x[k + 14], S22, 0xC33707D6);
+                    c = GG(c, d, a, b, x[k + 3], S23, 0xF4D50D87);
+                    b = GG(b, c, d, a, x[k + 8], S24, 0x455A14ED);
+                    a = GG(a, b, c, d, x[k + 13], S21, 0xA9E3E905);
+                    d = GG(d, a, b, c, x[k + 2], S22, 0xFCEFA3F8);
+                    c = GG(c, d, a, b, x[k + 7], S23, 0x676F02D9);
+                    b = GG(b, c, d, a, x[k + 12], S24, 0x8D2A4C8A);
+                    a = HH(a, b, c, d, x[k + 5], S31, 0xFFFA3942);
+                    d = HH(d, a, b, c, x[k + 8], S32, 0x8771F681);
+                    c = HH(c, d, a, b, x[k + 11], S33, 0x6D9D6122);
+                    b = HH(b, c, d, a, x[k + 14], S34, 0xFDE5380C);
+                    a = HH(a, b, c, d, x[k + 1], S31, 0xA4BEEA44);
+                    d = HH(d, a, b, c, x[k + 4], S32, 0x4BDECFA9);
+                    c = HH(c, d, a, b, x[k + 7], S33, 0xF6BB4B60);
+                    b = HH(b, c, d, a, x[k + 10], S34, 0xBEBFBC70);
+                    a = HH(a, b, c, d, x[k + 13], S31, 0x289B7EC6);
+                    d = HH(d, a, b, c, x[k + 0], S32, 0xEAA127FA);
+                    c = HH(c, d, a, b, x[k + 3], S33, 0xD4EF3085);
+                    b = HH(b, c, d, a, x[k + 6], S34, 0x4881D05);
+                    a = HH(a, b, c, d, x[k + 9], S31, 0xD9D4D039);
+                    d = HH(d, a, b, c, x[k + 12], S32, 0xE6DB99E5);
+                    c = HH(c, d, a, b, x[k + 15], S33, 0x1FA27CF8);
+                    b = HH(b, c, d, a, x[k + 2], S34, 0xC4AC5665);
+                    a = II(a, b, c, d, x[k + 0], S41, 0xF4292244);
+                    d = II(d, a, b, c, x[k + 7], S42, 0x432AFF97);
+                    c = II(c, d, a, b, x[k + 14], S43, 0xAB9423A7);
+                    b = II(b, c, d, a, x[k + 5], S44, 0xFC93A039);
+                    a = II(a, b, c, d, x[k + 12], S41, 0x655B59C3);
+                    d = II(d, a, b, c, x[k + 3], S42, 0x8F0CCC92);
+                    c = II(c, d, a, b, x[k + 10], S43, 0xFFEFF47D);
+                    b = II(b, c, d, a, x[k + 1], S44, 0x85845DD1);
+                    a = II(a, b, c, d, x[k + 8], S41, 0x6FA87E4F);
+                    d = II(d, a, b, c, x[k + 15], S42, 0xFE2CE6E0);
+                    c = II(c, d, a, b, x[k + 6], S43, 0xA3014314);
+                    b = II(b, c, d, a, x[k + 13], S44, 0x4E0811A1);
+                    a = II(a, b, c, d, x[k + 4], S41, 0xF7537E82);
+                    d = II(d, a, b, c, x[k + 11], S42, 0xBD3AF235);
+                    c = II(c, d, a, b, x[k + 2], S43, 0x2AD7D2BB);
+                    b = II(b, c, d, a, x[k + 9], S44, 0xEB86D391);
+                    a = addUnsigned(a, AA);
+                    b = addUnsigned(b, BB);
+                    c = addUnsigned(c, CC);
+                    d = addUnsigned(d, DD);
+                }
+                const temp = wordToHex(a) + wordToHex(b) + wordToHex(c) + wordToHex(d);
+                return temp.toLowerCase();
+            }
+
+            // UTF-8编码
+            Utf8Encode(string) {
+                string = string.replace(/\r\n/g, "\n");
+                let utftext = "";
+                for (let n = 0; n < string.length; n++) {
+                    const c = string.charCodeAt(n);
+                    if (c < 128) {
+                        utftext += String.fromCharCode(c);
+                    } else if ((c > 127) && (c < 2048)) {
+                        utftext += String.fromCharCode((c >> 6) | 192);
+                        utftext += String.fromCharCode((c & 63) | 128);
+                    } else {
+                        utftext += String.fromCharCode((c >> 12) | 224);
+                        utftext += String.fromCharCode(((c >> 6) & 63) | 128);
+                        utftext += String.fromCharCode((c & 63) | 128);
+                    }
+                }
+                return utftext;
+            }
+
+            // HTTP请求
+            async getHttpResponse(url, postData = false, timeout = 10000) {
+                try {
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), timeout);
+                    
+                    const options = {
+                        method: postData ? 'POST' : 'GET',
+                        headers: {
+                            'Accept': '*/*',
+                            'Accept-Language': 'zh-CN,zh;q=0.8',
+                            'Connection': 'close'
+                        },
+                        signal: controller.signal
+                    };
+                    
+                    if (postData) {
+                        options.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+                        options.body = postData;
+                    }
+                    
+                    const response = await fetch(url, options);
+                    clearTimeout(timeoutId);
+                    
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    
+                    return await response.text();
+                } catch (error) {
+                    console.error('HTTP请求失败:', error);
+                    throw error;
+                }
+            }
+        }
+
         // 创建支付核心实例（统一使用一个实例）
         const epayCore = new EpayCore(PAYMENT_CONFIG);
         
-        // 生成支付请求URL（使用彩虹易支付SDK）
-        function generatePaymentRequest() {
-            if (!selectedProvince || !selectedCity) {
-                alert('请先选择城市');
-                return null;
+        let redirectTimer = null;
+        let redirectPaymentParams = null;
+        
+        // 显示支付过渡页面
+        function showPaymentRedirect(orderNo, paymentParams) {
+            // 保存支付参数以便稍后使用
+            redirectPaymentParams = paymentParams;
+            
+            // 更新订单号
+            document.getElementById('redirectOrderNumber').textContent = orderNo;
+            
+            // 重置倒计时
+            const countdownEl = document.getElementById('redirectCountdown');
+            const progressEl = document.getElementById('redirectProgress');
+            let seconds = 3;
+            countdownEl.textContent = seconds;
+            progressEl.style.width = '100%';
+            
+            // 显示过渡页面
+            document.getElementById('paymentRedirectModal').classList.remove('hidden');
+            
+            // 清除之前的定时器
+            if (redirectTimer) {
+                clearInterval(redirectTimer);
             }
             
-            // 生成订单号
-            const outTradeNo = 'WX' + Date.now() + Math.floor(Math.random() * 1000);
+            // 开始倒计时
+            redirectTimer = setInterval(() => {
+                seconds--;
+                countdownEl.textContent = seconds;
+                
+                // 更新进度条
+                const progressPercentage = (seconds / 3) * 100;
+                progressEl.style.width = progressPercentage + '%';
+                
+                // 倒计时结束，自动跳转到支付
+                if (seconds <= 0) {
+                    clearInterval(redirectTimer);
+                    redirectToPayment();
+                }
+            }, 1000);
+        }
+        
+        // 跳转到支付页面
+        function redirectToPayment() {
+            if (redirectPaymentParams) {
+                // 隐藏过渡页面
+                document.getElementById('paymentRedirectModal').classList.add('hidden');
+                
+                // 使用SDK的支付跳转方法
+                console.log('自动跳转到支付页面...');
+                epayCore.submitPayment(redirectPaymentParams);
+                
+                // 清除支付参数
+                redirectPaymentParams = null;
+            }
+        }
+        
+        // 取消支付
+        function cancelPayment() {
+            // 清除定时器
+            if (redirectTimer) {
+                clearInterval(redirectTimer);
+                redirectTimer = null;
+            }
             
-            // 商品名称
-            const productName = `${selectedProvince}${selectedCity}交友群`;
+            // 隐藏过渡页面
+            document.getElementById('paymentRedirectModal').classList.add('hidden');
             
-            // 构建支付参数（仅包含彩虹易支付标准参数）
-            const params = {
-                pid: PAYMENT_CONFIG.pid,
-                type: selectedPaymentMethod === 'alipay' ? 'alipay' : 'wxpay',
-                out_trade_no: outTradeNo,
+            // 提示支付失败并建议重新支付
+            alert('支付失败，请重新支付');
+            
+            // 清除支付参数
+            redirectPaymentParams = null;
+        }
+        
+        // 绑定支付过渡页面按钮事件
+        document.addEventListener('DOMContentLoaded', function() {
+            // 继续支付按钮
+            document.getElementById('continuePaymentBtn').addEventListener('click', function() {
+                if (redirectTimer) {
+                    clearInterval(redirectTimer);
+                }
+                redirectToPayment();
+            });
+            
+            // 返回按钮
+            document.getElementById('cancelPaymentBtn').addEventListener('click', cancelPayment);
+        });
+        
+        // 提交支付请求（使用彩虹易支付SDK）
+        function submitPayment() {
+            // 检查是否已选择城市
+            if (!selectedProvince || !selectedCity) {
+                // 显示更友好的提示，并自动滚动到城市选择区域
+                alert('请先选择您所在的城市，然后才能进行支付');
+                
+                // 自动滚动到城市选择区域
+                const citySection = document.querySelector('.city-section');
+                if (citySection) {
+                    citySection.scrollIntoView({ behavior: 'smooth' });
+                }
+                
+                // 高亮显示城市选择区域
+                const provinceList = document.getElementById('provinceList');
+                if (provinceList) {
+                    provinceList.style.border = '2px solid #ff6b6b';
+                    provinceList.style.boxShadow = '0 0 10px rgba(255, 107, 107, 0.5)';
+                    
+                    // 3秒后移除高亮效果
+                    setTimeout(() => {
+                        provinceList.style.border = '';
+                        provinceList.style.boxShadow = '';
+                    }, 3000);
+                }
+                
+                return;
+            }
+            
+            // 检查是否同意声明
+            const agreementCheckbox = document.getElementById('paymentAgreementCheckbox');
+            const agreementError = document.getElementById('paymentAgreementError');
+            
+            if (!agreementCheckbox.checked) {
+                // 显示错误提示
+                agreementError.classList.remove('hidden');
+                
+                // 高亮显示声明区域
+                const agreementSection = document.querySelector('.agreement-section');
+                if (agreementSection) {
+                    agreementSection.scrollIntoView({ behavior: 'smooth' });
+                    
+                    // 添加高亮效果
+                    agreementSection.style.border = '2px solid #ff6b6b';
+                    agreementSection.style.boxShadow = '0 0 10px rgba(255, 107, 107, 0.5)';
+                    
+                    // 3秒后移除高亮效果
+                    setTimeout(() => {
+                        agreementSection.style.border = '';
+                        agreementSection.style.boxShadow = '';
+                    }, 3000);
+                }
+                
+                return;
+            } else {
+                // 隐藏错误提示（如果之前显示的话）
+                agreementError.classList.add('hidden');
+            }
+            
+            console.log('开始生成支付请求...');
+            
+            // 构建支付参数 - 根据用户选择的支付方式
+            const paymentParams = {
+                type: selectedPaymentMethod === 'alipay' ? 'alipay' : 'wxpay', // 根据选择切换支付方式
                 notify_url: PAYMENT_CONFIG.notify_url,
                 return_url: PAYMENT_CONFIG.return_url,
-                name: productName,
-                money: '39.99' // 微信群聊付费金额
+                out_trade_no: 'WXGROUP' + Date.now(),
+                name: '微信群聊VIP服务',
+                money: parseFloat(PAYMENT_CONFIG.amount).toFixed(2) // 确保金额为两位小数格式
             };
             
-            // 调试信息
-            console.log('支付参数:', params);
-            console.log('支付配置:', PAYMENT_CONFIG);
+            console.log('支付参数生成成功:', paymentParams);
+            console.log('选择的支付方式:', selectedPaymentMethod);
             
-            // 使用彩虹易支付SDK生成支付链接
-            const paymentUrl = epayCore.getPayLink(params);
+            // 显示支付过渡页面，而不是直接跳转
+            console.log('显示支付过渡页面...');
+            showPaymentRedirect(paymentParams.out_trade_no, paymentParams);
+        }
+        
+        // 提交红娘牵线支付请求（使用彩虹易支付SDK）
+        function submitMatchmakerPayment() {
+            // 检查用户是否已登录
+            if (!currentUser) {
+                alert('请先登录才能开通红娘牵线VIP服务');
+                switchSection('profileSection');
+                return;
+            }
             
-            // 调试信息
-            console.log('生成的支付链接:', paymentUrl);
+            // 检查是否同意声明
+            const agreementCheckbox = document.getElementById('matchmakerPaymentAgreementCheckbox');
+            const agreementError = document.getElementById('matchmakerPaymentAgreementError');
             
-            return paymentUrl;
+            if (!agreementCheckbox.checked) {
+                // 显示错误提示
+                agreementError.classList.remove('hidden');
+                
+                // 高亮显示声明区域
+                const agreementSection = document.querySelector('.agreement-section');
+                if (agreementSection) {
+                    agreementSection.scrollIntoView({ behavior: 'smooth' });
+                    
+                    // 添加高亮效果
+                    agreementSection.style.border = '2px solid #ff6b6b';
+                    agreementSection.style.boxShadow = '0 0 10px rgba(255, 107, 107, 0.5)';
+                    
+                    // 3秒后移除高亮效果
+                    setTimeout(() => {
+                        agreementSection.style.border = '';
+                        agreementSection.style.boxShadow = '';
+                    }, 3000);
+                }
+                
+                return;
+            } else {
+                // 隐藏错误提示（如果之前显示的话）
+                agreementError.classList.add('hidden');
+            }
+            
+            // 构建红娘牵线支付参数 - 使用MATCHMAKER_PAYMENT_CONFIG中的配置
+            const paymentParams = {
+                type: selectedMatchmakerPaymentMethod === 'alipay' ? 'alipay' : 'wxpay', // 根据选择切换支付方式
+                notify_url: MATCHMAKER_PAYMENT_CONFIG.notify_url,
+                return_url: MATCHMAKER_PAYMENT_CONFIG.return_url,
+                out_trade_no: 'MATCHMAKER' + Date.now(),
+                name: '红娘牵线VIP服务',
+                money: parseFloat(MATCHMAKER_PAYMENT_CONFIG.amount).toFixed(2) // 确保金额为两位小数格式
+            };
+            
+            console.log('红娘牵线支付参数生成成功:', paymentParams);
+            console.log('选择的支付方式:', selectedMatchmakerPaymentMethod);
+            
+            // 显示支付过渡页面，而不是直接跳转
+            console.log('显示支付过渡页面...');
+            showPaymentRedirect(paymentParams.out_trade_no, paymentParams);
+        }
+        
+        // 退款功能
+        function refundOrder(orderIndex) {
+            if (confirm('确定要申请退款吗？退款将在1-3个工作日内处理。')) {
+                orders[orderIndex].status = 'refunded';
+                localStorage.setItem('wx_group_orders', JSON.stringify(orders));
+                initOrderList();
+                alert('退款申请已提交，请等待处理');
+            }
+        }
+        
+        // 检查URL参数，处理支付结果（使用彩虹易支付SDK验证）
+        function checkPaymentResult() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const status = urlParams.get('status');
+            const tradeNo = urlParams.get('out_trade_no');
+            const payStatus = urlParams.get('pay_status');
+            const tradeStatus = urlParams.get('trade_status');
+            const totalAmount = urlParams.get('total_amount');
+            
+            // 只有在有支付参数时才处理支付结果
+            if (!status && !tradeNo && !payStatus && !tradeStatus) {
+                return;
+            }
+            
+            console.log('检测到支付回调参数:', {
+                status, tradeNo, payStatus, tradeStatus, totalAmount
+            });
+            
+            // 支持多种支付结果参数格式
+            const isSuccess = status === 'success' || 
+                            payStatus === '1' || 
+                            tradeStatus === 'TRADE_SUCCESS' ||
+                            tradeStatus === 'success';
+            
+            if (isSuccess && tradeNo) {
+                // 支付成功
+                hasPaid = true;
+                localStorage.setItem('hasPaid', 'true');
+                
+                // 生成订单
+                const orderTime = new Date().toLocaleString();
+                const orderAmount = totalAmount ? parseFloat(totalAmount) : 39.99;
+                const newOrder = {
+                    id: tradeNo,
+                    province: selectedProvince,
+                    city: selectedCity,
+                    amount: orderAmount,
+                    time: orderTime,
+                    status: 'paid'
+                };
+                
+                orders.unshift(newOrder);
+                localStorage.setItem('wx_group_orders', JSON.stringify(orders));
+                
+                // 更新UI状态
+                initUI();
+                
+                // 显示详细的支付成功页面
+                showPaymentSuccess(tradeNo, orderAmount, orderTime, '微信群聊VIP服务');
+                
+                // 清除URL参数
+                window.history.replaceState({}, document.title, window.location.pathname);
+                
+                console.log('支付成功处理完成，订单号:', tradeNo);
+            } else if (status === 'failed' || payStatus === '0' || tradeStatus === 'TRADE_CLOSED') {
+                // 支付失败
+                const failedOrderNo = tradeNo || '未知订单号';
+                const failedAmount = totalAmount ? parseFloat(totalAmount) : 39.99;
+                showPaymentFailed(failedOrderNo, failedAmount, '支付超时或网络异常');
+                
+                // 清除URL参数
+                window.history.replaceState({}, document.title, window.location.pathname);
+                
+                console.log('支付失败处理完成，订单号:', failedOrderNo);
+            }
+        }
+        
+        // 显示支付成功页面
+        function showPaymentSuccess(orderNumber, amount, time, productName) {
+            // 更新支付成功页面信息
+            document.getElementById('successOrderNumber').textContent = orderNumber;
+            document.getElementById('successAmount').textContent = '¥' + amount.toFixed(2);
+            document.getElementById('successTime').textContent = time;
+            
+            // 显示支付成功模态框
+            successModal.classList.remove('hidden');
+            
+            // 自动跳转到订单页面（5秒后）
+            setTimeout(() => {
+                successModal.classList.add('hidden');
+                switchSection('orderSection');
+            }, 5000);
+        }
+        
+        // 显示支付失败页面
+        function showPaymentFailed(orderNumber, amount, reason) {
+            // 更新支付失败页面信息
+            document.getElementById('failedOrderNumber').textContent = orderNumber;
+            document.getElementById('failedAmount').textContent = '¥' + amount.toFixed(2);
+            document.getElementById('failedReason').textContent = reason;
+            
+            // 显示支付失败模态框
+            failedModal.classList.remove('hidden');
+        }
+        
+        // 检查红娘牵线支付结果（使用彩虹易支付SDK验证）
+        function checkMatchmakerPaymentResult() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const status = urlParams.get('status');
+            const tradeNo = urlParams.get('out_trade_no');
+            const payStatus = urlParams.get('pay_status');
+            const tradeStatus = urlParams.get('trade_status');
+            const totalAmount = urlParams.get('total_amount');
+            const product = urlParams.get('name');
+            
+            // 只有在有支付参数时才处理支付结果
+            if (!status && !tradeNo && !payStatus && !tradeStatus) {
+                return;
+            }
+            
+            console.log('检测到红娘牵线支付回调参数:', {
+                status, tradeNo, payStatus, tradeStatus, totalAmount, product
+            });
+            
+            // 支持多种支付结果参数格式
+            const isSuccess = status === 'success' || 
+                            payStatus === '1' || 
+                            tradeStatus === 'TRADE_SUCCESS' ||
+                            tradeStatus === 'success';
+            
+            if (isSuccess && tradeNo) {
+                // 红娘牵线VIP支付成功
+                hasMatchmakerVip = true;
+                localStorage.setItem('hasMatchmakerVip', 'true');
+                
+                // 更新UI状态
+                updateMatchmakerVipUI();
+                
+                // 显示详细的支付成功页面
+                const orderTime = new Date().toLocaleString();
+                const orderAmount = totalAmount ? parseFloat(totalAmount) : 99.99;
+                showPaymentSuccess(tradeNo, orderAmount, orderTime, '红娘牵线VIP服务');
+                
+                // 清除URL参数
+                window.history.replaceState({}, document.title, window.location.pathname);
+                
+                console.log('红娘牵线支付成功处理完成，订单号:', tradeNo);
+            } else if (status === 'failed' || payStatus === '0' || tradeStatus === 'TRADE_CLOSED') {
+                // 支付失败
+                const failedOrderNo = tradeNo || '未知订单号';
+                const failedAmount = totalAmount ? parseFloat(totalAmount) : 99.99;
+                showPaymentFailed(failedOrderNo, failedAmount, '支付超时或网络异常');
+                
+                // 清除URL参数
+                window.history.replaceState({}, document.title, window.location.pathname);
+                
+                console.log('红娘牵线支付失败处理完成，订单号:', failedOrderNo);
+            }
         }
         
         // 生成红娘牵线支付请求URL（使用彩虹易支付SDK）
@@ -8575,17 +9334,17 @@ let selectedMatchmakerGender = localStorage.getItem('selectedMatchmakerGender') 
             
             // 构建支付参数（仅包含彩虹易支付标准参数）
             const params = {
-                pid: PAYMENT_CONFIG.pid,
+                pid: MATCHMAKER_PAYMENT_CONFIG.pid,
                 type: selectedMatchmakerPaymentMethod === 'alipay' ? 'alipay' : 'wxpay',
                 out_trade_no: outTradeNo,
-                notify_url: PAYMENT_CONFIG.notify_url,
-                return_url: PAYMENT_CONFIG.return_url,
+                notify_url: MATCHMAKER_PAYMENT_CONFIG.notify_url,
+                return_url: MATCHMAKER_PAYMENT_CONFIG.return_url,
                 name: productName,
-                money: '199.99' // 红娘牵线服务金额
+                money: MATCHMAKER_PAYMENT_CONFIG.amount // 使用配置文件中的金额
             };
             
-            // 使用彩虹易支付SDK生成支付链接
-            return epayCore.getPayLink(params);
+            // 使用红娘牵线专用的EpayCore实例生成支付链接
+            return matchmakerEpayCore.getPayLink(params);
         }
         
         // 页面加载完成后自动运行完整的彩虹易支付签名测试
@@ -8595,178 +9354,7 @@ let selectedMatchmakerGender = localStorage.getItem('selectedMatchmakerGender') 
         
         // 全局UTF-8编码函数已删除，统一使用EpayCore类的Utf8Encode方法
 
-        // 更可靠的MD5实现
-        // 替换为更可靠的MD5实现，确保与PHP的md5函数一致
-        // 修复后的MD5实现，确保与PHP的md5函数完全一致
-        EpayCore.prototype.md5 = function(string) {
-            // 确保输入是字符串
-            string = String(string);
-            
-            // 先进行UTF-8编码
-            string = this.Utf8Encode(string);
-            
-            // 直接使用可靠的备用MD5实现，因为现代浏览器普遍不支持MD5的SubtleCrypto API
-            // 这个实现经过验证，与PHP的md5()函数完全兼容
-            
-            // 备用MD5实现（与PHP完全兼容的版本）
-            function getMd5Fallback(string) {
-                
-                var x = Array();
-                var i;
-                
-                // 将字符串转换为32位整数数组
-                for (i = 0; i < string.length; i += 4) {
-                    x[i >> 2] = string.charCodeAt(i) |
-                               (string.charCodeAt(i + 1) << 8) |
-                               (string.charCodeAt(i + 2) << 16) |
-                               (string.charCodeAt(i + 3) << 24);
-                }
-                
-                // 计算填充
-                var padding = string.length % 4;
-                var messageLength = string.length * 8;
-                
-                // 添加填充字节
-                x[string.length >> 2] = 0x80 << (24 - padding * 8);
-                x[((string.length + 8) >> 6) << 2] = messageLength;
-                
-                // 初始化MD5状态
-                var a = 0x67452301;
-                var b = 0xefcdab89;
-                var c = 0x98badcfe;
-                var d = 0x10325476;
-                
-                // MD5常量
-                var k = [
-                    0xd76aa478, 0xe8c7b756, 0x242070db, 0xc1bdceee,
-                    0xf57c0faf, 0x4787c62a, 0xa8304613, 0xfd469501,
-                    0x698098d8, 0x8b44f7af, 0xffff5bb1, 0x895cd7be,
-                    0x6b901122, 0xfd987193, 0xa679438e, 0x49b40821,
-                    0xf61e2562, 0xc040b340, 0x265e5a51, 0xe9b6c7aa,
-                    0xd62f105d, 0x02441453, 0xd8a1e681, 0xe7d3fbc8,
-                    0x21e1cde6, 0xc33707d6, 0xf4d50d87, 0x455a14ed,
-                    0xa9e3e905, 0xfcefa3f8, 0x676f02d9, 0x8d2a4c8a,
-                    0xfffa3942, 0x8771f681, 0x6d9d6122, 0xfde5380c,
-                    0xa4beea44, 0x4bdecfa9, 0xf6bb4b60, 0xbebfbc70,
-                    0x289b7ec6, 0xeaa127fa, 0xd4ef3085, 0x04881d05,
-                    0xd9d4d039, 0xe6db99e5, 0x1fa27cf8, 0xc4ac5665,
-                    0xf4292244, 0x432aff97, 0xab9423a7, 0xfc93a039,
-                    0x655b59c3, 0x8f0ccc92, 0xffeff47d, 0x85845dd1,
-                    0x6fa87e4f, 0xfe2ce6e0, 0xa3014314, 0x4e0811a1,
-                    0xf7537e82, 0xbd3af235, 0x2ad7d2bb, 0xeb86d391
-                ];
-                
-                // MD5循环函数
-                function md5cycle(a, b, c, d, x, s, t) {
-                    a = add32(a, (b & c) | ((~b) & d));
-                    a = add32(a, x);
-                    a = add32(a, t);
-                    a = add32((a << s) | (a >>> (32 - s)), b);
-                    return a;
-                }
-                
-                // 32位加法
-                function add32(x, y) {
-                    return (x + y) & 0xffffffff;
-                }
-                
-                // 转换为十六进制字符串
-                function toHex(n) {
-                    var hex_chr = "0123456789abcdef";
-                    var s = "";
-                    for (var i = 0; i < 4; i++) {
-                        s += hex_chr.charAt((n >> (i * 8 + 4)) & 0x0f) + hex_chr.charAt((n >> (i * 8)) & 0x0f);
-                    }
-                    return s;
-                }
-                
-                // 执行MD5计算
-                for (i = 0; i < x.length; i += 16) {
-                    var olda = a;
-                    var oldb = b;
-                    var oldc = c;
-                    var oldd = d;
-                    
-                    a = md5cycle(a, b, c, d, x[i + 0], 7, k[0]);
-                    d = md5cycle(d, a, b, c, x[i + 1], 12, k[1]);
-                    c = md5cycle(c, d, a, b, x[i + 2], 17, k[2]);
-                    b = md5cycle(b, c, d, a, x[i + 3], 22, k[3]);
-                    a = md5cycle(a, b, c, d, x[i + 4], 7, k[4]);
-                    d = md5cycle(d, a, b, c, x[i + 5], 12, k[5]);
-                    c = md5cycle(c, d, a, b, x[i + 6], 17, k[6]);
-                    b = md5cycle(b, c, d, a, x[i + 7], 22, k[7]);
-                    a = md5cycle(a, b, c, d, x[i + 8], 7, k[8]);
-                    d = md5cycle(d, a, b, c, x[i + 9], 12, k[9]);
-                    c = md5cycle(c, d, a, b, x[i + 10], 17, k[10]);
-                    b = md5cycle(b, c, d, a, x[i + 11], 22, k[11]);
-                    a = md5cycle(a, b, c, d, x[i + 12], 7, k[12]);
-                    d = md5cycle(d, a, b, c, x[i + 13], 12, k[13]);
-                    c = md5cycle(c, d, a, b, x[i + 14], 17, k[14]);
-                    b = md5cycle(b, c, d, a, x[i + 15], 22, k[15]);
-                    
-                    a = md5cycle(a, b, c, d, x[i + 1], 5, k[16]);
-                    d = md5cycle(d, a, b, c, x[i + 6], 9, k[17]);
-                    c = md5cycle(c, d, a, b, x[i + 11], 14, k[18]);
-                    b = md5cycle(b, c, d, a, x[i + 0], 20, k[19]);
-                    a = md5cycle(a, b, c, d, x[i + 5], 5, k[20]);
-                    d = md5cycle(d, a, b, c, x[i + 10], 9, k[21]);
-                    c = md5cycle(c, d, a, b, x[i + 15], 14, k[22]);
-                    b = md5cycle(b, c, d, a, x[i + 4], 20, k[23]);
-                    a = md5cycle(a, b, c, d, x[i + 9], 5, k[24]);
-                    d = md5cycle(d, a, b, c, x[i + 14], 9, k[25]);
-                    c = md5cycle(c, d, a, b, x[i + 3], 14, k[26]);
-                    b = md5cycle(b, c, d, a, x[i + 8], 20, k[27]);
-                    a = md5cycle(a, b, c, d, x[i + 13], 5, k[28]);
-                    d = md5cycle(d, a, b, c, x[i + 2], 9, k[29]);
-                    c = md5cycle(c, d, a, b, x[i + 7], 14, k[30]);
-                    b = md5cycle(b, c, d, a, x[i + 12], 20, k[31]);
-                    
-                    a = md5cycle(a, b, c, d, x[i + 5], 4, k[32]);
-                    d = md5cycle(d, a, b, c, x[i + 8], 11, k[33]);
-                    c = md5cycle(c, d, a, b, x[i + 11], 16, k[34]);
-                    b = md5cycle(b, c, d, a, x[i + 14], 23, k[35]);
-                    a = md5cycle(a, b, c, d, x[i + 1], 4, k[36]);
-                    d = md5cycle(d, a, b, c, x[i + 4], 11, k[37]);
-                    c = md5cycle(c, d, a, b, x[i + 7], 16, k[38]);
-                    b = md5cycle(b, c, d, a, x[i + 10], 23, k[39]);
-                    a = md5cycle(a, b, c, d, x[i + 13], 4, k[40]);
-                    d = md5cycle(d, a, b, c, x[i + 0], 11, k[41]);
-                    c = md5cycle(c, d, a, b, x[i + 3], 16, k[42]);
-                    b = md5cycle(b, c, d, a, x[i + 6], 23, k[43]);
-                    a = md5cycle(a, b, c, d, x[i + 9], 4, k[44]);
-                    d = md5cycle(d, a, b, c, x[i + 12], 11, k[45]);
-                    c = md5cycle(c, d, a, b, x[i + 15], 16, k[46]);
-                    b = md5cycle(b, c, d, a, x[i + 2], 23, k[47]);
-                    
-                    a = md5cycle(a, b, c, d, x[i + 0], 6, k[48]);
-                    d = md5cycle(d, a, b, c, x[i + 7], 10, k[49]);
-                    c = md5cycle(c, d, a, b, x[i + 14], 15, k[50]);
-                    b = md5cycle(b, c, d, a, x[i + 5], 21, k[51]);
-                    a = md5cycle(a, b, c, d, x[i + 12], 6, k[52]);
-                    d = md5cycle(d, a, b, c, x[i + 3], 10, k[53]);
-                    c = md5cycle(c, d, a, b, x[i + 10], 15, k[54]);
-                    b = md5cycle(b, c, d, a, x[i + 1], 21, k[55]);
-                    a = md5cycle(a, b, c, d, x[i + 8], 6, k[56]);
-                    d = md5cycle(d, a, b, c, x[i + 15], 10, k[57]);
-                    c = md5cycle(c, d, a, b, x[i + 6], 15, k[58]);
-                    b = md5cycle(b, c, d, a, x[i + 13], 21, k[59]);
-                    a = md5cycle(a, b, c, d, x[i + 4], 6, k[60]);
-                    d = md5cycle(d, a, b, c, x[i + 11], 10, k[61]);
-                    c = md5cycle(c, d, a, b, x[i + 2], 15, k[62]);
-                    b = md5cycle(b, c, d, a, x[i + 9], 21, k[63]);
-                    
-                    a = add32(a, olda);
-                    b = add32(b, oldb);
-                    c = add32(c, oldc);
-                    d = add32(d, oldd);
-                }
-                
-                return toHex(a) + toHex(b) + toHex(c) + toHex(d);
-            }
-            
-            // 调用MD5计算函数并返回结果
-            return getMd5Fallback(string);
-        }
+        // 移除了重复的MD5实现，使用类内部定义的md5方法，确保签名生成的一致性
         
         // 添加一个更精确的测试函数，完全模拟彩虹易支付官方签名验证过程
         function testRainbowPaySignature() {
@@ -8925,315 +9513,20 @@ let selectedMatchmakerGender = localStorage.getItem('selectedMatchmakerGender') 
             };
         }
         
-        // 支付过渡页面相关变量
-        let redirectTimer = null;
-        let redirectPaymentParams = null;
+
         
-        // 显示支付过渡页面
-        function showPaymentRedirect(orderNo, paymentParams) {
-            // 保存支付参数以便稍后使用
-            redirectPaymentParams = paymentParams;
-            
-            // 更新订单号
-            document.getElementById('redirectOrderNumber').textContent = orderNo;
-            
-            // 重置倒计时
-            const countdownEl = document.getElementById('redirectCountdown');
-            const progressEl = document.getElementById('redirectProgress');
-            let seconds = 3;
-            countdownEl.textContent = seconds;
-            progressEl.style.width = '100%';
-            
-            // 显示过渡页面
-            document.getElementById('paymentRedirectModal').classList.remove('hidden');
-            
-            // 清除之前的定时器
-            if (redirectTimer) {
-                clearInterval(redirectTimer);
-            }
-            
-            // 开始倒计时
-            redirectTimer = setInterval(() => {
-                seconds--;
-                countdownEl.textContent = seconds;
-                
-                // 更新进度条
-                const progressPercentage = (seconds / 3) * 100;
-                progressEl.style.width = progressPercentage + '%';
-                
-                // 倒计时结束，自动跳转到支付
-                if (seconds <= 0) {
-                    clearInterval(redirectTimer);
-                    redirectToPayment();
-                }
-            }, 1000);
-        }
+
         
-        // 跳转到支付页面
-        function redirectToPayment(params) {
-            // 优先使用传入的参数，如果没有则使用全局变量
-            const paymentParams = params || redirectPaymentParams;
-            
-            // 验证支付参数完整性
-            if (!paymentParams) {
-                console.error('支付失败：支付参数为空');
-                alert('支付失败：支付参数不完整，请重试');
-                return;
-            }
-            
-            // 隐藏过渡页面
-            document.getElementById('paymentRedirectModal').classList.add('hidden');
-            
-            // 统一使用支付配置（不再区分支付类型）
-            
-            // 如果参数已经包含签名，提取必要的支付参数重新构建
-            if (paymentParams.sign && paymentParams.sign_type) {
-                console.log('提取必要的支付参数');
-                
-                // 只保留支付平台需要的必要参数
-                const essentialParams = {
-                    pid: paymentParams.pid,
-                    type: paymentParams.type,
-                    out_trade_no: paymentParams.out_trade_no,
-                    notify_url: paymentParams.notify_url,
-                    return_url: paymentParams.return_url,
-                    name: paymentParams.name,
-                    money: paymentParams.money,
-                    clientip: paymentParams.clientip || '',
-                    device: paymentParams.device || '',
-                    sign: paymentParams.sign,
-                    sign_type: paymentParams.sign_type
-                };
-                
-                // 创建隐藏的form表单进行支付跳转
-                const form = document.createElement('form');
-                form.method = 'POST';
-                form.action = PAYMENT_CONFIG.apiUrl + 'submit.php';
-                form.style.display = 'none';
-                
-                // 添加必要的参数到表单
-                for (const key in essentialParams) {
-                    if (essentialParams[key] !== '' && essentialParams[key] !== undefined && essentialParams[key] !== null) {
-                        const input = document.createElement('input');
-                        input.type = 'hidden';
-                        input.name = key;
-                        input.value = essentialParams[key];
-                        form.appendChild(input);
-                    }
-                }
-                
-                console.log('=== 直接提交支付表单 ===');
-                console.log('表单提交地址:', form.action);
-                console.log('使用的必要参数:', essentialParams);
-                console.log('=== 支付表单提交结束 ===');
-                
-                // 将表单添加到页面并自动提交
-                document.body.appendChild(form);
-                form.submit();
-            } else {
-                // 如果没有签名，使用正确的SDK实例生成签名
-                console.log('生成新的签名参数');
-                
-                // 使用统一的SDK实例生成签名
-                epayCore.submitPayment(paymentParams);
-            }
-            
-            // 清除全局支付参数
-            if (!params) {
-                redirectPaymentParams = null;
-            }
-        }
+
         
-        // 取消支付
-        function cancelPayment() {
-            // 清除定时器
-            if (redirectTimer) {
-                clearInterval(redirectTimer);
-                redirectTimer = null;
-            }
-            
-            // 隐藏过渡页面
-            document.getElementById('paymentRedirectModal').classList.add('hidden');
-            
-            // 提示支付失败并建议重新支付
-            alert('支付失败，请重新支付');
-            
-            // 清除支付参数
-            redirectPaymentParams = null;
-        }
+
         
-        // 绑定支付过渡页面按钮事件
-        document.addEventListener('DOMContentLoaded', function() {
-            // 继续支付按钮
-            document.getElementById('continuePaymentBtn').addEventListener('click', function() {
-                if (redirectTimer) {
-                    clearInterval(redirectTimer);
-                }
-                redirectToPayment();
-            });
-            
-            // 返回按钮
-            document.getElementById('cancelPaymentBtn').addEventListener('click', cancelPayment);
-        });
+
         
-        // 提交支付请求（使用彩虹易支付SDK）
-        function submitPayment() {
-            // 检查是否已选择城市
-            if (!selectedProvince || !selectedCity) {
-                // 显示更友好的提示，并自动滚动到城市选择区域
-                alert('请先选择您所在的城市，然后才能进行支付');
-                
-                // 自动滚动到城市选择区域
-                const citySection = document.querySelector('.city-section');
-                if (citySection) {
-                    citySection.scrollIntoView({ behavior: 'smooth' });
-                }
-                
-                // 高亮显示城市选择区域
-                if (provinceList) {
-                    provinceList.style.border = '2px solid #ff6b6b';
-                    provinceList.style.boxShadow = '0 0 10px rgba(255, 107, 107, 0.5)';
-                    
-                    // 3秒后移除高亮效果
-                    setTimeout(() => {
-                        provinceList.style.border = '';
-                        provinceList.style.boxShadow = '';
-                    }, 3000);
-                }
-                
-                return;
-            }
-            
-            console.log('开始生成支付请求...');
-            
-            // 直接构建支付参数，确保订单号唯一且一致
-            const outTradeNo = 'WX' + Date.now() + Math.floor(Math.random() * 1000);
-            
-            // 构建支付参数
-            const paymentParams = {
-                pid: PAYMENT_CONFIG.pid,
-                type: selectedPaymentMethod === 'alipay' ? 'alipay' : 'wxpay',
-                out_trade_no: outTradeNo,
-                notify_url: PAYMENT_CONFIG.notify_url,
-                return_url: PAYMENT_CONFIG.return_url,
-                name: `${selectedProvince}${selectedCity}交友群`,
-                money: '39.99', // 微信群聊付费金额
-                device: 'mobile'
-            };
-            
-            // 使用彩虹易支付SDK生成支付链接（内部会自动处理参数和签名）
-            const paymentUrl = epayCore.getPayLink(paymentParams);
-            
-            // 获取带签名的完整参数用于显示过渡页面
-            const fullPaymentParams = epayCore.buildRequestParam(paymentParams);
-            
-            console.log('完整支付参数（含签名）:', fullPaymentParams);
-            console.log('选择的支付方式:', selectedPaymentMethod);
-            console.log('生成的支付链接:', paymentUrl);
-            
-            // 提示用户支付成功后如果功能未开通请联系客服
-            alert('提示：如果支付成功后没有开通相对应的VIP功能，请及时联系客服');
-            
-            // 显示支付过渡页面，而不是直接跳转
-            console.log('显示支付过渡页面...');
-            showPaymentRedirect(fullPaymentParams.out_trade_no, fullPaymentParams);
-        }
-        
-        // 提交红娘牵线支付请求（使用彩虹易支付SDK）
-        function submitMatchmakerPayment() {
-            // 检查用户是否已登录
-            if (!currentUser) {
-                alert('请先登录才能开通红娘牵线VIP服务');
-                switchSection('profileSection');
-                return;
-            }
-            
-            console.log('开始生成红娘牵线支付请求...');
-            
-            // 直接构建支付参数，确保订单号唯一且一致
-            const outTradeNo = 'MM' + Date.now() + Math.floor(Math.random() * 1000);
-            
-            // 构建支付参数
-            const paymentParams = {
-                pid: PAYMENT_CONFIG.pid,
-                type: selectedMatchmakerPaymentMethod === 'alipay' ? 'alipay' : 'wxpay',
-                out_trade_no: outTradeNo,
-                notify_url: PAYMENT_CONFIG.notify_url,
-                return_url: PAYMENT_CONFIG.return_url,
-                name: '红娘牵线VIP服务',
-                money: '199.99', // 红娘牵线服务金额
-                device: 'mobile'
-            };
-            
-            // 使用彩虹易支付SDK生成支付链接（内部会自动处理参数和签名）
-            const paymentUrl = epayCore.getPayLink(paymentParams);
-            
-            // 获取带签名的完整参数用于显示过渡页面
-            const fullPaymentParams = epayCore.buildRequestParam(paymentParams);
-            
-            console.log('红娘牵线完整支付参数（含签名）:', fullPaymentParams);
-            console.log('选择的支付方式:', selectedMatchmakerPaymentMethod);
-            console.log('生成的支付链接:', paymentUrl);
-            
-            // 提示用户支付成功后如果功能未开通请联系客服
-            alert('提示：如果支付成功后没有开通相对应的红娘牵线VIP功能，请及时联系客服');
-            
-            // 显示支付过渡页面，而不是直接跳转
-            console.log('显示支付过渡页面...');
-            showPaymentRedirect(fullPaymentParams.out_trade_no, fullPaymentParams);
-        }
+
         
         // 退款功能
-        function refundOrder(orderIndex) {
-            const order = orders[orderIndex];
-            
-            // 检查订单状态是否允许退款
-            if (!order || !['pending', 'completed'].includes(order.status)) {
-                alert('当前订单状态不允许退款申请');
-                return;
-            }
-            
-            // 确认退款申请
-            if (!confirm('确定要申请退款吗？退款将在1-3个工作日内处理。\n\n订单信息：\n' + 
-                         '订单号：' + order.orderId + '\n' +
-                         '商品名称：' + order.name + '\n' +
-                         '金额：' + order.amount + '元')) {
-                return;
-            }
-            
-            // 模拟退款API请求
-            console.log('提交退款申请，订单号:', order.orderId);
-            
-            // 显示加载状态
-            const originalStatus = order.status;
-            order.status = 'refunding';
-            localStorage.setItem('wx_group_orders', JSON.stringify(orders));
-            initOrderList();
-            
-            // 模拟异步退款处理
-            setTimeout(() => {
-                try {
-                    // 模拟退款成功
-                    order.status = 'refunded';
-                    order.refundTime = new Date().toLocaleString();
-                    order.refundReason = '用户主动申请退款';
-                    
-                    // 保存到本地存储
-                    localStorage.setItem('wx_group_orders', JSON.stringify(orders));
-                    initOrderList();
-                    
-                    alert('退款申请已成功提交，我们将在1-3个工作日内处理您的退款请求。');
-                    
-                } catch (error) {
-                    // 退款失败，恢复原始状态
-                    console.error('退款申请提交失败:', error);
-                    order.status = originalStatus;
-                    localStorage.setItem('wx_group_orders', JSON.stringify(orders));
-                    initOrderList();
-                    alert('退款申请提交失败，请稍后重试');
-                }
-            }, 1500);
-        }
+
         
         // 导航切换
         function switchSection(targetId) {
@@ -9309,99 +9602,9 @@ let selectedMatchmakerGender = localStorage.getItem('selectedMatchmakerGender') 
         }
         
         // 检查URL参数，处理支付结果（使用彩虹易支付SDK验证）
-        function checkPaymentResult() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const status = urlParams.get('status');
-            const tradeNo = urlParams.get('out_trade_no');
-            const payStatus = urlParams.get('pay_status');
-            const tradeStatus = urlParams.get('trade_status');
-            const totalAmount = urlParams.get('total_amount');
-            
-            // 只有在有支付参数时才处理支付结果
-            if (!status && !tradeNo && !payStatus && !tradeStatus) {
-                return;
-            }
-            
-            console.log('检测到支付回调参数:', {
-                status, tradeNo, payStatus, tradeStatus, totalAmount
-            });
-            
-            // 支持多种支付结果参数格式
-            const isSuccess = status === 'success' || 
-                            payStatus === '1' || 
-                            tradeStatus === 'TRADE_SUCCESS' ||
-                            tradeStatus === 'success';
-            
-            if (isSuccess && tradeNo) {
-                // 支付成功
-                hasPaid = true;
-                localStorage.setItem('hasPaid', 'true');
-                
-                // 生成订单
-                const orderTime = new Date().toLocaleString();
-                const orderAmount = totalAmount ? parseFloat(totalAmount) : 39.99;
-                const newOrder = {
-                    id: tradeNo,
-                    province: selectedProvince,
-                    city: selectedCity,
-                    amount: orderAmount,
-                    time: orderTime,
-                    status: 'paid'
-                };
-                
-                orders.unshift(newOrder);
-                localStorage.setItem('wx_group_orders', JSON.stringify(orders));
-                
-                // 更新UI状态
-                initUI();
-                
-                // 显示详细的支付成功页面
-                showPaymentSuccess(tradeNo, orderAmount, orderTime, '微信群聊VIP服务');
-                
-                // 清除URL参数
-                window.history.replaceState({}, document.title, window.location.pathname);
-                
-                console.log('支付成功处理完成，订单号:', tradeNo);
-            } else if (status === 'failed' || payStatus === '0' || tradeStatus === 'TRADE_CLOSED') {
-                // 支付失败
-                const failedOrderNo = tradeNo || '未知订单号';
-                const failedAmount = totalAmount ? parseFloat(totalAmount) : 39.99;
-                showPaymentFailed(failedOrderNo, failedAmount, '支付超时或网络异常');
-                
-                // 清除URL参数
-                window.history.replaceState({}, document.title, window.location.pathname);
-                
-                console.log('支付失败处理完成，订单号:', failedOrderNo);
-            }
-        }
+
         
-        // 显示支付成功页面
-        function showPaymentSuccess(orderNumber, amount, time, productName) {
-            // 更新支付成功页面信息
-            document.getElementById('successOrderNumber').textContent = orderNumber;
-            document.getElementById('successAmount').textContent = '¥' + amount.toFixed(2);
-            document.getElementById('successTime').textContent = time;
-            
-            // 显示支付成功模态框
-            successModal.classList.remove('hidden');
-            
-            // 自动跳转到订单页面（5秒后）
-            setTimeout(() => {
-                successModal.classList.add('hidden');
-                switchSection('orderSection');
-            }, 5000);
-        }
-        
-        // 显示支付失败页面
-        function showPaymentFailed(orderNumber, amount, reason) {
-            // 更新支付失败页面信息
-            document.getElementById('failedOrderNumber').textContent = orderNumber;
-            document.getElementById('failedAmount').textContent = '¥' + amount.toFixed(2);
-            document.getElementById('failedReason').textContent = reason;
-            
-            // 显示支付失败模态框
-            failedModal.classList.remove('hidden');
-        }
+
         
         // 获取未读消息数量
         function getUnreadMessages() {
@@ -9681,59 +9884,7 @@ let selectedMatchmakerGender = localStorage.getItem('selectedMatchmakerGender') 
         }
         
         // 检查红娘牵线支付结果（使用彩虹易支付SDK验证）
-        function checkMatchmakerPaymentResult() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const status = urlParams.get('status');
-            const tradeNo = urlParams.get('out_trade_no');
-            const payStatus = urlParams.get('pay_status');
-            const tradeStatus = urlParams.get('trade_status');
-            const totalAmount = urlParams.get('total_amount');
-            const product = urlParams.get('name');
-            
-            // 只有在有支付参数时才处理支付结果
-            if (!status && !tradeNo && !payStatus && !tradeStatus) {
-                return;
-            }
-            
-            console.log('检测到红娘牵线支付回调参数:', {
-                status, tradeNo, payStatus, tradeStatus, totalAmount, product
-            });
-            
-            // 支持多种支付结果参数格式
-            const isSuccess = status === 'success' || 
-                            payStatus === '1' || 
-                            tradeStatus === 'TRADE_SUCCESS' ||
-                            tradeStatus === 'success';
-            
-            if (isSuccess && tradeNo) {
-                // 红娘牵线VIP支付成功
-                hasMatchmakerVip = true;
-                localStorage.setItem('hasMatchmakerVip', 'true');
-                
-                // 更新UI状态
-                updateMatchmakerVipUI();
-                
-                // 显示详细的支付成功页面
-                const orderTime = new Date().toLocaleString();
-                const orderAmount = totalAmount ? parseFloat(totalAmount) : 99.99;
-                showPaymentSuccess(tradeNo, orderAmount, orderTime, '红娘牵线VIP服务');
-                
-                // 清除URL参数
-                window.history.replaceState({}, document.title, window.location.pathname);
-                
-                console.log('红娘牵线支付成功处理完成，订单号:', tradeNo);
-            } else if (status === 'failed' || payStatus === '0' || tradeStatus === 'TRADE_CLOSED') {
-                // 支付失败
-                const failedOrderNo = tradeNo || '未知订单号';
-                const failedAmount = totalAmount ? parseFloat(totalAmount) : 99.99;
-                showPaymentFailed(failedOrderNo, failedAmount, '支付超时或网络异常');
-                
-                // 清除URL参数
-                window.history.replaceState({}, document.title, window.location.pathname);
-                
-                console.log('红娘牵线支付失败处理完成，订单号:', failedOrderNo);
-            }
-        }
+
         
         // 用户注册
         function registerUser() {
@@ -12512,6 +12663,72 @@ function initMatchmaker() {
                     }
                 });
             }
+            
+            // 支付页面声明双击事件
+            const paymentAgreementCheckbox = document.getElementById('paymentAgreementCheckbox');
+            const paymentAgreementContent = document.getElementById('paymentAgreementContent');
+            
+            if (paymentAgreementCheckbox && paymentAgreementContent) {
+                let clickCount = 0;
+                let clickTimer = null;
+                
+                paymentAgreementCheckbox.addEventListener('click', function(e) {
+                    // 允许正常的复选框点击行为，不阻止默认行为
+                    
+                    clickCount++;
+                    
+                    if (clickCount === 1) {
+                        // 第一次点击，设置定时器
+                        clickTimer = setTimeout(() => {
+                            clickCount = 0; // 重置计数
+                        }, 300); // 300毫秒内没有第二次点击则重置
+                    } else if (clickCount === 2) {
+                        // 第二次点击，清除定时器
+                        clearTimeout(clickTimer);
+                        clickCount = 0;
+                        
+                        // 切换声明内容的显示/隐藏
+                        if (paymentAgreementContent.classList.contains('hidden')) {
+                            paymentAgreementContent.classList.remove('hidden');
+                        } else {
+                            paymentAgreementContent.classList.add('hidden');
+                        }
+                    }
+                });
+            }
+            
+            // 牵线服务支付页面声明双击事件
+            const matchmakerPaymentAgreementCheckbox = document.getElementById('matchmakerPaymentAgreementCheckbox');
+            const matchmakerPaymentAgreementContent = document.getElementById('matchmakerPaymentAgreementContent');
+            
+            if (matchmakerPaymentAgreementCheckbox && matchmakerPaymentAgreementContent) {
+                let clickCount = 0;
+                let clickTimer = null;
+                
+                matchmakerPaymentAgreementCheckbox.addEventListener('click', function(e) {
+                    // 允许正常的复选框点击行为，不阻止默认行为
+                    
+                    clickCount++;
+                    
+                    if (clickCount === 1) {
+                        // 第一次点击，设置定时器
+                        clickTimer = setTimeout(() => {
+                            clickCount = 0; // 重置计数
+                        }, 300); // 300毫秒内没有第二次点击则重置
+                    } else if (clickCount === 2) {
+                        // 第二次点击，清除定时器
+                        clearTimeout(clickTimer);
+                        clickCount = 0;
+                        
+                        // 切换声明内容的显示/隐藏
+                        if (matchmakerPaymentAgreementContent.classList.contains('hidden')) {
+                            matchmakerPaymentAgreementContent.classList.remove('hidden');
+                        } else {
+                            matchmakerPaymentAgreementContent.classList.add('hidden');
+                        }
+                    }
+                });
+            }
         }
         
         // 客服系统功能
@@ -12694,6 +12911,8 @@ function initMatchmaker() {
             initProvinceList();
             initOrderList();
             initUI();
+            
+            // 检查支付结果
             checkPaymentResult();
             checkMatchmakerPaymentResult();
 
@@ -12815,7 +13034,7 @@ function initMatchmaker() {
                     rating: 5,
                     comment: '服务非常专业，体验超出预期！从咨询到完成，整个过程都很顺畅，工作人员态度也很好。',
                     isVerified: true,
-                    image: 'c:/Users/Administrator/xwechat_files/wxid_gllglcghza7p22_36e7/temp/RWTemp/2025-11/9e20f478899dc29eb19741386f9343c8/2f7dff108301d1b1b02129b19031bee5.jpg'
+                    image: 'c:\\Users\\Administrator\\xwechat_files\\wxid_gllglcghza7p22_36e7\\temp\\RWTemp\\2025-11\\9e20f478899dc29eb19741386f9343c8\\418d8a8851e4a73941aac88d8a2bdccb.png'
                 },
                 {
                     id: 2,
@@ -12826,7 +13045,7 @@ function initMatchmaker() {
                     rating: 4,
                     comment: '整体不错，细节处理得很好！尤其是最后的效果让我非常满意，值得推荐。',
                     isVerified: true,
-                    image: 'c:/Users/Administrator/xwechat_files/wxid_gllglcghza7p22_36e7/temp/RWTemp/2025-11/9e20f478899dc29eb19741386f9343c8/99119f1cc38f9e8c339b02cdf37a6d07.png'
+                    image: 'c:\\Users\\Administrator\\xwechat_files\\wxid_gllglcghza7p22_36e7\\temp\\RWTemp\\2025-11\\9e20f478899dc29eb19741386f9343c8\\5aafe5c13344019aa0c1839b6c3e898e.png'
                 },
                 {
                     id: 3,
@@ -12838,8 +13057,8 @@ function initMatchmaker() {
                     comment: '非常满意这次的服务！提供了很多专业建议，结果超出了我的期望，强烈推荐给大家！',
                     isVerified: true,
                     images: [
-                        'c:/Users/Administrator/xwechat_files/wxid_gllglcghza7p22_36e7/temp/RWTemp/2025-11/9e20f478899dc29eb19741386f9343c8/d4f0c4965efe9ffab581967176d32ca8.jpg',
-                        'c:/Users/Administrator/xwechat_files/wxid_gllglcghza7p22_36e7/temp/RWTemp/2025-11/9e20f478899dc29eb19741386f9343c8/ef70d89b37684dfc103d743338bf9fad.jpg'
+                        'c:\\Users\\Administrator\\xwechat_files\\wxid_gllglcghza7p22_36e7\\temp\\RWTemp\\2025-11\\9e20f478899dc29eb19741386f9343c8\\244eb3f89814ebfaf9cb55de0bc2b43b.jpg',
+                        'c:\\Users\\Administrator\\xwechat_files\\wxid_gllglcghza7p22_36e7\\temp\\RWTemp\\2025-11\\9e20f478899dc29eb19741386f9343c8\\81f7b056e53c4c4b2dac582b424415e5.jpg'
                     ]
                 },
                 {
@@ -12851,7 +13070,7 @@ function initMatchmaker() {
                     rating: 5,
                     comment: '服务态度很好，工作效率也很高，非常满意！',
                     isVerified: true,
-                    image: 'c:/Users/Administrator/xwechat_files/wxid_gllglcghza7p22_36e7/temp/RWTemp/2025-11/9e20f478899dc29eb19741386f9343c8/31e731a17372720d13a742f9ebd1b77c.jpg'
+                    image: 'c:\\Users\\Administrator\\xwechat_files\\wxid_gllglcghza7p22_36e7\\temp\\RWTemp\\2025-11\\9e20f478899dc29eb19741386f9343c8\\f797dbb14aba1adf2d7f88ef12ebe3f2.jpg'
                 },
                 {
                     id: 5,
@@ -12862,7 +13081,7 @@ function initMatchmaker() {
                     rating: 4,
                     comment: '整体服务不错，值得信赖！',
                     isVerified: true,
-                    image: 'c:/Users/Administrator/xwechat_files/wxid_gllglcghza7p22_36e7/temp/RWTemp/2025-11/9e20f478899dc29eb19741386f9343c8/978a7db0a8729185bfbdbfe5c4e0470d.jpg'
+                    image: 'c:\\Users\\Administrator\\xwechat_files\\wxid_gllglcghza7p22_36e7\\temp\\RWTemp\\2025-11\\9e20f478899dc29eb19741386f9343c8\\978a7db0a8729185bfbdbfe5c4e0470d.jpg'
                 },
                 {
                     id: 6,
@@ -12873,7 +13092,7 @@ function initMatchmaker() {
                     rating: 5,
                     comment: '非常专业的团队，效果超出预期！',
                     isVerified: true,
-                    image: 'c:/Users/Administrator/xwechat_files/wxid_gllglcghza7p22_36e7/temp/RWTemp/2025-11/9e20f478899dc29eb19741386f9343c8/f797dbb14aba1adf2d7f88ef12ebe3f2.jpg'
+                    image: 'c:\\Users\\Administrator\\xwechat_files\\wxid_gllglcghza7p22_36e7\\temp\\RWTemp\\2025-11\\9e20f478899dc29eb19741386f9343c8\\ef70d89b37684dfc103d743338bf9fad.jpg'
                 },
                 {
                     id: 7,
@@ -12885,8 +13104,8 @@ function initMatchmaker() {
                     comment: '服务非常周到，团队专业可靠，强烈推荐！',
                     isVerified: true,
                     images: [
-                        'c:/Users/Administrator/xwechat_files/wxid_gllglcghza7p22_36e7/temp/RWTemp/2025-11/9e20f478899dc29eb19741386f9343c8/81f7b056e53c4c4b2dac582b424415e5.jpg',
-                        'c:/Users/Administrator/xwechat_files/wxid_gllglcghza7p22_36e7/temp/RWTemp/2025-11/9e20f478899dc29eb19741386f9343c8/244eb3f89814ebfaf9cb55de0bc2b43b.jpg'
+                        'c:\\Users\\Administrator\\xwechat_files\\wxid_gllglcghza7p22_36e7\\temp\\RWTemp\\2025-11\\9e20f478899dc29eb19741386f9343c8\\d4f0c4965efe9ffab581967176d32ca8.jpg',
+                        'c:\\Users\\Administrator\\xwechat_files\\wxid_gllglcghza7p22_36e7\\temp\\RWTemp\\2025-11\\9e20f478899dc29eb19741386f9343c8\\31e731a17372720d13a742f9ebd1b77c.jpg'
                     ]
                 },
                 {
@@ -12899,8 +13118,8 @@ function initMatchmaker() {
                     comment: '服务质量非常高，团队协作默契，值得信赖！',
                     isVerified: true,
                     images: [
-                        'c:/Users/Administrator/xwechat_files/wxid_gllglcghza7p22_36e7/temp/RWTemp/2025-11/9e20f478899dc29eb19741386f9343c8/5aafe5c13344019aa0c1839b6c3e898e.jpg',
-                        'c:/Users/Administrator/xwechat_files/wxid_gllglcghza7p22_36e7/temp/RWTemp/2025-11/9e20f478899dc29eb19741386f9343c8/418d8a8851e4a73941aac88d8a2bdccb.jpg'
+                        'c:\\Users\\Administrator\\xwechat_files\\wxid_gllglcghza7p22_36e7\\temp\\RWTemp\\2025-11\\9e20f478899dc29eb19741386f9343c8\\99119f1cc38f9e8c339b02cdf37a6d07.png',
+                        'c:\\Users\\Administrator\\xwechat_files\\wxid_gllglcghza7p22_36e7\\temp\\RWTemp\\2025-11\\9e20f478899dc29eb19741386f9343c8\\2f7dff108301d1b1b02129b19031bee5.jpg'
                     ]
                 }
             ];
@@ -12917,7 +13136,7 @@ function initMatchmaker() {
                 // 用户头像
                 const avatar = document.createElement('img');
                 avatar.className = 'feedback-user-avatar';
-                avatar.src = feedback.avatar;
+                avatar.src = feedback.avatar || 'https://via.placeholder.com/60x60?text=用户头像';
                 avatar.alt = feedback.name;
                 
                 // 用户详情
@@ -12973,6 +13192,10 @@ function initMatchmaker() {
                     img.src = imageUrl;
                     img.alt = `用户反馈 ${index + 1} - 图片 ${imgIndex + 1}`;
                     img.onclick = () => showImagePreview(imageUrl);
+                    // 图片加载失败处理
+                    img.onerror = () => {
+                        img.src = 'https://picsum.photos/id/900/400/300';
+                    };
                     
                     // 图片悬停效果
                     const imgOverlay = document.createElement('div');
