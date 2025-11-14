@@ -6950,9 +6950,29 @@
             return_url: '/api/return'
         };
         
-        // 添加网络加载错误处理
+        // 添加全局资源加载错误处理
         window.addEventListener('error', function(e) {
-            console.error('资源加载错误:', e.target.src || e.target.href);
+            const resourceUrl = e.target.src || e.target.href;
+            console.error('资源加载错误:', resourceUrl);
+            
+            // 针对不同类型的资源进行处理
+            if (e.target.tagName === 'LINK' && e.target.rel === 'stylesheet') {
+                console.error('样式表加载失败:', resourceUrl);
+                // 可以添加备用样式表的加载逻辑
+            } else if (e.target.tagName === 'SCRIPT') {
+                console.error('JavaScript文件加载失败:', resourceUrl);
+                // 可以添加备用JavaScript文件的加载逻辑
+            } else if (e.target.tagName === 'IMG') {
+                console.error('图片加载失败:', resourceUrl);
+                // 已经有图片加载失败的处理逻辑
+            }
+        });
+        
+        // 监控页面加载性能
+        window.addEventListener('load', function() {
+            const perfData = performance.timing;
+            const loadTime = perfData.loadEventEnd - perfData.navigationStart;
+            console.log('页面加载时间:', loadTime, 'ms');
         });
         
         // 添加图片加载失败的默认处理
@@ -6962,7 +6982,76 @@
                 img.onerror = function() {
                     this.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 24 24" fill="none" stroke="%23ccc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"%3E%3Crect x="3" y="3" width="18" height="18" rx="2" ry="2"%3E%3C/rect%3E%3Ccircle cx="8.5" cy="8.5" r="1.5"%3E%3C/circle%3E%3Cpolyline points="21 15 16 10 5 21"%3E%3C/polyline%3E%3C/svg%3E';
                 };
+                
+                // 为图片添加懒加载
+                if ('loading' in img) {
+                    img.loading = 'lazy';
+                } else {
+                    // 兼容不支持loading属性的浏览器
+                    img.setAttribute('data-src', img.src);
+                    img.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 24 24" fill="none" stroke="%23ccc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"%3E%3Crect x="3" y="3" width="18" height="18" rx="2" ry="2"%3E%3C/rect%3E%3Ccircle cx="8.5" cy="8.5" r="1.5"%3E%3C/circle%3E%3Cpolyline points="21 15 16 10 5 21"%3E%3C/polyline%3E%3C/svg%3E';
+                }
             });
+            
+            // 实现图片懒加载
+            const lazyImages = document.querySelectorAll('img[data-src]');
+            if ('IntersectionObserver' in window) {
+                const imageObserver = new IntersectionObserver((entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const image = entry.target;
+                            image.src = image.getAttribute('data-src');
+                            image.removeAttribute('data-src');
+                            imageObserver.unobserve(image);
+                        }
+                    });
+                });
+                
+                lazyImages.forEach(image => {
+                    imageObserver.observe(image);
+                });
+            } else {
+                // 兼容不支持IntersectionObserver的浏览器
+                let lazyImageCounter = lazyImages.length;
+                
+                const lazyLoad = function() {
+                    if (lazyImageCounter > 0) {
+                        for (let i = 0; i < lazyImages.length; i++) {
+                            if (lazyImages[i].getBoundingClientRect().top < window.innerHeight && 0 < lazyImages[i].getBoundingClientRect().bottom) {
+                                lazyImages[i].src = lazyImages[i].getAttribute('data-src');
+                                lazyImages[i].removeAttribute('data-src');
+                                lazyImageCounter--;
+                            }
+                        }
+                    } else {
+                        document.removeEventListener('scroll', lazyLoad);
+                        window.removeEventListener('resize', lazyLoad);
+                        window.removeEventListener('orientationchange', lazyLoad);
+                    }
+                };
+                
+                document.addEventListener('scroll', lazyLoad);
+                window.addEventListener('resize', lazyLoad);
+                window.addEventListener('orientationchange', lazyLoad);
+                
+                // 初始加载
+                lazyLoad();
+            }
+        });
+        
+        // 优化资源加载策略 - DNS预解析
+        const preconnectUrls = [
+            'https://cdn.bootcdn.net',
+            'https://2a.mazhifupay.com',
+            'https://ui-avatars.com',
+            'https://via.placeholder.com'
+        ];
+        
+        preconnectUrls.forEach(url => {
+            const link = document.createElement('link');
+            link.rel = 'preconnect';
+            link.href = url;
+            document.head.appendChild(link);
         });
         
         // 城市数据（包含全国各市级城市地区）
@@ -9002,6 +9091,80 @@ let selectedMatchmakerGender = localStorage.getItem('selectedMatchmakerGender') 
 
         // 创建支付核心实例（统一使用一个实例）
         const epayCore = new EpayCore(PAYMENT_CONFIG);
+        
+        // 为EpayCore类添加重试机制和备用地址支持
+        EpayCore.prototype.submitPaymentWithRetry = async function(param, retryCount = 2) {
+            let attempt = 0;
+            const paymentUrls = [
+                this.submitUrl, // 默认地址
+                'https://2a.mazhifupay.com/submit.php' // 备用地址
+            ];
+            
+            while (attempt <= retryCount) {
+                try {
+                    // 尝试使用不同的支付地址
+                    const currentUrl = paymentUrls[attempt % paymentUrls.length];
+                    
+                    // 创建隐藏的form表单进行支付跳转，确保支付平台正确识别支付方式
+                    const params = this.buildRequestParam(param);
+                    const form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = currentUrl;
+                    form.style.display = 'none';
+                    
+                    // 添加所有参数到表单
+                    for (const key in params) {
+                        if (params.hasOwnProperty(key)) {
+                            const input = document.createElement('input');
+                            input.type = 'hidden';
+                            input.name = key;
+                            input.value = params[key];
+                            form.appendChild(input);
+                        }
+                    }
+                    
+                    // 将表单添加到页面并自动提交
+                    document.body.appendChild(form);
+                    form.submit();
+                    
+                    // 提交成功后退出循环
+                    break;
+                } catch (error) {
+                    console.error(`支付尝试 ${attempt + 1} 失败:`, error);
+                    attempt++;
+                    
+                    // 如果还有重试机会，等待一段时间后重试
+                    if (attempt <= retryCount) {
+                        await new Promise(resolve => setTimeout(resolve, 1000 * attempt));
+                    } else {
+                        // 所有尝试都失败了，显示错误信息
+                        alert('支付失败，请稍后重试或联系客服。');
+                        throw error;
+                    }
+                }
+            }
+        };
+        
+        // 重写redirectToPayment函数，使用带重试机制的支付提交方法
+        // 如果 redirectToPayment 已存在，先保存原始引用（避免重复声明）
+        const originalRedirectToPayment = typeof redirectToPayment !== 'undefined' ? redirectToPayment : undefined;
+        redirectToPayment = function() {
+            if (redirectPaymentParams) {
+                // 隐藏支付过渡页面
+                document.getElementById('paymentRedirectModal').classList.add('hidden');
+                
+                // 使用带重试机制的支付提交方法
+                epayCore.submitPaymentWithRetry(redirectPaymentParams)
+                    .catch(error => {
+                        console.error('支付重定向失败:', error);
+                        // 显示支付失败页面
+                        showPaymentFailed(redirectPaymentParams.out_trade_no, redirectPaymentParams.money, '支付请求发送失败，请检查网络连接');
+                    });
+                
+                // 清空保存的支付参数
+                redirectPaymentParams = null;
+            }
+        };
         
         let redirectTimer = null;
         let redirectPaymentParams = null;
@@ -13265,7 +13428,9 @@ function initMatchmaker() {
             return originalGenerateMatchmakerPaymentRequest.apply(this, arguments);
         };
         
-        const originalRedirectToPayment = redirectToPayment;
+        if (typeof originalRedirectToPayment === 'undefined') {
+            const originalRedirectToPayment = redirectToPayment;
+        }
         redirectToPayment = function(params) {
             if (!userAgreedToTerms) {
                 alert('请先阅读并同意服务条款');
