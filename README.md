@@ -6972,10 +6972,13 @@
             // 针对不同类型的资源进行处理
             if (e.target.tagName === 'LINK' && e.target.rel === 'stylesheet') {
                 console.error('样式表加载失败:', resourceUrl);
-                // 可以添加备用样式表的加载逻辑
+                // 为Font Awesome添加备用方案
+                if (resourceUrl.includes('font-awesome')) {
+                    console.log('Font Awesome加载失败，使用备用图标方案');
+                    // 这里可以添加备用图标库的加载逻辑
+                }
             } else if (e.target.tagName === 'SCRIPT') {
                 console.error('JavaScript文件加载失败:', resourceUrl);
-                // 可以添加备用JavaScript文件的加载逻辑
             } else if (e.target.tagName === 'IMG') {
                 console.error('图片加载失败:', resourceUrl);
                 // 已经有图片加载失败的处理逻辑
@@ -6985,25 +6988,54 @@
         // 添加未捕获的Promise拒绝处理
         window.addEventListener('unhandledrejection', function(e) {
             console.error('未捕获的Promise拒绝:', e.reason);
-            // 可以显示一个友好的错误提示给用户
+            // 显示一个友好的错误提示给用户，避免页面卡死
             if (document.readyState === 'complete') {
-                alert('网络请求失败，请检查网络连接后重试。');
+                // 只在页面完全加载后显示错误提示
+                const errorMessage = document.createElement('div');
+                errorMessage.style.cssText = `
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    background: rgba(248, 113, 113, 0.95);
+                    color: white;
+                    padding: 20px;
+                    border-radius: 10px;
+                    z-index: 9999;
+                    text-align: center;
+                    max-width: 80%;
+                    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+                `;
+                errorMessage.innerHTML = `
+                    <h3 style="margin-top: 0;">网络请求失败</h3>
+                    <p>请检查网络连接后重试，或刷新页面。</p>
+                    <button onclick="location.reload()" style="
+                        background: white;
+                        color: #f87171;
+                        border: none;
+                        padding: 8px 16px;
+                        border-radius: 5px;
+                        cursor: pointer;
+                        margin-top: 10px;
+                        font-weight: bold;
+                    ">刷新页面</button>
+                `;
+                document.body.appendChild(errorMessage);
             }
         });
         
-        // 添加网络状态检测
-        window.addEventListener('online', function() {
-            console.log('网络已连接');
-            // 可以显示网络已恢复的提示
-            const offlineAlert = document.getElementById('offline-alert');
-            if (offlineAlert) {
-                offlineAlert.style.display = 'none';
+        // 增强网络连接检测功能
+        function checkNetworkStatus() {
+            if (!navigator.onLine) {
+                showOfflineAlert();
+            } else {
+                hideOfflineAlert();
+                // 网络恢复时检查服务器连接
+                checkServerConnection();
             }
-        });
+        }
         
-        window.addEventListener('offline', function() {
-            console.log('网络已断开');
-            // 显示网络断开的提示
+        function showOfflineAlert() {
             let offlineAlert = document.getElementById('offline-alert');
             if (!offlineAlert) {
                 offlineAlert = document.createElement('div');
@@ -7015,17 +7047,141 @@
                     right: 0;
                     background: #f87171;
                     color: white;
-                    padding: 10px;
+                    padding: 12px;
                     text-align: center;
                     z-index: 9999;
                     font-weight: bold;
+                    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
                 `;
                 offlineAlert.innerHTML = '<i class="fas fa-exclamation-triangle"></i> 网络连接已断开，请检查网络设置';
                 document.body.appendChild(offlineAlert);
             } else {
                 offlineAlert.style.display = 'block';
             }
+        }
+        
+        function hideOfflineAlert() {
+            const offlineAlert = document.getElementById('offline-alert');
+            if (offlineAlert) {
+                offlineAlert.style.display = 'none';
+            }
+        }
+        
+        function showOnlineAlert() {
+            const onlineAlert = document.createElement('div');
+            onlineAlert.id = 'online-alert';
+            onlineAlert.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                background: #34d399;
+                color: white;
+                padding: 12px;
+                text-align: center;
+                z-index: 9999;
+                font-weight: bold;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            `;
+            onlineAlert.innerHTML = '<i class="fas fa-check-circle"></i> 网络已恢复，正在检查服务器连接...';
+            document.body.appendChild(onlineAlert);
+            
+            // 3秒后自动隐藏提示
+            setTimeout(() => {
+                onlineAlert.remove();
+            }, 3000);
+        }
+        
+        // 服务器连接检测
+        async function checkServerConnection() {
+            try {
+                // 使用当前页面URL作为检测目标
+                const currentUrl = window.location.origin + window.location.pathname;
+                const response = await fetch(currentUrl, {
+                    method: 'HEAD',
+                    cache: 'no-cache',
+                    signal: AbortSignal.timeout(5000)
+                });
+                
+                if (response.ok) {
+                    console.log('服务器连接正常');
+                    hideServerErrorAlert();
+                } else {
+                    showServerErrorAlert();
+                }
+            } catch (error) {
+                console.error('服务器连接检测失败:', error);
+                showServerErrorAlert();
+            }
+        }
+        
+        function showServerErrorAlert() {
+            let serverErrorAlert = document.getElementById('server-error-alert');
+            if (!serverErrorAlert) {
+                serverErrorAlert = document.createElement('div');
+                serverErrorAlert.id = 'server-error-alert';
+                serverErrorAlert.style.cssText = `
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    background: rgba(248, 113, 113, 0.95);
+                    color: white;
+                    padding: 20px;
+                    border-radius: 10px;
+                    z-index: 9999;
+                    text-align: center;
+                    max-width: 80%;
+                    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+                `;
+                serverErrorAlert.innerHTML = `
+                    <h3 style="margin-top: 0;"><i class="fas fa-server"></i> 服务器连接失败</h3>
+                    <p>无法连接到服务器，请检查网络连接或稍后再试。</p>
+                    <button onclick="location.reload()" style="
+                        background: white;
+                        color: #f87171;
+                        border: none;
+                        padding: 8px 16px;
+                        border-radius: 5px;
+                        cursor: pointer;
+                        margin-top: 10px;
+                        font-weight: bold;
+                    ">刷新页面</button>
+                `;
+                document.body.appendChild(serverErrorAlert);
+            }
+        }
+        
+        function hideServerErrorAlert() {
+            const serverErrorAlert = document.getElementById('server-error-alert');
+            if (serverErrorAlert) {
+                serverErrorAlert.remove();
+            }
+        }
+        
+        // 添加网络状态检测事件监听
+        window.addEventListener('online', function() {
+            console.log('网络已连接');
+            hideOfflineAlert();
+            showOnlineAlert();
+            // 网络恢复后检查服务器连接
+            setTimeout(checkServerConnection, 1000);
         });
+        
+        window.addEventListener('offline', function() {
+            console.log('网络已断开');
+            showOfflineAlert();
+            hideServerErrorAlert();
+        });
+        
+        // 页面加载时检查网络状态
+        window.addEventListener('load', function() {
+            checkNetworkStatus();
+            // 定期检查网络状态（每30秒）
+            setInterval(checkNetworkStatus, 30000);
+        });
+        // 修复：移除多余的右花括号，避免语法错误
+        // 此处原意应为结束某段代码块，但已超出所需范围，故删除
         
         // 初始检查网络状态
         if (!navigator.onLine) {
@@ -9118,8 +9274,14 @@ let selectedMatchmakerGender = localStorage.getItem('selectedMatchmakerGender') 
                 return utftext;
             }
 
-            // HTTP请求 - 优化版本：支持重试和超时
-            async getHttpResponse(url, postData = false, timeout = 10000, retryCount = 2) {
+            // HTTP请求 - 增强版：支持重试、超时、离线检测和服务器状态检查
+            async getHttpResponse(url, postData = false, timeout = 10000, retryCount = 3) {
+                // 首先检查网络连接状态
+                if (!navigator.onLine) {
+                    console.error('网络连接已断开，无法发送HTTP请求');
+                    throw new Error('网络连接已断开');
+                }
+                
                 let attempt = 0;
                 
                 while (attempt <= retryCount) {
@@ -9134,7 +9296,9 @@ let selectedMatchmakerGender = localStorage.getItem('selectedMatchmakerGender') 
                                 'Accept-Language': 'zh-CN,zh;q=0.8',
                                 'Connection': 'close'
                             },
-                            signal: controller.signal
+                            signal: controller.signal,
+                            // 添加缓存控制，避免使用过期缓存
+                            cache: 'no-cache'
                         };
                         
                         if (postData) {
@@ -9154,6 +9318,20 @@ let selectedMatchmakerGender = localStorage.getItem('selectedMatchmakerGender') 
                         console.error(`HTTP请求尝试 ${attempt + 1} 失败:`, error);
                         attempt++;
                         
+                        // 如果是网络断开错误，直接抛出
+                        if (!navigator.onLine) {
+                            throw new Error('网络连接已断开');
+                        }
+                        
+                        // 如果是服务器错误（4xx或5xx），检查是否需要特殊处理
+                        if (error.message.includes('HTTP error') && error.message.includes('status:')) {
+                            const status = parseInt(error.message.split('status:')[1].trim());
+                            if (status >= 500) {
+                                // 服务器错误，显示服务器错误提示
+                                showServerErrorAlert();
+                            }
+                        }
+                        
                         // 如果还有重试机会，等待一段时间后重试（指数退避）
                         if (attempt <= retryCount) {
                             const delay = 1000 * Math.pow(2, attempt - 1);
@@ -9162,7 +9340,21 @@ let selectedMatchmakerGender = localStorage.getItem('selectedMatchmakerGender') 
                         } else {
                             // 所有尝试都失败了
                             console.error('HTTP请求所有尝试都失败了');
-                            throw error;
+                            
+                            // 检查是否是同源请求，如果是则显示服务器错误提示
+                            try {
+                                const requestUrl = new URL(url);
+                                const currentUrl = new URL(window.location.href);
+                                if (requestUrl.origin === currentUrl.origin) {
+                                    showServerErrorAlert();
+                                }
+                            } catch (e) {
+                                // URL解析失败，可能是相对路径
+                                showServerErrorAlert();
+                            }
+                            
+                            // 返回更友好的错误信息
+                            throw new Error('网络请求失败，请检查网络连接后重试');
                         }
                     }
                 }
@@ -13140,30 +13332,84 @@ function initMatchmaker() {
             });
         }
         
+        // 初始化函数，添加错误捕获机制
+        function initPage() {
+            try {
+                initProvinceList();
+                initOrderList();
+                initUI();
+                
+                // 检查支付结果（这些函数可能涉及网络请求，添加错误处理）
+                try {
+                    checkPaymentResult();
+                    checkMatchmakerPaymentResult();
+                } catch (e) {
+                    console.error('支付结果检查失败:', e);
+                    // 即使支付结果检查失败，也继续初始化其他功能
+                }
+
+                initCityCollapse();
+                
+                // 网站统计功能可能涉及网络请求，添加错误处理
+                try {
+                    initWebsiteStats();
+                } catch (e) {
+                    console.error('网站统计初始化失败:', e);
+                }
+                
+                initUserAvatarClick();
+                initMatchmakerCitySelector();
+                initLoginTypeTabs();
+                initOrderSearch();
+                initPhoneValidation();
+                initVipServiceManager();
+                // 移除自动初始化，反馈中心将在用户点击时初始化
+                // initMatchmakerFeedbackPage();
+                // initGroupFeedbackPage();
+                initAgreementDoubleClick();
+                initCustomerService();
+                
+                console.log('页面初始化完成');
+            } catch (e) {
+                console.error('页面初始化失败:', e);
+                // 显示初始化失败的错误提示
+                const errorMessage = document.createElement('div');
+                errorMessage.style.cssText = `
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    background: rgba(248, 113, 113, 0.95);
+                    color: white;
+                    padding: 20px;
+                    border-radius: 10px;
+                    z-index: 9999;
+                    text-align: center;
+                    max-width: 80%;
+                    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+                `;
+                errorMessage.innerHTML = `
+                    <h3 style="margin-top: 0;">页面加载失败</h3>
+                    <p>页面初始化遇到问题，请刷新页面重试。</p>
+                    <button onclick="location.reload()" style="
+                        background: white;
+                        color: #f87171;
+                        border: none;
+                        padding: 8px 16px;
+                        border-radius: 5px;
+                        cursor: pointer;
+                        margin-top: 10px;
+                        font-weight: bold;
+                    ">刷新页面</button>
+                `;
+                document.body.appendChild(errorMessage);
+            }
+        }
+        
         // 初始化
         document.addEventListener('DOMContentLoaded', () => {
-            initProvinceList();
-            initOrderList();
-            initUI();
-            
-            // 检查支付结果
-            checkPaymentResult();
-            checkMatchmakerPaymentResult();
-
-
-            initCityCollapse();
-            initWebsiteStats();
-            initUserAvatarClick();
-            initMatchmakerCitySelector();
-            initLoginTypeTabs();
-            initOrderSearch();
-            initPhoneValidation();
-            initVipServiceManager();
-            // 移除自动初始化，反馈中心将在用户点击时初始化
-            // initMatchmakerFeedbackPage();
-            // initGroupFeedbackPage();
-            initAgreementDoubleClick();
-            initCustomerService();
+            // 延迟初始化，确保页面基本结构已加载
+            setTimeout(initPage, 100);
         });
     </script>
     
@@ -13488,147 +13734,186 @@ function initMatchmaker() {
         });
         
         // 为关键功能添加条款检查
-        const originalGeneratePaymentRequest = generatePaymentRequest;
-        generatePaymentRequest = function() {
-            if (!userAgreedToTerms) {
-                alert('请先阅读并同意服务条款');
-                showLegalTerms();
-                return null;
-            }
-            return originalGeneratePaymentRequest.apply(this, arguments);
-        };
-        
-        const originalGenerateMatchmakerPaymentRequest = generateMatchmakerPaymentRequest;
-        generateMatchmakerPaymentRequest = function() {
-            if (!userAgreedToTerms) {
-                alert('请先阅读并同意服务条款');
-                showLegalTerms();
-                return null;
-            }
-            return originalGenerateMatchmakerPaymentRequest.apply(this, arguments);
-        };
-        
-        if (typeof originalRedirectToPayment === 'undefined') {
-            const originalRedirectToPayment = redirectToPayment;
+        if (typeof generatePaymentRequest !== 'undefined') {
+            const originalGeneratePaymentRequest = generatePaymentRequest;
+            generatePaymentRequest = function() {
+                if (!userAgreedToTerms) {
+                    alert('请先阅读并同意服务条款');
+                    showLegalTerms();
+                    return null;
+                }
+                return originalGeneratePaymentRequest.apply(this, arguments);
+            };
         }
-        redirectToPayment = function(params) {
-            if (!userAgreedToTerms) {
-                alert('请先阅读并同意服务条款');
-                showLegalTerms();
-                return;
-            }
-            originalRedirectToPayment.apply(this, arguments);
-        };
         
-        const originalSubmitPayment = submitPayment;
-        submitPayment = function() {
-            if (!userAgreedToTerms) {
-                alert('请先阅读并同意服务条款');
-                showLegalTerms();
-                return;
-            }
-            originalSubmitPayment.apply(this, arguments);
-        };
+        // 为generateMatchmakerPaymentRequest添加存在性检查
+        if (typeof generateMatchmakerPaymentRequest !== 'undefined') {
+            const originalGenerateMatchmakerPaymentRequest = generateMatchmakerPaymentRequest;
+            generateMatchmakerPaymentRequest = function() {
+                if (!userAgreedToTerms) {
+                    alert('请先阅读并同意服务条款');
+                    showLegalTerms();
+                    return null;
+                }
+                return originalGenerateMatchmakerPaymentRequest.apply(this, arguments);
+            };
+        }
         
-        const originalSubmitMatchmakerPayment = submitMatchmakerPayment;
-        submitMatchmakerPayment = function() {
-            if (!userAgreedToTerms) {
-                alert('请先阅读并同意服务条款');
-                showLegalTerms();
-                return;
-            }
-            originalSubmitMatchmakerPayment.apply(this, arguments);
-        };
+        // 为redirectToPayment添加存在性检查和正确的重写
+        if (typeof redirectToPayment !== 'undefined') {
+            const originalRedirectToPayment = redirectToPayment;
+            redirectToPayment = function(params) {
+                if (!userAgreedToTerms) {
+                    alert('请先阅读并同意服务条款');
+                    showLegalTerms();
+                    return;
+                }
+                originalRedirectToPayment.apply(this, arguments);
+            };
+        }
         
-        const originalRefundOrder = refundOrder;
-        refundOrder = function(orderIndex) {
-            if (!userAgreedToTerms) {
-                alert('请先阅读并同意服务条款');
-                showLegalTerms();
-                return;
-            }
-            originalRefundOrder.apply(this, arguments);
-        };
+        // 为submitPayment添加存在性检查
+        if (typeof submitPayment !== 'undefined') {
+            const originalSubmitPayment = submitPayment;
+            submitPayment = function() {
+                if (!userAgreedToTerms) {
+                    alert('请先阅读并同意服务条款');
+                    showLegalTerms();
+                    return;
+                }
+                originalSubmitPayment.apply(this, arguments);
+            };
+        }
         
-        const originalViewUserDetail = viewUserDetail;
-        viewUserDetail = function(userObj) {
-            if (!userAgreedToTerms) {
-                alert('请先阅读并同意服务条款');
-                showLegalTerms();
-                return;
-            }
-            originalViewUserDetail.apply(this, arguments);
-        };
+        // 为submitMatchmakerPayment添加存在性检查
+        if (typeof submitMatchmakerPayment !== 'undefined') {
+            const originalSubmitMatchmakerPayment = submitMatchmakerPayment;
+            submitMatchmakerPayment = function() {
+                if (!userAgreedToTerms) {
+                    alert('请先阅读并同意服务条款');
+                    showLegalTerms();
+                    return;
+                }
+                originalSubmitMatchmakerPayment.apply(this, arguments);
+            };
+        }
         
-        const originalViewUserContact = viewUserContact;
-        viewUserContact = function(userId) {
-            if (!userAgreedToTerms) {
-                alert('请先阅读并同意服务条款');
-                showLegalTerms();
-                return;
-            }
-            originalViewUserContact.apply(this, arguments);
-        };
+        // 为refundOrder添加存在性检查
+        if (typeof refundOrder !== 'undefined') {
+            const originalRefundOrder = refundOrder;
+            refundOrder = function(orderIndex) {
+                if (!userAgreedToTerms) {
+                    alert('请先阅读并同意服务条款');
+                    showLegalTerms();
+                    return;
+                }
+                originalRefundOrder.apply(this, arguments);
+            };
+        }
         
-        const originalRegisterUser = registerUser;
-        registerUser = function() {
-            if (!userAgreedToTerms) {
-                alert('请先阅读并同意服务条款');
-                showLegalTerms();
-                return;
-            }
-            originalRegisterUser.apply(this, arguments);
-        };
+        // 为viewUserDetail添加存在性检查
+        if (typeof viewUserDetail !== 'undefined') {
+            const originalViewUserDetail = viewUserDetail;
+            viewUserDetail = function(userObj) {
+                if (!userAgreedToTerms) {
+                    alert('请先阅读并同意服务条款');
+                    showLegalTerms();
+                    return;
+                }
+                originalViewUserDetail.apply(this, arguments);
+            };
+        }
         
-        const originalLoginUser = loginUser;
-        loginUser = function() {
-            if (!userAgreedToTerms) {
-                alert('请先阅读并同意服务条款');
-                showLegalTerms();
-                return;
-            }
-            originalLoginUser.apply(this, arguments);
-        };
+        // 为viewUserContact添加存在性检查
+        if (typeof viewUserContact !== 'undefined') {
+            const originalViewUserContact = viewUserContact;
+            viewUserContact = function(userId) {
+                if (!userAgreedToTerms) {
+                    alert('请先阅读并同意服务条款');
+                    showLegalTerms();
+                    return;
+                }
+                originalViewUserContact.apply(this, arguments);
+            };
+        }
         
-        const originalEditUserProfile = editUserProfile;
-        editUserProfile = function() {
-            if (!userAgreedToTerms) {
-                alert('请先阅读并同意服务条款');
-                showLegalTerms();
-                return;
-            }
-            originalEditUserProfile.apply(this, arguments);
-        };
+        // 为registerUser添加存在性检查
+        if (typeof registerUser !== 'undefined') {
+            const originalRegisterUser = registerUser;
+            registerUser = function() {
+                if (!userAgreedToTerms) {
+                    alert('请先阅读并同意服务条款');
+                    showLegalTerms();
+                    return;
+                }
+                originalRegisterUser.apply(this, arguments);
+            };
+        }
         
-        const originalSubmitFeedback = submitFeedback;
-        submitFeedback = function() {
-            if (!userAgreedToTerms) {
-                alert('请先阅读并同意服务条款');
-                showLegalTerms();
-                return;
-            }
-            originalSubmitFeedback.apply(this, arguments);
-        };
+        // 为loginUser添加存在性检查
+        if (typeof loginUser !== 'undefined') {
+            const originalLoginUser = loginUser;
+            loginUser = function() {
+                if (!userAgreedToTerms) {
+                    alert('请先阅读并同意服务条款');
+                    showLegalTerms();
+                    return;
+                }
+                originalLoginUser.apply(this, arguments);
+            };
+        }
         
-        const originalHandlePhotoUpload = handlePhotoUpload;
-        handlePhotoUpload = function(event) {
-            if (!userAgreedToTerms) {
-                alert('请先阅读并同意服务条款');
-                showLegalTerms();
-                return;
-            }
-            originalHandlePhotoUpload.apply(this, arguments);
-        };
+        // 为editUserProfile添加存在性检查
+        if (typeof editUserProfile !== 'undefined') {
+            const originalEditUserProfile = editUserProfile;
+            editUserProfile = function() {
+                if (!userAgreedToTerms) {
+                    alert('请先阅读并同意服务条款');
+                    showLegalTerms();
+                    return;
+                }
+                originalEditUserProfile.apply(this, arguments);
+            };
+        }
         
-        const originalShowFeedbackExhibition = showFeedbackExhibition;
-        showFeedbackExhibition = function() {
-            if (!userAgreedToTerms) {
-                alert('请先阅读并同意服务条款');
-                showLegalTerms();
-                return;
-            }
-            originalShowFeedbackExhibition.apply(this, arguments);
-        };
+        // 为submitFeedback添加存在性检查
+        if (typeof submitFeedback !== 'undefined') {
+            const originalSubmitFeedback = submitFeedback;
+            submitFeedback = function() {
+                if (!userAgreedToTerms) {
+                    alert('请先阅读并同意服务条款');
+                    showLegalTerms();
+                    return;
+                }
+                originalSubmitFeedback.apply(this, arguments);
+            };
+        }
+        
+        // 为handlePhotoUpload添加存在性检查
+        if (typeof handlePhotoUpload !== 'undefined') {
+            const originalHandlePhotoUpload = handlePhotoUpload;
+            handlePhotoUpload = function(event) {
+                if (!userAgreedToTerms) {
+                    alert('请先阅读并同意服务条款');
+                    showLegalTerms();
+                    return;
+                }
+                originalHandlePhotoUpload.apply(this, arguments);
+            };
+        }
+        
+        // 为showFeedbackExhibition添加存在性检查
+        if (typeof showFeedbackExhibition !== 'undefined') {
+            const originalShowFeedbackExhibition = showFeedbackExhibition;
+            showFeedbackExhibition = function() {
+                if (!userAgreedToTerms) {
+                    alert('请先阅读并同意服务条款');
+                    showLegalTerms();
+                    return;
+                }
+                originalShowFeedbackExhibition.apply(this, arguments);
+            };
+        }
 
     </script>
     
