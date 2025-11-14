@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
@@ -12773,109 +12772,33 @@ function initMatchmaker() {
                 sendMessageToAPI(message);
             }
             
-            async function sendMessageToAPI(message) {
-                try {
-                    // 首先检查后端API是否可用
-                    const healthCheck = await fetch('http://localhost:5000/api/stats', {
-                        method: 'GET',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        }
-                    });
+            function sendMessageToAPI(message) {
+                // 显示发送成功状态
+                addMessage('✓ 消息已发送，客服正在为您服务...', 'system');
+                
+                // 模拟客服回复（延迟2-5秒）
+                setTimeout(() => {
+                    const smartResponses = [
+                        '您好，很高兴为您服务！有什么可以帮助您的吗？',
+                        '我理解您的问题，让我为您详细解答。',
+                        '感谢您的咨询，我们的专业客服正在为您处理。',
+                        '这个问题需要进一步了解，请稍等片刻。',
+                        '我们已经收到您的反馈，会尽快为您提供解决方案。',
+                        '建议您查看常见问题解答，可能对您有帮助。',
+                        '感谢您的耐心等待，正在为您查询相关信息。',
+                        '这个问题比较常见，让我为您详细说明处理流程。'
+                    ];
                     
-                    if (!healthCheck.ok) {
-                        throw new Error('客服系统暂时不可用');
-                    }
+                    const smartResponse = smartResponses[Math.floor(Math.random() * smartResponses.length)];
+                    addMessage(smartResponse, 'customer');
                     
-                    // 发送消息到后端API
-                    const response = await fetch('http://localhost:5000/api/send_message', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            content: message,
-                            sender_type: 'customer',
-                            customer_name: '匿名用户'
-                        })
-                    });
-                    
-                    if (!response.ok) {
-                        throw new Error('发送消息失败');
-                    }
-                    
-                    const result = await response.json();
-                    
-                    // 显示发送成功状态
-                    addMessage('✓ 消息已发送，客服正在为您服务...', 'system');
-                    
-                    // 等待后端客服回复（延迟2-5秒）
-                    setTimeout(async () => {
-                        try {
-                            // 获取对话列表查看最新回复
-                            const conversationsResponse = await fetch('http://localhost:5000/api/conversations');
-                            if (conversationsResponse.ok) {
-                                const conversationsData = await conversationsResponse.json();
-                                if (conversationsData.conversations && conversationsData.conversations.length > 0) {
-                                    const latestConversation = conversationsData.conversations[0];
-                                    if (latestConversation.last_message && latestConversation.last_message !== message) {
-                                        addMessage(latestConversation.last_message, 'customer');
-                                        return;
-                                    }
-                                }
-                            }
-                            
-                            // 如果无法获取真实回复，使用智能回复
-                            const smartResponses = [
-                                '您好，很高兴为您服务！有什么可以帮助您的吗？',
-                                '我理解您的问题，让我为您详细解答。',
-                                '感谢您的咨询，我们的专业客服正在为您处理。',
-                                '这个问题需要进一步了解，请稍等片刻。',
-                                '我们已经收到您的反馈，会尽快为您提供解决方案。',
-                                '建议您查看常见问题解答，可能对您有帮助。',
-                                '感谢您的耐心等待，正在为您查询相关信息。',
-                                '这个问题比较常见，让我为您详细说明处理流程。'
-                            ];
-                            
-                            const smartResponse = smartResponses[Math.floor(Math.random() * smartResponses.length)];
-                            addMessage(smartResponse, 'customer');
-                            
-                            // 30%概率添加QQ客服提示
-                            if (Math.random() < 0.3) {
-                                setTimeout(() => {
-                                    addMessage('💬 如果长时间没有回复，请添加专属客服QQ：1158980053', 'customer');
-                                }, 1500);
-                            }
-                            
-                        } catch (error) {
-                            console.error('获取客服回复失败:', error);
-                            addMessage('💬 客服系统繁忙，请稍后重试或添加QQ：1158980053', 'customer');
-                        }
-                    }, 2000 + Math.random() * 3000);
-                    
-                } catch (error) {
-                    console.error('发送消息失败:', error);
-                    // 如果API调用失败，使用本地智能回复
-                    addMessage('⚠️ 网络连接异常，正在使用本地客服模式...', 'system');
-                    
-                    setTimeout(() => {
-                        const localResponses = [
-                            '您好，很高兴为您服务！有什么可以帮助您的吗？',
-                            '我理解您的问题，让我为您详细解答。',
-                            '感谢您的咨询，我们的专业客服正在为您处理。',
-                            '这个问题需要进一步了解，请稍等片刻。',
-                            '我们已经收到您的反馈，会尽快为您提供解决方案。'
-                        ];
-                        
-                        const localResponse = localResponses[Math.floor(Math.random() * localResponses.length)];
-                        addMessage(localResponse, 'customer');
-                        
-                        // 添加QQ客服提示
+                    // 30%概率添加QQ客服提示
+                    if (Math.random() < 0.3) {
                         setTimeout(() => {
-                            addMessage('💬 为确保服务质量，建议添加专属客服QQ：1158980053', 'customer');
-                        }, 1000);
-                    }, 1000 + Math.random() * 2000);
-                }
+                            addMessage('💬 如果长时间没有回复，请添加专属客服QQ：1158980053', 'customer');
+                        }, 1500);
+                    }
+                }, 2000 + Math.random() * 3000);
             }
             
             function addMessage(text, sender) {
@@ -13025,14 +12948,14 @@ function initMatchmaker() {
             };
             
             const userFeedbacks = [
-                {                    id: 1,                    name: '李先生',                    avatar: 'https://ui-avatars.com/api/?name=李先生&background=random',                    location: '北京',                    date: formatDate(new Date(today.getTime() - Math.floor(Math.random() * 3) * 24 * 60 * 60 * 1000)),                    rating: 5,                    comment: '服务非常专业，体验超出预期！从咨询到完成，整个过程都很顺畅，工作人员态度也很好。',                    isVerified: true,                    image: 'https://s10.aconvert.com/convert/p3r68-cdx67/a6ryq-elt7n.jpg'                },
-                {                    id: 2,                    name: '张先生',                    avatar: 'https://ui-avatars.com/api/?name=张先生&background=random',                    location: '上海',                    date: formatDate(new Date(today.getTime() - Math.floor(Math.random() * 3) * 24 * 60 * 60 * 1000)),                    rating: 4,                    comment: '整体不错，细节处理得很好！尤其是最后的效果让我非常满意，值得推荐。',                    isVerified: true,                    image: 'https://s11.aconvert.com/convert/p3r68-cdx67/0g77e-8p8pc.jpg'                },
-                {                    id: 3,                    name: '王先生',                    avatar: 'https://ui-avatars.com/api/?name=王先生&background=random',                    location: '广州',                    date: formatDate(new Date(today.getTime() - Math.floor(Math.random() * 3) * 24 * 60 * 60 * 1000)),                    rating: 5,                    comment: '非常满意这次的服务！提供了很多专业建议，结果超出了我的期望，强烈推荐给大家！',                    isVerified: true,                    images: [                        'https://s11.aconvert.com/convert/p3r68-cdx67/nmfkx-4278t.jpg',                        'https://s11.aconvert.com/convert/p3r68-cdx67/m3nqj-7uvbg.jpg'                    ]                },
-                {                    id: 4,                    name: '赵先生',                    avatar: 'https://ui-avatars.com/api/?name=赵先生&background=random',                    location: '深圳',                    date: formatDate(new Date(today.getTime() - Math.floor(Math.random() * 3) * 24 * 60 * 60 * 1000)),                    rating: 5,                    comment: '服务态度很好，工作效率也很高，非常满意！',                    isVerified: true,                    image: 'https://s11.aconvert.com/convert/p3r68-cdx67/sub0i-a74ll.jpg'                },
-                {                    id: 5,                    name: '刘先生',                    avatar: 'https://ui-avatars.com/api/?name=刘先生&background=random',                    location: '杭州',                    date: formatDate(new Date(today.getTime() - Math.floor(Math.random() * 3) * 24 * 60 * 60 * 1000)),                    rating: 4,                    comment: '整体服务不错，值得信赖！',                    isVerified: true,                    image: 'https://s11.aconvert.com/convert/p3r68-cdx67/nxe16-c1w53.jpg'                },
-                {                    id: 6,                    name: '陈先生',                    avatar: 'https://ui-avatars.com/api/?name=陈先生&background=random',                    location: '成都',                    date: formatDate(new Date(today.getTime() - Math.floor(Math.random() * 3) * 24 * 60 * 60 * 1000)),                    rating: 5,                    comment: '非常专业的团队，效果超出预期！',                    isVerified: true,                    image: 'https://s11.aconvert.com/convert/p3r68-cdx67/b340i-zxaxd.jpg'                },
-                {                    id: 7,                    name: '杨先生',                    avatar: 'https://ui-avatars.com/api/?name=杨先生&background=random',                    location: '武汉',                    date: formatDate(new Date(today.getTime() - Math.floor(Math.random() * 3) * 24 * 60 * 60 * 1000)),                    rating: 5,                    comment: '服务非常周到，团队专业可靠，强烈推荐！',                    isVerified: true,                    images: [                        'https://s11.aconvert.com/convert/p3r68-cdx67/ntxgs-qx98f.jpg',                        'https://s11.aconvert.com/convert/p3r68-cdx67/migcc-ztn4d.jpg'                    ]                },
-                {                    id: 8,                    name: '吴先生',                    avatar: 'https://ui-avatars.com/api/?name=吴先生&background=random',                    location: '西安',                    date: formatDate(new Date(today.getTime() - Math.floor(Math.random() * 3) * 24 * 60 * 60 * 1000)),                    rating: 5,                    comment: '服务质量非常高，团队协作默契，值得信赖！',                    isVerified: true,                    images: [                        'https://s10.aconvert.com/convert/p3r68-cdx67/ach6l-xebkr.jpg',                        'https://s10.aconvert.com/convert/p3r68-cdx67/atfch-28gbc.jpg'                    ]                }
+                {                    id: 1,                    name: '李先生',                    avatar: 'https://ui-avatars.com/api/?name=李先生&background=random',                    location: '北京',                    date: formatDate(new Date(today.getTime() - Math.floor(Math.random() * 3) * 24 * 60 * 60 * 1000)),                    rating: 5,                    comment: '服务非常专业，体验超出预期！从咨询到完成，整个过程都很顺畅，工作人员态度也很好。',                    isVerified: true,                    image: 'https://s3.bmp.ovh/imgs/2025/11/14/573db0f35da7d6ee.jpg'                },
+                {                    id: 2,                    name: '张先生',                    avatar: 'https://ui-avatars.com/api/?name=张先生&background=random',                    location: '上海',                    date: formatDate(new Date(today.getTime() - Math.floor(Math.random() * 3) * 24 * 60 * 60 * 1000)),                    rating: 4,                    comment: '整体不错，细节处理得很好！尤其是最后的效果让我非常满意，值得推荐。',                    isVerified: true,                    image: 'https://s3.bmp.ovh/imgs/2025/11/14/75b7d3342388866e.png'                },
+                {                    id: 3,                    name: '王先生',                    avatar: 'https://ui-avatars.com/api/?name=王先生&background=random',                    location: '广州',                    date: formatDate(new Date(today.getTime() - Math.floor(Math.random() * 3) * 24 * 60 * 60 * 1000)),                    rating: 5,                    comment: '非常满意这次的服务！提供了很多专业建议，结果超出了我的期望，强烈推荐给大家！',                    isVerified: true,                    images: [                        'https://s3.bmp.ovh/imgs/2025/11/14/2876c21173df3c75.jpg',                        'https://s3.bmp.ovh/imgs/2025/11/14/16bc8514b2e33acf.jpg'                    ]                },
+                {                    id: 4,                    name: '赵先生',                    avatar: 'https://ui-avatars.com/api/?name=赵先生&background=random',                    location: '深圳',                    date: formatDate(new Date(today.getTime() - Math.floor(Math.random() * 3) * 24 * 60 * 60 * 1000)),                    rating: 5,                    comment: '服务态度很好，工作效率也很高，非常满意！',                    isVerified: true,                    image: 'https://s3.bmp.ovh/imgs/2025/11/14/09615d0a87903164.png'                },
+                {                    id: 5,                    name: '刘先生',                    avatar: 'https://ui-avatars.com/api/?name=刘先生&background=random',                    location: '杭州',                    date: formatDate(new Date(today.getTime() - Math.floor(Math.random() * 3) * 24 * 60 * 60 * 1000)),                    rating: 4,                    comment: '整体服务不错，值得信赖！',                    isVerified: true,                    image: 'https://s3.bmp.ovh/imgs/2025/11/14/3f50c9611cb43dc7.jpg'                },
+                {                    id: 6,                    name: '陈先生',                    avatar: 'https://ui-avatars.com/api/?name=陈先生&background=random',                    location: '成都',                    date: formatDate(new Date(today.getTime() - Math.floor(Math.random() * 3) * 24 * 60 * 60 * 1000)),                    rating: 5,                    comment: '非常专业的团队，效果超出预期！',                    isVerified: true,                    image: 'https://s3.bmp.ovh/imgs/2025/11/14/71ce30d88b94dcad.jpg'                },
+                {                    id: 7,                    name: '杨先生',                    avatar: 'https://ui-avatars.com/api/?name=杨先生&background=random',                    location: '武汉',                    date: formatDate(new Date(today.getTime() - Math.floor(Math.random() * 3) * 24 * 60 * 60 * 1000)),                    rating: 5,                    comment: '服务非常周到，团队专业可靠，强烈推荐！',                    isVerified: true,                    images: [                        'https://s3.bmp.ovh/imgs/2025/11/14/95dc0633799af85f.jpg',                        'https://s3.bmp.ovh/imgs/2025/11/14/52f9c737995f501e.jpg'                    ]                },
+                {                    id: 8,                    name: '吴先生',                    avatar: 'https://ui-avatars.com/api/?name=吴先生&background=random',                    location: '西安',                    date: formatDate(new Date(today.getTime() - Math.floor(Math.random() * 3) * 24 * 60 * 60 * 1000)),                    rating: 5,                    comment: '服务质量非常高，团队协作默契，值得信赖！',                    isVerified: true,                    images: [                        'https://s3.bmp.ovh/imgs/2025/11/14/aad3c757fd3f240e.png',                        'https://s3.bmp.ovh/imgs/2025/11/14/09615d0a87903164.png'                    ]                }
             ];
             
             // 添加用户反馈到网格，使用交错布局增加视觉多样性
@@ -13105,7 +13028,7 @@ function initMatchmaker() {
                     img.onclick = () => showImagePreview(imageUrl);
                     // 图片加载失败处理
                     img.onerror = () => {
-                        img.src = 'https://picsum.photos/id/900/400/300';
+                        img.src = 'https://via.placeholder.com/400x300?text=用户反馈图片';
                     };
                     
                     // 图片悬停效果
