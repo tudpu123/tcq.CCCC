@@ -6,6 +6,20 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>一日情侣牵线平台 - 同城交友体验</title>
+    
+    <!-- DNS预解析和预连接 -->
+    <link rel="dns-prefetch" href="//cdn.bootcdn.net">
+    <link rel="dns-prefetch" href="//2a.mazhifupay.com">
+    <link rel="dns-prefetch" href="//ui-avatars.com">
+    <link rel="dns-prefetch" href="//via.placeholder.com">
+    <link rel="dns-prefetch" href="//s3.bmp.ovh">
+    
+    <link rel="preconnect" href="https://cdn.bootcdn.net" crossorigin>
+    <link rel="preconnect" href="https://2a.mazhifupay.com" crossorigin>
+    <link rel="preconnect" href="https://ui-avatars.com" crossorigin>
+    <link rel="preconnect" href="https://via.placeholder.com" crossorigin>
+    <link rel="preconnect" href="https://s3.bmp.ovh" crossorigin>
+    
     <!-- 替换为国内可用的CDN -->
     <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- 或者使用本地字体图标库（如果有） -->
@@ -6968,6 +6982,57 @@
             }
         });
         
+        // 添加未捕获的Promise拒绝处理
+        window.addEventListener('unhandledrejection', function(e) {
+            console.error('未捕获的Promise拒绝:', e.reason);
+            // 可以显示一个友好的错误提示给用户
+            if (document.readyState === 'complete') {
+                alert('网络请求失败，请检查网络连接后重试。');
+            }
+        });
+        
+        // 添加网络状态检测
+        window.addEventListener('online', function() {
+            console.log('网络已连接');
+            // 可以显示网络已恢复的提示
+            const offlineAlert = document.getElementById('offline-alert');
+            if (offlineAlert) {
+                offlineAlert.style.display = 'none';
+            }
+        });
+        
+        window.addEventListener('offline', function() {
+            console.log('网络已断开');
+            // 显示网络断开的提示
+            let offlineAlert = document.getElementById('offline-alert');
+            if (!offlineAlert) {
+                offlineAlert = document.createElement('div');
+                offlineAlert.id = 'offline-alert';
+                offlineAlert.style.cssText = `
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    background: #f87171;
+                    color: white;
+                    padding: 10px;
+                    text-align: center;
+                    z-index: 9999;
+                    font-weight: bold;
+                `;
+                offlineAlert.innerHTML = '<i class="fas fa-exclamation-triangle"></i> 网络连接已断开，请检查网络设置';
+                document.body.appendChild(offlineAlert);
+            } else {
+                offlineAlert.style.display = 'block';
+            }
+        });
+        
+        // 初始检查网络状态
+        if (!navigator.onLine) {
+            const event = new Event('offline');
+            window.dispatchEvent(event);
+        }
+        
         // 监控页面加载性能
         window.addEventListener('load', function() {
             const perfData = performance.timing;
@@ -9053,38 +9118,53 @@ let selectedMatchmakerGender = localStorage.getItem('selectedMatchmakerGender') 
                 return utftext;
             }
 
-            // HTTP请求
-            async getHttpResponse(url, postData = false, timeout = 10000) {
-                try {
-                    const controller = new AbortController();
-                    const timeoutId = setTimeout(() => controller.abort(), timeout);
-                    
-                    const options = {
-                        method: postData ? 'POST' : 'GET',
-                        headers: {
-                            'Accept': '*/*',
-                            'Accept-Language': 'zh-CN,zh;q=0.8',
-                            'Connection': 'close'
-                        },
-                        signal: controller.signal
-                    };
-                    
-                    if (postData) {
-                        options.headers['Content-Type'] = 'application/x-www-form-urlencoded';
-                        options.body = postData;
+            // HTTP请求 - 优化版本：支持重试和超时
+            async getHttpResponse(url, postData = false, timeout = 10000, retryCount = 2) {
+                let attempt = 0;
+                
+                while (attempt <= retryCount) {
+                    try {
+                        const controller = new AbortController();
+                        const timeoutId = setTimeout(() => controller.abort(), timeout);
+                        
+                        const options = {
+                            method: postData ? 'POST' : 'GET',
+                            headers: {
+                                'Accept': '*/*',
+                                'Accept-Language': 'zh-CN,zh;q=0.8',
+                                'Connection': 'close'
+                            },
+                            signal: controller.signal
+                        };
+                        
+                        if (postData) {
+                            options.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+                            options.body = postData;
+                        }
+                        
+                        const response = await fetch(url, options);
+                        clearTimeout(timeoutId);
+                        
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        
+                        return await response.text();
+                    } catch (error) {
+                        console.error(`HTTP请求尝试 ${attempt + 1} 失败:`, error);
+                        attempt++;
+                        
+                        // 如果还有重试机会，等待一段时间后重试（指数退避）
+                        if (attempt <= retryCount) {
+                            const delay = 1000 * Math.pow(2, attempt - 1);
+                            console.log(`等待 ${delay}ms 后重试...`);
+                            await new Promise(resolve => setTimeout(resolve, delay));
+                        } else {
+                            // 所有尝试都失败了
+                            console.error('HTTP请求所有尝试都失败了');
+                            throw error;
+                        }
                     }
-                    
-                    const response = await fetch(url, options);
-                    clearTimeout(timeoutId);
-                    
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    
-                    return await response.text();
-                } catch (error) {
-                    console.error('HTTP请求失败:', error);
-                    throw error;
                 }
             }
         }
